@@ -48,18 +48,7 @@ export function MainNav({ items, children }: MainNavProps) {
   }, [pathname]);
 
   return (
-    <div className="flex gap-6 md:gap-10">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Link href="/" className="hidden items-center space-x-2 md:flex">
-          <span className={cn(norican.className, "text-2xl")}>
-            {siteConfig.authorName}
-          </span>
-        </Link>
-      </motion.div>
+    <div className="flex items-center gap-6">
       {items?.length ? (
         <nav className="hidden gap-6 md:flex items-center">
           {items?.map((item, index) => (
