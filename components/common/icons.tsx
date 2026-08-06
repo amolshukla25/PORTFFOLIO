@@ -33,6 +33,10 @@ import {
   User,
   X,
   Zap,
+  Brain,
+  Network,
+  Activity,
+  Workflow,
 } from "lucide-react";
 import { AiFillStar } from "react-icons/ai";
 import { BiLaugh, BiSolidUser } from "react-icons/bi";
@@ -67,7 +71,12 @@ import {
   SiTailwindcss,
   SiTypescript,
   SiX,
+  SiTensorflow,
+  SiVercel,
+  SiLangchain,
+  SiN8N,
 } from "react-icons/si";
+import { TbBrandAzure } from "react-icons/tb";
 
 export const Icons = {
   contact: Phone,
@@ -177,4 +186,13 @@ export const Icons = {
   paper: Scroll,
   aurora: Sparkles,
   synthwave: Music,
+  brain: Brain,
+  network: Network,
+  activity: Activity,
+  workflow: Workflow,
+  tensorflow: SiTensorflow,
+  vercel: SiVercel,
+  azure: TbBrandAzure,
+  langchain: SiLangchain,
+  n8n: SiN8N,
 };

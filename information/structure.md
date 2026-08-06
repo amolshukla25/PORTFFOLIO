@@ -38,7 +38,6 @@ This is the folder structure of the whole application
 │ └── Inter-Regular.ttf
 ├── components
 │ ├── common
-│ │ ├── analytics.tsx
 │ │ ├── animated-section.tsx
 │ │ ├── icons.tsx
 │ │ ├── main-nav.tsx

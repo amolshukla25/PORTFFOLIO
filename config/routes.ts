@@ -3,26 +3,11 @@ export const routesConfig: any = {
     {
       title: "Projects",
       href: "/projects",
-    },
-    {
-      title: "Experience",
-      href: "/experience",
-    },
-    {
-      title: "Contributions",
-      href: "/contributions",
+      isButton: true,
     },
     {
       title: "Skills",
       href: "/skills",
-    },
-    {
-      title: "Blogs",
-      href: "/blogs",
-    },
-    {
-      title: "Community",
-      href: "/community",
     },
     {
       title: "Contact",

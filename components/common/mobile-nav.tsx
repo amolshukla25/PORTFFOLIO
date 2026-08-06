@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { siteConfig } from "@/config/site";
 import { useLockBody } from "@/hooks/use-lock-body";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
@@ -33,15 +34,22 @@ export function MobileNav({ items, children }: MobileNavProps) {
             {siteConfig.authorName}
           </span>
         </Link>
-        <nav className="grid grid-flow-row auto-rows-max text-sm">
+        <nav className="grid grid-flow-row auto-rows-max text-sm gap-2">
           {items.map((item, index) => (
             <Link
               key={index}
               href={item.disabled ? "#" : item.href}
-              className={cn(
-                "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline",
-                item.disabled && "cursor-not-allowed opacity-60"
-              )}
+              className={
+                item.isButton
+                  ? cn(
+                      buttonVariants({ variant: "outline", size: "sm" }),
+                      "w-full justify-center rounded-xl font-medium"
+                    )
+                  : cn(
+                      "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline",
+                      item.disabled && "cursor-not-allowed opacity-60"
+                    )
+              }
             >
               {item.title}
             </Link>

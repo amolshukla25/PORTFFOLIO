@@ -16,6 +16,90 @@ export interface ExperienceInterface {
 
 export const experiences: ExperienceInterface[] = [
   {
+    id: "ikigai-ai-trainer",
+    position: "Full-Time AI Trainer",
+    company: "Ikigai School of AI",
+    location: "India",
+    startDate: new Date("2024-01-01"),
+    endDate: "Present",
+    description: [
+      "Deliver full-time training in Python, AI, and Data Science to aspiring developers and data professionals.",
+      "Design project-based curricula covering machine learning pipelines, generative AI fundamentals, and real-world automation.",
+      "Mentor students through capstone projects, interview preparation, and placement readiness.",
+    ],
+    achievements: [
+      "Delivered comprehensive AI and Python training for batches of aspiring developers and data professionals.",
+      "Built project-based learning modules around ML pipelines, generative AI, and real-world automation.",
+      "Guided students through capstone work, placements, and interview preparation.",
+    ],
+    skills: ["Python", "TensorFlow", "PyTorch", "SQL", "FastAPI"],
+    companyUrl: "https://ikigai.ai",
+    logo: "/profile-img.jpg",
+  },
+  {
+    id: "rcpl-trainer",
+    position: "PHP + AI Trainer",
+    company: "RCPL",
+    location: "India",
+    startDate: new Date("2023-01-01"),
+    endDate: new Date("2024-01-01"),
+    description: [
+      "Conducted dual-track training in PHP development and artificial intelligence.",
+      "Taught backend fundamentals including PHP core programming, database connectivity, and RESTful API integration.",
+      "Introduced AI modules on Python for Data Science, machine learning basics, and generative AI applications.",
+    ],
+    achievements: [
+      "Enabled trainees to build both web development and AI literacy together.",
+      "Created practical assignments and coding assessments for web and intelligent automation learning.",
+    ],
+    skills: ["PHP", "Python", "MySQL", "SQL", "FastAPI"],
+    companyUrl: "https://www.rcpl.com",
+    logo: "/profile-img.jpg",
+  },
+  {
+    id: "true-mind-trainer",
+    position: "AI & Python Trainer",
+    company: "True Mind",
+    location: "India",
+    startDate: new Date("2021-01-01"),
+    endDate: new Date("2023-01-01"),
+    description: [
+      "Delivered end-to-end training in Python from fundamentals to OOPs, file handling, and modular coding.",
+      "Trained more than 100 students in NumPy, Pandas, Matplotlib, Seaborn, and real-world data analysis workflows.",
+      "Integrated generative AI and LLM concepts into learning modules for smart application development.",
+    ],
+    achievements: [
+      "Mentored students for technical interviews, placements, and final-year projects.",
+      "Introduced machine learning fundamentals, evaluation, and deployment basics to learners.",
+    ],
+    skills: ["Python", "TensorFlow", "PyTorch", "SQL", "FastAPI"],
+    companyUrl: "https://truemind.in",
+    logo: "/profile-img.jpg",
+  },
+  {
+    id: "hitbull-eye-trainer",
+    position: "Big Data & Data Science Trainer",
+    company: "Hitbull Eye",
+    location: "India",
+    startDate: new Date("2020-01-01"),
+    endDate: new Date("2021-01-01"),
+    description: [
+      "Delivered specialized training in Big Data technologies and data science workflows.",
+      "Taught DSA topics including arrays, trees, graphs, and dynamic programming with focus on scalable systems.",
+      "Conducted DBMS lessons on normalization, indexing, joins, transactions, and ACID.",
+    ],
+    achievements: [
+      "Performed code reviews, doubt-solving sessions, and mock interviews for campus placement drives.",
+      "Delivered hands-on practical assignments and structured lesson plans for data-intensive learners.",
+    ],
+    skills: ["Python", "SQL", "MySQL", "AWS", "Docker"],
+    companyUrl: "https://hitbullseye.com",
+    logo: "/profile-img.jpg",
+  },
+];
+
+/*
+  {
     id: "ubs",
     position: "Software Development Engineer",
     company: "UBS",
@@ -54,7 +138,7 @@ export const experiences: ExperienceInterface[] = [
       "Improved LLM function-calling accuracy by ~40% through structured prompt design and response validation.",
       "Developed APIs and integrated Slack, Google Workspace, and HubSpot automations via FastAPI.",
       "Migrated ML inference from Replicate to AWS SageMaker, reducing cold-start latency by ~30%.",
-      "Created a Next.js dashboard for user analytics and a demo video explaining the implementation.",
+      "Created a Next.js dashboard and a demo video explaining the implementation.",
     ],
     skills: ["FastAPI", "Python", "AWS", "Next.js", "React", "Typescript"],
     companyUrl: "https://muzecmo.com",
@@ -89,4 +173,5 @@ export const experiences: ExperienceInterface[] = [
     companyUrl: "https://builtdesign.in",
     logo: "/experience/builtdesign-logo.png",
   },
-];
+*/
+

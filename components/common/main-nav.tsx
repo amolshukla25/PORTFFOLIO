@@ -9,6 +9,7 @@ import * as React from "react";
 import { Icons } from "@/components/common/icons";
 import { MobileNav } from "@/components/common/mobile-nav";
 import { siteConfig } from "@/config/site";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface MainNavProps {
@@ -73,13 +74,20 @@ export function MainNav({ items, children }: MainNavProps) {
             >
               <Link
                 href={item.disabled ? "#" : item.href}
-                className={cn(
-                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                  item.href.startsWith(`/${segment}`)
-                    ? "text-foreground"
-                    : "text-foreground/60",
-                  item.disabled && "cursor-not-allowed opacity-80"
-                )}
+                className={
+                  item.isButton
+                    ? cn(
+                        buttonVariants({ variant: "outline", size: "sm" }),
+                        "rounded-xl font-medium"
+                      )
+                    : cn(
+                        "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
+                        item.href.startsWith(`/${segment}`)
+                          ? "text-foreground"
+                          : "text-foreground/60",
+                        item.disabled && "cursor-not-allowed opacity-80"
+                      )
+                }
               >
                 {item.title}
               </Link>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Professional portrait illustration">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4c7a1"/>
+      <stop offset="100%" stop-color="#e5a87a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="40" fill="url(#bg)"/>
+  <circle cx="200" cy="200" r="150" fill="#f8fafc" opacity="0.96"/>
+  <ellipse cx="199" cy="232" rx="102" ry="122" fill="url(#skin)"/>
+  <path d="M112 238c10-88 68-128 118-128 61 0 104 42 106 116-15 9-30 16-46 20-12-31-38-53-69-53-31 0-57 23-70 55-18-3-36-9-39-10Z" fill="#172554"/>
+  <path d="M129 213c6-66 39-103 88-103 46 0 81 34 87 100-30-16-67-23-108-23-28 0-53 4-67 26Z" fill="#0f172a"/>
+  <ellipse cx="168" cy="222" rx="8" ry="10" fill="#0f172a"/>
+  <ellipse cx="232" cy="222" rx="8" ry="10" fill="#0f172a"/>
+  <path d="M174 256c15 12 38 12 54 0" stroke="#7c2d12" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M136 282c17 36 32 54 64 65 33-11 47-29 64-65" fill="#f8fafc" opacity="0.92"/>
+  <rect x="122" y="300" width="156" height="46" rx="23" fill="#1e3a8a"/>
+  <rect x="142" y="320" width="116" height="10" rx="5" fill="#93c5fd" opacity="0.85"/>
+</svg>

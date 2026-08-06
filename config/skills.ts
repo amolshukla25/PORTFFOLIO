@@ -152,9 +152,72 @@ export const skillsUnsorted: skillsInterface[] = [
   {
     name: "Netlify",
     description:
-      "Manage and organize relational databases efficiently for data-driven applications.",
+      "Deploy and host modern web applications instantly with serverless functions and CI/CD integrations.",
     rating: 4,
     icon: Icons.netlify,
+  },
+  {
+    name: "LangChain",
+    description:
+      "Build context-aware, reasoning applications with LLMs using flexible chains and agents.",
+    rating: 5,
+    icon: Icons.langchain,
+  },
+  {
+    name: "LangGraph",
+    description:
+      "Orchestrate multi-actor LLM applications with stateful, multi-agent workflows.",
+    rating: 4,
+    icon: Icons.network,
+  },
+  {
+    name: "LangSmith",
+    description:
+      "Debug, test, evaluate, and monitor LLM applications and agent actions.",
+    rating: 4,
+    icon: Icons.activity,
+  },
+  {
+    name: "n8n",
+    description:
+      "Design workflow automation and AI agent pipelines with a node-based integration system.",
+    rating: 4,
+    icon: Icons.n8n,
+  },
+  {
+    name: "Machine Learning",
+    description:
+      "Develop predictive models, classification systems, and regression pipelines using structured data.",
+    rating: 5,
+    icon: Icons.brain,
+  },
+  {
+    name: "Deep Learning",
+    description:
+      "Train neural networks, convolution architectures, and transformers for complex AI tasks.",
+    rating: 4,
+    icon: Icons.workflow,
+  },
+  {
+    name: "TensorFlow",
+    description:
+      "Build, train, and deploy machine learning models with an open-source end-to-end platform.",
+    rating: 4,
+    icon: Icons.tensorflow,
+  },
+  {
+    name: "Vercel",
+    description:
+      "Deploy front-end and serverless applications instantly with optimized edge hosting.",
+    rating: 5,
+    icon: Icons.vercel,
+  },
+  {
+    name: "Azure",
+    description:
+      "Build, deploy, and manage enterprise cloud services, cognitive tools, and AI infrastructures.",
+    rating: 4,
+    icon: Icons.azure,
   },
 ];
 

@@ -15,7 +15,6 @@ A modern, responsive, and SEO-optimized **Next.js 16 portfolio template** design
 - **Modern Tech Stack**: Next.js 16, React 19, TypeScript, Tailwind CSS, and shadcn/ui
 - **Easy Customization**: Well-organized code structure with minimal effort required
 - **Animations**: Subtle animations for engaging user experience
-- **Analytics Integration**: Ready for Google Analytics tracking
 - **Contact Form**: Functional contact form with validation
 - **Open Source**: Free to use and modify for your personal portfolio
 
@@ -37,7 +36,6 @@ https://github.com/user-attachments/assets/fc071310-9d1c-4832-877f-23f9569893d7
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Form Handling**: Server actions with validation
-- **Analytics**: Google Analytics + Vercel Analytics
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## 🔧 Getting Started
