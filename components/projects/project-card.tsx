@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Icons } from "@/components/common/icons";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import ChipContainer from "@/components/ui/chip-container";
 import { ProjectInterface } from "@/config/projects";
+import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
   project: ProjectInterface;
@@ -17,7 +18,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <Image
           className="rounded-lg border border-border object-cover"
           src={project.companyLogoImg}
-          alt="img"
+          alt={`${project.companyName} project screenshot`}
           fill
         />
       </div>
@@ -31,11 +32,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex gap-2 flex-wrap">
           <ChipContainer textArr={project.category} />
         </div>
-        <Link href={`/projects/${project.id}`} className="mt-auto">
-          <Button variant={"default"} className="mt-2 w-full sm:w-auto">
-            Read more
-            <Icons.chevronRight className="w-4 ml-1" />
-          </Button>
+        <Link
+          href={`/projects/${project.id}`}
+          className={cn(
+            buttonVariants({ variant: "default" }),
+            "mt-auto mt-2 w-full sm:w-auto rounded-lg font-medium text-primary-foreground"
+          )}
+          aria-label={`Read more about ${project.companyName} project`}
+        >
+          Read more
+          <Icons.chevronRight className="w-4 ml-1" />
         </Link>
       </div>
       <div className="absolute bottom-4 right-4 p-3 rounded-full bg-background border border-border hidden md:block">
