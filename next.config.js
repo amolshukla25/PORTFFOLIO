@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/resume",
-        destination: process.env.NEXT_PUBLIC_RESUME_LINK || "/",
+        destination: process.env.NEXT_PUBLIC_RESUME_LINK || "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing",
         permanent: false,
       },
     ];

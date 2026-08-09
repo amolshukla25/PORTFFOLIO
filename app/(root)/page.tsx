@@ -91,14 +91,15 @@ export default function IndexPage() {
 
           <div className="flex flex-col mt-10 items-center justify-center sm:flex-row sm:space-x-4 gap-3">
             <AnimatedText delay={0.6}>
-              <Link
-                href={process.env.NEXT_PUBLIC_RESUME_LINK || siteConfig.links.resume || "/resume"}
+              <a
+                href={process.env.NEXT_PUBLIC_RESUME_LINK || siteConfig.links.resume || "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing"}
                 target="_blank"
+                rel="noopener noreferrer"
                 className={cn(buttonVariants({ size: "lg" }))}
                 aria-label="View resume"
               >
                 <Icons.post className="w-4 h-4 mr-2" /> Resume
-              </Link>
+              </a>
             </AnimatedText>
             <AnimatedText delay={0.8}>
               <Link
