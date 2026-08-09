@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 
+import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { getAllBlogsMeta } from "@/lib/blogs";
 
@@ -67,5 +68,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...routes, ...blogRoutes];
+  // Project detail pages
+  const projectRoutes: MetadataRoute.Sitemap = Projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...routes, ...blogRoutes, ...projectRoutes];
 }

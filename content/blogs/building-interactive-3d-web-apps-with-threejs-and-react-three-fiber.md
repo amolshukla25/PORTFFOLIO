@@ -3,7 +3,7 @@ title: "Building Interactive 3D Web Apps with Three.js and React Three Fiber"
 date: "2026-05-03"
 description: "An introduction to loading 3D models and rendering real-time physics in React using React Three Fiber and Drei."
 tags: ["AI", "LLM", "Deep Learning", "Python"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

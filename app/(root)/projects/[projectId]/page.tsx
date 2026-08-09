@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -19,6 +20,29 @@ interface ProjectPageProps {
 }
 
 const githubUsername = "amolshukla";
+
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { projectId } = await params;
+  const project = Projects.find((val) => val.id === projectId);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+    };
+  }
+
+  return {
+    title: `${project.companyName} — ${project.category.join(", ")} | Projects`,
+    description:
+      project.shortDescription || project.descriptionDetails.paragraphs[0],
+    keywords: [...project.techStack, ...project.category],
+    alternates: {
+      canonical: `${siteConfig.url}/projects/${projectId}`,
+    },
+  };
+}
 
 export default async function Project({ params }: ProjectPageProps) {
   const { projectId } = await params;

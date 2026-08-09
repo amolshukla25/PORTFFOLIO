@@ -17,8 +17,9 @@ export const pagesConfig: PagesConfig = {
     title: "Home",
     description: "Welcome to my portfolio website.",
     metadata: {
-      title: "Home",
-      description: "Amol shukla's portfolio website.",
+      title: "Amol Shukla — AI Developer & Trainer",
+      description:
+        "Amol Shukla — AI Developer, Trainer, and Agentic AI Expert building agentic AI systems and training on LLMs and generative AI with Python.",
     },
   },
   skills: {
@@ -27,7 +28,7 @@ export const pagesConfig: PagesConfig = {
     metadata: {
       title: "Skills",
       description:
-        "Amol shukla's key skills that define his professional identity.",
+        "AI, agentic AI, Python, and full-stack skills that define Amol Shukla — AI developer and trainer.",
     },
   },
   projects: {
@@ -35,7 +36,8 @@ export const pagesConfig: PagesConfig = {
     description: "Showcasing impactful projects and technical achievements.",
     metadata: {
       title: "Projects",
-      description: "Amol shukla's projects in building web applications.",
+      description:
+        "AI, agentic AI, and web development projects built by Amol Shukla — AI developer, trainer, and agentic AI expert.",
     },
   },
   contact: {
@@ -43,7 +45,8 @@ export const pagesConfig: PagesConfig = {
     description: "Let's connect and explore collaborations.",
     metadata: {
       title: "Contact",
-      description: "Contact Amol shukla.",
+      description:
+        "Contact Amol Shukla — AI developer, trainer, and agentic AI expert — to collaborate on AI and software projects.",
     },
   },
   contributions: {
@@ -70,7 +73,7 @@ export const pagesConfig: PagesConfig = {
     metadata: {
       title: "Blogs",
       description:
-        "Amol shukla's blog — thoughts on AI, software engineering, and building in public.",
+        "Amol Shukla's blog — tutorials and thoughts on agentic AI, LLMs, generative AI, Python, and software engineering.",
     },
   },
   experience: {

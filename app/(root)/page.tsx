@@ -21,9 +21,11 @@ import { cn } from "@/lib/utils";
 import profileImg from "@/public/profile-img.svg";
 
 export const metadata: Metadata = {
-  title: `${pagesConfig.home.metadata.title}`,
+  title: {
+    absolute: "Amol Shukla — AI Developer & Trainer | Agentic AI Expert",
+  },
   description:
-    "Amol shukla - Applied AI Engineer working at the intersection of AI, data, and scalable software systems. Explore my projects, experience, and contributions.",
+    "Amol Shukla — AI Developer, Trainer, and Agentic AI Expert. I build agentic AI systems, train on LLMs and generative AI, and ship production software with Python. Explore my projects, experience, and technical blog.",
   alternates: {
     canonical: siteConfig.url,
   },
@@ -37,28 +39,11 @@ export default function IndexPage() {
     "@type": "Person",
     name: siteConfig.authorName,
     url: siteConfig.url,
-    image: siteConfig.ogImage,
-    jobTitle: "Applied AI Engineer",
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
+    jobTitle: "AI Developer, Trainer & Agentic AI Expert",
+    description:
+      "AI Developer, Trainer, and Agentic AI Expert building agentic AI systems and training on LLMs and generative AI with Python.",
     sameAs: [siteConfig.links.github, siteConfig.links.twitter],
-  };
-
-  // Structured data for website as a software application (template)
-  const softwareSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Next.js Portfolio Template",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    author: {
-      "@type": "Person",
-      name: siteConfig.authorName,
-      url: siteConfig.url,
-    },
   };
 
   return (
@@ -68,23 +53,22 @@ export default function IndexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <Script
-        id="schema-software"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
 
       <section className="space-y-6 pb-8 pt-6 mb-0 md:pb-12 md:py-20 lg:py-32 h-screen flex items-center">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center -mt-20">
-          <Image
-            src={profileImg}
-            height={220}
-            width={220}
-            sizes="(max-width: 768px) 60vw, 220px"
-            className="mb-0 h-[220px] w-[220px] rounded-full border-8 border-primary object-cover object-[center_35%] md:mb-2"
-            alt="Amol shukla - Applied AI Engineer Portfolio"
-            priority
-          />
+          <div className="relative group mb-2">
+            {/* Soft decorative gradient glow behind the avatar */}
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-accent opacity-20 blur-md group-hover:opacity-40 transition duration-500 pointer-events-none" />
+            <Image
+              src={profileImg}
+              height={220}
+              width={220}
+              sizes="(max-width: 768px) 60vw, 220px"
+              className="relative mb-0 h-[220px] w-[220px] rounded-full border-4 border-background ring-4 ring-primary/10 object-cover object-[center_35%] shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:ring-primary/30"
+              alt="Amol shukla - Applied AI Engineer Portfolio"
+              priority
+            />
+          </div>
           <AnimatedText
             as="h1"
             delay={0.2}
@@ -108,7 +92,7 @@ export default function IndexPage() {
           <div className="flex flex-col mt-10 items-center justify-center sm:flex-row sm:space-x-4 gap-3">
             <AnimatedText delay={0.6}>
               <Link
-                href={"/resume"}
+                href={process.env.NEXT_PUBLIC_RESUME_LINK || siteConfig.links.resume || "/resume"}
                 target="_blank"
                 className={cn(buttonVariants({ size: "lg" }))}
                 aria-label="View resume"
@@ -133,7 +117,17 @@ export default function IndexPage() {
             </AnimatedText>
           </div>
           <AnimatedText delay={1.2}>
-            <Icons.chevronDown className="h-6 w-6 mt-10" />
+            <Link
+              href="#projects"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="flex justify-center cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Scroll down to projects"
+            >
+              <Icons.chevronDown className="h-6 w-6 mt-10 animate-bounce" />
+            </Link>
           </AnimatedText>
         </div>
       </section>

@@ -3,7 +3,7 @@ title: "A Complete Guide to Answer Engine Optimization (AEO)"
 date: "2026-05-23"
 description: "With Perplexity and ChatGPT search on the rise, learn how to structure your site's copy and schema markups for generative AI answers."
 tags: ["Frontend", "React", "Next.js", "Web Dev"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

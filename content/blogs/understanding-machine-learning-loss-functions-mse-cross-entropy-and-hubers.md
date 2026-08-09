@@ -3,7 +3,7 @@ title: "Understanding Machine Learning Loss Functions: MSE, Cross-Entropy, and H
 date: "2025-12-04"
 description: "A comparative overview explaining when to use different loss metrics in regression and classification tasks."
 tags: ["DevOps", "Docker", "Kubernetes", "MLOps"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

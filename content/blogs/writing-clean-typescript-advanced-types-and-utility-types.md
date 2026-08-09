@@ -3,7 +3,7 @@ title: "Writing Clean TypeScript: Advanced Types and Utility Types"
 date: "2026-03-24"
 description: "Improve your codebase typing. Learn to use keyof, ReturnType, Record, and conditional types like a pro."
 tags: ["AI", "LLM", "Deep Learning", "Python"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

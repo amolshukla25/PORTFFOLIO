@@ -3,7 +3,7 @@ title: "Demystifying Deep Learning: Build a Neural Network from Scratch in Pytho
 date: "2026-01-13"
 description: "Learn the math behind backpropagation, gradient descent, and implement a feedforward neural net using NumPy only."
 tags: ["DevOps", "Docker", "Kubernetes", "MLOps"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

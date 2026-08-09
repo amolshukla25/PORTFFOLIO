@@ -3,7 +3,7 @@ title: "Implementing Dark Mode in Tailwind CSS and Next.js"
 date: "2025-12-24"
 description: "A clean guide to set up theme transitions, prevent page flickers, and toggle themes in Next.js using next-themes."
 tags: ["Backend", "Database", "Performance", "API"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

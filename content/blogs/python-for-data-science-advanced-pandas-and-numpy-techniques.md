@@ -3,7 +3,7 @@ title: "Python for Data Science: Advanced Pandas and NumPy Techniques"
 date: "2026-02-02"
 description: "Supercharge your data analysis. Learn vectorization, multi-indexing, and fast file parsing using modern Python data libraries."
 tags: ["Backend", "Database", "Performance", "API"]
-coverImage: "/cover_datascience.png"
+coverImage: "/cover_datascience.webp"
 featured: false
 ---
 

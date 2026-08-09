@@ -3,7 +3,7 @@ title: "How to Deploy Next.js to Vercel and AWS Amplify"
 date: "2026-03-04"
 description: "A comparative guide showing how to set up continuous deployment pipelines for Next.js on Vercel and AWS."
 tags: ["Frontend", "React", "Next.js", "Web Dev"]
-coverImage: "/cover_devops.png"
+coverImage: "/cover_devops.webp"
 featured: false
 ---
 

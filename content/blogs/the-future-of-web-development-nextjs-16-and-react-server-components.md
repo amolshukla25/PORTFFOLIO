@@ -3,7 +3,7 @@ title: "The Future of Web Development: Next.js 16 and React Server Components"
 date: "2026-07-02"
 description: "Explore the changes in Next.js 16, the Turbopack engine, and how Server Actions change frontend data-fetching paradigms."
 tags: ["Next.js", "React", "Frontend", "Web Dev"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

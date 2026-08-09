@@ -3,7 +3,7 @@ title: "Getting Started with LangChain and LangGraph for AI Agents"
 date: "2026-01-23"
 description: "Understand how to model agentic workflows, memory persistence, and tool selection using LangGraph."
 tags: ["Frontend", "React", "Next.js", "Web Dev"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

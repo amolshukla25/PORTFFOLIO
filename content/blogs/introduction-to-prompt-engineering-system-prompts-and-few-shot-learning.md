@@ -3,7 +3,7 @@ title: "Introduction to Prompt Engineering: System Prompts and Few-Shot Learning
 date: "2026-03-14"
 description: "Learn how system prompts, few-shot templates, and chain-of-thought instructions dramatically improve LLM output accuracy."
 tags: ["Backend", "Database", "Performance", "API"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

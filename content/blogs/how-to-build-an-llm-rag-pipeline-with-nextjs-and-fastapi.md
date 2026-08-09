@@ -3,7 +3,7 @@ title: "How to Build an LLM RAG Pipeline with Next.js and FastAPI"
 date: "2026-07-22"
 description: "Step-by-step guide to building a production-ready Retrieval-Augmented Generation (RAG) system using Next.js on the frontend and FastAPI on the backend."
 tags: ["AI", "Next.js", "FastAPI", "RAG", "Python"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: true
 ---
 

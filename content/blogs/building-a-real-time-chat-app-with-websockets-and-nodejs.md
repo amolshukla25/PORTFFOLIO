@@ -3,7 +3,7 @@ title: "Building a Real-time Chat App with WebSockets and Node.js"
 date: "2026-02-12"
 description: "A practical guide to implementing bi-directional real-time communication using Socket.io and Express."
 tags: ["AI", "LLM", "Deep Learning", "Python"]
-coverImage: "/cover_backend.png"
+coverImage: "/cover_backend.webp"
 featured: false
 ---
 

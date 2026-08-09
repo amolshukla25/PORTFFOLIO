@@ -3,7 +3,7 @@ title: "Deep Dive into Transformers and Self-Attention Mechanisms"
 date: "2026-08-01"
 description: "An intuitive and mathematical breakdown of self-attention, multi-head attention, and how transformers revolutionized natural language processing."
 tags: ["AI", "Machine Learning", "Transformers", "NLP"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: true
 ---
 

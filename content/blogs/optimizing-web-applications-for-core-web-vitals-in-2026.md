@@ -3,7 +3,7 @@ title: "Optimizing Web Applications for Core Web Vitals in 2026"
 date: "2026-06-02"
 description: "Learn how to improve Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS) on Next.js projects."
 tags: ["Backend", "Database", "Performance", "API"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

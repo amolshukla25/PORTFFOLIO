@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/resume",
+        destination: process.env.NEXT_PUBLIC_RESUME_LINK || "/",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -3,7 +3,7 @@ title: "Scaling Machine Learning Models: From Jupyter to Kubernetes"
 date: "2026-04-13"
 description: "Moving ML from notebooks to production requires reliable pipelines. Learn the fundamentals of model serialization and Kubernetes deployments."
 tags: ["Frontend", "React", "Next.js", "Web Dev"]
-coverImage: "/cover_devops.png"
+coverImage: "/cover_devops.webp"
 featured: false
 ---
 

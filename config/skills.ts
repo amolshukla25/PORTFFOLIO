@@ -221,8 +221,36 @@ export const skillsUnsorted: skillsInterface[] = [
   },
 ];
 
-export const skills = skillsUnsorted
-  .slice()
-  .sort((a, b) => b.rating - a.rating);
+const aiSkillsList = [
+  "LangChain",
+  "LangGraph",
+  "LangSmith",
+  "n8n",
+  "Machine Learning",
+  "Deep Learning",
+  "TensorFlow"
+];
+
+export const skills = skillsUnsorted.slice().sort((a, b) => {
+  const aIsAI = aiSkillsList.includes(a.name);
+  const bIsAI = aiSkillsList.includes(b.name);
+  
+  // Rule 1: AI skills go to the top
+  if (aIsAI && !bIsAI) return -1;
+  if (!aIsAI && bIsAI) return 1;
+  if (aIsAI && bIsAI) {
+    // Within AI skills, sort by rating descending
+    return b.rating - a.rating;
+  }
+
+  // Rule 2: Next.js goes next (just below AI skills)
+  const aIsNext = a.name === "Next.js";
+  const bIsNext = b.name === "Next.js";
+  if (aIsNext && !bIsNext) return -1;
+  if (!aIsNext && bIsNext) return 1;
+
+  // Rule 3: All other skills below, sorted by rating descending
+  return b.rating - a.rating;
+});
 
 export const featuredSkills = skills.slice(0, 6);

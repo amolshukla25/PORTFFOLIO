@@ -3,7 +3,7 @@ title: "Mastering Python Generators for Memory-Efficient Data Pipelines"
 date: "2026-07-12"
 description: "Learn how to use Python generators and yield statements to process massive datasets without running out of RAM."
 tags: ["Python", "Backend", "Performance", "Data Engineering"]
-coverImage: "/cover_backend.png"
+coverImage: "/cover_backend.webp"
 featured: true
 ---
 

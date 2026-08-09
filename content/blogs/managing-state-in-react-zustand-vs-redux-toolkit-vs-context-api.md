@@ -3,7 +3,7 @@ title: "Managing State in React: Zustand vs Redux Toolkit vs Context API"
 date: "2026-02-22"
 description: "Choose the best state management tool for your React application based on size, overhead, and complexity."
 tags: ["DevOps", "Docker", "Kubernetes", "MLOps"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

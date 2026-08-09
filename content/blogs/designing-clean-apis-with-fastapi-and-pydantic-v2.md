@@ -3,7 +3,7 @@ title: "Designing Clean APIs with FastAPI and Pydantic v2"
 date: "2026-04-03"
 description: "Leverage Pydantic v2 inside FastAPI to enforce runtime type safety and auto-generate OpenAPI documentation."
 tags: ["DevOps", "Docker", "Kubernetes", "MLOps"]
-coverImage: "/cover_backend.png"
+coverImage: "/cover_backend.webp"
 featured: false
 ---
 

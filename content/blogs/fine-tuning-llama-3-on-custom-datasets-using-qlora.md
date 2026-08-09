@@ -3,7 +3,7 @@ title: "Fine-Tuning Llama 3 on Custom Datasets using QLoRA"
 date: "2026-06-12"
 description: "A practical guide to fine-tuning Llama 3 models on a single GPU using Hugging Face, PEFT, and QLoRA configurations."
 tags: ["AI", "LLM", "Deep Learning", "Python"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

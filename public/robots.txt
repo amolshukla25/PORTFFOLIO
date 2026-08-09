@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://amolshukla.xyz/sitemap.xml
+Sitemap: https://www.amolshukla.online/sitemap.xml

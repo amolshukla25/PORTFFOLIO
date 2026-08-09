@@ -3,7 +3,7 @@ title: "The Ultimate Git Cheat Sheet for Solo Developers"
 date: "2026-01-03"
 description: "Learn how to use cherry-pick, rebase, reflog, and interactive clean to manage your local commits efficiently."
 tags: ["AI", "LLM", "Deep Learning", "Python"]
-coverImage: "/cover_devops.png"
+coverImage: "/cover_devops.webp"
 featured: false
 ---
 

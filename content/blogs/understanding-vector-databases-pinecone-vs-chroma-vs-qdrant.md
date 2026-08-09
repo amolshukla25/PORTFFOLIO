@@ -3,7 +3,7 @@ title: "Understanding Vector Databases: Pinecone vs Chroma vs Qdrant"
 date: "2026-06-22"
 description: "Compare top vector databases on performance, ease of use, self-hosting options, and suitability for production LLM systems."
 tags: ["AI", "Vector DB", "Chroma", "Pinecone", "Qdrant"]
-coverImage: "/cover_ai.png"
+coverImage: "/cover_ai.webp"
 featured: false
 ---
 

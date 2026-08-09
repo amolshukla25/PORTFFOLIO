@@ -3,7 +3,7 @@ title: "How to Handle Authentication in Next.js with NextAuth.js"
 date: "2026-04-23"
 description: "Secure your Next.js application using OAuth providers, credentials providers, and JSON Web Tokens (JWT)."
 tags: ["Backend", "Database", "Performance", "API"]
-coverImage: "/cover_webdev.png"
+coverImage: "/cover_webdev.webp"
 featured: false
 ---
 

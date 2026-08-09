@@ -3,7 +3,7 @@ title: "Why Every AI Engineer Needs to Learn Docker"
 date: "2026-05-13"
 description: "Stop 'it works on my machine' errors. Learn how containerization simplifies machine learning environments and GPU execution."
 tags: ["DevOps", "Docker", "Kubernetes", "MLOps"]
-coverImage: "/cover_devops.png"
+coverImage: "/cover_devops.webp"
 featured: false
 ---
 

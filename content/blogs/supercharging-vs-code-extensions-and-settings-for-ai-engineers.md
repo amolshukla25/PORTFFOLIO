@@ -3,7 +3,7 @@ title: "Supercharging VS Code: Extensions and Settings for AI Engineers"
 date: "2025-12-14"
 description: "Boost your productivity with custom keybindings, Copilot prompts, formatters, and workspace configs."
 tags: ["Frontend", "React", "Next.js", "Web Dev"]
-coverImage: "/cover_devops.png"
+coverImage: "/cover_devops.webp"
 featured: false
 ---
 

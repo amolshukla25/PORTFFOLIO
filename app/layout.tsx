@@ -72,7 +72,7 @@ export const metadata = {
   icons: {
     icon: siteConfig.iconIco,
     shortcut: siteConfig.logoIcon,
-    apple: siteConfig.logoIcon,
+    apple: siteConfig.appleIcon,
   },
   manifest: `${siteConfig.url}/manifest.webmanifest`,
   alternates: {
