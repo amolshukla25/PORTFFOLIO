@@ -65,7 +65,7 @@ export default function IndexPage() {
               width={220}
               sizes="(max-width: 768px) 60vw, 220px"
               className="relative mb-0 h-[220px] w-[220px] rounded-full border-4 border-background ring-4 ring-primary/10 object-cover object-[center_35%] shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:ring-primary/30"
-              alt="Amol shukla - Applied AI Engineer Portfolio"
+              alt="Amol Shukla - Applied AI Engineer Portfolio"
               priority
             />
           </div>
@@ -74,7 +74,7 @@ export default function IndexPage() {
             delay={0.2}
             className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Amol shukla
+            Amol Shukla
           </AnimatedText>
           <AnimatedText
             as="h3"
@@ -111,7 +111,7 @@ export default function IndexPage() {
                     size: "lg",
                   })
                 )}
-                aria-label="Contact Amol shukla"
+                aria-label="Contact Amol Shukla"
               >
                 <Icons.contact className="w-4 h-4 mr-2" /> Contact
               </Link>
