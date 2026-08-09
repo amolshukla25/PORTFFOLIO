@@ -117,17 +117,13 @@ export default function IndexPage() {
             </AnimatedText>
           </div>
           <AnimatedText delay={1.2}>
-            <Link
+            <a
               href="#projects"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-              }}
               className="flex justify-center cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Scroll down to projects"
             >
               <Icons.chevronDown className="h-6 w-6 mt-10 animate-bounce" />
-            </Link>
+            </a>
           </AnimatedText>
         </div>
       </section>
