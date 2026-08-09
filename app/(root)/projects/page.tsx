@@ -5,10 +5,14 @@ import ProjectCard from "@/components/projects/project-card";
 import { ResponsiveTabs } from "@/components/ui/responsive-tabs";
 import { pagesConfig } from "@/config/pages";
 import { Projects } from "@/config/projects";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: pagesConfig.projects.metadata.title,
   description: pagesConfig.projects.metadata.description,
+  alternates: {
+    canonical: `${siteConfig.url}/projects`,
+  },
 };
 
 const renderContent = (tabVal: string) => {
