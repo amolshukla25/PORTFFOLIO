@@ -434,7 +434,7 @@ export default function CoursesExplorer() {
                   );
                 })}
               </div>
-            )}
+            ) : null}
           </>
         ) : (
           /* Tab 2: Learning Roadmap Timeline */
