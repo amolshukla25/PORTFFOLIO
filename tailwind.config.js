@@ -52,6 +52,13 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        star: "hsl(var(--star))",
+        success: "hsl(var(--success))",
+        code: {
+          bg: "hsl(var(--code-bg))",
+          fg: "hsl(var(--code-fg))",
+          accent: "hsl(var(--code-accent))",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],

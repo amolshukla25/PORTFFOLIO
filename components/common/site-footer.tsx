@@ -117,8 +117,17 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/40 pt-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {siteConfig.authorName}. All rights
-            reserved.
+            © {new Date().getFullYear()} {siteConfig.authorName} · Made with{" "}
+            <span aria-hidden className="text-destructive transition-transform duration-300 inline-block hover:scale-125">
+              ❤
+            </span>{" "}
+            by{" "}
+            <a
+              href={siteConfig.url}
+              className="font-medium text-foreground transition-colors hover:text-accent"
+            >
+              amolshukla.online
+            </a>
           </p>
           <a
             href="#"

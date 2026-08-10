@@ -33,6 +33,13 @@
 
     --ring: 239 84% 60%;
 
+    /* Semantic tokens — stars, success, code blocks */
+    --star: 38 92% 50%;
+    --success: 142 71% 45%;
+    --code-bg: 240 10% 4%;
+    --code-fg: 240 5% 96%;
+    --code-accent: 160 84% 39%;
+
     --radius: 0.625rem;
 
     --d: 700ms;
@@ -68,6 +75,13 @@
     --destructive-foreground: 210 40% 98%;
 
     --ring: 234 89% 74%;
+
+    /* Semantic tokens — brighter variants for dark backgrounds */
+    --star: 48 96% 58%;
+    --success: 142 69% 58%;
+    --code-bg: 240 10% 4%;
+    --code-fg: 240 5% 96%;
+    --code-accent: 160 84% 45%;
 
     --radius: 0.625rem;
     --d: 700ms;

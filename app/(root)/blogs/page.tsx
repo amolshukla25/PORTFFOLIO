@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import Script from "next/script";
+import { Suspense } from "react";
 
 import BlogCard from "@/components/blogs/blog-card";
+import BlogExplorer from "@/components/blogs/blog-explorer";
 import { AnimatedSection } from "@/components/common/animated-section";
 import PageContainer from "@/components/common/page-container";
 import { pagesConfig } from "@/config/pages";
@@ -123,30 +125,36 @@ export default function BlogsPage() {
         description={pagesConfig.blogs.description}
         eyebrow="Writing"
       >
-        {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 text-center">
-            <p className="text-4xl mb-4">✍️</p>
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              No posts yet
-            </h3>
-            <p className="text-muted-foreground text-sm">
-              Check back soon — posts are coming.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-2">
-            {blogs.map((blog, index) => (
-              <AnimatedSection
-                key={blog.slug}
-                delay={0.05 * index}
-                direction="up"
-                className="h-full"
-              >
-                <BlogCard blog={blog} />
-              </AnimatedSection>
-            ))}
-          </div>
-        )}
+        <Suspense
+          fallback={
+            blogs.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 text-center">
+                <p className="text-4xl mb-4">✍️</p>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  No posts yet
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Check back soon — posts are coming.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-2">
+                {blogs.map((blog, index) => (
+                  <AnimatedSection
+                    key={blog.slug}
+                    delay={0.05 * index}
+                    direction="up"
+                    className="h-full"
+                  >
+                    <BlogCard blog={blog} />
+                  </AnimatedSection>
+                ))}
+              </div>
+            )
+          }
+        >
+          <BlogExplorer blogs={blogs} />
+        </Suspense>
       </PageContainer>
     </>
   );

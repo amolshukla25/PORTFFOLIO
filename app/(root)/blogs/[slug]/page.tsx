@@ -10,7 +10,7 @@ import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
 import { Icons } from "@/components/common/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { getAllBlogSlugs, getBlogPost } from "@/lib/blogs";
+import { getAllBlogSlugs, getAllBlogsMeta, getBlogPost } from "@/lib/blogs";
 import { cn } from "@/lib/utils";
 
 interface BlogPostPageProps {
@@ -87,6 +87,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   } catch {
     notFound();
   }
+
+  const allBlogs = getAllBlogsMeta();
+  const currentIndex = allBlogs.findIndex((b) => b.slug === slug);
+
+  // Related posts: share at least one tag, ranked by overlap then recency
+  const relatedPosts = allBlogs
+    .filter((b) => b.slug !== slug)
+    .map((b) => ({
+      blog: b,
+      overlap: b.tags.filter((t) => post.tags.includes(t)).length,
+    }))
+    .filter((r) => r.overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap || new Date(b.blog.date).getTime() - new Date(a.blog.date).getTime())
+    .slice(0, 3)
+    .map((r) => r.blog);
+
+  // Fall back to most recent posts if no tag overlap exists
+  const related =
+    relatedPosts.length > 0
+      ? relatedPosts
+      : allBlogs.filter((b) => b.slug !== slug).slice(0, 3);
+
+  // Prev / next article navigation (newest-first ordering)
+  const newerPost = currentIndex > 0 ? allBlogs[currentIndex - 1] : null;
+  const olderPost =
+    currentIndex >= 0 && currentIndex < allBlogs.length - 1
+      ? allBlogs[currentIndex + 1]
+      : null;
 
   const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
@@ -216,15 +244,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Header */}
         <AnimatedSection direction="up">
           <header className="mb-8">
-            {/* Tags as keywords */}
+            {/* Tags as internal links to the filtered blog index */}
             <div className="flex flex-wrap gap-2 mb-4">
               {post.tags.map((tag) => (
-                <span
+                <Link
                   key={tag}
-                  className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20"
+                  href={`/blogs?tag=${encodeURIComponent(tag)}`}
+                  className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   {tag}
-                </span>
+                </Link>
               ))}
             </div>
 
@@ -288,33 +317,150 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           />
         </AnimatedSection>
 
+        {/* Prev / Next article navigation — strong internal linking */}
+        {(newerPost || olderPost) && (
+          <AnimatedSection
+            direction="up"
+            delay={0.15}
+            className="mt-12 border-t border-border pt-8"
+          >
+            <nav
+              aria-label="Article navigation"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
+              {olderPost ? (
+                <Link
+                  href={`/blogs/${olderPost.slug}`}
+                  className="group rounded-xl border border-border bg-card p-4 transition-all hover:border-accent/40 hover:shadow-md"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    ← Older article
+                  </span>
+                  <span className="mt-1.5 block text-sm font-semibold text-foreground line-clamp-2 transition-colors group-hover:text-accent">
+                    {olderPost.title}
+                  </span>
+                </Link>
+              ) : (
+                <span className="hidden sm:block" aria-hidden />
+              )}
+              {newerPost ? (
+                <Link
+                  href={`/blogs/${newerPost.slug}`}
+                  className="group rounded-xl border border-border bg-card p-4 text-right transition-all hover:border-accent/40 hover:shadow-md sm:col-start-2"
+                >
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Newer article →
+                  </span>
+                  <span className="mt-1.5 block text-sm font-semibold text-foreground line-clamp-2 transition-colors group-hover:text-accent">
+                    {newerPost.title}
+                  </span>
+                </Link>
+              ) : (
+                <span className="hidden sm:block" aria-hidden />
+              )}
+            </nav>
+          </AnimatedSection>
+        )}
+
+        {/* Related reading */}
+        {related.length > 0 && (
+          <AnimatedSection
+            direction="up"
+            delay={0.2}
+            className="mt-14 border-t border-border pt-8"
+          >
+            <h2 className="font-heading text-2xl font-bold text-foreground mb-6">
+              Related reading
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {related.map((blog) => (
+                <Link
+                  key={blog.slug}
+                  href={`/blogs/${blog.slug}`}
+                  className="card-hover group flex flex-col overflow-hidden rounded-xl border border-border bg-card"
+                >
+                  {blog.coverImage && (
+                    <div className="relative h-24 w-full overflow-hidden bg-muted">
+                      <Image
+                        src={blog.coverImage}
+                        alt={blog.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-3.5">
+                    <h3 className="line-clamp-2 text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
+                      {blog.title}
+                    </h3>
+                    <span className="mt-auto pt-2 text-[11px] text-muted-foreground">
+                      {blog.readingTime
+                        ? `${blog.readingTime} min read`
+                        : new Date(blog.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            year: "numeric",
+                          })}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </AnimatedSection>
+        )}
+
         {/* Footer nav */}
         <AnimatedSection
           direction="up"
-          delay={0.15}
+          delay={0.25}
           className="mt-16 pt-8 border-t border-border"
         >
-          <footer className="flex items-center justify-between">
-            <Link
-              href="/blogs"
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "rounded-lg gap-2"
-              )}
-            >
-              <Icons.chevronLeft className="w-4 h-4" />
-              All posts
-            </Link>
-            <div className="text-sm text-muted-foreground">
-              Written by{" "}
+          <footer className="space-y-4">
+            {/* Learning Hub cross-link */}
+            <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-accent/20 bg-accent/5 px-5 py-4 sm:flex-row sm:items-center">
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  🎓 Want hands-on practice?
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Explore structured notes, code walk-throughs, and exercises
+                  in the Learning Hub.
+                </p>
+              </div>
               <Link
-                href={siteConfig.links.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-foreground hover:text-primary transition-colors"
+                href="/courses"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "shrink-0 rounded-lg gap-2"
+                )}
               >
-                {siteConfig.authorName}
+                Visit the Learning Hub
+                <Icons.arrowRight className="h-4 w-4" />
               </Link>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <Link
+                href="/blogs"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "rounded-lg gap-2"
+                )}
+              >
+                <Icons.chevronLeft className="w-4 h-4" />
+                All posts
+              </Link>
+              <div className="text-sm text-muted-foreground">
+                Written by{" "}
+                <Link
+                  href={siteConfig.links.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {siteConfig.authorName}
+                </Link>
+              </div>
             </div>
           </footer>
         </AnimatedSection>

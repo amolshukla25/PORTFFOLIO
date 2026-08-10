@@ -39,7 +39,7 @@ export const Projects: ProjectInterface[] = [
     techStack: ["React", "Javascript", "HTML 5", "CSS 3"],
     startDate: new Date("2022-03-01"),
     endDate: new Date("2022-07-01"),
-    companyLogoImg: "/projects/card/logo.png",
+    companyLogoImg: "/projects/covers/portfolio-card.webp",
     pagesInfoArr: [
       {
         title: "Card Views",
@@ -88,7 +88,7 @@ export const Projects: ProjectInterface[] = [
     techStack: ["Python", "FastAPI", "SQL", "TensorFlow"],
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-06-01"),
-    companyLogoImg: "/projects/academic-learning-assistant/thumbnail.png",
+    companyLogoImg: "/projects/covers/academic-learning-assistant.webp",
     pagesInfoArr: [
       {
         title: "Context-aware tutoring",
@@ -118,7 +118,7 @@ export const Projects: ProjectInterface[] = [
     techStack: ["Python", "FastAPI", "SQL", "PyTorch"],
     startDate: new Date("2024-06-01"),
     endDate: new Date("2024-12-01"),
-    companyLogoImg: "/projects/smart-resume-analyzer/thumbnail.png",
+    companyLogoImg: "/projects/covers/smart-resume-analyzer.webp",
     pagesInfoArr: [
       {
         title: "Resume matching",
@@ -149,7 +149,7 @@ export const Projects: ProjectInterface[] = [
     techStack: ["Next.js", "React", "Typescript", "Tailwind CSS"],
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-12-01"),
-    companyLogoImg: "/projects/ikigai-website/thumbnail.png",
+    companyLogoImg: "/projects/covers/ikigai-website.webp",
     pagesInfoArr: [
       {
         title: "Program showcase",

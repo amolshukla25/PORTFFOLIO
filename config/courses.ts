@@ -1,3 +1,12 @@
+export interface PracticeExercise {
+  id: string;
+  title: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+  task: string;
+  hint?: string;
+  solution?: string;
+}
+
 export interface Lecture {
   id: string;
   title: string;
@@ -8,6 +17,12 @@ export interface Lecture {
   codeSnippet: string;
   codeLanguage: string;
   codeOutput: string;
+  /** Practical ways to visualise how the code runs (trace tables, tools, mental models) */
+  visualizationTips?: string[];
+  /** Professional tips & tricks for this topic */
+  tipsAndTricks?: string[];
+  /** Hands-on practice exercises with optional solutions */
+  practice?: PracticeExercise[];
 }
 
 export interface Module {
@@ -31,160 +46,10 @@ export interface Course {
   modules: Module[];
 }
 
+import { PYTHON_COURSE } from "./python-course";
+
 export const COURSES: Course[] = [
-  {
-    id: "python-basics",
-    title: "Python Foundations for Engineers",
-    shortDescription: "Master control structures, nested loops, functional scoping, and object-oriented programming (OOP) paradigms.",
-    detailedDescription: "Designed for beginners and developers transitioning to Python, this course provides a rigorous foundation in language core features. You will study execution scoping, control loops, functions, and model real-world business items using Object-Oriented structures.",
-    category: ["Python", "Programming Basics", "OOP Concepts"],
-    duration: "12 hrs",
-    difficulty: "Beginner",
-    rating: 4.8,
-    instructor: "Amol Shukla",
-    iconName: "code",
-    modules: [
-      {
-        id: "python-syntax-control",
-        title: "Module 1: Syntax & Program Flow",
-        description: "Variables, basic operations, input/output pipelines, conditional branching, and iteration loops.",
-        lectures: [
-          {
-            id: "variables-io",
-            title: "Lecture 1: Variables, Operations & Input/Output",
-            shortDescription: "Type casting, dynamic variable allocation, printing statements, and standard inputs.",
-            duration: "35 mins",
-            readingTime: "4 mins read",
-            contentMarkdown: `### Dynamic Typing in Python
-Python is a dynamically typed language, meaning variables are references to objects in memory, and their types do not need to be declared explicitly.
-
-#### Memory References
-When you declare \`x = 10\`, Python allocates an integer object in heap memory and points the label \`x\` to it. If you subsequently assign \`x = "hello"\`, the variable label is simply pointed to a new string object, leaving the previous integer eligible for automatic garbage collection.
-
-#### Common Data Casting
-- Convert values to integers using \`int(value)\`
-- Convert values to strings using \`str(value)\`
-- Convert values to floats using \`float(value)\``,
-            codeLanguage: "python",
-            codeSnippet: `# Variables and casting demonstration
-age = "24"  # String representation
-print("Type before casting:", type(age))
-
-# Cast string to integer to perform math addition
-age_int = int(age)
-next_year_age = age_int + 1
-print("Type after casting:", type(age_int))
-print(f"Age next year: {next_year_age}")
-
-# Dynamic type swap
-label = 100
-print("Label type:", type(label))
-label = "Dynamic Label Swapped"
-print("Label new type:", type(label))`,
-            codeOutput: `Type before casting: <class 'str'>
-Type after casting: <class 'int'>
-Age next year: 25
-Label type: <class 'int'>
-Label new type: <class 'str'>`
-          },
-          {
-            id: "loops-conditionals",
-            title: "Lecture 2: Conditional Branches & Loops",
-            shortDescription: "Evaluating truth tables, nested loops, break, and continue instructions.",
-            duration: "45 mins",
-            readingTime: "6 mins read",
-            contentMarkdown: `### Controlling Execution Flow
-A program is sequential by default. Conditionals and loops allow code branches to execute dynamically based on logical statements.
-
-#### Comparison and Logic
-- **Conditionals (\`if/elif/else\`):** Route the code path depending on boolean state evaluation.
-- **Loops (\`for\`, \`while\`):** Repeat instructions. The \`for\` loop is used to iterate over a predetermined sequence (like a list, range, or dictionary keys). The \`while\` loop runs continuously until a predicate condition evaluates to false.
-
-#### Loop Interrupts
-- \`break\`: Exits the loop scope immediately.
-- \`continue\`: Skips the rest of the current loop iteration and moves to the next pass.`,
-            codeLanguage: "python",
-            codeSnippet: `# Grade checker script showcasing conditionals and loops
-scores = [45, 88, 72, 95, 60, 30]
-passing_score = 60
-
-print("Evaluating exam scores:")
-for score in scores:
-    if score >= 90:
-        print(f"Score {score}: Grade A+ (Excellent!)")
-    elif score >= passing_score:
-        print(f"Score {score}: Passing grade")
-    else:
-        # Check if failing critically
-        if score < 40:
-            print(f"Score {score}: Failed critically (Needs revision)")
-            continue
-        print(f"Score {score}: Failed")`,
-            codeOutput: `Evaluating exam scores:
-Score 45: Failed
-Score 88: Passing grade
-Score 72: Passing grade
-Score 95: Grade A+ (Excellent!)
-Score 60: Passing grade
-Score 30: Failed critically (Needs revision)`
-          }
-        ]
-      },
-      {
-        id: "python-oop",
-        title: "Module 2: Object-Oriented Python",
-        description: "Organize script logic using classes, object initializers, inheritance structures, and encapsulation.",
-        lectures: [
-          {
-            id: "classes-objects",
-            title: "Lecture 3: Classes, Instances, & Inheritance",
-            shortDescription: "Object structure, __init__ constructor, instance parameters, methods, and parent-child overrides.",
-            duration: "50 mins",
-            readingTime: "7 mins read",
-            contentMarkdown: `### The OOP Paradigm
-Object-Oriented Programming (OOP) is a design template that groups related variables (attributes) and functions (methods) into cohesive packages called **Objects**.
-
-#### Definitions
-- **Class**: The blueprint template defining structure and actions.
-- **Instance**: A concrete object initialized in memory from a Class template.
-- **Constructor (\`__init__\`):** The initializer method run automatically when a new object is instantiated.
-- **Inheritance**: Allows a child class to inherit attributes and methods from a parent class, enabling reusable code structures.`,
-            codeLanguage: "python",
-            codeSnippet: `# Class constructor and Inheritance demo
-class Person:
-    def __init__(self, name, role):
-        self.name = name
-        self.role = role
-
-    def get_profile(self):
-        return f"Name: {self.name}, Role: {self.role}"
-
-# Child inherits from Person parent class
-class Instructor(Person):
-    def __init__(self, name, department, course):
-        # Initialize parent attributes
-        super().__init__(name, role="Instructor")
-        self.department = department
-        self.course = course
-
-    # Override get_profile method
-    def get_profile(self):
-        parent_details = super().get_profile()
-        return f"{parent_details} | Dept: {self.department} | Course: {self.course}"
-
-# Instantiate objects
-user = Person("Rahul", "Student")
-teacher = Instructor("Amol Shukla", "AI Engineering", "Data Science")
-
-print(user.get_profile())
-print(teacher.get_profile())`,
-            codeOutput: `Name: Rahul, Role: Student
-Name: Amol Shukla, Role: Instructor | Dept: AI Engineering | Course: Data Science`
-          }
-        ]
-      }
-    ]
-  },
+  PYTHON_COURSE,
   {
     id: "data-science",
     title: "Applied Data Science & Generative AI Hub",

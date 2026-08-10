@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 
+import { COURSES } from "@/config/courses";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { getAllBlogsMeta } from "@/lib/blogs";
@@ -46,6 +47,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/courses`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -70,5 +77,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...routes, ...blogRoutes, ...projectRoutes];
+  // Course detail pages
+  const courseRoutes: MetadataRoute.Sitemap = COURSES.map((course) => ({
+    url: `${baseUrl}/courses/${course.id}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Lecture note pages
+  const lectureRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
+    course.modules.flatMap((module) =>
+      module.lectures.map((lecture) => ({
+        url: `${baseUrl}/courses/${course.id}/${lecture.id}`,
+        lastModified: new Date(),
+        changeFrequency: "yearly" as const,
+        priority: 0.5,
+      }))
+    )
+  );
+
+  return [...routes, ...blogRoutes, ...projectRoutes, ...courseRoutes, ...lectureRoutes];
 }

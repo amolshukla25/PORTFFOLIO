@@ -8,16 +8,18 @@ import { AnimatedSection } from "@/components/common/animated-section";
 import { AnimatedText } from "@/components/common/animated-text";
 import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
 import { Icons } from "@/components/common/icons";
+import { Code } from "lucide-react";
 import ProjectCard from "@/components/projects/project-card";
 import SkillsCard from "@/components/skills/skills-card";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { COURSES } from "@/config/courses";
+import { experiences } from "@/config/experience";
 import { pagesConfig } from "@/config/pages";
 import { featuredProjects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { featuredSkills } from "@/config/skills";
-import { COURSES } from "@/config/courses";
-import { experiences } from "@/config/experience";
-import { getFeaturedBlogs } from "@/lib/blogs";
+import { SocialLinks } from "@/config/socials";
+import { getAllBlogsMeta, getFeaturedBlogs } from "@/lib/blogs";
 import { cn } from "@/lib/utils";
 import profileImg from "@/public/profile-img.svg";
 
@@ -32,8 +34,35 @@ export const metadata: Metadata = {
   },
 };
 
+const getCourseIcon = (iconName: string, className: string) => {
+  switch (iconName) {
+    case "brain":
+      return <Icons.brain className={className} />;
+    case "network":
+      return <Icons.network className={className} />;
+    case "activity":
+      return <Icons.activity className={className} />;
+    case "workflow":
+      return <Icons.workflow className={className} />;
+    case "code":
+      return <Code className={className} />;
+    default:
+      return <Icons.page className={className} />;
+  }
+};
+
+const getDurationText = (
+  startDate: Date,
+  endDate: Date | "Present"
+): string => {
+  const end =
+    typeof endDate === "string" ? "Present" : endDate.getFullYear().toString();
+  return `${startDate.getFullYear()} – ${end}`;
+};
+
 export default function IndexPage() {
   const featuredBlogs = getFeaturedBlogs();
+  const allBlogsCount = getAllBlogsMeta().length;
 
   const yearsOfExperience = Math.max(
     1,
@@ -45,7 +74,40 @@ export default function IndexPage() {
     { value: `${yearsOfExperience}+`, label: "Years Experience" },
     { value: `${featuredProjects.length}`, label: "Projects" },
     { value: `${COURSES.length}`, label: "Courses" },
-    { value: `${featuredBlogs.length}`, label: "Articles" },
+    { value: `${allBlogsCount}`, label: "Articles" },
+  ];
+
+  const aboutHighlights = [
+    {
+      icon: Icons.brain,
+      title: "AI Developer & Trainer",
+      description:
+        "6+ years training developers and data professionals in Python, machine learning, and generative AI.",
+    },
+    {
+      icon: Icons.workflow,
+      title: "Agentic AI Expert",
+      description:
+        "Design ReAct-style agent pipelines, tool-calling systems, and safe production LLM workflows.",
+    },
+    {
+      icon: Icons.aurora,
+      title: "Generative AI Specialist",
+      description:
+        "Hands-on LLM and GenAI training that takes learners from prompt engineering to deployment.",
+    },
+    {
+      icon: Icons.react,
+      title: "Full-Stack Engineer",
+      description:
+        "Ship end-to-end products with Next.js, React, TypeScript, Python, and FastAPI.",
+    },
+  ];
+
+  const tileGradients = [
+    "from-primary to-accent",
+    "from-accent/90 to-primary/80",
+    "from-primary/80 to-accent/70",
   ];
 
   // Structured data for personal portfolio
@@ -84,8 +146,8 @@ export default function IndexPage() {
           <AnimatedText delay={0.1} className="mb-8">
             <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
               </span>
               Available for AI projects & training
             </span>
@@ -140,14 +202,14 @@ export default function IndexPage() {
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:space-x-4">
             <AnimatedText delay={0.7}>
               <Link
-                href="/courses"
+                href="#about"
                 className={cn(
                   buttonVariants({ size: "lg", variant: "default" }),
                   "group w-full rounded-xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground shadow-lg shadow-accent/20 hover:opacity-95 sm:w-auto"
                 )}
-                aria-label="Enter Learning Hub"
+                aria-label="Learn more about Amol Shukla"
               >
-                <Icons.page className="mr-2 h-4 w-4" /> Learning Hub
+                <Icons.userFill className="mr-2 h-4 w-4" /> About Me
               </Link>
             </AnimatedText>
             <AnimatedText delay={0.85}>
@@ -205,15 +267,265 @@ export default function IndexPage() {
           {/* Scroll indicator */}
           <AnimatedText delay={1.3} className="mt-12">
             <a
-              href="#projects"
+              href="#learning"
               className="flex justify-center text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Scroll down to projects"
+              aria-label="Scroll down to learning hub"
             >
               <Icons.chevronDown className="h-6 w-6 animate-bounce" />
             </a>
           </AnimatedText>
         </div>
       </section>
+
+      {/* ─── Learning Hub (Courses) ───────────────────────────────────── */}
+      <AnimatedSection
+        direction="up"
+        className="container space-y-10 py-16"
+        id="learning"
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <span className="eyebrow">
+            <Icons.brain className="h-3.5 w-3.5" /> Learning Hub
+          </span>
+          <AnimatedText
+            as="h2"
+            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+          >
+            Structured courses, built for learners
+          </AnimatedText>
+          <AnimatedText
+            as="p"
+            delay={0.2}
+            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
+          >
+            Explore interactive notes, code walk-throughs, and downloadable
+            worksheets curated for students and professionals.
+          </AnimatedText>
+        </div>
+
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
+          {COURSES.map((course, index) => {
+            const totalLectures = course.modules.reduce(
+              (acc, module) => acc + module.lectures.length,
+              0
+            );
+
+            return (
+              <AnimatedSection
+                key={course.id}
+                delay={0.1 * (index + 1)}
+                direction="up"
+                className="h-full w-full min-w-0"
+              >
+                <Link
+                  href={`/courses/${course.id}`}
+                  className="card-hover group relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-border bg-background p-6"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent transition-transform duration-300 group-hover:scale-105">
+                      {getCourseIcon(course.iconName, "h-6 w-6")}
+                    </div>
+                    <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-[11px] font-semibold text-accent">
+                      {course.difficulty}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-xl font-bold text-foreground transition-colors duration-200 group-hover:text-accent">
+                      {course.title}
+                    </h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                      {course.shortDescription}
+                    </p>
+                  </div>
+                  <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4">
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1.5">
+                        <Icons.clock className="h-3.5 w-3.5" />
+                        {course.duration}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Icons.page className="h-3.5 w-3.5" />
+                        {totalLectures} lectures
+                      </span>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent">
+                      Open
+                      <Icons.chevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            );
+          })}
+        </div>
+
+        <AnimatedText delay={0.4} className="flex justify-center">
+          <Link href="/courses">
+            <Button variant={"outline"} className="group rounded-xl">
+              Browse the full Learning Hub
+              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Button>
+          </Link>
+        </AnimatedText>
+      </AnimatedSection>
+
+      {/* ─── About ────────────────────────────────────────────────────── */}
+      <AnimatedSection direction="up" className="container py-16" id="about">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Bio */}
+          <div className="space-y-6">
+            <span className="eyebrow">
+              <Icons.userFill className="h-3.5 w-3.5" /> About Me
+            </span>
+            <AnimatedText
+              as="h2"
+              className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl"
+            >
+              Turning complex AI into practical skills
+            </AnimatedText>
+            <div className="space-y-4 leading-relaxed text-muted-foreground">
+              <p>
+                I&apos;m {siteConfig.authorName} — an AI Developer, Trainer,
+                and Agentic AI Expert with {yearsOfExperience}+ years of
+                experience helping developers and data professionals master
+                Python, machine learning, and generative AI.
+              </p>
+              <p>
+                As a full-time AI trainer at Ikigai School of AI, I design
+                project-based curricula, mentor students through placements,
+                and build production applications — from agentic AI pipelines
+                to full-stack web products — in parallel.
+              </p>
+            </div>
+
+            {/* Socials + Resume */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {SocialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.name}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-muted/40 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent"
+                >
+                  <item.icon className="h-4 w-4" />
+                </a>
+              ))}
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_RESUME_LINK ||
+                  siteConfig.links.resume
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "ml-1 rounded-xl"
+                )}
+              >
+                <Icons.post className="mr-2 h-4 w-4" /> Resume
+              </a>
+            </div>
+          </div>
+
+          {/* Highlights */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {aboutHighlights.map((h, i) => (
+              <AnimatedSection key={h.title} delay={0.1 * (i + 1)} direction="up">
+                <div className="card-hover h-full rounded-2xl border border-border bg-card p-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent">
+                    <h.icon size={22} />
+                  </div>
+                  <h3 className="mt-4 font-bold text-foreground">{h.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {h.description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ─── Experience ───────────────────────────────────────────────── */}
+      <AnimatedSection
+        direction="up"
+        className="container py-16"
+        id="experience"
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <span className="eyebrow">
+            <Icons.work className="h-3.5 w-3.5" /> Experience
+          </span>
+          <AnimatedText
+            as="h2"
+            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+          >
+            Where I&apos;ve worked
+          </AnimatedText>
+          <AnimatedText
+            as="p"
+            delay={0.2}
+            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
+          >
+            A track record of delivering AI training and building production
+            software across companies and startups.
+          </AnimatedText>
+        </div>
+
+        <div className="mx-auto mt-12 max-w-3xl space-y-4">
+          {experiences.slice(0, 3).map((exp, i) => (
+            <AnimatedSection key={exp.id} delay={0.1 * (i + 1)} direction="up">
+              <Link
+                href={`/experience/${exp.id}`}
+                className="card-hover group flex items-start gap-4 rounded-2xl border border-border bg-background p-5"
+              >
+                <span
+                  className={cn(
+                    "flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br font-heading text-sm font-bold text-primary-foreground shadow-sm",
+                    tileGradients[i % tileGradients.length]
+                  )}
+                >
+                  {exp.company
+                    .split(" ")
+                    .slice(0, 2)
+                    .map((w) => w[0])
+                    .join("")}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <h3 className="font-bold text-foreground transition-colors duration-200 group-hover:text-accent">
+                      {exp.position}
+                    </h3>
+                    <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent">
+                      {getDurationText(exp.startDate, exp.endDate)}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 text-sm font-medium text-muted-foreground">
+                    {exp.company} · {exp.location}
+                  </p>
+                  <p className="mt-1 line-clamp-1 text-sm text-muted-foreground/80">
+                    {exp.description[0]}
+                  </p>
+                </div>
+                <Icons.chevronRight
+                  aria-hidden="true"
+                  className="mt-1 h-4 w-4 flex-shrink-0 text-muted-foreground transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+                />
+              </Link>
+            </AnimatedSection>
+          ))}
+          <div className="flex justify-center pt-4">
+            <Link href="/experience">
+              <Button variant={"outline"} className="group rounded-xl">
+                Full career timeline
+                <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </AnimatedSection>
 
       {/* ─── Projects ─────────────────────────────────────────────────── */}
       <AnimatedSection
@@ -261,99 +573,35 @@ export default function IndexPage() {
         </AnimatedText>
       </AnimatedSection>
 
-      {/* ─── Courses ──────────────────────────────────────────────────── */}
+      {/* ─── Skills ───────────────────────────────────────────────────── */}
       <AnimatedSection
         direction="up"
         className="container space-y-10 py-16"
-        id="courses"
+        id="skills"
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <span className="eyebrow">
-            <Icons.brain className="h-3.5 w-3.5" /> Learning
+            <Icons.aurora className="h-3.5 w-3.5" /> Expertise
           </span>
           <AnimatedText
             as="h2"
             className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
           >
-            Syllabus & Courses
+            {pagesConfig.skills.title}
           </AnimatedText>
           <AnimatedText
             as="p"
             delay={0.2}
             className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Access interactive notes, code walk-throughs, and downloadable PDF
-            worksheets curated for students and learners.
+            {pagesConfig.skills.description}
           </AnimatedText>
         </div>
-
-        <div className="grid w-full grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {COURSES.map((course, index) => {
-            const totalLectures = course.modules.reduce(
-              (acc, module) => acc + module.lectures.length,
-              0
-            );
-
-            return (
-              <AnimatedSection
-                key={course.id}
-                delay={0.1 * (index + 1)}
-                direction="up"
-                className="h-full w-full min-w-0"
-              >
-                <Link
-                  href={`/courses/${course.id}`}
-                  className="card-hover group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background"
-                >
-                  <article className="flex h-full flex-col">
-                    <div className="flex flex-grow flex-col gap-3 p-6">
-                      <div className="flex flex-wrap gap-1.5" aria-label="Tags">
-                        {course.category.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <h3 className="line-clamp-2 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-accent">
-                        {course.title}
-                      </h3>
-                      <p className="line-clamp-3 flex-grow text-sm leading-relaxed text-muted-foreground">
-                        {course.shortDescription}
-                      </p>
-                      <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4">
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1.5">
-                            <Icons.clock className="h-3.5 w-3.5" />
-                            {course.duration}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <Icons.page className="h-3.5 w-3.5" />
-                            {totalLectures} lectures
-                          </span>
-                        </div>
-                        <span
-                          className="inline-flex items-center gap-0.5 text-xs font-medium text-muted-foreground transition-colors duration-200 group-hover:text-accent"
-                          aria-hidden="true"
-                        >
-                          Learn
-                          <Icons.chevronRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
-              </AnimatedSection>
-            );
-          })}
-        </div>
-
+        <SkillsCard skills={featuredSkills} />
         <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/courses">
+          <Link href="/skills">
             <Button variant={"outline"} className="group rounded-xl">
-              View All Courses
+              View All
               <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Link>
@@ -406,40 +654,6 @@ export default function IndexPage() {
         </AnimatedText>
       </AnimatedSection>
 
-      {/* ─── Skills ───────────────────────────────────────────────────── */}
-      <AnimatedSection
-        direction="up"
-        className="container space-y-10 py-16"
-        id="skills"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.aurora className="h-3.5 w-3.5" /> Expertise
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            {pagesConfig.skills.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {pagesConfig.skills.description}
-          </AnimatedText>
-        </div>
-        <SkillsCard skills={featuredSkills} />
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/skills">
-            <Button variant={"outline"} className="group rounded-xl">
-              View All
-              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
     </ClientPageWrapper>
   );
 }

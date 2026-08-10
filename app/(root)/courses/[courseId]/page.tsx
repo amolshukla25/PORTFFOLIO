@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import { COURSES } from "@/config/courses";
@@ -12,6 +13,10 @@ interface CoursePageProps {
   params: Promise<{
     courseId: string;
   }>;
+}
+
+export function generateStaticParams() {
+  return COURSES.map((course) => ({ courseId: course.id }));
 }
 
 export async function generateMetadata({
@@ -29,8 +34,35 @@ export async function generateMetadata({
   return {
     title: `${course.title} — Notes & Syllabus | Amol Shukla`,
     description: course.shortDescription,
+    keywords: course.category,
     alternates: {
       canonical: `${siteConfig.url}/courses/${courseId}`,
+    },
+    openGraph: {
+      title: `${course.title} | ${siteConfig.name}`,
+      description: course.shortDescription,
+      url: `${siteConfig.url}/courses/${courseId}`,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: course.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${course.title} | ${siteConfig.name}`,
+      description: course.shortDescription,
+      images: [siteConfig.ogImage],
+      creator: `@${siteConfig.username}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }
@@ -43,8 +75,72 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
     redirect("/courses");
   }
 
+  const totalLectures = course.modules.reduce(
+    (acc, module) => acc + module.lectures.length,
+    0
+  );
+
+  // Course schema + breadcrumbs for structured data
+  const courseSchema = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: course.title,
+    description: course.detailedDescription,
+    url: `${siteConfig.url}/courses/${course.id}`,
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.authorName,
+      url: siteConfig.url,
+    },
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "online",
+      courseWorkload: course.duration,
+      instructor: {
+        "@type": "Person",
+        name: course.instructor,
+      },
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Learning Hub",
+        item: `${siteConfig.url}/courses`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: course.title,
+        item: `${siteConfig.url}/courses/${course.id}`,
+      },
+    ],
+  };
+
   return (
     <div className="container py-8 max-w-4xl">
+      <Script
+        id="schema-course"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
+      <Script
+        id="schema-breadcrumb-course"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
       {/* Back button */}
       <Link
         href="/courses"
@@ -66,6 +162,14 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
           <span className="text-xs text-muted-foreground flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
             {course.duration} estimated content
+          </span>
+          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+            <BookOpen className="h-3.5 w-3.5" />
+            {totalLectures} lectures
+          </span>
+          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+            <Award className="h-3.5 w-3.5 text-star" />
+            {course.rating} / 5
           </span>
         </div>
 
