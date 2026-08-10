@@ -26,6 +26,7 @@ export default function ExperiencePage() {
     <PageContainer
       title={pagesConfig.experience.title}
       description={pagesConfig.experience.description}
+      eyebrow="Career"
     >
       <Timeline experiences={experiences} />
     </PageContainer>

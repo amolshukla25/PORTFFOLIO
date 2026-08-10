@@ -121,6 +121,7 @@ export default function BlogsPage() {
       <PageContainer
         title={pagesConfig.blogs.title}
         description={pagesConfig.blogs.description}
+        eyebrow="Writing"
       >
         {blogs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center">

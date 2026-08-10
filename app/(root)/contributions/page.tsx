@@ -15,6 +15,7 @@ export default function ContributonsPage() {
     <PageContainer
       title={pagesConfig.contributions.title}
       description={pagesConfig.contributions.description}
+      eyebrow="Open Source"
     >
       <ContributionCard
         contributions={contributionsUnsorted}

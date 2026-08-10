@@ -1,15 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Norican } from "next/font/google";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import * as React from "react";
 
 import { Icons } from "@/components/common/icons";
 import { MobileNav } from "@/components/common/mobile-nav";
-import { siteConfig } from "@/config/site";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface MainNavProps {
@@ -17,22 +14,15 @@ interface MainNavProps {
   children?: React.ReactNode;
 }
 
-const norican = Norican({
-  weight: ["400"],
-  style: ["normal"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
 // Animation variants for the navigation items
 const navItemVariants = {
-  hidden: { opacity: 0, y: -20 },
+  hidden: { opacity: 0, y: -12 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.1 * i,
-      duration: 0.5,
+      delay: 0.06 * i,
+      duration: 0.4,
       ease: "easeOut" as const,
     },
   }),
@@ -48,50 +38,48 @@ export function MainNav({ items, children }: MainNavProps) {
   }, [pathname]);
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-3">
       {items?.length ? (
-        <nav className="hidden gap-6 md:flex items-center">
-          {items?.map((item, index) => (
-            <motion.div
-              key={index}
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={navItemVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                href={item.disabled ? "#" : item.href}
-                className={
-                  item.isButton
-                    ? cn(
-                        buttonVariants({ variant: "outline", size: "sm" }),
-                        "rounded-xl font-medium"
-                      )
-                    : cn(
-                        "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                        item.href.startsWith(`/${segment}`)
-                          ? "text-foreground"
-                          : "text-foreground/60",
-                        item.disabled && "cursor-not-allowed opacity-80"
-                      )
-                }
+        <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-muted/40 p-1 backdrop-blur-sm md:flex">
+          {items?.map((item, index) => {
+            const isActive =
+              !item.isButton &&
+              item.href.startsWith(`/${segment}`) &&
+              segment !== null;
+            return (
+              <motion.div
+                key={index}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                variants={navItemVariants}
               >
-                {item.title}
-              </Link>
-            </motion.div>
-          ))}
+                <Link
+                  href={item.disabled ? "#" : item.href}
+                  className={cn(
+                    "inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200",
+                    item.isButton
+                      ? "bg-foreground text-background shadow-sm hover:opacity-90"
+                      : isActive
+                        ? "bg-background text-foreground shadow-sm border border-border/60"
+                        : "text-muted-foreground hover:bg-background/60 hover:text-foreground"
+                  )}
+                >
+                  {item.title}
+                </Link>
+              </motion.div>
+            );
+          })}
         </nav>
       ) : null}
       <motion.button
-        className="flex items-center space-x-2 md:hidden"
+        className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-sm font-semibold md:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.96 }}
+        aria-label="Toggle navigation menu"
       >
-        {showMobileMenu ? <Icons.close /> : <Icons.menu />}
-        <span className="font-bold">Menu</span>
+        {showMobileMenu ? <Icons.close className="h-4 w-4" /> : <Icons.menu className="h-4 w-4" />}
+        Menu
       </motion.button>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>

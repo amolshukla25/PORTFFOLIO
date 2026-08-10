@@ -30,10 +30,10 @@ interface ExperienceCardProps {
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
   return (
-    <div className="group relative overflow-hidden rounded-lg border bg-background p-4 sm:p-6 transition-all duration-300">
+    <div className="card-hover group relative overflow-hidden rounded-2xl border bg-background p-5 sm:p-6">
       <div className="flex items-start gap-3 sm:gap-4">
         {experience.logo && (
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 border-border overflow-hidden bg-white flex-shrink-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl border border-border/60 overflow-hidden bg-white flex-shrink-0 shadow-sm">
             <Image
               src={experience.logo}
               alt={experience.company}
@@ -66,7 +66,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
               <span>{experience.location}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20">
                 {getDurationText(experience.startDate, experience.endDate)}
               </span>
             </div>
@@ -74,17 +74,17 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
           <p className="mt-2 sm:mt-3 text-sm text-muted-foreground line-clamp-2">
             {experience.description[0]}
           </p>
-          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1">
+          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5">
             {experience.skills.slice(0, 2).map((skill, index) => (
               <span
                 key={index}
-                className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground"
+                className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground"
               >
                 {skill}
               </span>
             ))}
             {experience.skills.length > 2 && (
-              <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-muted text-muted-foreground">
+              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
                 +{experience.skills.length - 2} more
               </span>
             )}
@@ -95,7 +95,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experience }) => {
         <Button
           variant="outline"
           size="sm"
-          className="rounded-lg w-full sm:w-auto"
+          className="rounded-xl w-full sm:w-auto"
           asChild
         >
           <Link href={`/experience/${experience.id}`}>

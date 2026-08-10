@@ -19,6 +19,7 @@ export default function SkillsPage() {
     <PageContainer
       title={pagesConfig.skills.title}
       description={pagesConfig.skills.description}
+      eyebrow="Expertise"
     >
       <SkillsCard skills={skills} />
     </PageContainer>

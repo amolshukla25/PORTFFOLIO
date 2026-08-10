@@ -20,12 +20,12 @@ export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link
       href={`/blogs/${blog.slug}`}
-      className="group relative flex flex-col bg-background border border-border rounded-lg overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:border-primary/40 hover:-translate-y-0.5"
+      className="card-hover group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background"
     >
-      <article className="flex flex-col h-full">
+      <article className="flex h-full flex-col">
         {/* Cover image */}
         {blog.coverImage && (
-          <div className="relative w-full h-[180px] flex-shrink-0 overflow-hidden bg-muted">
+          <div className="relative h-[180px] w-full flex-shrink-0 overflow-hidden bg-muted">
             <Image
               src={blog.coverImage}
               alt={blog.title}
@@ -37,55 +37,55 @@ export default function BlogCard({ blog }: BlogCardProps) {
         )}
 
         {/* Content */}
-        <div className="p-5 flex flex-col flex-grow gap-3">
+        <div className="flex flex-grow flex-col gap-3 p-6">
           {/* Tags */}
           <div className="flex flex-wrap gap-1.5" aria-label="Tags">
             {blog.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+                className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent"
               >
                 {tag}
               </span>
             ))}
             {blog.tags.length > 3 && (
-              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-muted text-muted-foreground">
+              <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                 +{blog.tags.length - 3}
               </span>
             )}
           </div>
 
           {/* Title */}
-          <h3 className="text-lg font-bold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-200">
+          <h3 className="line-clamp-2 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-accent">
             {blog.title}
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-muted-foreground line-clamp-3 flex-grow leading-relaxed">
+          <p className="line-clamp-3 flex-grow text-sm leading-relaxed text-muted-foreground">
             {blog.description}
           </p>
 
           {/* Footer: date + read time + arrow */}
-          <div className="flex items-center justify-between pt-2 border-t border-border mt-auto">
+          <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4">
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
               <time dateTime={isoDate} className="flex items-center gap-1">
-                <Icons.calendar className="w-3.5 h-3.5" />
+                <Icons.calendar className="h-3.5 w-3.5" />
                 {formattedDate}
               </time>
               {blog.readingTime && (
                 <span className="flex items-center gap-1">
-                  <Icons.clock className="w-3.5 h-3.5" />
+                  <Icons.clock className="h-3.5 w-3.5" />
                   {blog.readingTime} min read
                 </span>
               )}
             </div>
             {/* Decorative read indicator */}
             <span
-              className="inline-flex items-center gap-0.5 text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200"
+              className="inline-flex items-center gap-0.5 text-xs font-medium text-muted-foreground transition-colors duration-200 group-hover:text-accent"
               aria-hidden="true"
             >
               Read
-              <Icons.chevronRight className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+              <Icons.chevronRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
             </span>
           </div>
         </div>

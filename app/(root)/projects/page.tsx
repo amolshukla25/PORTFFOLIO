@@ -55,6 +55,7 @@ export default function ProjectsPage() {
     <PageContainer
       title={pagesConfig.projects.title}
       description={pagesConfig.projects.description}
+      eyebrow="Portfolio"
     >
       <ResponsiveTabs items={tabItems} defaultValue="all" />
     </PageContainer>

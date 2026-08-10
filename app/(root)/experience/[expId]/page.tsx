@@ -189,7 +189,7 @@ export default async function ExperienceDetailPage({
                     </div>
                   </div>
                   <div className="flex justify-center sm:justify-end">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent/10 text-accent border border-accent/20">
                       {getDurationText(
                         experience.startDate,
                         experience.endDate

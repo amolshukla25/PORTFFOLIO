@@ -17,16 +17,16 @@ export default function ContributionCard({
           href={contribution.link}
           target="_blank"
           key={id}
-          className="w-full min-w-0 h-full"
+          className="group w-full min-w-0 h-full"
         >
-          <div className="relative rounded-lg border bg-background p-2 hover:bg-accent hover:text-accent-foreground transition-colors w-full h-full flex flex-col">
+          <div className="card-hover relative rounded-2xl border bg-background p-2 w-full h-full flex flex-col">
             <Icons.externalLink
               size={35}
-              className="absolute bottom-3 right-3 border bg-background rounded-full p-1.5 sm:p-2 cursor-pointer text-muted-foreground z-10 w-8 h-8 sm:w-10 sm:h-10"
+              className="absolute bottom-3 right-3 border bg-background rounded-full p-1.5 sm:p-2 cursor-pointer text-muted-foreground z-10 w-8 h-8 sm:w-10 sm:h-10 transition-colors hover:text-accent hover:border-accent/30"
             />
-            <div className="flex min-h-[170px] flex-col justify-between rounded-md p-4 sm:p-6 pb-12 sm:pb-6 flex-grow">
+            <div className="flex min-h-[170px] flex-col justify-between rounded-xl p-4 sm:p-6 pb-12 sm:pb-6 flex-grow">
               <div className="flex flex-row justify-between items-start gap-2 mb-4 min-w-0">
-                <h3 className="font-bold flex space-x-2 items-center min-w-0 flex-1">
+                <h3 className="font-bold flex space-x-2 items-center min-w-0 flex-1 group-hover:text-accent transition-colors">
                   <Icons.gitRepoIcon
                     size={18}
                     className="flex-shrink-0 sm:w-5 sm:h-5"

@@ -6,7 +6,7 @@ interface ChipContainerProps {
 
 export default function ChipContainer({ textArr }: ChipContainerProps) {
   return (
-    <div className="flex my-3 gap-2 flex-wrap">
+    <div className="flex flex-wrap gap-1.5">
       {textArr.map((it, ind) => (
         <Chip key={ind} content={it} />
       ))}

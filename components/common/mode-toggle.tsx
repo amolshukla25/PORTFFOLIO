@@ -32,7 +32,7 @@ export function ModeToggle() {
   }
 
   return (
-    <div className="flex items-center gap-1 bg-muted/40 p-1 rounded-full border border-border/30">
+    <div className="flex items-center gap-0.5 bg-muted/40 p-1 rounded-full border border-border/40 shadow-sm backdrop-blur">
       {/* Cyberpunk Quick Switch */}
       <Button
         variant="ghost"

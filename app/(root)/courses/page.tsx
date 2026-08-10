@@ -80,6 +80,7 @@ export default function CoursesPage() {
     <PageContainer
       title="Student Learning Hub"
       description="Access comprehensive documented notes, code walk-throughs, and PDF worksheets curated for students and learners."
+      eyebrow="Learning"
     >
       <div className="py-8">
         

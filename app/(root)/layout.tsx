@@ -1,18 +1,10 @@
 import Link from "next/link";
-import { Norican } from "next/font/google";
 import { MainNav } from "@/components/common/main-nav";
 import { ModeToggle } from "@/components/common/mode-toggle";
 import { SiteFooter } from "@/components/common/site-footer";
 import { routesConfig } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-
-const norican = Norican({
-  weight: ["400"],
-  style: ["normal"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
@@ -21,14 +13,17 @@ interface MarketingLayoutProps {
 export default function MarketingLayout({ children }: MarketingLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="container z-50 bg-background border-b border-border/40">
-        <div className="flex h-20 items-center justify-between py-6">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className={cn(norican.className, "text-2xl hover:text-foreground/80 transition-colors")}>
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between gap-4">
+          <Link href="/" className="group flex items-center gap-2.5" aria-label="Go to homepage">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-accent font-heading text-sm font-bold text-primary-foreground shadow-md shadow-accent/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
+              AS
+            </span>
+            <span className="font-heading text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent">
               {siteConfig.authorName}
             </span>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <MainNav items={routesConfig.mainNav}>
               <div className="flex items-center gap-3">
                 <ModeToggle />
@@ -38,7 +33,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
           </div>
         </div>
       </header>
-      <main className="container flex-1">{children}</main>
+      <main className={cn("container flex-1")}>{children}</main>
       <SiteFooter />
     </div>
   );

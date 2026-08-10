@@ -19,6 +19,7 @@ export default function ContactPage() {
     <PageContainer
       title={pagesConfig.contact.title}
       description={pagesConfig.contact.description}
+      eyebrow="Connect"
     >
       <div className="flex flex-col lg:flex-row">
         <div className="flex-1">
