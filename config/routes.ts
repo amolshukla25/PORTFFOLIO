@@ -6,6 +6,10 @@ export const routesConfig: any = {
       isButton: true,
     },
     {
+      title: "Courses",
+      href: "/courses",
+    },
+    {
       title: "Skills",
       href: "/skills",
     },

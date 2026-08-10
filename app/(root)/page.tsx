@@ -91,17 +91,26 @@ export default function IndexPage() {
 
           <div className="flex flex-col mt-10 items-center justify-center sm:flex-row sm:space-x-4 gap-3">
             <AnimatedText delay={0.6}>
+              <Link
+                href="/courses"
+                className={cn(buttonVariants({ size: "lg", variant: "default" }), "bg-gradient-to-r from-primary to-accent hover:opacity-90 rounded-xl")}
+                aria-label="Enter Learning Hub"
+              >
+                <Icons.page className="w-4 h-4 mr-2" /> Learning Hub
+              </Link>
+            </AnimatedText>
+            <AnimatedText delay={0.8}>
               <a
                 href={process.env.NEXT_PUBLIC_RESUME_LINK || siteConfig.links.resume || "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(buttonVariants({ size: "lg" }))}
+                className={cn(buttonVariants({ size: "lg", variant: "outline" }), "rounded-xl")}
                 aria-label="View resume"
               >
                 <Icons.post className="w-4 h-4 mr-2" /> Resume
               </a>
             </AnimatedText>
-            <AnimatedText delay={0.8}>
+            <AnimatedText delay={1.0}>
               <Link
                 href={"/contact"}
                 rel="noreferrer"
@@ -109,7 +118,8 @@ export default function IndexPage() {
                   buttonVariants({
                     variant: "outline",
                     size: "lg",
-                  })
+                  }),
+                  "rounded-xl"
                 )}
                 aria-label="Contact Amol Shukla"
               >
@@ -166,6 +176,72 @@ export default function IndexPage() {
           <Link href="/projects">
             <Button variant={"outline"} className="rounded-xl">
               <Icons.chevronDown className="mr-2 h-4 w-4" /> View All
+            </Button>
+          </Link>
+        </AnimatedText>
+      </AnimatedSection>
+      <AnimatedSection
+        direction="up"
+        className="container space-y-6 bg-muted/40 py-10 my-14 rounded-3xl border border-border/50 p-6 md:p-10"
+        id="courses"
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <Icons.star className="h-3.5 w-3.5 fill-current" /> Education & Training
+          </span>
+          <AnimatedText
+            as="h2"
+            className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
+          >
+            Student Study Hub
+          </AnimatedText>
+          <AnimatedText
+            as="p"
+            delay={0.2}
+            className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
+          >
+            I create and share comprehensive documented notes, interactive code workbooks, and downloadable PDF worksheets to help my students master Python, Data Science, and Agentic AI.
+          </AnimatedText>
+        </div>
+
+        <div className="w-full max-w-2xl mx-auto pt-6">
+          <div className="group relative p-6 rounded-2xl bg-card border border-border shadow-md transition-all duration-300 hover:shadow-xl hover:border-primary/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-md">
+              <div className="flex items-center gap-2">
+                <span className="p-2 rounded-lg bg-muted text-primary">
+                  <Icons.brain className="h-6 w-6" />
+                </span>
+                <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                  Applied Data Science & Generative AI Hub
+                </h3>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Our first course covers data wrangling, advanced computations, predictive statistical modeling, and agentic loop pipeline architectures.
+              </p>
+              <div className="flex gap-2 flex-wrap">
+                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">5 Lectures</span>
+                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">Python & sklearn</span>
+                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">Agentic Workflows</span>
+              </div>
+            </div>
+
+            <Link
+              href="/courses/data-science"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "rounded-xl gap-2 font-medium shrink-0 w-full sm:w-auto text-center justify-center"
+              )}
+            >
+              Start Learning
+              <Icons.chevronRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+
+        <AnimatedText delay={0.4} className="flex justify-center pt-2">
+          <Link href="/courses">
+            <Button variant={"outline"} className="rounded-xl">
+              <Icons.page className="mr-2 h-4 w-4" /> View All Courses
             </Button>
           </Link>
         </AnimatedText>
