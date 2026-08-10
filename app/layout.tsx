@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { ModalProvider } from "@/providers/modal-provider";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Toaster />
           <ModalProvider />
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
