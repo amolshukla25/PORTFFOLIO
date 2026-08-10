@@ -21,132 +21,46 @@ import {
   Eye,
   Heart,
   Lightbulb,
-  ListChecks
+  ListChecks,
+  Award,
+  GraduationCap
 } from "lucide-react";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkHtml from "remark-html";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-// Lightweight Markdown Renderer for Note Content
+// Full GFM markdown renderer (tables, blockquotes, links, code blocks,
+// task lists, strikethrough) — same pipeline the blog pages use.
 function RenderMarkdown({ content }: { content: string }) {
-  const paragraphs = content.split("\n\n");
-  
+  const [html, setHtml] = React.useState("");
+
+  React.useEffect(() => {
+    let active = true;
+    remark()
+      .use(remarkGfm)
+      .use(remarkHtml, { sanitize: false })
+      .process(content)
+      .then((file) => {
+        if (active) setHtml(String(file));
+      })
+      .catch(() => {
+        if (active) setHtml(`<p>Could not render this section.</p>`);
+      });
+    return () => {
+      active = false;
+    };
+  }, [content]);
+
   return (
-    <div className="space-y-4 text-muted-foreground leading-relaxed">
-      {paragraphs.map((para, pIdx) => {
-        const trimmed = para.trim();
-        if (!trimmed) return null;
-
-        // Header 2 (page title is the single h1)
-        if (trimmed.startsWith("# ") || trimmed.startsWith("## ")) {
-          return (
-            <h2 key={pIdx} className="font-heading text-2xl text-foreground font-bold pt-6 pb-2 border-b border-border/50">
-              {trimmed.replace("## ", "")}
-            </h2>
-          );
-        }
-
-        // Header 3
-        if (trimmed.startsWith("### ")) {
-          return (
-            <h3 key={pIdx} className="font-heading text-2xl text-foreground font-bold pt-6 pb-2 border-b border-border/50">
-              {trimmed.replace("### ", "")}
-            </h3>
-          );
-        }
-
-        // Header 4
-        if (trimmed.startsWith("#### ")) {
-          return (
-            <h4 key={pIdx} className="font-heading text-xl text-foreground font-semibold pt-4 pb-1">
-              {trimmed.replace("#### ", "")}
-            </h4>
-          );
-        }
-
-        // Unordered List Items
-        if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
-          const items = trimmed.split("\n").map(li => li.replace(/^[-*]\s+/, ""));
-          return (
-            <ul key={pIdx} className="list-disc pl-6 space-y-2 my-4 text-sm sm:text-base">
-              {items.map((item, iIdx) => (
-                <li key={iIdx} className="marker:text-primary">
-                  {/* Parse inline backticks inside lists */}
-                  {parseInlineFormatting(item)}
-                </li>
-              ))}
-            </ul>
-          );
-        }
-
-        // Ordered List Items
-        if (/^\d+\.\s/.test(trimmed)) {
-          const items = trimmed.split("\n").map(li => li.replace(/^\d+\.\s+/, ""));
-          return (
-            <ol key={pIdx} className="list-decimal pl-6 space-y-2 my-4 text-sm sm:text-base">
-              {items.map((item, iIdx) => (
-                <li key={iIdx} className="marker:text-primary">
-                  {parseInlineFormatting(item)}
-                </li>
-              ))}
-            </ol>
-          );
-        }
-
-        // Code block
-        if (trimmed.startsWith("```")) {
-          const lines = trimmed.split("\n");
-          // Remove backticks line and last line
-          const codeLines = lines.slice(1, lines.length - 1).join("\n");
-          return (
-            <pre key={pIdx} className="p-4 rounded-xl bg-muted/60 border border-border/80 font-mono text-xs sm:text-sm overflow-x-auto my-4 text-foreground">
-              <code>{codeLines}</code>
-            </pre>
-          );
-        }
-
-        // Normal paragraph
-        return (
-          <p key={pIdx} className="my-3 text-sm sm:text-base">
-            {parseInlineFormatting(trimmed)}
-          </p>
-        );
-      })}
-    </div>
+    <div
+      className="blog-content lecture-content max-w-none"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
-}
-
-// Simple inline formatting parser (bold, inline code, latex math equations)
-function parseInlineFormatting(text: string) {
-  // Regex for inline code: `code`
-  // Regex for bold: **bold**
-  // Regex for simple LaTeX math: $$math$$ or $math$
-  
-  let parts: React.ReactNode[] = [text];
-  
-  // 1. Parse bold: **text**
-  parts = parts.flatMap((part) => {
-    if (typeof part !== "string") return part;
-    const split = part.split(/\*\*([^*]+)\*\*/g);
-    return split.map((sub, idx) => (idx % 2 === 1 ? <strong key={idx} className="font-bold text-foreground">{sub}</strong> : sub));
-  });
-
-  // 2. Parse inline code: `code`
-  parts = parts.flatMap((part) => {
-    if (typeof part !== "string") return part;
-    const split = part.split(/`([^`]+)`/g);
-    return split.map((sub, idx) => (idx % 2 === 1 ? <code key={idx} className="px-1.5 py-0.5 rounded bg-muted font-mono text-xs text-primary font-medium">{sub}</code> : sub));
-  });
-
-  // 3. Parse Math variables like $MSE$
-  parts = parts.flatMap((part) => {
-    if (typeof part !== "string") return part;
-    const split = part.split(/\$\$([^$]+)\$\$/g);
-    return split.map((sub, idx) => (idx % 2 === 1 ? <span key={idx} className="font-serif italic text-foreground bg-muted/30 px-1 rounded">{sub}</span> : sub));
-  });
-
-  return parts;
 }
 
 export default function LectureNotesPage() {
@@ -348,7 +262,7 @@ export default function LectureNotesPage() {
           </div>
 
           {/* Documented Notes Content */}
-          <div className="prose dark:prose-invert max-w-none">
+          <div className="lecture-prose">
             <RenderMarkdown content={activeLecture.contentMarkdown} />
           </div>
 
@@ -537,6 +451,84 @@ export default function LectureNotesPage() {
                     </div>
                   </details>
                 ))}
+              </div>
+            </section>
+          )}
+
+          {/* Up Next — Continue Learning CTA */}
+          {nextLecture ? (
+            <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
+              <div className="bg-gradient-to-r from-primary/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">
+                  Up next · Continue learning
+                </p>
+                <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground leading-snug">
+                  {nextLecture.title.split(": ")[1] || nextLecture.title}
+                </h2>
+                <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2 max-w-2xl">
+                  {nextLecture.shortDescription}
+                </p>
+              </div>
+              <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5">
+                    <BookOpen className="h-3.5 w-3.5 text-primary/70" />
+                    {nextLecture.readingTime}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-primary/70" />
+                    {nextLecture.duration}
+                  </span>
+                </div>
+                <Link
+                  href={`/courses/${course.id}/${nextLecture.id}`}
+                  className={cn(
+                    buttonVariants({ variant: "default" }),
+                    "rounded-xl gap-2 sm:ml-auto w-full sm:w-auto"
+                  )}
+                >
+                  Start next lesson
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </section>
+          ) : (
+            <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
+              <div className="bg-gradient-to-r from-success/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60 flex items-start gap-3">
+                <Award className="h-6 w-6 text-star shrink-0" />
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-success mb-1">
+                    Course complete
+                  </p>
+                  <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground leading-snug">
+                    You finished {course.title.split(": ")[0]}!
+                  </h2>
+                  <p className="mt-1.5 text-sm text-muted-foreground max-w-2xl">
+                    Review the full syllabus, revisit any lesson, or explore another course in the Learning Hub.
+                  </p>
+                </div>
+              </div>
+              <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href={`/courses/${course.id}`}
+                  className={cn(
+                    buttonVariants({ variant: "default" }),
+                    "rounded-xl gap-2 w-full sm:w-auto"
+                  )}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  View full syllabus
+                </Link>
+                <Link
+                  href="/courses"
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "rounded-xl gap-2 w-full sm:w-auto"
+                  )}
+                >
+                  <GraduationCap className="h-4 w-4" />
+                  Browse all courses
+                </Link>
               </div>
             </section>
           )}

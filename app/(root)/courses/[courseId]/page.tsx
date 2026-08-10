@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Script from "next/script";
-import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap } from "lucide-react";
+import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap, List } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
@@ -189,6 +189,55 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
         </div>
       </div>
 
+      {/* Table of Contents — every module & lecture linked for navigation + internal linking */}
+      <nav
+        aria-label="Course table of contents"
+        className="mb-10 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden"
+      >
+        <div className="px-6 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
+          <List className="h-4 w-4 text-primary" />
+          <h2 className="font-heading text-lg font-bold text-foreground">
+            Table of Contents
+          </h2>
+          <span className="ml-auto text-xs font-medium text-muted-foreground">
+            {course.modules.length} modules · {totalLectures} lessons
+          </span>
+        </div>
+        <ol className="divide-y divide-border/50 text-sm">
+          {course.modules.map((module, mIdx) => (
+            <li key={module.id} className="px-6 py-3 hover:bg-muted/30 transition-colors">
+              <div className="flex items-center gap-2">
+                <a
+                  href={`#${module.id}`}
+                  className="font-semibold text-foreground hover:text-primary transition-colors inline-flex items-center gap-2"
+                >
+                  <BookOpen className="h-3.5 w-3.5 text-primary/70 shrink-0" />
+                  <span>
+                    Module {mIdx + 1}: {module.title.split(": ")[1] || module.title}
+                  </span>
+                </a>
+                <span className="ml-auto text-xs text-muted-foreground shrink-0">
+                  {module.lectures.length} lessons
+                </span>
+              </div>
+              <ol className="mt-2 ml-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                {module.lectures.map((lecture) => (
+                  <li key={lecture.id}>
+                    <Link
+                      href={`/courses/${course.id}/${lecture.id}`}
+                      className="group inline-flex items-start gap-1.5 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-primary/40 group-hover:text-primary transition-colors" />
+                      <span className="line-clamp-1">{lecture.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
       {/* Syllabus Modules Grid (Card Inside Card Layout) */}
       <div className="space-y-8">
         <h2 className="font-heading text-3xl mb-6">Course Modules</h2>
@@ -196,7 +245,8 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
         {course.modules.map((module, mIdx) => (
           <div
             key={module.id}
-            className="p-6 rounded-2xl bg-card border border-border/80 shadow-sm relative overflow-hidden"
+            id={module.id}
+            className="p-6 rounded-2xl bg-card border border-border/80 shadow-sm relative overflow-hidden scroll-mt-24"
           >
             {/* Soft decorative background tint for module */}
             <div className="absolute top-0 left-0 w-2 h-full bg-primary" />
