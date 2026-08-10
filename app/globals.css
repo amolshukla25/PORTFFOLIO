@@ -463,133 +463,32 @@
   font-size: 1.0625rem;
 }
 
+/* Reuses the full .blog-content prose system (headings, tables, blockquotes,
+   lists, code) and only tunes the reading experience for course notes. */
 .lecture-content {
-  color: hsl(var(--foreground));
   font-size: 1.0625rem;
   line-height: 1.85;
 }
 
 .lecture-content p {
   margin-bottom: 1.25rem;
-  color: hsl(var(--foreground) / 0.88);
 }
 
 .lecture-content h2 {
-  font-family: var(--font-heading);
   font-size: 1.75rem;
-  font-weight: 700;
   letter-spacing: -0.02em;
   margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid hsl(var(--border));
-  color: hsl(var(--foreground));
-  scroll-margin-top: 6rem;
 }
 
 .lecture-content h3 {
-  font-family: var(--font-heading);
   font-size: 1.375rem;
-  font-weight: 700;
   letter-spacing: -0.01em;
   margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  color: hsl(var(--foreground));
-  scroll-margin-top: 6rem;
-}
-
-.lecture-content h4 {
-  font-family: var(--font-heading);
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: hsl(var(--foreground));
-}
-
-.lecture-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.9375rem;
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.lecture-content thead {
-  background: hsl(var(--muted));
-}
-
-.lecture-content th {
-  text-align: left;
-  padding: 0.65rem 1rem;
-  font-weight: 600;
-  color: hsl(var(--foreground));
-  border-bottom: 1px solid hsl(var(--border));
-}
-
-.lecture-content td {
-  padding: 0.65rem 1rem;
-  color: hsl(var(--foreground) / 0.85);
-  border-bottom: 1px solid hsl(var(--border));
-  vertical-align: top;
-}
-
-.lecture-content tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.lecture-content tbody tr:hover {
-  background: hsl(var(--muted) / 0.4);
-}
-
-.lecture-content blockquote {
-  border-left: 4px solid hsl(var(--accent) / 0.6);
-  background: hsl(var(--accent) / 0.06);
-  padding: 0.9rem 1.25rem;
-  margin: 1.5rem 0;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  color: hsl(var(--foreground) / 0.85);
-}
-
-.lecture-content blockquote p {
-  margin-bottom: 0;
-  color: inherit;
-}
-
-.lecture-content ul,
-.lecture-content ol {
-  padding-left: 1.5rem;
-  margin: 1rem 0 1.25rem;
-}
-
-.lecture-content li {
-  margin-bottom: 0.45rem;
-  color: hsl(var(--foreground) / 0.88);
-}
-
-.lecture-content li::marker {
-  color: hsl(var(--accent));
-}
-
-.lecture-content a {
-  color: hsl(var(--primary));
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .lecture-content pre {
   background: hsl(var(--code-bg));
   color: hsl(var(--code-fg));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  font-size: 0.875rem;
-  line-height: 1.7;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 }
 
 .lecture-content pre code {
@@ -603,21 +502,13 @@
 .lecture-content code:not(pre > code) {
   background: hsl(var(--muted));
   color: hsl(var(--primary));
-  border: 1px solid hsl(var(--border));
-  padding: 0.15em 0.4em;
-  border-radius: calc(var(--radius) - 4px);
-  font-size: 0.875em;
-  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 }
 
-.lecture-content hr {
-  border: none;
-  border-top: 1px solid hsl(var(--border));
-  margin: 2rem 0;
-}
-
-.lecture-content strong {
-  color: hsl(var(--foreground));
+/* LaTeX-style math tokens ($$expr$$) rendered inside fenced math blocks */
+.lecture-content pre code.language-math {
+  font-family: var(--font-heading), serif;
+  font-style: italic;
+  letter-spacing: 0.01em;
 }
 
 /* Print Media Styles for clean PDF saving */

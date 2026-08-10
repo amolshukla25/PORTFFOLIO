@@ -33,6 +33,14 @@ import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+// Renders $$math$$ tokens as styled inline math spans before remark parses
+// the markdown, so notes that use LaTeX-style delimiters keep their look.
+function protectMath(content: string) {
+  return content.replace(/\$\$([^$]+)\$\$/g, (_, expr) => {
+    return `\`\`\`math\n${expr}\n\`\`\``;
+  });
+}
+
 // Full GFM markdown renderer (tables, blockquotes, links, code blocks,
 // task lists, strikethrough) — same pipeline the blog pages use.
 function RenderMarkdown({ content }: { content: string }) {
@@ -43,7 +51,7 @@ function RenderMarkdown({ content }: { content: string }) {
     remark()
       .use(remarkGfm)
       .use(remarkHtml, { sanitize: false })
-      .process(content)
+      .process(protectMath(content))
       .then((file) => {
         if (active) setHtml(String(file));
       })

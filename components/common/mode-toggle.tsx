@@ -22,6 +22,18 @@ export function ModeToggle() {
     setMounted(true);
   }, []);
 
+  // Migration guard: older versions of this site offered extra themes
+  // (retro, cyberpunk, paper, aurora, synthwave) that were persisted in
+  // localStorage. Those no longer exist, so fall back to the light default
+  // instead of applying a class with no matching CSS.
+  React.useEffect(() => {
+    if (!mounted) return;
+    const valid = THEME_OPTIONS.map((o) => o.value);
+    if (theme && !valid.includes(theme)) {
+      setTheme("light");
+    }
+  }, [mounted, theme, setTheme]);
+
   if (!mounted) {
     return (
       <Button variant="ghost" size="sm" className="h-8 w-8 px-0" disabled>
@@ -32,7 +44,7 @@ export function ModeToggle() {
 
   return (
     <div
-      role="radiogroup"
+      role="group"
       aria-label="Theme"
       className="flex items-center gap-1 bg-muted/40 p-1 rounded-full border border-border/40 shadow-sm backdrop-blur"
     >
@@ -44,8 +56,7 @@ export function ModeToggle() {
             key={option.value}
             variant="ghost"
             size="sm"
-            role="radio"
-            aria-checked={isActive}
+            aria-pressed={isActive}
             onClick={() => setTheme(option.value)}
             className={cn(
               "h-7 rounded-full px-2.5 gap-1.5 transition-all hover:bg-background/80 hover:text-foreground",
