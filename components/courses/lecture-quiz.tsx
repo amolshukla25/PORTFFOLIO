@@ -225,6 +225,8 @@ export default function LectureQuiz({ quiz }: LectureQuizProps) {
         {/* Instant feedback + explanation */}
         {answered && (
           <div
+            role="status"
+            aria-live="polite"
             className={cn(
               "mt-4 rounded-xl border p-4 text-sm animate-in fade-in slide-in-from-bottom-2",
               selected === question.correctIndex

@@ -36,7 +36,15 @@ export default function CourseProgressPanel({
 
   if (!mounted) {
     return (
-      <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm h-[88px]" />
+      <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm" aria-hidden>
+        <div className="h-4 w-32 rounded-md bg-muted animate-pulse" />
+        <div className="mt-4 h-2 rounded-full bg-muted animate-pulse" />
+        <div className="mt-4 space-y-2">
+          <div className="h-2 w-full rounded-md bg-muted/60 animate-pulse" />
+          <div className="h-2 w-2/3 rounded-md bg-muted/60 animate-pulse" />
+          <div className="h-2 w-1/2 rounded-md bg-muted/60 animate-pulse" />
+        </div>
+      </div>
     );
   }
 

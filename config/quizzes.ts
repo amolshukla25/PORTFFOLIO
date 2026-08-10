@@ -902,7 +902,7 @@ export const LECTURE_QUIZZES: Record<string, LectureQuiz> = {
     title: "Expense Tracker Mini-Project",
     questions: [
       {
-        id: "mp-1",
+        id: "exp-1",
         question: "Which data structure is ideal for storing expense categories and amounts?",
         options: ["A dictionary", "A string", "A boolean", "An integer"],
         correctIndex: 0,
@@ -910,7 +910,7 @@ export const LECTURE_QUIZZES: Record<string, LectureQuiz> = {
           "A dict maps each category name to its total amount — perfect for this tracker.",
       },
       {
-        id: "mp-2",
+        id: "exp-2",
         question: "How do you add a new expense to a dict total?",
         options: [
           "totals[key] = totals.get(key, 0) + amount",
@@ -923,7 +923,7 @@ export const LECTURE_QUIZZES: Record<string, LectureQuiz> = {
           "totals.get(key, 0) safely reads the existing total (or 0) before adding the amount.",
       },
       {
-        id: "mp-3",
+        id: "exp-3",
         question: "Which loop keeps a menu running until the user chooses to quit?",
         options: ["for _ in range(5):", "while True: with break on quit", "foreach", "repeat(10):"],
         correctIndex: 1,
