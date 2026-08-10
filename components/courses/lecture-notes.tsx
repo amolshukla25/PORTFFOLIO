@@ -23,15 +23,22 @@ import {
   Lightbulb,
   ListChecks,
   Award,
-  GraduationCap
+  GraduationCap,
+  CheckCircle2,
+  Circle,
+  Trophy
 } from "lucide-react";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 import { COURSES } from "@/config/courses";
+import { LECTURE_QUIZZES } from "@/config/quizzes";
 import { siteConfig } from "@/config/site";
+import { useCourseProgress } from "@/hooks/use-course-progress";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import LectureQuiz from "./lecture-quiz";
+import PythonPlayground from "./python-playground";
 
 // Renders $$math$$ tokens as styled inline math spans before remark parses
 // the markdown, so notes that use LaTeX-style delimiters keep their look.
@@ -82,6 +89,16 @@ export default function LectureNotesPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // Progress tracking (localStorage-backed via zustand persist)
+  const progress = useCourseProgress();
+  const completedLectures = mounted ? progress.completed[courseId] ?? [] : [];
+  const isCompleted = completedLectures.includes(lectureId);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Find course and active lecture
   const course = COURSES.find((c) => c.id === courseId);
@@ -114,6 +131,12 @@ export default function LectureNotesPage() {
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  // Toggle completion for the current lecture
+  const handleToggleComplete = () => {
+    progress.toggleLecture(courseId, lectureId);
+    showToast(isCompleted ? "Lecture marked as incomplete" : "Lecture marked as complete! 🎉");
   };
 
   // Trigger PDF printing (leveraging custom print styles in globals.css)
@@ -166,35 +189,80 @@ export default function LectureNotesPage() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
-          {course.modules.map((module, mIdx) => (
-            <div key={module.id} className="space-y-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80 pl-2">
-                M{mIdx + 1}: {module.title.split(": ")[1] || module.title}
-              </h3>
-              <div className="space-y-1">
-                {module.lectures.map((lec) => {
-                  const isActive = lec.id === lectureId;
-                  return (
-                    <Link
-                      key={lec.id}
-                      href={`/courses/${course.id}/${lec.id}`}
-                      onClick={() => setSidebarOpen(false)}
-                      className={cn(
-                        "flex items-start gap-2.5 p-2 rounded-lg text-xs font-medium transition-all",
-                        isActive
-                          ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                      )}
-                    >
-                      <FileText className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-                      <span className="line-clamp-2">{lec.title.split(": ")[1] || lec.title}</span>
-                    </Link>
-                  );
-                })}
+          {course.modules.map((module, mIdx) => {
+            const doneInModule = module.lectures.filter((lec) =>
+              completedLectures.includes(lec.id)
+            ).length;
+            return (
+              <div key={module.id} className="space-y-2">
+                <div className="flex items-center justify-between pl-2 pr-1">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    M{mIdx + 1}: {module.title.split(": ")[1] || module.title}
+                  </h3>
+                  {mounted && doneInModule > 0 && (
+                    <span className="text-[10px] font-semibold text-success shrink-0">
+                      {doneInModule}/{module.lectures.length}
+                    </span>
+                  )}
+                </div>
+                <div className="space-y-1">
+                  {module.lectures.map((lec) => {
+                    const isActive = lec.id === lectureId;
+                    const isDone = completedLectures.includes(lec.id);
+                    return (
+                      <Link
+                        key={lec.id}
+                        href={`/courses/${course.id}/${lec.id}`}
+                        onClick={() => setSidebarOpen(false)}
+                        className={cn(
+                          "flex items-start gap-2.5 p-2 rounded-lg text-xs font-medium transition-all",
+                          isActive
+                            ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )}
+                      >
+                        {mounted && isDone ? (
+                          <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-success" />
+                        ) : (
+                          <Circle
+                            className={cn(
+                              "h-3.5 w-3.5 mt-0.5 shrink-0",
+                              isActive ? "text-primary-foreground/70" : "text-border"
+                            )}
+                          />
+                        )}
+                        <span className="line-clamp-2">{lec.title.split(": ")[1] || lec.title}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
+        {/* Overall course progress footer */}
+        {mounted && (
+          <div className="p-4 border-t border-border/60 bg-muted/20 no-print">
+            <div className="flex items-center justify-between mb-1.5 text-[11px] font-medium">
+              <span className="text-muted-foreground flex items-center gap-1">
+                <Trophy className="h-3 w-3 text-star" />
+                Course progress
+              </span>
+              <span className="font-semibold text-foreground">
+                {completedLectures.length}/{allLectures.length}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-border/60 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-success transition-all duration-500"
+                style={{
+                  width: `${(completedLectures.length / allLectures.length) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* Backdrop for mobile sidebar */}
@@ -228,6 +296,26 @@ export default function LectureNotesPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={handleToggleComplete}
+              className={cn(
+                buttonVariants({ variant: isCompleted ? "default" : "outline", size: "sm" }),
+                "rounded-xl gap-1.5 text-xs h-9 transition-all"
+              )}
+              aria-pressed={isCompleted}
+            >
+              {isCompleted ? (
+                <>
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Completed
+                </>
+              ) : (
+                <>
+                  <Circle className="h-3.5 w-3.5" />
+                  Mark Complete
+                </>
+              )}
+            </button>
             <button
               onClick={handleDownloadPDF}
               disabled={isExporting}
@@ -355,6 +443,23 @@ export default function LectureNotesPage() {
             </pre>
           </div>
 
+          {/* Live Python Playground — runs the lecture code in-browser */}
+          <div className="my-8 no-print">
+            <div className="flex items-center gap-2 mb-3">
+              <Terminal className="h-4 w-4 text-primary" />
+              <h2 className="text-sm font-semibold text-foreground">
+                Try It Yourself
+              </h2>
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                No setup · runs in your browser
+              </span>
+            </div>
+            <PythonPlayground
+              initialCode={activeLecture.codeSnippet}
+              expectedOutput={activeLecture.codeOutput}
+            />
+          </div>
+
           {/* Code Visualization Tips */}
           {activeLecture.visualizationTips &&
             activeLecture.visualizationTips.length > 0 && (
@@ -460,6 +565,22 @@ export default function LectureNotesPage() {
                   </details>
                 ))}
               </div>
+            </section>
+          )}
+
+          {/* Interactive Quiz */}
+          {LECTURE_QUIZZES[activeLecture.id] && (
+            <section className="my-8 no-print">
+              <div className="flex items-center gap-2 mb-3">
+                <Trophy className="h-4 w-4 text-star" />
+                <h2 className="text-sm font-semibold text-foreground">
+                  Test Your Knowledge
+                </h2>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Instant feedback
+                </span>
+              </div>
+              <LectureQuiz quiz={LECTURE_QUIZZES[activeLecture.id]} />
             </section>
           )}
 

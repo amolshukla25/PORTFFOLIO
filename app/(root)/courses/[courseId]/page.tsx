@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Script from "next/script";
 import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap, List } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
+import CourseProgressPanel from "@/components/courses/course-progress-panel";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
@@ -187,6 +188,18 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
             Instructor: <span className="font-normal text-muted-foreground">{course.instructor}</span>
           </span>
         </div>
+      </div>
+
+      {/* Progress tracker — completion state persisted to localStorage */}
+      <div className="mb-10">
+        <CourseProgressPanel
+          courseId={course.id}
+          modules={course.modules.map((m) => ({
+            id: m.id,
+            title: m.title,
+            lectures: m.lectures.map((l) => ({ id: l.id, title: l.title })),
+          }))}
+        />
       </div>
 
       {/* Table of Contents — every module & lecture linked for navigation + internal linking */}

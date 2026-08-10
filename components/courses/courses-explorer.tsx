@@ -13,6 +13,7 @@ import {
   Clock,
   Code,
   Compass,
+  FileText,
   GraduationCap,
   Layers,
   Network,
@@ -140,6 +141,28 @@ export default function CoursesExplorer() {
       return true;
     });
   }, [query, difficulty, category]);
+
+  // Lecture-level search: jump straight to any lecture that matches the query
+  const lectureResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return COURSES.flatMap((course) =>
+      course.modules.flatMap((module) =>
+        module.lectures
+          .filter((lec) =>
+            [lec.title, lec.shortDescription, module.title]
+              .join(" ")
+              .toLowerCase()
+              .includes(q)
+          )
+          .map((lec) => ({
+            course,
+            module,
+            lecture: lec,
+          }))
+      )
+    ).slice(0, 12);
+  }, [query]);
 
   const hasFilters = Boolean(query || difficulty || category);
 
@@ -282,7 +305,43 @@ export default function CoursesExplorer() {
               </div>
             </div>
 
-            {filteredCourses.length === 0 ? (
+            {/* Lecture results from the search query */}
+            {lectureResults.length > 0 && (
+              <div className="mb-8 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden">
+                <div className="px-5 py-3.5 border-b border-border/60 bg-muted/20 flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">
+                    Lectures found
+                  </span>
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    {lectureResults.length} result{lectureResults.length > 1 ? "s" : ""}
+                  </span>
+                </div>
+                <ul className="divide-y divide-border/50">
+                  {lectureResults.map(({ course, module, lecture }) => (
+                    <li key={lecture.id}>
+                      <Link
+                        href={`/courses/${course.id}/${lecture.id}`}
+                        className="flex items-start gap-3 px-5 py-3.5 transition-colors hover:bg-muted/40"
+                      >
+                        <FileText className="h-4 w-4 mt-0.5 shrink-0 text-primary/60" />
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-foreground truncate">
+                            {lecture.title}
+                          </span>
+                          <span className="block text-xs text-muted-foreground truncate mt-0.5">
+                            {course.title} · {module.title.split(": ")[1] || module.title}
+                          </span>
+                        </span>
+                        <ChevronRight className="h-4 w-4 ml-auto shrink-0 text-muted-foreground/50" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {filteredCourses.length === 0 && lectureResults.length === 0 ? (
               <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-20 text-center">
                 <p className="mb-2 text-4xl">🎓</p>
                 <h3 className="text-lg font-semibold text-foreground">No courses match</h3>
@@ -302,7 +361,7 @@ export default function CoursesExplorer() {
                   </button>
                 )}
               </div>
-            ) : (
+            ) : filteredCourses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {filteredCourses.map((course) => {
                   const totalLectures = course.modules.reduce(
