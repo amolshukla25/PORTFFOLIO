@@ -17,5 +17,10 @@ export const routesConfig: any = {
       title: "Contact",
       href: "/contact",
     },
+    {
+      title: "Resume",
+      href: "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing",
+      isButton: true,
+    },
   ],
 };

@@ -16,6 +16,7 @@ import { pagesConfig } from "@/config/pages";
 import { featuredProjects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { featuredSkills } from "@/config/skills";
+import { COURSES } from "@/config/courses";
 import { getFeaturedBlogs } from "@/lib/blogs";
 import { cn } from "@/lib/utils";
 import profileImg from "@/public/profile-img.svg";
@@ -182,66 +183,102 @@ export default function IndexPage() {
       </AnimatedSection>
       <AnimatedSection
         direction="up"
-        className="container space-y-6 bg-muted/40 py-10 my-14 rounded-3xl border border-border/50 p-6 md:p-10"
+        className="container space-y-6 py-10 my-14"
         id="courses"
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-            <Icons.star className="h-3.5 w-3.5 fill-current" /> Education & Training
-          </span>
           <AnimatedText
             as="h2"
             className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl"
           >
-            Student Study Hub
+            Syllabus & Courses
           </AnimatedText>
           <AnimatedText
             as="p"
             delay={0.2}
             className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
           >
-            I create and share comprehensive documented notes, interactive code workbooks, and downloadable PDF worksheets to help my students master Python, Data Science, and Agentic AI.
+            Access interactive notes, code walk-throughs, and downloadable PDF worksheets curated for students and learners.
           </AnimatedText>
         </div>
 
-        <div className="w-full max-w-2xl mx-auto pt-6">
-          <div className="group relative p-6 rounded-2xl bg-card border border-border shadow-md transition-all duration-300 hover:shadow-xl hover:border-primary/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="space-y-3 max-w-md">
-              <div className="flex items-center gap-2">
-                <span className="p-2 rounded-lg bg-muted text-primary">
-                  <Icons.brain className="h-6 w-6" />
-                </span>
-                <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                  Applied Data Science & Generative AI Hub
-                </h3>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Our first course covers data wrangling, advanced computations, predictive statistical modeling, and agentic loop pipeline architectures.
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">5 Lectures</span>
-                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">Python & sklearn</span>
-                <span className="text-[10px] bg-muted px-2 py-0.5 rounded-md font-medium text-muted-foreground">Agentic Workflows</span>
-              </div>
-            </div>
+        <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full items-stretch">
+            {COURSES.map((course, index) => {
+              const totalLectures = course.modules.reduce(
+                (acc, module) => acc + module.lectures.length,
+                0
+              );
 
-            <Link
-              href="/courses/data-science"
-              className={cn(
-                buttonVariants({ variant: "default" }),
-                "rounded-xl gap-2 font-medium shrink-0 w-full sm:w-auto text-center justify-center"
-              )}
-            >
-              Start Learning
-              <Icons.chevronRight className="h-4 w-4" />
-            </Link>
+              return (
+                <AnimatedSection
+                  key={course.id}
+                  delay={0.1 * (index + 1)}
+                  direction="up"
+                  className="h-full w-full min-w-0"
+                >
+                  <Link
+                    href={`/courses/${course.id}`}
+                    className="group relative flex flex-col bg-background border border-border rounded-lg overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:border-primary/40 hover:-translate-y-0.5"
+                  >
+                    <article className="flex flex-col h-full">
+                      {/* Content */}
+                      <div className="p-5 flex flex-col flex-grow gap-3">
+                        {/* Category tags */}
+                        <div className="flex flex-wrap gap-1.5" aria-label="Tags">
+                          {course.category.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary border border-primary/20"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-lg font-bold text-foreground leading-snug line-clamp-2 group-hover:text-primary transition-colors duration-200">
+                          {course.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-sm text-muted-foreground line-clamp-3 flex-grow leading-relaxed">
+                          {course.shortDescription}
+                        </p>
+
+                        {/* Stats footer */}
+                        <div className="flex items-center justify-between pt-2 border-t border-border mt-auto">
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1.5">
+                              <Icons.clock className="w-3.5 h-3.5" />
+                              {course.duration}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <Icons.page className="w-3.5 h-3.5" />
+                              {totalLectures} lectures
+                            </span>
+                          </div>
+                          <span
+                            className="inline-flex items-center gap-0.5 text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200"
+                            aria-hidden="true"
+                          >
+                            Learn
+                            <Icons.chevronRight className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  </Link>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
 
-        <AnimatedText delay={0.4} className="flex justify-center pt-2">
+        <AnimatedText delay={0.4} className="flex justify-center">
           <Link href="/courses">
             <Button variant={"outline"} className="rounded-xl">
-              <Icons.page className="mr-2 h-4 w-4" /> View All Courses
+              <Icons.chevronDown className="mr-2 h-4 w-4" /> View All Courses
             </Button>
           </Link>
         </AnimatedText>
