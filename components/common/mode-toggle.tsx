@@ -28,7 +28,7 @@ export function ModeToggle() {
   // instead of applying a class with no matching CSS.
   React.useEffect(() => {
     if (!mounted) return;
-    const valid = THEME_OPTIONS.map((o) => o.value);
+    const valid: string[] = THEME_OPTIONS.map((o) => o.value);
     if (theme && !valid.includes(theme)) {
       setTheme("light");
     }

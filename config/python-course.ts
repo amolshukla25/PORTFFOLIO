@@ -1,10 +1,10 @@
 import type { Course } from "./courses";
-import { MODULE_1 } from "./python-course/module-1";
-import { MODULE_2 } from "./python-course/module-2";
-import { MODULE_3 } from "./python-course/module-3";
-import { MODULE_4 } from "./python-course/module-4";
-import { MODULE_5 } from "./python-course/module-5";
-import { MODULE_6 } from "./python-course/module-6";
+import { MODULE_1 } from "./python-course-modules/module-1";
+import { MODULE_2 } from "./python-course-modules/module-2";
+import { MODULE_3 } from "./python-course-modules/module-3";
+import { MODULE_4 } from "./python-course-modules/module-4";
+import { MODULE_5 } from "./python-course-modules/module-5";
+import { MODULE_6 } from "./python-course-modules/module-6";
 
 /**
  * Complete Python Foundations Course — "From Zero to Professional".
