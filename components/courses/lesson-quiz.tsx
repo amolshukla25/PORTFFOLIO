@@ -10,16 +10,16 @@ import {
   X,
 } from "lucide-react";
 
-import type { LectureQuiz } from "@/config/quizzes";
+import type { LessonQuiz } from "@/config/quizzes";
 import { cn } from "@/lib/utils";
 
-interface LectureQuizProps {
-  quiz: LectureQuiz;
+interface LessonQuizProps {
+  quiz: LessonQuiz;
 }
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
-export default function LectureQuiz({ quiz }: LectureQuizProps) {
+export default function LessonQuiz({ quiz }: LessonQuizProps) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);

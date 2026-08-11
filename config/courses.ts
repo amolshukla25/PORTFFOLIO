@@ -7,7 +7,7 @@ export interface PracticeExercise {
   solution?: string;
 }
 
-export interface Lecture {
+export interface lesson {
   id: string;
   title: string;
   shortDescription: string;
@@ -29,7 +29,7 @@ export interface Module {
   id: string;
   title: string;
   description: string;
-  lectures: Lecture[];
+  lessons: lesson[];
 }
 
 export interface Course {
@@ -66,10 +66,10 @@ export const COURSES: Course[] = [
         id: "module-1-foundations",
         title: "Module 1: Foundations of Python & Ecosystem",
         description: "Set up the local environment and master Python fundamentals optimized for large data manipulation.",
-        lectures: [
+        lessons: [
           {
             id: "python-basics",
-            title: "Lecture 1: The Python Data Science Ecosystem",
+            title: "1: The Python Data Science Ecosystem",
             shortDescription: "Jupyter setup, virtual environments, variables, data structures, and list comprehensions.",
             duration: "45 mins",
             readingTime: "5 mins read",
@@ -119,10 +119,10 @@ High Scorers (Score > 80): {'amol': 95, 'rahul': 82, 'priya': 88}`
         id: "module-2-manipulation",
         title: "Module 2: Vectorized Computing & Wrangling",
         description: "Transform raw, unstructured datasets into clean, actionable insights using NumPy and Pandas.",
-        lectures: [
+        lessons: [
           {
             id: "numpy-pandas",
-            title: "Lecture 2: NumPy Arrays & Pandas Wrangling",
+            title: "2: NumPy Arrays & Pandas Wrangling",
             shortDescription: "N-dimensional arrays, vectorized functions, DataFrame operations, grouping, and handling missing data.",
             duration: "60 mins",
             readingTime: "8 mins read",
@@ -201,10 +201,10 @@ Marketing          70000.0                1             4.0`
         id: "module-3-visualizations",
         title: "Module 3: Visual Analytics",
         description: "Design premium visual dashboards that communicate statistical patterns clearly.",
-        lectures: [
+        lessons: [
           {
             id: "visualization",
-            title: "Lecture 3: Visualizing Patterns with Seaborn & Matplotlib",
+            title: "3: Visualizing Patterns with Seaborn & Matplotlib",
             shortDescription: "Building distribution charts, relational scatter plots, and correlation heatmaps.",
             duration: "50 mins",
             readingTime: "6 mins read",
@@ -258,10 +258,10 @@ Feature_B   0.894236   1.000000
         id: "module-4-ml",
         title: "Module 4: Machine Learning Foundations",
         description: "Fit mathematical models to make predictions on unseen records.",
-        lectures: [
+        lessons: [
           {
             id: "supervised-learning",
-            title: "Lecture 4: Predictive Modeling with Scikit-Learn",
+            title: "4: Predictive Modeling with Scikit-Learn",
             shortDescription: "Features vs Labels, train-test splitting, fitting Linear Regression, and checking MSE / R2.",
             duration: "75 mins",
             readingTime: "10 mins read",
@@ -322,10 +322,10 @@ R-squared Score (R2): 0.8072`
         id: "module-5-agentic-ai",
         title: "Module 5: Agentic AI Pipelines",
         description: "Deploy large language models in an agentic loop to write and execute code dynamically.",
-        lectures: [
+        lessons: [
           {
             id: "agentic-ai",
-            title: "Lecture 5: Developing Intelligent Agentic Data Pipelines",
+            title: "5: Developing Intelligent Agentic Data Pipelines",
             shortDescription: "Tool-calling patterns, ReAct architecture, safety sandboxing, and orchestrating analytical agents.",
             duration: "90 mins",
             readingTime: "12 mins read",

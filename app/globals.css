@@ -457,41 +457,41 @@
   display: block;
 }
 
-/* ─── Lecture / Course Documentation Prose ────────────────────────────────── */
+/* ─── lesson / Course Documentation Prose ────────────────────────────────── */
 
-.lecture-prose {
+.lesson-prose {
   font-size: 1.0625rem;
 }
 
 /* Reuses the full .blog-content prose system (headings, tables, blockquotes,
    lists, code) and only tunes the reading experience for course notes. */
-.lecture-content {
+.lesson-content {
   font-size: 1.0625rem;
   line-height: 1.85;
 }
 
-.lecture-content p {
+.lesson-content p {
   margin-bottom: 1.25rem;
 }
 
-.lecture-content h2 {
+.lesson-content h2 {
   font-size: 1.75rem;
   letter-spacing: -0.02em;
   margin-top: 2.5rem;
 }
 
-.lecture-content h3 {
+.lesson-content h3 {
   font-size: 1.375rem;
   letter-spacing: -0.01em;
   margin-top: 2rem;
 }
 
-.lecture-content pre {
+.lesson-content pre {
   background: hsl(var(--code-bg));
   color: hsl(var(--code-fg));
 }
 
-.lecture-content pre code {
+.lesson-content pre code {
   background: none;
   border: none;
   padding: 0;
@@ -499,13 +499,13 @@
   font-size: inherit;
 }
 
-.lecture-content code:not(pre > code) {
+.lesson-content code:not(pre > code) {
   background: hsl(var(--muted));
   color: hsl(var(--primary));
 }
 
 /* LaTeX-style math tokens ($$expr$$) rendered inside fenced math blocks */
-.lecture-content pre code.language-math {
+.lesson-content pre code.language-math {
   font-family: var(--font-heading), serif;
   font-style: italic;
   letter-spacing: 0.01em;

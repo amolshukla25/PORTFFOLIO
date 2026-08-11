@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { Icons } from "@/components/common/icons";
 import ProjectDescription from "@/components/projects/project-description";
@@ -46,9 +46,9 @@ export async function generateMetadata({
 
 export default async function Project({ params }: ProjectPageProps) {
   const { projectId } = await params;
-  let project = Projects.find((val) => val.id === projectId);
+  const project = Projects.find((val) => val.id === projectId);
   if (!project) {
-    redirect("/projects");
+    notFound();
   }
 
   return (
@@ -65,7 +65,7 @@ export default async function Project({ params }: ProjectPageProps) {
       </Link>
       <div>
         <time
-          dateTime={Date.now().toString()}
+          dateTime={project.startDate.toISOString()}
           className="block text-sm text-muted-foreground"
         >
           {formatDateFromObj(project.startDate)}
@@ -97,7 +97,7 @@ export default async function Project({ params }: ProjectPageProps) {
           >
             <Image
               src={profileImg}
-              alt={"amol"}
+              alt="Amol Shukla"
               width={42}
               height={42}
               className="rounded-full bg-background"
@@ -155,7 +155,7 @@ export default async function Project({ params }: ProjectPageProps) {
                 <Image
                   src={img}
                   key={ind}
-                  alt={img}
+                  alt={page.description || `${page.title} — ${project.companyName}`}
                   width={720}
                   height={405}
                   className="my-4 rounded-md border bg-muted transition-colors"

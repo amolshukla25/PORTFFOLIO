@@ -1,56 +1,57 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 
-import LectureNotes from "@/components/courses/lecture-notes";
+import LessonNotes from "@/components/courses/lesson-notes";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 
-interface LecturePageProps {
+interface LessonPageProps {
   params: Promise<{
     courseId: string;
-    lectureId: string;
+    lessonId: string;
   }>;
 }
 
 export function generateStaticParams() {
   return COURSES.flatMap((course) =>
     course.modules.flatMap((module) =>
-      module.lectures.map((lecture) => ({
+      module.lessons.map((lesson) => ({
         courseId: course.id,
-        lectureId: lecture.id,
+        lessonId: lesson.id,
       }))
     )
   );
 }
 
-function getLecture(courseId: string, lectureId: string) {
+function getlesson(courseId: string, lessonId: string) {
   const course = COURSES.find((c) => c.id === courseId);
-  const lecture = course
-    ?.modules.flatMap((m) => m.lectures)
-    .find((l) => l.id === lectureId);
-  return { course, lecture };
+  const lesson = course
+    ?.modules.flatMap((m) => m.lessons)
+    .find((l) => l.id === lessonId);
+  return { course, lesson };
 }
 
 export async function generateMetadata({
   params,
-}: LecturePageProps): Promise<Metadata> {
-  const { courseId, lectureId } = await params;
-  const { course, lecture } = getLecture(courseId, lectureId);
+}: LessonPageProps): Promise<Metadata> {
+  const { courseId, lessonId } = await params;
+  const { course, lesson } = getlesson(courseId, lessonId);
 
-  if (!course || !lecture) {
-    return { title: "Lecture Not Found" };
+  if (!course || !lesson) {
+    return { title: "Lesson Not Found" };
   }
 
-  const url = `${siteConfig.url}/courses/${courseId}/${lectureId}`;
-  const title = `${lecture.title} — ${course.title}`;
+  const url = `${siteConfig.url}/courses/${courseId}/${lessonId}`;
+  const title = `${lesson.title} — ${course.title}`;
 
   return {
     title,
-    description: lecture.shortDescription,
+    description: lesson.shortDescription,
     alternates: { canonical: url },
     openGraph: {
       title: `${title} | ${siteConfig.name}`,
-      description: lecture.shortDescription,
+      description: lesson.shortDescription,
       url,
       siteName: siteConfig.name,
       type: "article",
@@ -59,7 +60,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${siteConfig.name}`,
-      description: lecture.shortDescription,
+      description: lesson.shortDescription,
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,
     },
@@ -67,71 +68,71 @@ export async function generateMetadata({
   };
 }
 
-export default async function LecturePage({
+export default async function lessonPage({
   params,
-}: LecturePageProps) {
-  const { courseId, lectureId } = await params;
-  const { course, lecture } = getLecture(courseId, lectureId);
+}: LessonPageProps) {
+  const { courseId, lessonId } = await params;
+  const { course, lesson } = getlesson(courseId, lessonId);
 
-  if (!course || !lecture) {
-    return null;
+  if (!course || !lesson) {
+    notFound();
   }
 
-  const url = `${siteConfig.url}/courses/${courseId}/${lectureId}`;
+  const url = `${siteConfig.url}/courses/${courseId}/${lessonId}`;
 
-  // FAQPage schema generated from real lecture content for rich results
+  // FAQPage schema generated from real lesson content for rich results
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: `What is covered in "${lecture.title}"?`,
+        name: `What is covered in "${lesson.title}"?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: lecture.shortDescription,
+          text: lesson.shortDescription,
         },
       },
       {
         "@type": "Question",
-        name: `How long does it take to learn ${lecture.title.split(": ").pop()?.toLowerCase() ?? "this lesson"}?`,
+        name: `How long does it take to learn ${lesson.title.split(": ").pop()?.toLowerCase() ?? "this lesson"}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `The lesson takes about ${lecture.readingTime.replace(/^.*?(\d+)/, "$1")} to read, with an estimated lecture duration of ${lecture.duration}.`,
+          text: `The lesson takes about ${lesson.readingTime.replace(/^.*?(\d+)/, "$1")} to read, with an estimated lesson duration of ${lesson.duration}.`,
         },
       },
-      ...(lecture.visualizationTips?.length
+      ...(lesson.visualizationTips?.length
         ? [
             {
               "@type": "Question",
-              name: `What visualization tips help you master ${lecture.title.split(": ").pop() ?? "this topic"}?`,
+              name: `What visualization tips help you master ${lesson.title.split(": ").pop() ?? "this topic"}?`,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: lecture.visualizationTips.slice(0, 2).join(" "),
+                text: lesson.visualizationTips.slice(0, 2).join(" "),
               },
             },
           ]
         : []),
-      ...(lecture.tipsAndTricks?.length
+      ...(lesson.tipsAndTricks?.length
         ? [
             {
               "@type": "Question",
-              name: `What are the best professional tips and tricks for ${lecture.title.split(": ").pop() ?? "this topic"}?`,
+              name: `What are the best professional tips and tricks for ${lesson.title.split(": ").pop() ?? "this topic"}?`,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: lecture.tipsAndTricks.slice(0, 2).join(" "),
+                text: lesson.tipsAndTricks.slice(0, 2).join(" "),
               },
             },
           ]
         : []),
-      ...(lecture.practice?.length
+      ...(lesson.practice?.length
         ? [
             {
               "@type": "Question",
-              name: `Can you practice ${lecture.title.split(": ").pop() ?? "this topic"} with exercises?`,
+              name: `Can you practice ${lesson.title.split(": ").pop() ?? "this topic"} with exercises?`,
               acceptedAnswer: {
                 "@type": "Answer",
-                text: `Yes — this lesson includes ${lecture.practice.length} hands-on practice exercise${lecture.practice.length > 1 ? "s" : ""} with difficulty levels and step-by-step solutions: ${lecture.practice
+                text: `Yes — this lesson includes ${lesson.practice.length} hands-on practice exercise${lesson.practice.length > 1 ? "s" : ""} with difficulty levels and step-by-step solutions: ${lesson.practice
                   .slice(0, 2)
                   .map((p) => p.title)
                   .join(", ")}.`,
@@ -153,11 +154,11 @@ export default async function LecturePage({
   return (
     <>
       <Script
-        id="schema-faq-lecture"
+        id="schema-faq-lesson"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <LectureNotes />
+      <LessonNotes />
     </>
   );
 }

@@ -5,10 +5,10 @@ export const MODULE_1: Module = {
   title: "Module 1: Python Fundamentals",
   description:
     "Set up Python, write your first program, and master variables, data types, strings, and operators with visual memory models.",
-  lectures: [
+  lessons: [
     {
       id: "hello-world-python",
-      title: "Lecture 1: Hello, Python! Setup & Your First Program",
+      title: "Lesson 1: Hello, Python! Setup & Your First Program",
       shortDescription:
         "Installing Python, the REPL, print statements, comments, and why indentation matters.",
       duration: "30 mins",
@@ -17,7 +17,7 @@ export const MODULE_1: Module = {
 
 Python is a general-purpose, high-level programming language created by Guido van Rossum and first released in 1991. It was designed with one guiding philosophy: **code should be readable and easy to write**. Because Python reads almost like plain English, you can focus on *thinking* about the problem instead of fighting the syntax. Today Python is the #1 language for beginners, data science, machine learning, artificial intelligence, and web back-ends — which is exactly why this course starts here.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Install Python and verify it works on your machine
 - Write and run your very first program
@@ -110,7 +110,7 @@ print("Back at top level")          # no indent = outside
 
 #### How to Visualize Code Execution
 
-Imagine Python reading your file **top to bottom, one line at a time**, like a person following a recipe. Every \`print()\` is a "shout" to the console — the order of the shouts is exactly the order of execution. There is no jumping ahead and no skipping lines (until we learn about loops and functions in later lectures).
+Imagine Python reading your file **top to bottom, one line at a time**, like a person following a recipe. Every \`print()\` is a "shout" to the console — the order of the shouts is exactly the order of execution. There is no jumping ahead and no skipping lines (until we learn about loops and functions in later lessons).
 
 ---
 
@@ -191,7 +191,7 @@ AI | ML | Python`,
     },
     {
       id: "variables-io",
-      title: "Lecture 2: Variables, Data Types & Input/Output",
+      title: "Lesson 2: Variables, Data Types & Input/Output",
       shortDescription:
         "Dynamic typing, type casting, memory references, printing statements, and reading standard input.",
       duration: "35 mins",
@@ -200,7 +200,7 @@ AI | ML | Python`,
 
 A **variable** is a named label that points to a value stored in memory. Think of it as a sticky note attached to a box: the note has a name (like \`age\`), and the box holds a value (like \`24\`). You can move the note to a different box anytime — that is called **reassignment**.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Create and reuse variables with proper naming rules
 - Understand Python's dynamic typing and the \`type()\` function
@@ -280,7 +280,7 @@ age = int(input("Your age: "))     # "25" -> 25
 price = float(input("Price: "))    # "9.99" -> 9.99
 \`\`\`
 
-If the user types something that cannot be converted (like \`"abc"\`), Python raises a \`ValueError\`. We will learn how to catch these errors gracefully in Lecture 21.
+If the user types something that cannot be converted (like \`"abc"\`), Python raises a \`ValueError\`. We will learn how to catch these errors gracefully in Lesson 21.
 
 #### Comparison: Dynamic vs Static Typing
 
@@ -382,7 +382,7 @@ Nice to meet you, Amol`,
     },
     {
       id: "strings-mastery",
-      title: "Lecture 3: Strings — Slicing, Methods & f-Strings",
+      title: "Lesson 3: Strings — Slicing, Methods & f-Strings",
       shortDescription:
         "String indexing and slicing, powerful string methods, and modern formatted strings.",
       duration: "40 mins",
@@ -400,7 +400,7 @@ string"""
 
 Strings are **immutable**: once created, you cannot change a string in place. Any operation that "changes" a string actually creates a brand-new one.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Index and slice strings with positive and negative indexes
 - Use the most important string methods
@@ -520,7 +520,7 @@ Professional Python code in 2026 uses f-strings almost exclusively.
 - Negative indexes count from the end; \`[::-1]\` reverses a string.
 - String methods return new strings — assign the result.
 - f-strings with \`{...}\` are the professional formatting standard.
-- Slicing works identically on lists and tuples (Lecture 8).
+- Slicing works identically on lists and tuples (Lesson 8).
 
 **Next up:** Operators & expressions — how Python does math and logic.`,
       codeLanguage: "python",
@@ -590,7 +590,7 @@ Welcome to Python — 25 lessons!`,
     },
     {
       id: "operators-expressions",
-      title: "Lecture 4: Operators & Expressions",
+      title: "Lesson 4: Operators & Expressions",
       shortDescription:
         "Arithmetic, comparison, logical, and assignment operators — plus expression evaluation order.",
       duration: "35 mins",
@@ -599,7 +599,7 @@ Welcome to Python — 25 lessons!`,
 
 Operators are the **verbs of programming** — they tell Python what to *do* with values. You already use them in math class; Python just gives them superpowers like integer division and modulo. An **expression** is any combination of values and operators that Python can evaluate to a single result.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Use arithmetic, comparison, and logical operators
 - Understand operator precedence (order of operations)

@@ -5,10 +5,10 @@ export const MODULE_5: Module = {
   title: "Module 5: Object-Oriented Python",
   description:
     "Model the real world with classes, inheritance, encapsulation, magic methods, and dataclasses.",
-  lectures: [
+  lessons: [
     {
       id: "classes-objects",
-      title: "Lecture 16: Classes, Instances & Inheritance",
+      title: "Lesson 16: Classes, Instances & Inheritance",
       shortDescription:
         "Object structure, __init__ constructor, instance parameters, methods, and parent-child overrides.",
       duration: "50 mins",
@@ -17,7 +17,7 @@ export const MODULE_5: Module = {
 
 Object-Oriented Programming (OOP) is a design philosophy that groups related data (**attributes**) and behavior (**methods**) into cohesive packages called **objects**. Instead of scattering data and functions around your program, you model real-world things — a User, an Order, a Course — as objects where the data and its operations live together.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Define classes and create instances
 - Initialize objects with \`__init__\`
@@ -215,7 +215,7 @@ Name: Amol Shukla, Role: Instructor | Dept: AI Engineering | Course: Data Scienc
     },
     {
       id: "inheritance-polymorphism",
-      title: "Lecture 17: Inheritance & Polymorphism",
+      title: "Lesson 17: Inheritance & Polymorphism",
       shortDescription:
         "Deep-dive into inheritance, method overriding, polymorphism, isinstance, and the MRO.",
       duration: "50 mins",
@@ -224,7 +224,7 @@ Name: Amol Shukla, Role: Instructor | Dept: AI Engineering | Course: Data Scienc
 
 A child class inherits every attribute and method from its parent, then adds or overrides what it needs. This eliminates duplication and expresses **"is-a"** relationships: a \`Dog\` *is an* \`Animal\`, a \`Car\` *is a* \`Vehicle\`.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Override parent methods and call \`super()\`
 - Use polymorphism — one interface, many behaviors
@@ -401,7 +401,7 @@ Dog MRO: ['Dog', 'Animal', 'object']`,
     },
     {
       id: "encapsulation-magic-methods",
-      title: "Lecture 18: Encapsulation, Properties & Magic Methods",
+      title: "Lesson 18: Encapsulation, Properties & Magic Methods",
       shortDescription:
         "Private attributes, @property for smart access, and dunder methods that customize objects.",
       duration: "55 mins",
@@ -423,7 +423,7 @@ class BankAccount:
         self._balance = balance    # protected by convention
 \`\`\`
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Protect internal state with private conventions
 - Build smart attribute access with \`@property\`
@@ -592,7 +592,7 @@ Accounts equal: True`,
     },
     {
       id: "dataclasses",
-      title: "Lecture 19: Dataclasses & Modern OOP",
+      title: "Lesson 19: Dataclasses & Modern OOP",
       shortDescription:
         "Write less boilerplate with @dataclass, frozen data, and professional OOP best practices.",
       duration: "40 mins",
@@ -615,7 +615,7 @@ print(python)              # Course(title='Python', lessons=25, tags=['python', 
 print(python == Course("Python", 25, ["python", "ai"]))   # True — free __eq__
 \`\`\`
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Define dataclasses with type-annotated fields
 - Use \`field()\` and \`default_factory\` for mutable defaults

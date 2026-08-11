@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 
 // Pyodide: Python compiled to WebAssembly, loaded lazily from the CDN the
-// first time the user hits "Run" so lecture pages stay fast.
+// first time the user hits "Run" so lesson pages stay fast.
 const PYODIDE_VERSION = "0.26.4";
 const PYODIDE_URL = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/pyodide.js`;
 

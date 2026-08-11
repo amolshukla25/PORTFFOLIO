@@ -32,12 +32,12 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 import { COURSES } from "@/config/courses";
-import { LECTURE_QUIZZES } from "@/config/quizzes";
+import { LESSON_QUIZZES } from "@/config/quizzes";
 import { siteConfig } from "@/config/site";
 import { useCourseProgress } from "@/hooks/use-course-progress";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import LectureQuiz from "./lecture-quiz";
+import LessonQuiz from "./lesson-quiz";
 import PythonPlayground from "./python-playground";
 
 // Renders $$math$$ tokens as styled inline math spans before remark parses
@@ -72,17 +72,17 @@ function RenderMarkdown({ content }: { content: string }) {
 
   return (
     <div
-      className="blog-content lecture-content max-w-none"
+      className="blog-content lesson-content max-w-none"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 }
 
-export default function LectureNotesPage() {
+export default function LessonNotesPage() {
   const router = useRouter();
   const params = useParams();
   const courseId = params.courseId as string;
-  const lectureId = params.lectureId as string;
+  const lessonId = params.lessonId as string;
 
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<"code" | "output">("code");
@@ -93,32 +93,32 @@ export default function LectureNotesPage() {
 
   // Progress tracking (localStorage-backed via zustand persist)
   const progress = useCourseProgress();
-  const completedLectures = mounted ? progress.completed[courseId] ?? [] : [];
-  const isCompleted = completedLectures.includes(lectureId);
+  const completedLessons = mounted ? progress.completed[courseId] ?? [] : [];
+  const isCompleted = completedLessons.includes(lessonId);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Find course and active lecture
+  // Find course and active lesson
   const course = COURSES.find((c) => c.id === courseId);
   if (!course) return null;
 
-  // Flatten all lectures to locate active lecture
-  const allLectures = course.modules.flatMap((m) => m.lectures);
-  const lectureIndex = allLectures.findIndex((l) => l.id === lectureId);
-  const activeLecture = allLectures[lectureIndex];
+  // Flatten all lessons to locate active lesson
+  const allLessons = course.modules.flatMap((m) => m.lessons);
+  const lessonIndex = allLessons.findIndex((l) => l.id === lessonId);
+  const activeLesson = allLessons[lessonIndex];
   
-  if (!activeLecture) return null;
+  if (!activeLesson) return null;
 
-  // Next & Previous Lectures
-  const prevLecture = lectureIndex > 0 ? allLectures[lectureIndex - 1] : null;
-  const nextLecture = lectureIndex < allLectures.length - 1 ? allLectures[lectureIndex + 1] : null;
+  // Next & Previous lessons
+  const prevLesson = lessonIndex > 0 ? allLessons[lessonIndex - 1] : null;
+  const nextLesson = lessonIndex < allLessons.length - 1 ? allLessons[lessonIndex + 1] : null;
 
   // Copy code to clipboard handler
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(activeLecture.codeSnippet);
+      await navigator.clipboard.writeText(activeLesson.codeSnippet);
       setCopied(true);
       showToast("Code snippet copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
@@ -133,10 +133,10 @@ export default function LectureNotesPage() {
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Toggle completion for the current lecture
+  // Toggle completion for the current lesson
   const handleToggleComplete = () => {
-    progress.toggleLecture(courseId, lectureId);
-    showToast(isCompleted ? "Lecture marked as incomplete" : "Lecture marked as complete! 🎉");
+    progress.togglelesson(courseId, lessonId);
+    showToast(isCompleted ? "Lesson marked as incomplete" : "Lesson marked as complete! 🎉");
   };
 
   // Trigger PDF printing (leveraging custom print styles in globals.css)
@@ -190,25 +190,30 @@ export default function LectureNotesPage() {
 
         <div className="flex-1 overflow-y-auto p-4 space-y-6">
           {course.modules.map((module, mIdx) => {
-            const doneInModule = module.lectures.filter((lec) =>
-              completedLectures.includes(lec.id)
+            const doneInModule = module.lessons.filter((lec) =>
+              completedLessons.includes(lec.id)
             ).length;
             return (
               <div key={module.id} className="space-y-2">
-                <div className="flex items-center justify-between pl-2 pr-1">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
-                    M{mIdx + 1}: {module.title.split(": ")[1] || module.title}
+                <div className="flex items-center justify-between gap-2 pl-2 pr-1">
+                  <h3 className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-primary/10 text-[9px] font-bold text-primary">
+                      {mIdx + 1}
+                    </span>
+                    <span className="truncate">
+                      {module.title.split(": ")[1] || module.title}
+                    </span>
                   </h3>
                   {mounted && doneInModule > 0 && (
-                    <span className="text-[10px] font-semibold text-success shrink-0">
-                      {doneInModule}/{module.lectures.length}
+                    <span className="shrink-0 rounded-full bg-success/10 px-1.5 py-0.5 text-[10px] font-semibold text-success">
+                      {doneInModule}/{module.lessons.length}
                     </span>
                   )}
                 </div>
                 <div className="space-y-1">
-                  {module.lectures.map((lec) => {
-                    const isActive = lec.id === lectureId;
-                    const isDone = completedLectures.includes(lec.id);
+                  {module.lessons.map((lec) => {
+                    const isActive = lec.id === lessonId;
+                    const isDone = completedLessons.includes(lec.id);
                     return (
                       <Link
                         key={lec.id}
@@ -250,14 +255,14 @@ export default function LectureNotesPage() {
                 Course progress
               </span>
               <span className="font-semibold text-foreground">
-                {completedLectures.length}/{allLectures.length}
+                {completedLessons.length}/{allLessons.length}
               </span>
             </div>
             <div className="h-1.5 rounded-full bg-border/60 overflow-hidden">
               <div
                 className="h-full rounded-full bg-success transition-all duration-500"
                 style={{
-                  width: `${(completedLectures.length / allLectures.length) * 100}%`,
+                  width: `${(completedLessons.length / allLessons.length) * 100}%`,
                 }}
               />
             </div>
@@ -291,7 +296,7 @@ export default function LectureNotesPage() {
               <span>/</span>
               <Link href={`/courses/${course.id}`} className="hover:text-foreground transition-colors truncate max-w-[120px]">{course.title}</Link>
               <span>/</span>
-              <span className="text-foreground truncate max-w-[150px]">{activeLecture.title}</span>
+              <span className="text-foreground truncate max-w-[150px]">{activeLesson.title}</span>
             </div>
           </div>
 
@@ -337,29 +342,29 @@ export default function LectureNotesPage() {
         {/* Note Paper (Print container) */}
         <article className="w-full max-w-4xl px-4 sm:px-8 py-8 sm:py-12 print-container flex-grow space-y-8">
           
-          {/* Lecture Metadata */}
+          {/* lesson Metadata */}
           <div className="space-y-3 border-b border-border/60 pb-6">
             <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5 text-primary/70" />
-                {activeLecture.duration} lecture duration
+                {activeLesson.duration} lesson duration
               </span>
               <span>•</span>
-              <span>{activeLecture.readingTime}</span>
+              <span>{activeLesson.readingTime}</span>
             </div>
             
             <h1 className="font-heading text-3xl sm:text-4xl leading-tight text-foreground font-bold">
-              {activeLecture.title}
+              {activeLesson.title}
             </h1>
             
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed italic">
-              {activeLecture.shortDescription}
+              {activeLesson.shortDescription}
             </p>
           </div>
 
           {/* Documented Notes Content */}
-          <div className="lecture-prose">
-            <RenderMarkdown content={activeLecture.contentMarkdown} />
+          <div className="lesson-prose">
+            <RenderMarkdown content={activeLesson.contentMarkdown} />
           </div>
 
           {/* Interactive Code Section Widget (no-print on PDF if you wish, or keep it formatted as standard text box) */}
@@ -367,7 +372,7 @@ export default function LectureNotesPage() {
             <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-2">
                 <FileCode className="h-5 w-5 text-primary" />
-                <span className="text-sm font-semibold text-foreground">Interactive Lecture Code Snippet</span>
+                <span className="text-sm font-semibold text-foreground">Interactive Lesson Code Snippet</span>
               </div>
               
               {/* Tab Selector */}
@@ -408,19 +413,19 @@ export default function LectureNotesPage() {
                 >
                   {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
                 </button>
-                <pre className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-fg leading-relaxed max-h-[350px]">
-                  <code>{activeLecture.codeSnippet}</code>
+                <pre className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-fg leading-relaxed">
+                  <code>{activeLesson.codeSnippet}</code>
                 </pre>
               </div>
             ) : (
-              <div className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-accent leading-relaxed border-t border-border/20 max-h-[350px]">
+              <div className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-accent leading-relaxed border-t border-border/20">
                 <div className="text-code-fg/50 mb-2"># Simulated stdout run execution:</div>
-                <code>{activeLecture.codeOutput}</code>
+                <code>{activeLesson.codeOutput}</code>
               </div>
             )}
             
             <div className="px-5 py-3.5 bg-muted/10 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
-              <span>Language: <span className="font-semibold text-foreground capitalize">{activeLecture.codeLanguage}</span></span>
+              <span>Language: <span className="font-semibold text-foreground capitalize">{activeLesson.codeLanguage}</span></span>
               <button
                 onClick={handleCopy}
                 className="flex items-center gap-1 hover:text-foreground transition-colors font-medium"
@@ -433,17 +438,17 @@ export default function LectureNotesPage() {
 
           {/* Printable copy of Code snippet for the PDF output (hidden on screen, visible during printing) */}
           <div className="hidden print:block border border-black/20 p-5 rounded-lg my-8">
-            <h4 className="font-bold mb-2">Lecture Code (Python)</h4>
+            <h4 className="font-bold mb-2">Lesson Code (Python)</h4>
             <pre className="font-mono text-xs p-3 bg-zinc-50 border border-zinc-200 rounded whitespace-pre-wrap">
-              <code>{activeLecture.codeSnippet}</code>
+              <code>{activeLesson.codeSnippet}</code>
             </pre>
             <h4 className="font-bold mt-4 mb-2">Console Output</h4>
             <pre className="font-mono text-xs p-3 bg-zinc-50 border border-zinc-200 rounded whitespace-pre-wrap">
-              <code>{activeLecture.codeOutput}</code>
+              <code>{activeLesson.codeOutput}</code>
             </pre>
           </div>
 
-          {/* Live Python Playground — runs the lecture code in-browser */}
+          {/* Live Python Playground — runs the lesson code in-browser */}
           <div className="my-8 no-print">
             <div className="flex items-center gap-2 mb-3">
               <Terminal className="h-4 w-4 text-primary" />
@@ -455,14 +460,14 @@ export default function LectureNotesPage() {
               </span>
             </div>
             <PythonPlayground
-              initialCode={activeLecture.codeSnippet}
-              expectedOutput={activeLecture.codeOutput}
+              initialCode={activeLesson.codeSnippet}
+              expectedOutput={activeLesson.codeOutput}
             />
           </div>
 
           {/* Code Visualization Tips */}
-          {activeLecture.visualizationTips &&
-            activeLecture.visualizationTips.length > 0 && (
+          {activeLesson.visualizationTips &&
+            activeLesson.visualizationTips.length > 0 && (
               <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
                 <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
                   <Eye className="h-4 w-4 text-primary" />
@@ -471,7 +476,7 @@ export default function LectureNotesPage() {
                   </h2>
                 </div>
                 <ul className="p-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
-                  {activeLecture.visualizationTips.map((tip, tipIdx) => (
+                  {activeLesson.visualizationTips.map((tip, tipIdx) => (
                     <li key={tipIdx} className="flex gap-3">
                       <span className="mt-0.5 shrink-0 text-primary" aria-hidden>
                         🧠
@@ -484,8 +489,8 @@ export default function LectureNotesPage() {
             )}
 
           {/* Tips & Tricks */}
-          {activeLecture.tipsAndTricks &&
-            activeLecture.tipsAndTricks.length > 0 && (
+          {activeLesson.tipsAndTricks &&
+            activeLesson.tipsAndTricks.length > 0 && (
               <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
                 <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
                   <Lightbulb className="h-4 w-4 text-star" />
@@ -494,7 +499,7 @@ export default function LectureNotesPage() {
                   </h2>
                 </div>
                 <ul className="p-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
-                  {activeLecture.tipsAndTricks.map((tip, tipIdx) => (
+                  {activeLesson.tipsAndTricks.map((tip, tipIdx) => (
                     <li key={tipIdx} className="flex gap-3">
                       <span className="mt-0.5 shrink-0 text-star" aria-hidden>
                         ⚡
@@ -507,7 +512,7 @@ export default function LectureNotesPage() {
             )}
 
           {/* Practice Exercises */}
-          {activeLecture.practice && activeLecture.practice.length > 0 && (
+          {activeLesson.practice && activeLesson.practice.length > 0 && (
             <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8">
               <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
@@ -517,11 +522,11 @@ export default function LectureNotesPage() {
                   </h2>
                 </div>
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  {activeLecture.practice.length} exercises
+                  {activeLesson.practice.length} exercises
                 </span>
               </div>
               <div className="divide-y divide-border/60">
-                {activeLecture.practice.map((exercise, exIdx) => (
+                {activeLesson.practice.map((exercise, exIdx) => (
                   <details key={exercise.id} className="group px-5 py-4">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
                       <span className="flex items-center gap-2.5 text-sm font-semibold text-foreground transition-colors group-open:text-primary">
@@ -569,7 +574,7 @@ export default function LectureNotesPage() {
           )}
 
           {/* Interactive Quiz */}
-          {LECTURE_QUIZZES[activeLecture.id] && (
+          {LESSON_QUIZZES[activeLesson.id] && (
             <section className="my-8 no-print">
               <div className="flex items-center gap-2 mb-3">
                 <Trophy className="h-4 w-4 text-star" />
@@ -580,37 +585,37 @@ export default function LectureNotesPage() {
                   Instant feedback
                 </span>
               </div>
-              <LectureQuiz quiz={LECTURE_QUIZZES[activeLecture.id]} />
+              <LessonQuiz quiz={LESSON_QUIZZES[activeLesson.id]} />
             </section>
           )}
 
           {/* Up Next — Continue Learning CTA */}
-          {nextLecture ? (
+          {nextLesson ? (
             <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
               <div className="bg-gradient-to-r from-primary/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">
                   Up next · Continue learning
                 </p>
                 <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground leading-snug">
-                  {nextLecture.title.split(": ")[1] || nextLecture.title}
+                  {nextLesson.title.split(": ")[1] || nextLesson.title}
                 </h2>
                 <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2 max-w-2xl">
-                  {nextLecture.shortDescription}
+                  {nextLesson.shortDescription}
                 </p>
               </div>
               <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-4 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
                     <BookOpen className="h-3.5 w-3.5 text-primary/70" />
-                    {nextLecture.readingTime}
+                    {nextLesson.readingTime}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <Clock className="h-3.5 w-3.5 text-primary/70" />
-                    {nextLecture.duration}
+                    {nextLesson.duration}
                   </span>
                 </div>
                 <Link
-                  href={`/courses/${course.id}/${nextLecture.id}`}
+                  href={`/courses/${course.id}/${nextLesson.id}`}
                   className={cn(
                     buttonVariants({ variant: "default" }),
                     "rounded-xl gap-2 sm:ml-auto w-full sm:w-auto"
@@ -662,32 +667,32 @@ export default function LectureNotesPage() {
             </section>
           )}
 
-          {/* Next / Previous Lecture Links */}
+          {/* Next / Previous lesson Links */}
           <div className="pt-8 border-t border-border/60 flex items-center justify-between no-print gap-4">
-            {prevLecture ? (
+            {prevLesson ? (
               <Link
-                href={`/courses/${course.id}/${prevLecture.id}`}
+                href={`/courses/${course.id}/${prevLesson.id}`}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "sm" }),
                   "rounded-xl gap-1 text-xs sm:text-sm text-muted-foreground hover:text-foreground"
                 )}
               >
                 <ChevronLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Previous:</span> {prevLecture.title.split(": ")[1] || prevLecture.title}
+                <span className="hidden sm:inline">Previous:</span> {prevLesson.title.split(": ")[1] || prevLesson.title}
               </Link>
             ) : (
               <div />
             )}
 
-            {nextLecture ? (
+            {nextLesson ? (
               <Link
-                href={`/courses/${course.id}/${nextLecture.id}`}
+                href={`/courses/${course.id}/${nextLesson.id}`}
                 className={cn(
                   buttonVariants({ variant: "default", size: "sm" }),
                   "rounded-xl gap-1 text-xs sm:text-sm ml-auto"
                 )}
               >
-                <span className="hidden sm:inline">Next:</span> {nextLecture.title.split(": ")[1] || nextLecture.title}
+                <span className="hidden sm:inline">Next:</span> {nextLesson.title.split(": ")[1] || nextLesson.title}
                 <ChevronRight className="h-4 w-4" />
               </Link>
             ) : (

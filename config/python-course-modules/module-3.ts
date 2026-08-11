@@ -5,10 +5,10 @@ export const MODULE_3: Module = {
   title: "Module 3: Data Structures",
   description:
     "Master lists, tuples, sets, dictionaries, and the powerful tools in the collections module.",
-  lectures: [
+  lessons: [
     {
       id: "lists-tuples",
-      title: "Lecture 8: Lists & Tuples",
+      title: "Lesson 8: Lists & Tuples",
       shortDescription:
         "Mutable lists, immutable tuples, slicing, sorting, and common list methods.",
       duration: "40 mins",
@@ -23,7 +23,7 @@ mixed = [1, "two", 3.0, True]     # lists can hold mixed types
 empty = []
 \`\`\`
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Create and manipulate lists with the essential methods
 - Understand the difference between mutable lists and immutable tuples
@@ -126,7 +126,7 @@ Functions that return multiple values use tuples under the hood — unpacking is
 
 ### Slicing Works on Both
 
-Everything you learned about string slicing (Lecture 3) works on lists and tuples:
+Everything you learned about string slicing (Lesson 3) works on lists and tuples:
 
 \`\`\`python
 data = [10, 20, 30, 40, 50]
@@ -135,7 +135,7 @@ print(data[::-1])     # [50, 40, 30, 20, 10] — reversed
 print(data[::2])      # [10, 30, 50]
 \`\`\`
 
-**Copy with slicing:** \`copy = original[:]\` creates a real copy. We will see why this matters in Lecture 11.
+**Copy with slicing:** \`copy = original[:]\` creates a real copy. We will see why this matters in Lesson 11.
 
 ---
 
@@ -144,7 +144,7 @@ print(data[::2])      # [10, 30, 50]
 - **Mistake:** \`fruits[5]\` on a 3-item list — **Fix:** check \`len(fruits)\`; the last index is always \`len - 1\`.
 - **Mistake:** Expecting \`sorted()\` to change the original — **Fix:** \`sorted()\` returns a new list; \`.sort()\` mutates.
 - **Mistake:** Writing \`(5)\` and expecting a tuple — **Fix:** add the trailing comma: \`(5,)\`.
-- **Mistake:** \`b = a\` thinking it copies the list — **Fix:** \`b = a[:]\` or \`b = a.copy()\` (see Lecture 11).
+- **Mistake:** \`b = a\` thinking it copies the list — **Fix:** \`b = a[:]\` or \`b = a.copy()\` (see Lesson 11).
 
 ### Professional Tips & Tricks
 
@@ -228,7 +228,7 @@ First color: red | Count: 3`,
     },
     {
       id: "sets-dictionaries",
-      title: "Lecture 9: Sets & Dictionaries",
+      title: "Lesson 9: Sets & Dictionaries",
       shortDescription:
         "Unordered sets for lightning-fast membership, and key-value dictionaries for real-world data.",
       duration: "45 mins",
@@ -241,7 +241,7 @@ A **dictionary** stores key-value pairs — like a real dictionary where you loo
 student = {"name": "Riya", "course": "Python", "score": 92}
 \`\`\`
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Create, read, update, and delete dictionary entries
 - Use \`.get()\` for safe access and \`.items()\` for iteration
@@ -423,16 +423,16 @@ Only in batch1: {'Amol'}`,
     },
     {
       id: "advanced-collections",
-      title: "Lecture 10: Advanced Collections — Counter, defaultdict & deque",
+      title: "Lesson 10: Advanced Collections — Counter, defaultdict & deque",
       shortDescription:
         "Supercharge your data with Counter, defaultdict, deque, and namedtuple from the collections module.",
       duration: "40 mins",
       readingTime: "8 mins read",
       contentMarkdown: `### The collections Module — Professional Tools
 
-The \`collections\` module ships with specialized containers that solve common problems in one line. Once you know them, you will wonder how you lived without them. This lecture covers the four you will use constantly.
+The \`collections\` module ships with specialized containers that solve common problems in one line. Once you know them, you will wonder how you lived without them. This lesson covers the four you will use constantly.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Tally anything instantly with \`Counter\`
 - Stop fearing missing keys with \`defaultdict\`
@@ -624,7 +624,7 @@ Point: 3 4`,
     },
     {
       id: "nested-copies",
-      title: "Lecture 11: Nested Structures, Aliasing & Copies",
+      title: "Lesson 11: Nested Structures, Aliasing & Copies",
       shortDescription:
         "Build nested dicts and lists, understand how references behave, and copy safely.",
       duration: "40 mins",
@@ -644,7 +644,7 @@ print(employees[0]["skills"][0])   # python
 
 Read nested access **outside-in**: the outermost bracket first, then work inward.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Build and navigate nested lists and dicts
 - Understand aliasing — two names, one object

@@ -1,9 +1,9 @@
 /**
- * Interactive quizzes for every lecture in the Learning Hub.
+ * Interactive quizzes for every lesson in the Learning Hub.
  *
- * Keyed by lecture id (see config/python-course/module-*.ts and
- * config/courses.ts). Rendered by components/courses/lecture-quiz.tsx
- * at the bottom of every lecture page.
+ * Keyed by lesson id (see config/python-course/module-*.ts and
+ * config/courses.ts). Rendered by components/courses/lesson-quiz.tsx
+ * at the bottom of every lesson page.
  */
 
 export interface QuizQuestion {
@@ -14,12 +14,12 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-export interface LectureQuiz {
+export interface LessonQuiz {
   title: string;
   questions: QuizQuestion[];
 }
 
-export const LECTURE_QUIZZES: Record<string, LectureQuiz> = {
+export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
   // ─── Module 1: Python Fundamentals ────────────────────────────────────────
   "hello-world-python": {
     title: "Hello, Python!",

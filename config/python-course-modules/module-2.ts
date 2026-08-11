@@ -5,10 +5,10 @@ export const MODULE_2: Module = {
   title: "Module 2: Control Flow",
   description:
     "Make decisions with conditionals, repeat work with loops, and write elegant comprehensions.",
-  lectures: [
+  lessons: [
     {
       id: "loops-conditionals",
-      title: "Lecture 5: Conditional Branches & Loops",
+      title: "Lesson 5: Conditional Branches & Loops",
       shortDescription:
         "Evaluating truth tables, if/elif/else routing, for and while loops, break, and continue.",
       duration: "45 mins",
@@ -17,7 +17,7 @@ export const MODULE_2: Module = {
 
 A program runs **sequentially** by default — top to bottom, one line after another. Conditionals and loops are what give your program the power to **make decisions** and **repeat work**. Together they turn a static script into dynamic, intelligent software.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Route code with \`if\` / \`elif\` / \`else\`
 - Understand truthiness — which values count as True or False
@@ -213,16 +213,16 @@ Score 30: Failed critically (Needs revision)`,
     },
     {
       id: "loop-control-nested",
-      title: "Lecture 6: Loop Control, Nested Loops & The else Clause",
+      title: "Lesson 6: Loop Control, Nested Loops & The else Clause",
       shortDescription:
         "Master break, continue, pass, loop else clauses, and nested loops with trace tables.",
       duration: "40 mins",
       readingTime: "8 mins read",
       contentMarkdown: `### Taking Full Control of Loops
 
-Plain \`for\` and \`while\` loops get you 80% of the way. The remaining 20% — fine-grained control — is what separates beginner code from professional code. This lecture covers the three interrupts, the secret \`else\` clause, and nested loops.
+Plain \`for\` and \`while\` loops get you 80% of the way. The remaining 20% — fine-grained control — is what separates beginner code from professional code. This lesson covers the three interrupts, the secret \`else\` clause, and nested loops.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Use \`break\`, \`continue\`, and \`pass\` precisely
 - Master the loop \`else\` clause — Python's hidden gem
@@ -415,7 +415,7 @@ Found 16 at position 3
     },
     {
       id: "comprehensions",
-      title: "Lecture 7: Comprehensions — Clean, Fast Loops",
+      title: "Lesson 7: Comprehensions — Clean, Fast Loops",
       shortDescription:
         "Build lists, dicts, and sets in one elegant line with comprehensions and generator expressions.",
       duration: "40 mins",
@@ -424,7 +424,7 @@ Found 16 at position 3
 
 A **list comprehension** builds a new list in a single expression. It is shorter, faster, and easier to read than a manual \`for\` loop that appends. Once you learn to read them, comprehensions become the tool you reach for first.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Read and write list comprehensions with filters
 - Build dict and set comprehensions

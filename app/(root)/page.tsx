@@ -305,8 +305,8 @@ export default function IndexPage() {
 
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
           {COURSES.map((course, index) => {
-            const totalLectures = course.modules.reduce(
-              (acc, module) => acc + module.lectures.length,
+            const totalLessons = course.modules.reduce(
+              (acc, module) => acc + module.lessons.length,
               0
             );
 
@@ -345,7 +345,7 @@ export default function IndexPage() {
                       </span>
                       <span className="flex items-center gap-1.5">
                         <Icons.page className="h-3.5 w-3.5" />
-                        {totalLectures} lectures
+                        {totalLessons} lessons
                       </span>
                     </div>
                     <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent">

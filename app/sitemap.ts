@@ -8,7 +8,9 @@ import { getAllBlogsMeta } from "@/lib/blogs";
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
 
-  // Main pages
+  // Main pages — only the home page and content hubs (blogs/courses) carry a
+  // lastModified, since they change as new content ships. Static portfolio
+  // pages intentionally omit it so crawlers rely on their own recrawl logic.
   const routes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
@@ -18,25 +20,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/skills`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/experience`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/contributions`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
@@ -54,7 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
@@ -69,33 +66,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Project detail pages
+  // Project detail pages — static content, so no lastModified
   const projectRoutes: MetadataRoute.Sitemap = Projects.map((project) => ({
     url: `${baseUrl}/projects/${project.id}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  // Course detail pages
+  // Course detail pages — static content, so no lastModified
   const courseRoutes: MetadataRoute.Sitemap = COURSES.map((course) => ({
     url: `${baseUrl}/courses/${course.id}`,
-    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  // Lecture note pages
-  const lectureRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
+  // lesson note pages — static content, so no lastModified
+  const lessonRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
     course.modules.flatMap((module) =>
-      module.lectures.map((lecture) => ({
-        url: `${baseUrl}/courses/${course.id}/${lecture.id}`,
-        lastModified: new Date(),
+      module.lessons.map((lesson) => ({
+        url: `${baseUrl}/courses/${course.id}/${lesson.id}`,
         changeFrequency: "yearly" as const,
         priority: 0.5,
       }))
     )
   );
 
-  return [...routes, ...blogRoutes, ...projectRoutes, ...courseRoutes, ...lectureRoutes];
+  return [...routes, ...blogRoutes, ...projectRoutes, ...courseRoutes, ...lessonRoutes];
 }

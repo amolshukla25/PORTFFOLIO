@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { AnimatedSection } from "@/components/common/animated-section";
 import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
@@ -63,7 +63,7 @@ export default async function ExperienceDetailPage({
   const experience = experiences.find((c) => c.id === expId);
 
   if (!experience) {
-    redirect("/experience");
+    notFound();
   }
 
   const tabItems = [

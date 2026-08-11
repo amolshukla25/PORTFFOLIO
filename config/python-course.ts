@@ -8,7 +8,7 @@ import { MODULE_6 } from "./python-course-modules/module-6";
 
 /**
  * Complete Python Foundations Course — "From Zero to Professional".
- * Every lecture is its own page (/courses/python-basics/<lecture-id>),
+ * Every lesson is its own page (/courses/python-basics/<lesson-id>),
  * so each topic can be individually optimized for search engines.
  * Each lesson ships with: teaching notes, runnable code, console output,
  * visualization tips, professional tips & tricks, and practice exercises.

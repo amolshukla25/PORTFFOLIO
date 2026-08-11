@@ -5,10 +5,10 @@ export const MODULE_6: Module = {
   title: "Module 6: Files, Errors & Professional Python",
   description:
     "Handle files, tame errors, write generators, work with JSON, test like a pro, and build a full CLI project.",
-  lectures: [
+  lessons: [
     {
       id: "file-handling",
-      title: "Lecture 20: File Handling & Context Managers",
+      title: "Lesson 20: File Handling & Context Managers",
       shortDescription:
         "Read and write files safely with the with statement, work with paths, and handle CSV data.",
       duration: "45 mins",
@@ -17,7 +17,7 @@ export const MODULE_6: Module = {
 
 Programs that outlive a single run need **persistence** — the ability to save data and read it back later. Files store data between runs: reading config, saving results, processing CSV exports. Without file handling, every program forgets everything when it closes.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Open files safely with the \`with\` statement
 - Read files line by line, chunk by chunk
@@ -186,7 +186,7 @@ CSV rows: [['name', 'course'], ['Amol', 'Python'], ['Riya', 'Data Science']]`,
     },
     {
       id: "exception-handling",
-      title: "Lecture 21: Exception Handling — Fail Gracefully",
+      title: "Lesson 21: Exception Handling — Fail Gracefully",
       shortDescription:
         "try/except/else/finally, raising your own errors, and writing code that never crashes the user.",
       duration: "45 mins",
@@ -195,7 +195,7 @@ CSV rows: [['name', 'course'], ['Amol', 'Python'], ['Riya', 'Data Science']]`,
 
 When Python hits a problem, it **raises an exception**. Unhandled, an exception crashes the program with an ugly traceback. Handled well, your program responds gracefully — this is the difference between professional and fragile software.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Protect risky code with \`try\`/\`except\`
 - Use \`else\` and \`finally\` correctly
@@ -401,7 +401,7 @@ Caught: Age cannot be negative`,
     },
     {
       id: "iterators-generators",
-      title: "Lecture 22: Iterators, Generators & itertools",
+      title: "Lesson 22: Iterators, Generators & itertools",
       shortDescription:
         "Lazy iteration with yield, memory-efficient pipelines, and the itertools toolbox.",
       duration: "45 mins",
@@ -410,7 +410,7 @@ Caught: Age cannot be negative`,
 
 A **generator** produces values one at a time using \`yield\`. Unlike a list, it does **not** store everything in memory at once — perfect for huge or even infinite sequences.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Write generators with \`yield\`
 - Understand lazy evaluation
@@ -578,7 +578,7 @@ Chained: [1, 2, 3, 4]`,
     },
     {
       id: "json-data",
-      title: "Lecture 23: JSON & Working with Data",
+      title: "Lesson 23: JSON & Working with Data",
       shortDescription:
         "Serialize Python objects to JSON, load API data, and build real-world data workflows.",
       duration: "45 mins",
@@ -587,7 +587,7 @@ Chained: [1, 2, 3, 4]`,
 
 **JSON** (JavaScript Object Notation) is the universal format for APIs, configs, and data files. It looks almost exactly like Python dicts and lists — strings in double quotes, booleans lowercase (\`true\`/\`false\`), and \`null\` instead of \`None\`.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Convert between Python and JSON with the four functions
 - Pretty-print JSON for readability
@@ -766,7 +766,7 @@ Round-trip equal: True`,
     },
     {
       id: "testing-debugging",
-      title: "Lecture 24: Testing & Debugging Like a Pro",
+      title: "Lesson 24: Testing & Debugging Like a Pro",
       shortDescription:
         "assert, pytest, the debugger, and logging — write code that proves itself.",
       duration: "50 mins",
@@ -775,7 +775,7 @@ Round-trip equal: True`,
 
 A professional program ships with tests that **prove** it works. Every time you change code, tests catch what you broke — instantly. Without tests, you are trusting "it worked when I tried it once".
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Write quick checks with \`assert\`
 - Build real tests with pytest
@@ -967,7 +967,7 @@ Result: 118.0
     },
     {
       id: "mini-project-expense-tracker",
-      title: "Lecture 25: Capstone — Build a CLI Expense Tracker",
+      title: "Lesson 25: Capstone — Build a CLI Expense Tracker",
       shortDescription:
         "Bring everything together: functions, dicts, files, JSON, and a menu loop in one complete project.",
       duration: "90 mins",
@@ -976,7 +976,7 @@ Result: 118.0
 
 You have learned variables, control flow, data structures, functions, OOP, files, errors, and JSON. Now we combine **all of it** into a real, usable program: a **CLI Expense Tracker**. This is the moment you stop being a beginner.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Design a small program's architecture before writing code
 - Persist data to JSON so it survives restarts
@@ -1028,7 +1028,7 @@ def load_expenses():
 
 **Step 3 — Add with validation:** reject non-positive amounts by raising \`ValueError\`.
 
-**Step 4 — Summary:** a dict of totals using \`.get()\` — exactly the pattern from Lecture 9:
+**Step 4 — Summary:** a dict of totals using \`.get()\` — exactly the pattern from Lesson 9:
 
 \`\`\`python
 by_category = {}
@@ -1036,7 +1036,7 @@ for e in expenses:
     by_category[e["category"]] = by_category.get(e["category"], 0) + e["amount"]
 \`\`\`
 
-**Step 5 — The menu loop:** \`while True\` + \`break\` from Lecture 5, with try/except around input:
+**Step 5 — The menu loop:** \`while True\` + \`break\` from Lesson 5, with try/except around input:
 
 \`\`\`python
 while True:
@@ -1065,12 +1065,12 @@ while True:
 
 Every line of this project uses a lesson you already completed:
 
-- \`while True\` + \`break\` → Lecture 5
-- Dicts + \`.get()\` → Lecture 9
-- Functions → Lecture 12
-- try/except + \`raise\` → Lecture 21
-- JSON + files → Lectures 20 & 23
-- The \`__name__\` guard → Lecture 15
+- \`while True\` + \`break\` → Lesson 5
+- Dicts + \`.get()\` → Lesson 9
+- Functions → Lesson 12
+- try/except + \`raise\` → Lesson 21
+- JSON + files → lessons 20 & 23
+- The \`__name__\` guard → Lesson 15
 
 That is the point: professional Python is just these building blocks arranged well.
 

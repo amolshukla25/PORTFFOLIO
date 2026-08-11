@@ -5,10 +5,10 @@ export const MODULE_4: Module = {
   title: "Module 4: Functions & Modularity",
   description:
     "Write reusable functions, lambdas, decorators, and organize code into modules and packages.",
-  lectures: [
+  lessons: [
     {
       id: "functions-basics",
-      title: "Lecture 12: Functions — Reusable Building Blocks",
+      title: "Lesson 12: Functions — Reusable Building Blocks",
       shortDescription:
         "Define functions, parameters, default arguments, return values, and docstrings.",
       duration: "45 mins",
@@ -17,7 +17,7 @@ export const MODULE_4: Module = {
 
 A **function** is a named block of reusable code. Write it once, call it many times. Functions are how you stop repeating yourself (the **DRY** principle: *Don't Repeat Yourself*) and keep programs readable. If you find yourself copying and pasting the same 5 lines, that code belongs in a function.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Define functions with \`def\`
 - Pass parameters and use default arguments
@@ -145,7 +145,7 @@ def show():
 \`\`\`
 
 - A function can **read** global variables.
-- It **cannot change** them without the \`global\` keyword (Lecture 14).
+- It **cannot change** them without the \`global\` keyword (Lesson 14).
 - Each call creates a **fresh set of local boxes** — no leftovers between calls.
 
 > **Mental model:** a function is a machine. Inputs go in the funnel (parameters), work happens inside, and the result rolls out (return). Trace each call separately — a fresh set of local boxes every time.
@@ -247,7 +247,7 @@ Return value: None`,
     },
     {
       id: "lambda-args-kwargs",
-      title: "Lecture 13: Lambda, *args & **kwargs",
+      title: "Lesson 13: Lambda, *args & **kwargs",
       shortDescription:
         "Anonymous one-line functions and flexible functions that accept any number of arguments.",
       duration: "40 mins",
@@ -263,7 +263,7 @@ print(double(5))   # 10
 
 It is exactly equivalent to \`def double(x): return x * 2\`, but written as an expression. Lambdas shine where you need a quick, throwaway function — especially as a sort \`key\` or with \`map\`/\`filter\`.
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Write lambdas and use them as sort keys
 - Accept any number of arguments with \`*args\`
@@ -469,7 +469,7 @@ Name: Amol
     },
     {
       id: "scope-closures-decorators",
-      title: "Lecture 14: Scope, Closures & Decorators",
+      title: "Lesson 14: Scope, Closures & Decorators",
       shortDescription:
         "LEGB scoping rules, closures that remember, and decorators that wrap functions with extra behavior.",
       duration: "55 mins",
@@ -485,7 +485,7 @@ Python resolves names with the **LEGB** rule. When code refers to a name, Python
 
 The first match wins. This is why you can have a local variable named \`len\` shadowing the built-in (don't do that).
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Apply the LEGB scoping rules
 - Modify outer variables with \`global\` and \`nonlocal\`
@@ -696,7 +696,7 @@ Sum: 4999950000`,
     },
     {
       id: "modules-packages",
-      title: "Lecture 15: Modules, Packages & Imports",
+      title: "Lesson 15: Modules, Packages & Imports",
       shortDescription:
         "Organize code into files, import between them, use the __name__ guard, and install packages with pip.",
       duration: "40 mins",
@@ -717,7 +717,7 @@ import math_helper
 print(math_helper.square(5))   # 25
 \`\`\`
 
-#### What You'll Learn in This Lecture
+#### What You'll Learn in This lesson
 
 - Import modules with all four import styles
 - Understand packages — folders of modules

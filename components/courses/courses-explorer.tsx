@@ -106,8 +106,8 @@ export default function CoursesExplorer() {
 
   // Aggregate stats across the whole hub
   const stats = useMemo(() => {
-    const totalLectures = COURSES.reduce(
-      (acc, c) => acc + c.modules.reduce((a, m) => a + m.lectures.length, 0),
+    const totalLessons = COURSES.reduce(
+      (acc, c) => acc + c.modules.reduce((a, m) => a + m.lessons.length, 0),
       0
     );
     const totalModules = COURSES.reduce((acc, c) => acc + c.modules.length, 0);
@@ -115,7 +115,7 @@ export default function CoursesExplorer() {
       const parsed = parseInt(c.duration, 10);
       return acc + (Number.isNaN(parsed) ? 0 : parsed);
     }, 0);
-    return { courses: COURSES.length, lectures: totalLectures, modules: totalModules, hours: totalHours };
+    return { courses: COURSES.length, lessons: totalLessons, modules: totalModules, hours: totalHours };
   }, []);
 
   // Category options derived from the course data
@@ -142,13 +142,13 @@ export default function CoursesExplorer() {
     });
   }, [query, difficulty, category]);
 
-  // Lecture-level search: jump straight to any lecture that matches the query
-  const lectureResults = useMemo(() => {
+  // lesson-level search: jump straight to any lesson that matches the query
+  const lessonResults = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
     return COURSES.flatMap((course) =>
       course.modules.flatMap((module) =>
-        module.lectures
+        module.lessons
           .filter((lec) =>
             [lec.title, lec.shortDescription, module.title]
               .join(" ")
@@ -158,7 +158,7 @@ export default function CoursesExplorer() {
           .map((lec) => ({
             course,
             module,
-            lecture: lec,
+            lesson: lec,
           }))
       )
     ).slice(0, 12);
@@ -177,7 +177,7 @@ export default function CoursesExplorer() {
         <div className="grid grid-cols-2 gap-3 mb-8 sm:grid-cols-4">
           {[
             { icon: GraduationCap, label: "Courses", value: stats.courses },
-            { icon: BookOpen, label: "Lectures", value: stats.lectures },
+            { icon: BookOpen, label: "Lessons", value: stats.lessons },
             { icon: Layers, label: "Modules", value: stats.modules },
             { icon: Clock, label: "Hours of content", value: stats.hours },
           ].map((stat) => (
@@ -305,29 +305,29 @@ export default function CoursesExplorer() {
               </div>
             </div>
 
-            {/* Lecture results from the search query */}
-            {lectureResults.length > 0 && (
+            {/* lesson results from the search query */}
+            {lessonResults.length > 0 && (
               <div className="mb-8 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden">
                 <div className="px-5 py-3.5 border-b border-border/60 bg-muted/20 flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-primary" />
                   <span className="text-sm font-semibold text-foreground">
-                    Lectures found
+                    lessons found
                   </span>
                   <span className="ml-auto text-xs text-muted-foreground">
-                    {lectureResults.length} result{lectureResults.length > 1 ? "s" : ""}
+                    {lessonResults.length} result{lessonResults.length > 1 ? "s" : ""}
                   </span>
                 </div>
                 <ul className="divide-y divide-border/50">
-                  {lectureResults.map(({ course, module, lecture }) => (
-                    <li key={lecture.id}>
+                  {lessonResults.map(({ course, module, lesson }) => (
+                    <li key={lesson.id}>
                       <Link
-                        href={`/courses/${course.id}/${lecture.id}`}
+                        href={`/courses/${course.id}/${lesson.id}`}
                         className="flex items-start gap-3 px-5 py-3.5 transition-colors hover:bg-muted/40"
                       >
                         <FileText className="h-4 w-4 mt-0.5 shrink-0 text-primary/60" />
                         <span className="min-w-0">
                           <span className="block text-sm font-semibold text-foreground truncate">
-                            {lecture.title}
+                            {lesson.title}
                           </span>
                           <span className="block text-xs text-muted-foreground truncate mt-0.5">
                             {course.title} · {module.title.split(": ")[1] || module.title}
@@ -341,7 +341,7 @@ export default function CoursesExplorer() {
               </div>
             )}
 
-            {filteredCourses.length === 0 && lectureResults.length === 0 ? (
+            {filteredCourses.length === 0 && lessonResults.length === 0 ? (
               <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/20 px-6 py-20 text-center">
                 <p className="mb-2 text-4xl">🎓</p>
                 <h3 className="text-lg font-semibold text-foreground">No courses match</h3>
@@ -364,8 +364,8 @@ export default function CoursesExplorer() {
             ) : filteredCourses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {filteredCourses.map((course) => {
-                  const totalLectures = course.modules.reduce(
-                    (acc, module) => acc + module.lectures.length,
+                  const totalLessons = course.modules.reduce(
+                    (acc, module) => acc + module.lessons.length,
                     0
                   );
 
@@ -406,7 +406,7 @@ export default function CoursesExplorer() {
                           </div>
                           <div className="flex items-center gap-1.5">
                             <BookOpen className="h-3.5 w-3.5" />
-                            <span>{totalLectures} lectures</span>
+                            <span>{totalLessons} lessons</span>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <Star className="h-3.5 w-3.5 text-star fill-star" />

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap, List } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
@@ -73,11 +73,11 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
   const course = COURSES.find((c) => c.id === courseId);
 
   if (!course) {
-    redirect("/courses");
+    notFound();
   }
 
-  const totalLectures = course.modules.reduce(
-    (acc, module) => acc + module.lectures.length,
+  const totalLessons = course.modules.reduce(
+    (acc, module) => acc + module.lessons.length,
     0
   );
 
@@ -166,7 +166,7 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
           </span>
           <span className="text-xs text-muted-foreground flex items-center gap-1.5">
             <BookOpen className="h-3.5 w-3.5" />
-            {totalLectures} lectures
+            {totalLessons} lessons
           </span>
           <span className="text-xs text-muted-foreground flex items-center gap-1.5">
             <Award className="h-3.5 w-3.5 text-star" />
@@ -197,12 +197,12 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
           modules={course.modules.map((m) => ({
             id: m.id,
             title: m.title,
-            lectures: m.lectures.map((l) => ({ id: l.id, title: l.title })),
+            lessons: m.lessons.map((l) => ({ id: l.id, title: l.title })),
           }))}
         />
       </div>
 
-      {/* Table of Contents — every module & lecture linked for navigation + internal linking */}
+      {/* Table of Contents — every module & lesson linked for navigation + internal linking */}
       <nav
         aria-label="Course table of contents"
         className="mb-10 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden"
@@ -213,42 +213,59 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
             Table of Contents
           </h2>
           <span className="ml-auto text-xs font-medium text-muted-foreground">
-            {course.modules.length} modules · {totalLectures} lessons
+            {course.modules.length} modules · {totalLessons} lessons
           </span>
         </div>
-        <ol className="divide-y divide-border/50 text-sm">
-          {course.modules.map((module, mIdx) => (
-            <li key={module.id} className="px-6 py-3 hover:bg-muted/30 transition-colors">
-              <div className="flex items-center gap-2">
+        <div className="p-4 sm:p-6 space-y-3">
+          {course.modules.map((module, mIdx) => {
+            const moduleTitle = module.title.split(": ")[1] || module.title;
+            return (
+              <section
+                key={module.id}
+                className="rounded-xl border border-border/60 bg-background overflow-hidden"
+              >
                 <a
                   href={`#${module.id}`}
-                  className="font-semibold text-foreground hover:text-primary transition-colors inline-flex items-center gap-2"
+                  className="group flex items-center gap-3.5 px-4 sm:px-5 py-3.5 transition-colors hover:bg-muted/30"
                 >
-                  <BookOpen className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-                  <span>
-                    Module {mIdx + 1}: {module.title.split(": ")[1] || module.title}
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent font-heading text-sm font-bold text-primary-foreground shadow-sm">
+                    {mIdx + 1}
                   </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+                      {moduleTitle}
+                    </span>
+                    <span className="mt-0.5 block text-xs text-muted-foreground line-clamp-1">
+                      {module.description}
+                    </span>
+                  </span>
+                  <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                    {module.lessons.length}{" "}
+                    {module.lessons.length === 1 ? "lesson" : "lessons"}
+                  </span>
+                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-primary" />
                 </a>
-                <span className="ml-auto text-xs text-muted-foreground shrink-0">
-                  {module.lectures.length} lessons
-                </span>
-              </div>
-              <ol className="mt-2 ml-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
-                {module.lectures.map((lecture) => (
-                  <li key={lecture.id}>
-                    <Link
-                      href={`/courses/${course.id}/${lecture.id}`}
-                      className="group inline-flex items-start gap-1.5 text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      <ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-primary/40 group-hover:text-primary transition-colors" />
-                      <span className="line-clamp-1">{lecture.title}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </li>
-          ))}
-        </ol>
+                <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 border-t border-border/40 px-4 sm:px-5 py-3">
+                  {module.lessons.map((lesson, lIdx) => (
+                    <li key={lesson.id}>
+                      <Link
+                        href={`/courses/${course.id}/${lesson.id}`}
+                        className="group inline-flex items-start gap-2 rounded-md py-1.5 pr-2 text-xs transition-colors"
+                      >
+                        <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-muted text-[9px] font-bold text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                          {lIdx + 1}
+                        </span>
+                        <span className="leading-relaxed text-muted-foreground transition-colors group-hover:text-primary">
+                          {lesson.title.split(": ")[1] || lesson.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            );
+          })}
+        </div>
       </nav>
 
       {/* Syllabus Modules Grid (Card Inside Card Layout) */}
@@ -276,32 +293,32 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
               </p>
             </div>
 
-            {/* Inner Lecture Cards (Card inside Card) */}
+            {/* Inner lesson Cards (Card inside Card) */}
             <div className="grid grid-cols-1 gap-4">
-              {module.lectures.map((lecture) => (
+              {module.lessons.map((lesson) => (
                 <div
-                  key={lecture.id}
+                  key={lesson.id}
                   className="group relative p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
                 >
                   <div className="space-y-1.5 max-w-xl">
                     <div className="flex items-center gap-2">
                       <FileText className="h-4 w-4 text-primary/70 shrink-0" />
                       <h4 className="font-bold text-base text-foreground group-hover:text-primary transition-colors">
-                        {lecture.title}
+                        {lesson.title}
                       </h4>
                     </div>
                     <p className="text-xs text-muted-foreground line-clamp-2 pl-6">
-                      {lecture.shortDescription}
+                      {lesson.shortDescription}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-4 pl-6 sm:pl-0 shrink-0">
                     <div className="text-right hidden sm:block">
-                      <p className="text-xs font-medium text-foreground">{lecture.duration}</p>
-                      <p className="text-[10px] text-muted-foreground">{lecture.readingTime}</p>
+                      <p className="text-xs font-medium text-foreground">{lesson.duration}</p>
+                      <p className="text-[10px] text-muted-foreground">{lesson.readingTime}</p>
                     </div>
                     <Link
-                      href={`/courses/${course.id}/${lecture.id}`}
+                      href={`/courses/${course.id}/${lesson.id}`}
                       className={cn(
                         buttonVariants({ variant: "outline", size: "sm" }),
                         "rounded-xl gap-1 text-xs py-1.5 h-auto group-hover:bg-primary group-hover:text-primary-foreground transition-colors"

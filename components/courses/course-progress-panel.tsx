@@ -12,7 +12,7 @@ interface CourseProgressPanelProps {
   modules: {
     id: string;
     title: string;
-    lectures: { id: string; title: string }[];
+    lessons: { id: string; title: string }[];
   }[];
 }
 
@@ -27,12 +27,12 @@ export default function CourseProgressPanel({
     setMounted(true);
   }, []);
 
-  const allLectures = modules.flatMap((m) => m.lectures);
+  const allLessons = modules.flatMap((m) => m.lessons);
   const completed =
     mounted && progress.completed[courseId] ? progress.completed[courseId] : [];
-  const doneCount = allLectures.filter((l) => completed.includes(l.id)).length;
-  const pct = allLectures.length ? Math.round((doneCount / allLectures.length) * 100) : 0;
-  const allDone = doneCount > 0 && doneCount === allLectures.length;
+  const doneCount = allLessons.filter((l) => completed.includes(l.id)).length;
+  const pct = allLessons.length ? Math.round((doneCount / allLessons.length) * 100) : 0;
+  const allDone = doneCount > 0 && doneCount === allLessons.length;
 
   if (!mounted) {
     return (
@@ -82,7 +82,7 @@ export default function CourseProgressPanel({
           </div>
         </div>
         <span className="text-xs font-bold text-foreground shrink-0">
-          {doneCount}/{allLectures.length}
+          {doneCount}/{allLessons.length}
         </span>
       </div>
 
@@ -95,7 +95,7 @@ export default function CourseProgressPanel({
 
       {pct === 0 && (
         <p className="mt-1.5 text-[11px] text-muted-foreground">
-          Start any lecture below and mark it complete to track your journey.
+          Start any lesson below and mark it complete to track your journey.
         </p>
       )}
 
@@ -117,16 +117,16 @@ export default function CourseProgressPanel({
       {/* Per-module mini progress */}
       <div className="mt-4 space-y-2 border-t border-border/60 pt-3">
         {modules.map((mod) => {
-          const modDone = mod.lectures.filter((l) => completed.includes(l.id)).length;
-          const modPct = mod.lectures.length
-            ? Math.round((modDone / mod.lectures.length) * 100)
+          const modDone = mod.lessons.filter((l) => completed.includes(l.id)).length;
+          const modPct = mod.lessons.length
+            ? Math.round((modDone / mod.lessons.length) * 100)
             : 0;
           return (
             <div key={mod.id} className="flex items-center gap-2">
               <span
                 className={cn(
                   "h-1.5 w-1.5 shrink-0 rounded-full",
-                  modDone === mod.lectures.length
+                  modDone === mod.lessons.length
                     ? "bg-success"
                     : modDone > 0
                       ? "bg-primary"
@@ -137,7 +137,7 @@ export default function CourseProgressPanel({
                 {mod.title.split(": ").pop()}
               </span>
               <span className="text-[10px] font-semibold text-muted-foreground shrink-0">
-                {modDone}/{mod.lectures.length}
+                {modDone}/{mod.lessons.length}
               </span>
             </div>
           );
