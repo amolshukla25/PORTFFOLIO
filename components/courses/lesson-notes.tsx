@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import {
@@ -26,7 +26,9 @@ import {
   GraduationCap,
   CheckCircle2,
   Circle,
-  Trophy
+  Trophy,
+  PanelLeftClose,
+  PanelLeftOpen
 } from "lucide-react";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
@@ -90,6 +92,12 @@ export default function LessonNotesPage() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [mounted, setMounted] = useState(false);
+  // Desktop syllabus outline collapse state (persisted so it survives navigation)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Reading progress 0–100 for the slim progress bar under the sticky header
+  const [readingProgress, setReadingProgress] = useState(0);
+  // Measures scroll progress through the lesson article itself (not the footer)
+  const articleRef = useRef<HTMLElement>(null);
 
   // Progress tracking (localStorage-backed via zustand persist)
   const progress = useCourseProgress();
@@ -98,6 +106,39 @@ export default function LessonNotesPage() {
 
   useEffect(() => {
     setMounted(true);
+    // Restore the user's desktop outline preference across lessons
+    try {
+      if (window.localStorage.getItem("course-outline-collapsed") === "1") {
+        setSidebarCollapsed(true);
+      }
+    } catch {
+      // localStorage unavailable — keep the outline open
+    }
+  }, []);
+
+  // Track reading progress through the lesson article for the progress bar
+  useEffect(() => {
+    const updateProgress = () => {
+      const el = articleRef.current;
+      if (!el) return;
+      const total = el.offsetHeight - window.innerHeight;
+      if (total <= 0) {
+        setReadingProgress(0);
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const scrolled = window.innerHeight - rect.top;
+      setReadingProgress(
+        Math.min(100, Math.max(0, (scrolled / total) * 100))
+      );
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
   }, []);
 
   // Find course and active lesson
@@ -139,6 +180,22 @@ export default function LessonNotesPage() {
     showToast(isCompleted ? "Lesson marked as incomplete" : "Lesson marked as complete! 🎉");
   };
 
+  // Toggle (and remember) the desktop syllabus outline collapse state
+  const toggleOutline = () => {
+    setSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        window.localStorage.setItem("course-outline-collapsed", next ? "1" : "0");
+      } catch {
+        // ignore storage errors
+      }
+      return next;
+    });
+  };
+
+  // Wider reading measure while the outline is hidden
+  const contentWidthClass = sidebarCollapsed ? "max-w-5xl" : "max-w-4xl";
+
   // Trigger PDF printing (leveraging custom print styles in globals.css)
   const handleDownloadPDF = () => {
     setIsExporting(true);
@@ -152,6 +209,17 @@ export default function LessonNotesPage() {
 
   return (
     <div className="flex min-h-[calc(100vh-5rem)] border-t border-border/40 relative">
+      {/* Reading progress bar under the sticky header */}
+      <div
+        className="fixed top-16 left-0 right-0 z-40 h-0.5 pointer-events-none no-print"
+        aria-hidden
+      >
+        <div
+          className="h-full bg-gradient-to-r from-primary to-accent rounded-r-full transition-[width] duration-150 ease-out"
+          style={{ width: `${readingProgress}%` }}
+        />
+      </div>
+
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 bg-foreground text-background px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 border border-border animate-in fade-in slide-in-from-bottom-5 text-sm font-medium no-print">
@@ -164,7 +232,8 @@ export default function LessonNotesPage() {
       <aside
         className={cn(
           "w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:relative md:translate-x-0 fixed inset-y-0 left-0 z-40 top-20 md:top-0",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+          sidebarCollapsed && "md:w-0 md:border-r-0 md:overflow-hidden"
         )}
       >
         {/* Mobile close button inside sidebar */}
@@ -278,11 +347,28 @@ export default function LessonNotesPage() {
         />
       )}
 
+      {/* Floating reopen handle — visible on desktop only while the outline is hidden */}
+      {sidebarCollapsed && (
+        <button
+          onClick={toggleOutline}
+          className="hidden md:flex absolute left-1.5 top-1/2 -translate-y-1/2 z-30 h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur-md text-muted-foreground shadow-lg transition-all hover:text-foreground hover:border-accent/40 hover:shadow-xl no-print group"
+          aria-label="Show course outline"
+          title="Show course outline"
+        >
+          <PanelLeftOpen className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
+        </button>
+      )}
+
       {/* RIGHT CONTENT PANEL */}
-      <main className="flex-1 flex flex-col items-center overflow-x-hidden min-w-0 bg-background">
+      <main className="relative flex-1 flex flex-col items-center overflow-x-hidden min-w-0 bg-background">
         
         {/* Navigation / Action bar */}
-        <div className="w-full max-w-4xl px-4 sm:px-8 py-4 border-b border-border/40 flex items-center justify-between no-print gap-4">
+        <div
+          className={cn(
+            "w-full px-4 sm:px-8 py-4 border-b border-border/40 flex items-center justify-between no-print gap-4 transition-[max-width] duration-500 ease-out",
+            contentWidthClass
+          )}
+        >
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -290,6 +376,18 @@ export default function LessonNotesPage() {
               aria-label="Toggle Syllabus Outline"
             >
               <Menu className="h-4 w-4" />
+            </button>
+            <button
+              onClick={toggleOutline}
+              className="hidden md:inline-flex p-2 rounded-lg border border-border bg-card hover:bg-muted transition-colors"
+              aria-label={sidebarCollapsed ? "Show course outline" : "Hide course outline"}
+              title={sidebarCollapsed ? "Show course outline (more reading space)" : "Hide course outline (focus on reading)"}
+            >
+              {sidebarCollapsed ? (
+                <PanelLeftOpen className="h-4 w-4" />
+              ) : (
+                <PanelLeftClose className="h-4 w-4" />
+              )}
             </button>
             <div className="text-xs text-muted-foreground hidden sm:flex items-center gap-1">
               <Link href="/courses" className="hover:text-foreground transition-colors">Courses</Link>
@@ -340,7 +438,13 @@ export default function LessonNotesPage() {
         </div>
 
         {/* Note Paper (Print container) */}
-        <article className="w-full max-w-4xl px-4 sm:px-8 py-8 sm:py-12 print-container flex-grow space-y-8">
+        <article
+          ref={articleRef}
+          className={cn(
+            "w-full px-4 sm:px-8 py-8 sm:py-12 print-container flex-grow space-y-8 transition-[max-width] duration-500 ease-out",
+            contentWidthClass
+          )}
+        >
           
           {/* lesson Metadata */}
           <div className="space-y-3 border-b border-border/60 pb-6">
