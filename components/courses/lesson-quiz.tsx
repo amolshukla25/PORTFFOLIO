@@ -11,19 +11,26 @@ import {
 } from "lucide-react";
 
 import type { LessonQuiz } from "@/config/quizzes";
+import { useCourseProgress } from "@/hooks/use-course-progress";
 import { cn } from "@/lib/utils";
 
 interface LessonQuizProps {
   quiz: LessonQuiz;
+  /** Course the quiz belongs to — used to auto-mark the lesson complete. */
+  courseId: string;
+  /** Lesson this quiz belongs to — auto-marked complete on a passing score. */
+  lessonId: string;
 }
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 
-export default function LessonQuiz({ quiz }: LessonQuizProps) {
+export default function LessonQuiz({ quiz, courseId, lessonId }: LessonQuizProps) {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+
+  const progress = useCourseProgress();
 
   const question = quiz.questions[current];
   const answered = selected !== null;
@@ -41,6 +48,14 @@ export default function LessonQuiz({ quiz }: LessonQuizProps) {
 
   const handleNext = () => {
     if (current + 1 >= quiz.questions.length) {
+      // The score already includes the last answered question. A passing
+      // score (70%+) auto-marks the lesson as complete so progress updates
+      // without requiring the manual "Mark Complete" button.
+      const total = quiz.questions.length;
+      const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+      if (pct >= 70) {
+        progress.markCompleted(courseId, lessonId);
+      }
       setFinished(true);
     } else {
       setCurrent((c) => c + 1);
@@ -78,6 +93,12 @@ export default function LessonQuiz({ quiz }: LessonQuizProps) {
             <p className="text-xs text-muted-foreground">
               You scored {score} out of {total} ({pct}%)
             </p>
+            {great && (
+              <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 text-[11px] font-semibold text-success">
+                <Check className="h-3 w-3" />
+                Lesson marked as complete — progress updated!
+              </p>
+            )}
           </div>
         </div>
 

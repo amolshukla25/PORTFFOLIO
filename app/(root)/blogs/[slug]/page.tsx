@@ -462,6 +462,30 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </Link>
               </div>
             </div>
+
+            {/* Signature credit — always visible at the end of every article */}
+            <div className="flex items-center justify-center pt-6">
+              <Link
+                href="/"
+                className="group inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-muted/30 px-4 py-2 text-xs text-muted-foreground transition-all hover:border-accent/30 hover:text-foreground"
+              >
+                Made with
+                <span
+                  aria-hidden
+                  className="text-destructive transition-transform duration-300 inline-block group-hover:scale-125 group-hover:animate-pulse"
+                >
+                  ❤
+                </span>
+                by
+                <span className="font-semibold text-foreground group-hover:text-accent">
+                  {siteConfig.authorName}
+                </span>
+                <span aria-hidden className="text-border">
+                  ·
+                </span>
+                <span className="font-medium">amolshukla.online</span>
+              </Link>
+            </div>
           </footer>
         </AnimatedSection>
       </article>

@@ -70,6 +70,9 @@ export default function IndexPage() {
       Math.min(...experiences.map((e) => e.startDate.getFullYear()))
   );
 
+  // Teaching journey began in 2024 — tracked separately from total experience
+  const yearsTraining = Math.max(1, new Date().getFullYear() - 2024);
+
   const stats = [
     { value: `${yearsOfExperience}+`, label: "Years Experience" },
     { value: `${featuredProjects.length}`, label: "Projects" },
@@ -81,8 +84,7 @@ export default function IndexPage() {
     {
       icon: Icons.brain,
       title: "AI Developer & Trainer",
-      description:
-        "6+ years training developers and data professionals in Python, machine learning, and generative AI.",
+      description: `${yearsTraining}+ years training developers and data professionals in Python, machine learning, and generative AI.`,
     },
     {
       icon: Icons.workflow,
@@ -386,7 +388,7 @@ export default function IndexPage() {
             <div className="space-y-4 leading-relaxed text-muted-foreground">
               <p>
                 I&apos;m {siteConfig.authorName} — an AI Developer, Trainer,
-                and Agentic AI Expert with {yearsOfExperience}+ years of
+                and Agentic AI Expert with {yearsTraining}+ years of
                 experience helping developers and data professionals master
                 Python, machine learning, and generative AI.
               </p>

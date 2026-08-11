@@ -17,7 +17,9 @@ export const MODULE_2: Module = {
 
 A program runs **sequentially** by default — top to bottom, one line after another. Conditionals and loops are what give your program the power to **make decisions** and **repeat work**. Together they turn a static script into dynamic, intelligent software.
 
-#### What You'll Learn in This lesson
+Think about it this way: without conditionals, every run of a program produces the identical output, forever. Without loops, you would write the same line a thousand times to repeat a task a thousand times. These two tools are the difference between a calculator and a program.
+
+#### What You'll Learn in This Lesson
 
 - Route code with \`if\` / \`elif\` / \`else\`
 - Understand truthiness — which values count as True or False
@@ -39,6 +41,24 @@ In Python, *every* value has a truth value. The following are always **falsy**:
 | \`{}\` (empty dict) | \`()\` (empty tuple) |
 
 Everything else is **truthy** — including negative numbers, the string \`"0"\`, and empty sets. This lets you write terse checks like \`if items:\` (true when the list has anything in it).
+
+> **Mental model:** an empty container or a zero-like value "weighs nothing" and counts as False; anything with content or magnitude counts as True. When you see \`if x:\`, translate it as "if x has anything in it" or "if x is not zero".
+
+#### Why Truthiness Matters in Real Code
+
+Truthiness is what lets professional code avoid clumsy verbosity:
+
+\`\`\`python
+# Clumsy
+if len(items) > 0:
+    process(items)
+
+# Pythonic — items being non-empty means True
+if items:
+    process(items)
+\`\`\`
+
+The second version is shorter, reads naturally, and is the style used in virtually all real Python codebases — from Django to PyTorch.
 
 ---
 
@@ -68,6 +88,25 @@ Key rules:
 
 > **Decision-tree mental model:** each \`if\` is a fork in the road. You walk down the first path whose sign says "True", and you never come back.
 
+#### Nested Conditionals — Decisions Inside Decisions
+
+An \`if\` block can contain another \`if\` — useful when a second decision only makes sense after the first:
+
+\`\`\`python
+age = 20
+has_id = True
+
+if age >= 18:
+    if has_id:
+        print("Welcome in!")
+    else:
+        print("Need ID")
+else:
+    print("Too young")
+\`\`\`
+
+Nesting is fine up to two or three levels — beyond that, restructure with \`and\`/\`or\` or helper functions to keep code flat and readable.
+
 ---
 
 ### The for Loop — Iterating Over Sequences
@@ -89,7 +128,38 @@ You can loop over strings, lists, tuples, dict keys, sets — anything iterable.
 | \`range(1, 10, 2)\` | \`1, 3, 5, 7, 9\` (step 2) |
 | \`range(5, 0, -1)\` | \`5, 4, 3, 2, 1\` (countdown) |
 
+**\`range()\` has three forms:**
+
+| Form | Meaning |
+|---|---|
+| \`range(stop)\` | 0 to stop-1 |
+| \`range(start, stop)\` | start to stop-1 |
+| \`range(start, stop, step)\` | start to stop-1, jumping by step |
+
 > **Trace-table tip:** write a small table with columns for the loop variable and the output. Step through each iteration — this is exactly what Python does.
+
+#### Accumulating in a Loop — The Counter Pattern
+
+The single most common loop task is *accumulating* a total:
+
+\`\`\`python
+total = 0
+for n in range(1, 6):     # 1 + 2 + 3 + 4 + 5
+    total += n
+print(total)              # 15
+\`\`\`
+
+**Trace table for this loop:**
+
+| Iteration | n | total before | total after |
+|---|---|---|---|
+| 1 | 1 | 0 | 1 |
+| 2 | 2 | 1 | 3 |
+| 3 | 3 | 3 | 6 |
+| 4 | 4 | 6 | 10 |
+| 5 | 5 | 10 | 15 |
+
+This pattern — initialize before the loop, update inside — powers sums, counts, maximums, and building lists for the rest of the course.
 
 ---
 
@@ -106,6 +176,15 @@ print("Blast off!")
 \`\`\`
 
 **Danger:** if the condition never becomes False, the loop runs forever (an *infinite loop*). Always make sure something inside the loop moves the condition toward False.
+
+**Choosing between \`for\` and \`while\`:**
+
+| Situation | Use |
+|---|---|
+| You know how many times (or are iterating a collection) | \`for\` |
+| You repeat until a condition changes, and the count is unknown | \`while\` |
+| Example: "ask for password until correct" | \`while\` |
+| Example: "process every line in a file" | \`for\` |
 
 ---
 
@@ -125,6 +204,8 @@ for n in range(1, 11):
     print(n)              # 1 2 4 5 7
 \`\`\`
 
+> **Mental model:** \`break\` slams on the brakes and leaves the car. \`continue\` jumps over one pothole but keeps driving the same route.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -132,12 +213,15 @@ for n in range(1, 11):
 - **Mistake:** \`if score = 90:\` — **Fix:** comparison needs \`==\`, not \`=\`.
 - **Mistake:** An infinite \`while True:\` with no \`break\` — **Fix:** ensure the condition or a break eventually stops it.
 - **Mistake:** Checking \`elif\` conditions in the wrong order (e.g., \`>= 60\` before \`>= 90\`) — **Fix:** order from most to least specific.
+- **Mistake:** Forgetting to update the loop variable in a \`while\` loop — **Fix:** an unchanged condition means an infinite loop.
+- **Mistake:** Indenting the loop body inconsistently — **Fix:** every statement that belongs to the loop must share the same indent.
 
 ### Professional Tips & Tricks
 
 - Put the most likely condition first for slightly faster, clearer code.
 - \`while True + break\` is a clean pattern for menus and input validation loops.
 - \`range(start, stop, step)\` gives you full control over for-loop stepping.
+- Use trace tables on paper for the first few loops — the muscle memory pays off forever.
 
 ---
 
@@ -148,6 +232,7 @@ for n in range(1, 11):
 - \`for\` iterates over sequences; \`while\` repeats until False.
 - \`break\` stops a loop; \`continue\` skips one iteration.
 - Always ensure while loops can terminate.
+- The accumulate-inside-a-loop pattern is the foundation of nearly every algorithm.
 
 **Next up:** Loop control in depth — nested loops, the loop \`else\` clause, and \`pass\`.`,
       codeLanguage: "python",
@@ -222,7 +307,7 @@ Score 30: Failed critically (Needs revision)`,
 
 Plain \`for\` and \`while\` loops get you 80% of the way. The remaining 20% — fine-grained control — is what separates beginner code from professional code. This lesson covers the three interrupts, the secret \`else\` clause, and nested loops.
 
-#### What You'll Learn in This lesson
+#### What You'll Learn in This Lesson
 
 - Use \`break\`, \`continue\`, and \`pass\` precisely
 - Master the loop \`else\` clause — Python's hidden gem
@@ -246,6 +331,8 @@ for item in items:
     pass  # TODO: implement later — prevents an IndentationError
 \`\`\`
 
+> **When to use \`pass\`:** any place Python requires an indented block but you have nothing to write yet — empty function bodies, empty class bodies, empty exception handlers. It is the "I'll finish this later" placeholder.
+
 ---
 
 ### The Secret else Clause
@@ -268,6 +355,23 @@ else:
 - Not found → loop ends naturally → \`else\` **runs**.
 
 > Without \`else\`, you would need a boolean flag (\`found = False\` ...) — the loop \`else\` removes that boilerplate. It is one of the most "Pythonic" features in the language.
+
+#### The Flag-Variable Alternative (and Why else Is Better)
+
+The non-else way to write the same logic:
+
+\`\`\`python
+found = False
+for n in numbers:
+    if n == target:
+        print("Found it!")
+        found = True
+        break
+if not found:
+    print("Not found")
+\`\`\`
+
+The loop \`else\` version is shorter, has no flag to forget, and keeps the "not found" handling right next to the search. This pattern appears in real code constantly — prime-number checks, password validators, and duplicate detectors.
 
 ---
 
@@ -293,6 +397,10 @@ for i in range(1, 4):        # outer: 3 times
 - Use nested loops for grids, multiplication tables, and combinations.
 
 > **Trace with two counters:** build a table with columns \`i\` and \`j\`. For every value of \`i\`, list all values of \`j\`. You will literally see the pattern.
+
+#### Iteration Counts
+
+With \`m\` outer iterations and \`n\` inner iterations, the inner body runs \`m × n\` times total. For the 3×3 table above, that is 9 printed cells — and a \`for i in range(10): for j in range(10):\` grid prints 100 cells. This multiply-out is how you estimate whether nested loops will be fast enough for large data (a 10,000 × 10,000 nested loop is 100 million steps — slow!).
 
 ---
 
@@ -320,6 +428,10 @@ for name, score in zip(names, scores):
 # Riya 88
 \`\`\`
 
+> **Mental model:** \`enumerate\` hands out numbered tickets as each person enters. \`zip\` is a zipper joining two rows of teeth into one.
+
+**\`zip\` with more than two lists** works the same way, and it stops at the shortest input — perfect for combining parallel lists of scores, names, and grades.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -327,12 +439,16 @@ for name, score in zip(names, scores):
 - **Mistake:** Using a flag variable when \`else\` would work — **Fix:** prefer the loop \`else\` for "not found" logic.
 - **Mistake:** 3+ levels of nested loops — **Fix:** break them into functions; deep nesting is a readability killer.
 - **Mistake:** Forgetting to update the counter in a \`while\` loop — **Fix:** always move toward the exit condition.
+- **Mistake:** Putting \`else\` at the wrong indentation — **Fix:** the loop \`else\` must be at the *same indent* as the \`for\`/\`while\`, not inside the loop body.
+- **Mistake:** Using \`pass\` where you meant \`continue\` — **Fix:** \`pass\` does nothing and falls through; \`continue\` jumps to the next iteration.
 
 ### Professional Tips & Tricks
 
 - Prefer \`break + else\` over a boolean flag like \`found = False\` — it is more Pythonic.
 - Avoid deeply nested loops (3+ levels); break them into functions.
 - \`for i, v in enumerate(items)\` gives both index and value.
+- Use \`zip(names, scores, grades)\` to walk parallel lists in lockstep.
+- Print loop counters while debugging — instant trace table.
 
 ---
 
@@ -342,6 +458,7 @@ for name, score in zip(names, scores):
 - Loop \`else\` runs only when no \`break\` happened — perfect for search-failed logic.
 - Nested loops = inner loop completes fully per outer iteration.
 - \`enumerate()\` and \`zip()\` remove index/bookkeeping boilerplate.
+- Inner body runs \`m × n\` times in nested loops — always estimate the total.
 
 **Next up:** Comprehensions — build lists, dicts, and sets in one elegant line.`,
       codeLanguage: "python",
@@ -424,7 +541,9 @@ Found 16 at position 3
 
 A **list comprehension** builds a new list in a single expression. It is shorter, faster, and easier to read than a manual \`for\` loop that appends. Once you learn to read them, comprehensions become the tool you reach for first.
 
-#### What You'll Learn in This lesson
+Comprehensions are one of the defining features of Python — many other languages have copied them since. They appear on virtually every interview question, in every codebase, and in every data-processing script. This lesson makes you fluent in reading and writing them.
+
+#### What You'll Learn in This Lesson
 
 - Read and write list comprehensions with filters
 - Build dict and set comprehensions
@@ -467,6 +586,8 @@ evens = [n for n in numbers if n % 2 == 0]   # [2, 4]
 
 The comprehension is one line, runs faster (C-level loop under the hood), and cannot accidentally forget the append. Measurable speed differences appear on big lists.
 
+**Why is it faster?** Python optimizes comprehensions at the interpreter level — the loop runs in C rather than going through Python's slower per-instruction machinery. For a million items, comprehensions are typically 1.5–2× faster than manual append loops.
+
 ---
 
 ### Dict and Set Comprehensions
@@ -482,6 +603,14 @@ The same idea works for dictionaries and sets — just change the brackets:
 \`\`\`python
 cubes = {n: n ** 3 for n in numbers if n % 2 == 1}
 letters = {ch.lower() for ch in "Abracadabra"}   # unique letters
+\`\`\`
+
+**Dict comprehensions** are everywhere in data work — converting lists of records into lookup tables:
+
+\`\`\`python
+users = [{"id": 1, "name": "Amol"}, {"id": 2, "name": "Riya"}]
+by_id = {u["id"]: u["name"] for u in users}
+print(by_id[2])   # Riya
 \`\`\`
 
 ---
@@ -503,6 +632,8 @@ print(list(gen))   # [0, 10, 20, 30, 40]
 total = sum(n * n for n in range(1_000_000))   # no giant list created
 \`\`\`
 
+> **Mental model:** a list comprehension is a completed warehouse shelf; a generator is a live conveyor belt that hands you one item at a time. The belt uses almost no storage.
+
 ---
 
 ### When NOT to Use a Comprehension
@@ -514,6 +645,8 @@ Comprehensions are powerful but not always the answer:
 - You only need the side effect (like printing) → a normal loop is clearer.
 - Readability always wins. If the comprehension is hard to read, it is too clever.
 
+**The readability test:** if you cannot understand the comprehension at a glance, split it — either into a loop or into a helper function. Professionals optimize for the next reader, not for the shortest possible line.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -521,12 +654,16 @@ Comprehensions are powerful but not always the answer:
 - **Mistake:** Putting the condition after the expression but with wrong order — **Fix:** remember: \`[expr for item in seq if cond]\` — the \`if\` always comes after the \`for\`.
 - **Mistake:** Using a comprehension for side effects like \`print\` — **Fix:** use a regular loop; comprehensions are for building collections.
 - **Mistake:** A comprehension too long to fit on one line — **Fix:** switch to a loop. One-liners are only elegant when short.
+- **Mistake:** Forgetting the colon in a dict comprehension (\`{n: n**2 ...}\`) — **Fix:** dict comprehensions always have \`key: value\` with a colon.
+- **Mistake:** Using \`{}\` expecting a set — **Fix:** \`{}\` is an empty *dict*; an empty set is \`set()\`.
 
 ### Professional Tips & Tricks
 
 - Comprehensions are faster than manual append loops — measurable on big lists.
 - Use a generator expression in sum(), max(), or any() to avoid building intermediate lists.
 - Keep comprehensions on one line; if it does not fit, use a regular loop.
+- Use \`{k: v for ...}\` to build instant lookup tables from lists of records.
+- Read comprehensions right-to-left: loop → filter → expression.
 
 ---
 
@@ -536,6 +673,7 @@ Comprehensions are powerful but not always the answer:
 - Same pattern with \`{}\` builds sets and dicts.
 - Parentheses \`( )\` make a lazy, memory-friendly generator.
 - Use comprehensions for transformations; use loops for side effects and complex logic.
+- Generator expressions in sum/max/any avoid huge intermediate lists.
 
 **Next up:** Module 3 — data structures. Lists & tuples first.`,
       codeLanguage: "python",

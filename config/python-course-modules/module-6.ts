@@ -17,12 +17,15 @@ export const MODULE_6: Module = {
 
 Programs that outlive a single run need **persistence** — the ability to save data and read it back later. Files store data between runs: reading config, saving results, processing CSV exports. Without file handling, every program forgets everything when it closes.
 
-#### What You'll Learn in This lesson
+Everything from a saved game to a bank statement is just bytes in a file. Python's file tools are the gateway to the disk — and they are surprisingly easy once you master the \`with\` pattern.
+
+#### What You'll Learn in This Lesson
 
 - Open files safely with the \`with\` statement
 - Read files line by line, chunk by chunk
 - Write and append data
 - Handle CSV tabular data with the \`csv\` module
+- Work with paths using \`pathlib\`
 
 ---
 
@@ -40,6 +43,8 @@ with open("students.txt", "w", encoding="utf-8") as f:
 
 > **Mental model:** the \`with\` block is a safety bubble. When the bubble pops (normally or via an error), the file is closed automatically.
 
+**What's really happening?** The file object implements the **context manager** protocol — \`__enter__\` (opened for you) and \`__exit__\` (always called when the block ends, even on exceptions). That \`__exit__\` is what guarantees the cleanup.
+
 ---
 
 ### File Modes
@@ -53,6 +58,8 @@ with open("students.txt", "w", encoding="utf-8") as f:
 | \`"rb"\` / \`"wb"\` | Binary | Images, audio, pickles |
 
 **Warning:** \`"w"\` erases the file contents the moment you open it. If you want to keep existing data, use \`"a"\` (append).
+
+> **The most common beginner data-loss bug:** opening with \`"w"\` when you meant \`"a"\`. The file is truncated the instant \`open()\` succeeds — before a single line is written. Always double-check your mode.
 
 ---
 
@@ -72,6 +79,30 @@ with open("students.txt", "r", encoding="utf-8") as f:
 \`\`\`
 
 For a 10 GB log file, \`for line in f:\` streams it line by line using almost no memory.
+
+> **Mental model:** \`for line in f\` is a lazy conveyor belt — one line exists at a time. \`f.read()\` is a forklift that picks up the entire warehouse at once. Choose the tool that matches your file size.
+
+---
+
+### pathlib — Modern Path Handling
+
+The old \`os.path\` module is clunky. \`pathlib\` gives you clean, cross-platform path objects:
+
+\`\`\`python
+from pathlib import Path
+
+data_dir = Path("data")
+data_dir.mkdir(exist_ok=True)              # create folder if missing
+
+file_path = data_dir / "students.txt"      # / joins paths cleanly!
+print(file_path.exists())                  # True / False
+print(file_path.name)                      # students.txt
+print(file_path.suffix)                    # .txt
+print(file_path.read_text())               # read whole file as text
+file_path.write_text("hello\\n")           # write text
+\`\`\`
+
+No more \`os.path.join\` string gymnastics — \`/\` does the joining, and it works identically on Windows and macOS/Linux.
 
 ---
 
@@ -96,6 +127,16 @@ with open("students.csv", "r", encoding="utf-8") as f:
 
 > **Always pass \`newline=""\` when writing CSVs** — otherwise you get blank lines between rows on Windows.
 
+**csv.DictReader — CSV with headers as dicts:**
+
+\`\`\`python
+with open("students.csv", "r", encoding="utf-8") as f:
+    for row in csv.DictReader(f):
+        print(row["name"], row["course"])   # access by header name
+\`\`\`
+
+Once a CSV row is a dict, every lesson from Module 3 applies: \`.get()\`, comprehensions, grouping — instant data workflow.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -103,12 +144,16 @@ with open("students.csv", "r", encoding="utf-8") as f:
 - **Mistake:** Opening a file for \`"w"\` when you meant to append — **Fix:** use \`"a"\` to keep existing data.
 - **Mistake:** Forgetting \`encoding="utf-8"\` and getting mojibake — **Fix:** always specify the encoding.
 - **Mistake:** Reading a file without \`with\` and leaking handles — **Fix:** always use the \`with\` statement.
+- **Mistake:** \`f.read()\` on a giant file and running out of memory — **Fix:** iterate with \`for line in f\`.
+- **Mistake:** Forgetting \`newline=""\` when writing CSVs — **Fix:** pass it on every CSV write.
 
 ### Professional Tips & Tricks
 
 - Always specify \`encoding='utf-8'\` — avoids cross-platform encoding bugs.
 - Never open without \`with\` — a leaked open file handle can corrupt data or exhaust resources.
 - Use \`pathlib.Path\` for modern, cross-platform path handling.
+- Use \`csv.DictReader\` to turn rows into dicts instantly.
+- Check \`Path.exists()\` before reading to avoid \`FileNotFoundError\` (or catch it — Lesson 21).
 
 ---
 
@@ -119,6 +164,7 @@ with open("students.csv", "r", encoding="utf-8") as f:
 - \`for line in f:\` streams big files memory-efficiently.
 - The \`csv\` module handles tabular data safely.
 - Always pass \`encoding="utf-8"\` and \`newline=""\` for CSVs.
+- \`pathlib.Path\` makes path handling clean and cross-platform.
 
 **Next up:** Exception handling — making your programs fail gracefully.`,
       codeLanguage: "python",
@@ -195,7 +241,9 @@ CSV rows: [['name', 'course'], ['Amol', 'Python'], ['Riya', 'Data Science']]`,
 
 When Python hits a problem, it **raises an exception**. Unhandled, an exception crashes the program with an ugly traceback. Handled well, your program responds gracefully — this is the difference between professional and fragile software.
 
-#### What You'll Learn in This lesson
+Nobody writes bug-free code. Professionals write code that *anticipates* failure and handles it with dignity. Every real program — websites, games, banking apps — leans on exception handling to survive bad input, missing files, and network hiccups.
+
+#### What You'll Learn in This Lesson
 
 - Protect risky code with \`try\`/\`except\`
 - Use \`else\` and \`finally\` correctly
@@ -235,6 +283,17 @@ except ValueError:
 | \`IndexError\` | Index out of range |
 | \`ZeroDivisionError\` | Division by zero |
 
+> **Mental model:** \`except\` blocks are labeled boxes that catch only their matching error type. A \`ZeroDivisionError\` box won't catch a \`ValueError\` — each error falls into its own labeled box.
+
+**Catching multiple types — the tuple form:**
+
+\`\`\`python
+try:
+    value = int(data["price"]) / items
+except (KeyError, ValueError, ZeroDivisionError):
+    print("Bad data — skipping")
+\`\`\`
+
 ---
 
 ### The Full Structure: try / except / else / finally
@@ -259,6 +318,8 @@ finally:
 
 > **Mental model:** \`except\` blocks are labeled boxes that catch only their matching error type. \`finally\` is the janitor — it shows up no matter what.
 
+**Why have both \`else\` and \`finally\`?** \`else\` runs only on *success* — so you don't accidentally handle the success path inside the try where an exception there would be caught too. \`finally\` runs *unconditionally* — the right place for closing files, releasing locks, and cleanup.
+
 ---
 
 ### Raise Your Own Errors
@@ -276,6 +337,8 @@ try:
 except ValueError as e:
     print("Caught:", e)   # Caught: Age cannot be negative
 \`\`\`
+
+**Why raise instead of returning \`None\`?** A raised error *forces* the caller to deal with the problem — it can't be silently ignored. Returning \`None\` often leads to a \`NoneType\` crash three lines later, far from the real bug. Raise early, raise loudly.
 
 ---
 
@@ -300,6 +363,16 @@ except NotEnoughStock as e:
 
 Custom exceptions are self-documenting and catchable precisely.
 
+**When to define a custom exception:** when the same error can occur in many places and you want to catch it specifically, or when the error is unique to your domain (a game: \`GameOver\`; a store: \`OutOfStock\`). A hierarchy helps large codebases:
+
+\`\`\`python
+class StoreError(Exception): ...
+class OutOfStock(StoreError): ...
+class InvalidPayment(StoreError): ...
+\`\`\`
+
+Now \`except StoreError\` catches every store problem while still letting you handle \`OutOfStock\` specifically.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -307,12 +380,16 @@ Custom exceptions are self-documenting and catchable precisely.
 - **Mistake:** Bare \`except:\` — **Fix:** it hides bugs and even catches \`KeyboardInterrupt\`. Always name the exception type.
 - **Mistake:** Catching \`Exception\` broadly at the top — **Fix:** catch specific types first, broad ones last.
 - **Mistake:** Swallowing errors silently (\`except: pass\`) — **Fix:** log or print the message — silent excepts are debugging nightmares.
+- **Mistake:** Raising inside \`else\` — **Fix:** \`else\` is for the success path; keep raises in \`try\` or normal flow.
+- **Mistake:** Returning \`None\` on error instead of raising — **Fix:** raise early so the caller must handle it.
 
 ### Professional Tips & Tricks
 
 - Catch the most specific exception first, broad ones last.
 - Never use a bare \`except:\` — it hides bugs and catches even KeyboardInterrupt.
 - Log or print the exception message — silent except blocks are debugging nightmares.
+- Use \`else\` for success-only logic and \`finally\` for guaranteed cleanup.
+- Raise domain-specific custom exceptions so callers can catch precisely.
 
 ---
 
@@ -323,6 +400,7 @@ Custom exceptions are self-documenting and catchable precisely.
 - \`raise ValueError("msg")\` enforces rules with clear feedback.
 - Subclass \`Exception\` for domain-specific errors.
 - Catch specific types; never use bare \`except\`.
+- Raise early and loudly — never let errors vanish silently.
 
 **Next up:** Iterators, generators & itertools — lazy, memory-friendly iteration.`,
       codeLanguage: "python",
@@ -410,7 +488,9 @@ Caught: Age cannot be negative`,
 
 A **generator** produces values one at a time using \`yield\`. Unlike a list, it does **not** store everything in memory at once — perfect for huge or even infinite sequences.
 
-#### What You'll Learn in This lesson
+This is the lesson where your Python goes from "works on small data" to "handles real-world data". Generators are the reason Python can process files larger than RAM, stream infinite sequences, and feed machine-learning pipelines without memory crashes.
+
+#### What You'll Learn in This Lesson
 
 - Write generators with \`yield\`
 - Understand lazy evaluation
@@ -435,6 +515,14 @@ for num in countdown(3):     # 3 2 1 0
 
 > **Mental model:** a generator is a book that reveals one page at a time. You read a page, close the book, and reopen exactly where you left off. The bookmark (local state) is saved.
 
+**Watch the difference between \`return\` and \`yield\`:**
+
+| \`return\` | \`yield\` |
+|---|---|
+| Function ends, one value handed back | Function pauses, value handed out, resumes later |
+| Caller gets the value immediately | Caller gets a generator object to pull from |
+| State is lost | Local state is saved between yields |
+
 ---
 
 ### Why Generators Matter
@@ -455,6 +543,8 @@ Data pipelines, streaming, and AI training loops all rely on this lazy pattern.
 | Can be iterated again | Yes | No (consumed) |
 | Indexable | Yes | No |
 
+> **The one-shot rule:** a generator is a conveyor belt, not a warehouse. Once you've taken every item, the belt is empty — iterate again and you get nothing. If you need two passes, convert to a list (and pay the memory cost) or rebuild the generator.
+
 ---
 
 ### Generator Expressions
@@ -464,6 +554,15 @@ Data pipelines, streaming, and AI training loops all rely on this lazy pattern.
 \`\`\`python
 total = sum(x * x for x in range(1, 101))   # 338350 — no giant list
 \`\`\`
+
+**List vs generator expression — which to use?**
+
+| Use a list \`[...]\` | Use a generator \`(...)\` |
+|---|---|
+| You need the items multiple times | Single pass is enough |
+| You need indexing | Passing to sum/max/min/any |
+| Small data | Large or infinite data |
+| You need to inspect the result | You only need the aggregate |
 
 ---
 
@@ -486,6 +585,25 @@ print(list(islice((x for x in range(100) if x % 2 == 0), 5)))  # first 5 evens
 print(list(chain([1, 2], [3, 4])))                              # [1, 2, 3, 4]
 \`\`\`
 
+**Peeking at an infinite sequence safely:**
+
+\`\`\`python
+from itertools import count, islice
+evens = count(0, 2)                          # 0, 2, 4, 6, ... forever
+print(list(islice(evens, 5)))                # [0, 2, 4, 6, 8] — take 5, no crash
+\`\`\`
+
+> **Mental model:** \`islice\` is a "take n items and stop" guard — the only safe way to look at an infinite generator.
+
+---
+
+### Real-World Generator Patterns
+
+- **Reading huge files:** \`for line in open("big.log")\` — one line in memory at a time (Lesson 20).
+- **API pagination:** a generator that fetches the next page only when asked.
+- **Infinite data:** \`count()\`, \`cycle()\` for round-robin load balancing and game logic.
+- **Pipelines:** chain generators — \`clean(parse(raw(f)))\` — each stage lazy, total memory O(1).
+
 ---
 
 ### Common Mistakes to Avoid
@@ -493,12 +611,16 @@ print(list(chain([1, 2], [3, 4])))                              # [1, 2, 3, 4]
 - **Mistake:** Iterating a generator twice and getting nothing the second time — **Fix:** generators are one-shot; rebuild or convert to a list if you need two passes.
 - **Mistake:** Mixing \`yield\` and \`return value\` in the same function — **Fix:** in a generator, \`return\` ends iteration (and \`return value\` is invalid); use \`yield\` for values.
 - **Mistake:** Materializing huge lists when a generator would do — **Fix:** reach for \`(expr for ...)\` or \`itertools\`.
+- **Mistake:** Forgetting the parentheses in a generator expression passed to a function — **Fix:** \`sum(x for x in ...)\` is fine without extra parens when it's the only argument.
+- **Mistake:** Calling \`len()\` or indexing a generator — **Fix:** generators have no length and no indexes; convert to a list first if you need them.
 
 ### Professional Tips & Tricks
 
 - Use generators for file lines, API pagination, and any stream — never materialize huge lists.
 - Prefer \`(expr for ...)\` over \`[expr for ...]\` when passing to sum/max/any.
 - \`itertools.islice\` lets you peek at infinite generators safely.
+- Chain lazy stages into pipelines: each stage yields, total memory stays O(1).
+- Remember the one-shot rule: rebuild generators for a second pass.
 
 ---
 
@@ -508,6 +630,7 @@ print(list(chain([1, 2], [3, 4])))                              # [1, 2, 3, 4]
 - Generators use O(1) memory and are one-shot.
 - Generator expressions \`(expr for ...)\` feed into \`sum\`/\`max\`/\`any\`.
 - \`itertools\` provides \`islice\`, \`chain\`, \`product\`, and more.
+- \`islice\` makes infinite generators safe to peek at.
 
 **Next up:** JSON & working with real-world data.`,
       codeLanguage: "python",
@@ -587,7 +710,9 @@ Chained: [1, 2, 3, 4]`,
 
 **JSON** (JavaScript Object Notation) is the universal format for APIs, configs, and data files. It looks almost exactly like Python dicts and lists — strings in double quotes, booleans lowercase (\`true\`/\`false\`), and \`null\` instead of \`None\`.
 
-#### What You'll Learn in This lesson
+Nearly every website you use talks JSON. When a browser fetches data from a server, when a mobile app syncs, when a machine-learning model receives training config — JSON is the lingua franca. Learning it opens the door to consuming real-world data.
+
+#### What You'll Learn in This Lesson
 
 - Convert between Python and JSON with the four functions
 - Pretty-print JSON for readability
@@ -607,6 +732,8 @@ Chained: [1, 2, 3, 4]`,
 
 Remember: **d**ump goes to a string/file (serialize), **l**oad parses from a string/file (deserialize).
 
+> **Memory trick:** the "s" versions work on **s**trings; the no-s versions work on file objects. \`dumps\`/\`loads\` ↔ strings; \`dump\`/\`load\` ↔ files.
+
 ---
 
 ### Type Mapping
@@ -621,6 +748,22 @@ Remember: **d**ump goes to a string/file (serialize), **l**oad parses from a str
 | \`None\` | \`null\` |
 
 **Not serializable by default:** \`set\`, \`tuple\`, custom objects, \`datetime\`. You'll get a \`TypeError\` — convert them first or pass a \`default=\` function.
+
+**The \`default=\` escape hatch:**
+
+\`\`\`python
+import json
+from datetime import datetime
+
+data = {"created": datetime.now()}
+
+def convert(obj):
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    raise TypeError(f"Not serializable: {obj!r}")
+
+print(json.dumps(data, default=convert))  # {"created": "2026-08-11T..."}
+\`\`\`
 
 ---
 
@@ -670,6 +813,35 @@ This **parse → transform → save** pipeline is the backbone of every data eng
 
 > **Mental model:** \`dumps\` packs a suitcase (Python → JSON); \`loads\` unpacks it (JSON → Python). Draw the nesting outside-in: \`{\` = crate, \`[\` = shelf.
 
+**Fetching live JSON from an API (with \`requests\`):**
+
+\`\`\`python
+import requests
+import json
+
+response = requests.get("https://api.github.com/users/amolshukla")
+data = response.json()          # requests parses JSON for you
+print(data["public_repos"])     # work with it as plain Python
+\`\`\`
+
+---
+
+### Validating with try/except
+
+Real-world JSON is not always well-formed. Professional code wraps parsing:
+
+\`\`\`python
+import json
+
+raw = '{"broken": '   # invalid JSON
+try:
+    data = json.loads(raw)
+except json.JSONDecodeError as e:
+    print("Bad JSON:", e)
+\`\`\`
+
+This is the Lesson 21 pattern applied to data — one line of protection prevents a crash on every bad payload.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -677,12 +849,16 @@ This **parse → transform → save** pipeline is the backbone of every data eng
 - **Mistake:** \`json.dumps({1, 2, 3})\` (a set) — **Fix:** TypeError; convert to a list first.
 - **Mistake:** Forgetting that JSON booleans are \`true\`/\`false\` and \`null\` — **Fix:** Python parses them to \`True\`/\`False\`/\`None\` automatically.
 - **Mistake:** Double-encoding — calling \`json.dumps\` on an already-dumped string — **Fix:** dump once, at the end.
+- **Mistake:** \`json.load\` vs \`json.loads\` confusion — **Fix:** \`loads\` = string; \`load\` = file.
+- **Mistake:** Not handling \`JSONDecodeError\` on external data — **Fix:** wrap \`loads\` in try/except.
 
 ### Professional Tips & Tricks
 
 - Use \`json.dumps(..., ensure_ascii=False)\` to keep non-English characters readable.
 - Wrap \`json.loads\` in \`try/except json.JSONDecodeError\` for robust parsing.
 - Flatten nested JSON with helper functions before analysis — pandas can take dicts directly.
+- Use \`default=\` to serialize dates and custom objects.
+- Use \`indent=2\` and \`sort_keys=True\` for shareable, readable output.
 
 ---
 
@@ -692,6 +868,7 @@ This **parse → transform → save** pipeline is the backbone of every data eng
 - Python and JSON map cleanly: dict↔object, list↔array, True↔true, None↔null.
 - \`indent=2\` pretty-prints; \`ensure_ascii=False\` keeps Unicode readable.
 - Sets, tuples, and dates need conversion before serialization.
+- Wrap parsing in try/except for robustness.
 
 **Next up:** Testing & debugging — writing code that proves itself.`,
       codeLanguage: "python",
@@ -775,7 +952,9 @@ Round-trip equal: True`,
 
 A professional program ships with tests that **prove** it works. Every time you change code, tests catch what you broke — instantly. Without tests, you are trusting "it worked when I tried it once".
 
-#### What You'll Learn in This lesson
+This is the mindset shift that separates hobby code from production software. Companies ship with test suites that run on every commit — a failing test blocks the release. This lesson gives you that professional toolkit.
+
+#### What You'll Learn in This Lesson
 
 - Write quick checks with \`assert\`
 - Build real tests with pytest
@@ -794,6 +973,8 @@ print("Assertion passed")
 \`\`\`
 
 Great for sanity checks and quick validations. But asserts vanish with \`python -O\` — for real tests, use pytest.
+
+**Assertions are the grammar of tests.** Every test you will ever write is, at heart, a collection of assertions: "this equals that", "this raises that", "this is True".
 
 ---
 
@@ -826,6 +1007,18 @@ test_price.py .....                                               [100%]
 
 Useful flags: \`pytest -v\` (verbose), \`pytest -k name\` (run a subset), \`pytest -x\` (stop on first failure).
 
+> **Mental model:** each test is a referee with a checklist — green for pass, red for fail. The suite is your safety net: change code, run tests, and the net catches any broken behavior instantly.
+
+**Testing exceptions with pytest:**
+
+\`\`\`python
+import pytest
+
+def test_division_by_zero():
+    with pytest.raises(ZeroDivisionError):
+        result = 1 / 0
+\`\`\`
+
 ---
 
 ### The Debugger — Better than print()
@@ -851,6 +1044,8 @@ When \`breakpoint()\` runs, you drop into an interactive prompt:
 
 > **Mental model:** \`breakpoint()\` is a pause button that freezes the program mid-flight so you can inspect every variable.
 
+**Why the debugger beats \`print()\`:** you can inspect *any* variable at the pause point without editing code and re-running; you can step line by line; and you can continue from where you stopped. \`print()\` requires guessing what to print and re-running each time.
+
 ---
 
 ### Logging — Professional Print
@@ -869,11 +1064,29 @@ logging.error("something failed")
 
 Levels (increasing severity): \`DEBUG\` < \`INFO\` < \`WARNING\` < \`ERROR\` < \`CRITICAL\`.
 
+**Why logging over print in production:**
+
+| print() | logging |
+|---|---|
+| Screen only | Console, files, network |
+| No levels | DEBUG → CRITICAL levels |
+| No timestamps | Timestamps & formats built in |
+| No easy disabling | \`level=\` filters whole categories |
+| One-off | Structured, searchable output |
+
 ---
 
 ### TDD in One Sentence
 
 **Write the test FIRST** (it fails), then write the minimum code to make it pass — red, green, refactor.
+
+The loop:
+
+1. **Red:** write a failing test for the behavior you want.
+2. **Green:** write the smallest code that makes it pass.
+3. **Refactor:** clean up, keeping the tests green.
+
+This forces you to think about *behavior* before *implementation* — and guarantees every feature is covered.
 
 ---
 
@@ -882,12 +1095,16 @@ Levels (increasing severity): \`DEBUG\` < \`INFO\` < \`WARNING\` < \`ERROR\` < \
 - **Mistake:** Testing the implementation instead of the behavior — **Fix:** assert on outputs and effects, not internals.
 - **Mistake:** Only testing the happy path — **Fix:** test edge cases: zero, negatives, empty inputs, maximums.
 - **Mistake:** \`print()\` debugging in production — **Fix:** use the \`logging\` module.
+- **Mistake:** A test that asserts nothing — **Fix:** every test needs at least one \`assert\` (or \`pytest.raises\`).
+- **Mistake:** Tests that depend on other tests or on global state — **Fix:** keep tests independent and deterministic.
 
 ### Professional Tips & Tricks
 
 - Name tests descriptively: \`test_withdraw_insufficient_funds()\`.
 - Test edge cases: zero, negatives, empty inputs, and the maximums.
 - Use \`pytest -v\` for verbose output and \`pytest -k keyword\` to run a subset.
+- Use \`breakpoint()\` + \`n\`/\`s\`/\`p\` instead of print-debugging.
+- Replace production \`print()\` with \`logging\` — leveled, timestamped, filterable.
 
 ---
 
@@ -897,6 +1114,7 @@ Levels (increasing severity): \`DEBUG\` < \`INFO\` < \`WARNING\` < \`ERROR\` < \
 - \`breakpoint()\` + \`n\`/\`s\`/\`p\` beats print-debugging.
 - \`logging\` with levels is the production-grade replacement for print.
 - TDD: write the failing test first, then make it pass.
+- Test behavior, not implementation — and cover edge cases.
 
 **Next up:** The capstone — build a complete CLI expense tracker.`,
       codeLanguage: "python",
@@ -976,7 +1194,9 @@ Result: 118.0
 
 You have learned variables, control flow, data structures, functions, OOP, files, errors, and JSON. Now we combine **all of it** into a real, usable program: a **CLI Expense Tracker**. This is the moment you stop being a beginner.
 
-#### What You'll Learn in This lesson
+This project mirrors how real software is built: a small set of focused functions, persistence to disk, validation of user input, and a menu loop. If you can build this from memory, you are ready to start building your own projects.
+
+#### What You'll Learn in This Lesson
 
 - Design a small program's architecture before writing code
 - Persist data to JSON so it survives restarts
@@ -1008,7 +1228,9 @@ The whole program is a small set of focused functions:
 | \`print_summary(expenses)\` | Aggregate totals by category |
 | \`main()\` | The \`while True\` menu loop |
 
-Each function does **one job** — the golden rule of function design.
+Each function does **one job** — the golden rule of function design (Lesson 12).
+
+> **Mental model:** map each menu option to the function it calls. The menu is the front door; the functions are the rooms behind it. \`main()\` stays thin — it only routes.
 
 ---
 
@@ -1076,6 +1298,28 @@ That is the point: professional Python is just these building blocks arranged we
 
 ---
 
+### Testing Your Capstone
+
+Apply Lesson 24's habits to the project:
+
+\`\`\`python
+def test_add_expense():
+    expenses = []
+    add_expense(expenses, 250, "food")
+    assert expenses == [{"amount": 250, "category": "food"}]
+
+def test_add_rejects_zero():
+    expenses = []
+    try:
+        add_expense(expenses, 0, "food")
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError for amount 0")
+\`\`\`
+
+---
+
 ### Extension Ideas
 
 | Extension | Skills practiced |
@@ -1093,12 +1337,16 @@ That is the point: professional Python is just these building blocks arranged we
 - **Mistake:** One giant \`main()\` with everything inline — **Fix:** split into focused functions.
 - **Mistake:** Letting bad input crash the menu — **Fix:** wrap input parsing in try/except.
 - **Mistake:** Forgetting to save after adding — **Fix:** call \`save_expenses()\` after every mutation.
+- **Mistake:** \`float(input(...))\` on empty input crashing — **Fix:** validate and handle \`ValueError\`.
+- **Mistake:** Reading the JSON file before it exists — **Fix:** check \`os.path.exists\` first (or catch \`FileNotFoundError\`).
 
 ### Professional Tips & Tricks
 
 - Keep \`main()\` thin: it only routes menu choices to functions — each function does one job.
 - The try/except around input makes the program survive bad data — test it with 'abc'.
 - Extend the capstone with CSV export and a delete option to practice everything again.
+- Write a few pytest tests for \`add_expense\` — tests make the project feel professional.
+- Use \`__name__ == "__main__"\` so the module is also importable.
 
 ---
 
@@ -1108,6 +1356,7 @@ That is the point: professional Python is just these building blocks arranged we
 - JSON gives your program memory across runs.
 - Validate all user input with try/except.
 - One function = one job; \`main()\` only routes.
+- Test the core functions with pytest.
 - **You are no longer a beginner.** 🎉
 
 **Next steps:** Review the syllabus, redo any lesson, or explore the Applied Data Science course in the Learning Hub.`,

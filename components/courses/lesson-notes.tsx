@@ -242,9 +242,10 @@ export default function LessonNotesPage() {
 
   return (
     <div className="flex min-h-[calc(100vh-5rem)] border-t border-border/40 relative">
-      {/* Reading progress bar under the sticky header */}
+      {/* Reading progress bar along the bottom edge of the viewport —
+          kept at the bottom so it never cuts off the article text */}
       <div
-        className="fixed top-16 left-0 right-0 z-40 h-0.5 pointer-events-none no-print"
+        className="fixed bottom-[env(safe-area-inset-bottom)] left-0 right-0 z-40 h-0.5 pointer-events-none no-print"
         aria-hidden
       >
         <div
@@ -756,7 +757,11 @@ export default function LessonNotesPage() {
                   Instant feedback
                 </span>
               </div>
-              <LessonQuiz quiz={LESSON_QUIZZES[activeLesson.id]} />
+              <LessonQuiz
+                quiz={LESSON_QUIZZES[activeLesson.id]}
+                courseId={courseId}
+                lessonId={lessonId}
+              />
             </section>
           )}
 

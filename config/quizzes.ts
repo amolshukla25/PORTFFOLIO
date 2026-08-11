@@ -92,6 +92,22 @@ export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "int is Python's integer type (e.g. 42). float is for decimals like 3.14.",
       },
+      {
+        id: "v-4",
+        question: "What is the type of the value True in Python?",
+        options: ["int", "str", "bool", "float"],
+        correctIndex: 2,
+        explanation:
+          "True and False are booleans (type bool) — and secretly integers: True equals 1, False equals 0.",
+      },
+      {
+        id: "v-5",
+        question: "Which value represents 'nothing here' in Python?",
+        options: ["0", "False", "None", "null"],
+        correctIndex: 2,
+        explanation:
+          "None is Python's special 'no value' object — its type is NoneType.",
+      },
     ],
   },
   "strings-mastery": {

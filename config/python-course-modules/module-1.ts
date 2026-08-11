@@ -15,9 +15,19 @@ export const MODULE_1: Module = {
       readingTime: "6 mins read",
       contentMarkdown: `### What is Python?
 
-Python is a general-purpose, high-level programming language created by Guido van Rossum and first released in 1991. It was designed with one guiding philosophy: **code should be readable and easy to write**. Because Python reads almost like plain English, you can focus on *thinking* about the problem instead of fighting the syntax. Today Python is the #1 language for beginners, data science, machine learning, artificial intelligence, and web back-ends — which is exactly why this course starts here.
+Python is a general-purpose, high-level programming language created by Guido van Rossum and first released in **1991**. It was designed with one guiding philosophy: **code should be readable and easy to write**. Because Python reads almost like plain English, you can focus on *thinking* about the problem instead of fighting the syntax. Today Python is the #1 language for beginners, data science, machine learning, artificial intelligence, and web back-ends — which is exactly why this course starts here.
 
-#### What You'll Learn in This lesson
+#### Why Is Python Everywhere in 2026?
+
+- **Data Science & AI:** Pandas, NumPy, PyTorch, and TensorFlow are all Python-first. If a company trains a model, it is almost certainly written in Python.
+- **Web Development:** Django, FastAPI, and Flask power millions of back-ends.
+- **Automation & Scripting:** Python automates boring tasks — renaming files, scraping websites, cleaning data, and gluing other tools together.
+- **Education:** Its gentle learning curve makes it the default first language in universities worldwide.
+- **Huge Ecosystem:** The Python Package Index (PyPI) hosts over half a million free packages.
+
+> **Mental model:** think of Python as a *power tool with a friendly interface* — the underlying machinery (C code, memory management) is hidden, so you operate at the level of ideas, not hardware.
+
+#### What You'll Learn in This Lesson
 
 - Install Python and verify it works on your machine
 - Write and run your very first program
@@ -30,8 +40,8 @@ Python is a general-purpose, high-level programming language created by Guido va
 
 ### Installing Python (Step by Step)
 
-1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest stable version (3.11 or newer).
-2. Run the installer. **Important:** tick the checkbox **"Add Python to PATH"** before clicking *Install Now* — this lets you run \`python\` from any terminal.
+1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest stable version (3.11 or newer). Version 3.12+ is recommended — it is faster and has the newest features.
+2. Run the installer. **Important:** tick the checkbox **"Add Python to PATH"** before clicking *Install Now* — this lets you run \`python\` from any terminal. On macOS/Linux you can also install via \`brew install python\` or your package manager.
 3. Open a terminal (Command Prompt on Windows, Terminal on macOS/Linux) and verify the installation:
 
 \`\`\`bash
@@ -39,7 +49,9 @@ python --version
 # Output: Python 3.12.4
 \`\`\`
 
-If you see a version number, Python is ready. If you see *"python is not recognized"*, you missed the PATH checkbox — reinstall and tick it.
+If you see a version number, Python is ready. If you see *"python is not recognized"* or *"command not found"*, you missed the PATH checkbox (Windows) or Python isn't on your PATH (macOS/Linux) — reinstall and tick it, or use \`python3\` on macOS/Linux.
+
+> **Windows tip:** on modern Windows you can also type \`py\` instead of \`python\` — the Python Launcher finds the right version for you.
 
 #### The REPL vs Script Files
 
@@ -51,6 +63,8 @@ There are two ways to run Python code:
 | **Script file** | Save a \`.py\` file, run \`python hello.py\` | Real programs with many lines |
 
 The REPL reads your input, evaluates it, prints the result, and loops back for more — an instant playground. Script files are how real software is built: you save your code, run the whole file, and share it with others.
+
+**Interactive Python in the browser:** if you don't want to install anything yet, [python.org/shell](https://www.python.org/shell/) and [replit.com](https://replit.com) give you a working Python environment in your browser in seconds.
 
 ---
 
@@ -76,8 +90,25 @@ Hello, world!
 |---|---|---|
 | \`sep\` | Separator between multiple values (default is a space) | \`print("A", "B", sep=" | ")\` |
 | \`end\` | What to print at the end (default is a newline) | \`print("Hi", end="!")\` |
+| \`file\` | Where to write (default is the screen/stdout) | \`print("log", file=log_file)\` |
+| \`flush\` | Force immediate output (default \`False\`) | \`print("progress", flush=True)\` |
 
-You can print any number of values in one call, mixing strings and numbers freely.
+You can print any number of values in one call, mixing strings and numbers freely:
+
+\`\`\`python
+print("I am", 25, "years old")
+print("A", "B", "C", sep=" - ")
+print("Line one", end=" | ")
+print("still line one")
+\`\`\`
+
+\`\`\`text
+I am 25 years old
+A - B - C
+Line one | still line one
+\`\`\`
+
+> **Why it matters:** \`sep\` and \`end\` might look trivial, but they are the difference between pretty, readable output and a wall of mangled text. Professional scripts use them constantly.
 
 #### Comments — Notes for Humans
 
@@ -89,7 +120,12 @@ print("This runs")  # Comments can also go after code
 # print("This line is commented out, so it will NOT run")
 \`\`\`
 
-Comments are how you explain *why* code exists, not *what* it does — the code itself shows the *what*.
+Comments are how you explain *why* code exists, not *what* it does — the code itself shows the *what*. Good comment habits:
+
+- Comment the **why** ("we multiply by 1.18 to add 18% GST"), not the obvious **what** ("this adds two numbers").
+- Use comments to temporarily disable code while debugging.
+- Keep comments short and current — stale comments mislead worse than none.
+- Python also supports multi-line **docstrings** (\`"""..."""\`) for documenting functions and classes — you will use them heavily from Lesson 12 onward.
 
 ---
 
@@ -97,7 +133,7 @@ Comments are how you explain *why* code exists, not *what* it does — the code 
 
 Most languages group blocks of code with curly braces (\`{ }\`). Python uses **indentation** (spaces or tabs) instead. This is a feature, not a quirk: it forces every programmer to write neatly formatted code.
 
-- A block of code is indented 4 spaces by default.
+- A block of code is indented 4 spaces by default (this is the PEP 8 standard).
 - **Never mix tabs and spaces** — it causes an \`IndentationError\`.
 - Inconsistent indentation is the #1 cause of "my code suddenly broke" for beginners.
 
@@ -112,19 +148,38 @@ print("Back at top level")          # no indent = outside
 
 Imagine Python reading your file **top to bottom, one line at a time**, like a person following a recipe. Every \`print()\` is a "shout" to the console — the order of the shouts is exactly the order of execution. There is no jumping ahead and no skipping lines (until we learn about loops and functions in later lessons).
 
+**A beginner debugging ritual:** before running code, *predict* the output by reading line by line out loud. Then run it. If your prediction was wrong, you just found a misunderstanding — and that is a great thing, because now you know exactly what to study.
+
+---
+
+### Understanding Your First Errors
+
+Errors are not failures — they are the interpreter telling you exactly what it needs. The two you will meet first:
+
+| Error | What it means | Example trigger |
+|---|---|---|
+| \`SyntaxError\` | Python could not even read the line — spelling/structure problem | \`print("Hello\` (missing closing quote) |
+| \`NameError\` | You used a name Python has never seen | \`print(hello)\` where \`hello\` is undefined |
+
+**Read the last line of a traceback first** — it names the error type and the line number. The huge stack of text above it is context; the punchline is at the bottom.
+
 ---
 
 ### Common Mistakes to Avoid
 
 - **Mistake:** \`print "Hello"\` (forgetting parentheses) — **Fix:** \`print("Hello")\`. Python 3 requires parentheses; the old Python 2 syntax no longer works.
-- **Mistake:** Mixing tabs and spaces for indentation — **Fix:** configure your editor to convert tabs to 4 spaces.
+- **Mistake:** Mixing tabs and spaces for indentation — **Fix:** configure your editor to convert tabs to 4 spaces (VS Code: "Editor: Insert Spaces").
 - **Mistake:** Naming a file \`print.py\` or \`math.py\` — **Fix:** avoid names that collide with Python keywords or built-in modules.
+- **Mistake:** Skipping the "Add Python to PATH" checkbox — **Fix:** reinstall and tick it, or use \`py\` (Windows) / \`python3\` (macOS/Linux).
+- **Mistake:** Typing \`python\` inside the REPL to run a script — **Fix:** exit the REPL (\`exit()\` or Ctrl+Z) first, then run \`python hello.py\`.
 
 ### Professional Tips & Tricks
 
 - Use 4 spaces for indentation — never mix tabs and spaces.
 - Name your files with lowercase letters and underscores: \`hello_world.py\`.
 - Use \`print()\` freely while learning — it is your flashlight for seeing what code does.
+- Install a good editor: VS Code (free) with the Python extension gives you syntax highlighting, autocomplete, and one-click run buttons.
+- Keep a terminal window open beside your editor — running code every few lines is how you learn fastest.
 
 ---
 
@@ -132,9 +187,10 @@ Imagine Python reading your file **top to bottom, one line at a time**, like a p
 
 - Python is readable, popular, and the best first language to learn.
 - The REPL is for experiments; \`.py\` script files are for real programs.
-- \`print()\` displays output and supports \`sep\` and \`end\`.
+- \`print()\` displays output and supports \`sep\`, \`end\`, \`file\`, and \`flush\`.
 - Comments (\`#\`) document code and are ignored by Python.
 - Consistent 4-space indentation defines code blocks — and is non-negotiable.
+- Errors like \`SyntaxError\` and \`NameError\` tell you exactly what to fix — read the last line first.
 
 **Next up:** Variables, data types, and how Python reads input from the user.`,
       codeLanguage: "python",
@@ -193,15 +249,18 @@ AI | ML | Python`,
       id: "variables-io",
       title: "Lesson 2: Variables, Data Types & Input/Output",
       shortDescription:
-        "Dynamic typing, type casting, memory references, printing statements, and reading standard input.",
+        "The five core data types (int, float, str, bool, None), dynamic typing, type casting, memory references, and reading standard input.",
       duration: "35 mins",
       readingTime: "7 mins read",
       contentMarkdown: `### What is a Variable?
 
 A **variable** is a named label that points to a value stored in memory. Think of it as a sticky note attached to a box: the note has a name (like \`age\`), and the box holds a value (like \`24\`). You can move the note to a different box anytime — that is called **reassignment**.
 
-#### What You'll Learn in This lesson
+Variables are how programs *remember things*. Without them, every calculation would be lost the moment it finishes. Almost everything you write from here on revolves around creating, reading, and updating variables.
 
+#### What You'll Learn in This Lesson
+
+- Meet the five core data types: \`int\`, \`float\`, \`str\`, \`bool\`, and \`None\`
 - Create and reuse variables with proper naming rules
 - Understand Python's dynamic typing and the \`type()\` function
 - Read input from the user with \`input()\`
@@ -225,7 +284,7 @@ label = "text"       # now label points to a string
 print(type(label))   # <class 'str'>
 \`\`\`
 
-Use the built-in \`type()\` function as a spyglass to check what kind of object a variable really holds. It is invaluable for debugging.
+Use the built-in \`type()\` function as a spyglass to check what kind of object a variable really holds. It is invaluable for debugging — when something misbehaves, the first question is almost always "what type is this, really?"
 
 #### Memory References — What Really Happens
 
@@ -233,7 +292,67 @@ When you write \`x = 10\`, Python allocates an integer object in memory and poin
 
 > **Mental model:** variables are never boxes that "contain" values — they are name-tags tied to objects. Reassignment just moves the tag.
 
-#### Naming Rules (Non-Negotiable)
+This model explains a lot of Python's behavior, including the alias traps you will meet in Lesson 11. For now, just remember: **\`x = value\` creates or moves a tag; it never copies the value.**
+
+---
+
+### The Core Data Types — Your Building Blocks
+
+Every value in Python has a **type**, and almost every program you write is built from just **five core types**:
+
+| Type | Keyword | What it holds | Examples |
+|---|---|---|---|
+| Integer | \`int\` | Whole numbers (no decimal point) | \`42\`, \`-7\`, \`0\` |
+| Float | \`float\` | Numbers with a decimal point | \`3.14\`, \`-0.5\`, \`2.0\` |
+| String | \`str\` | Text — a sequence of characters | \`"hello"\`, \`'AI'\`, \`"2026"\` |
+| Boolean | \`bool\` | Logical truth values | \`True\`, \`False\` |
+| None | \`NoneType\` | "Nothing here" — exactly one special value | \`None\` |
+
+\`\`\`python
+age = 25          # int
+price = 9.99      # float
+name = "Amol"     # str
+is_student = True # bool
+result = None     # NoneType
+\`\`\`
+
+Each type has superpowers (and quirks) worth knowing:
+
+- **\`int\` — unlimited size.** Python integers never overflow. \`10 ** 100\` returns a 101-digit number instantly — languages like C or Java would crash with an overflow error.
+- **\`float\` — decimals, with a tiny catch.** Floats are stored in binary, so some decimals are only *approximately* exact:
+  \`\`\`python
+  print(0.1 + 0.2)   # 0.30000000000000004  (not 0.3!)
+  \`\`\`
+  This is not a Python bug — it happens in every programming language. When exact decimals matter (like money), use the \`Decimal\` module (covered later in the course).
+- **\`bool\` — booleans are secretly integers.** \`True\` equals \`1\` and \`False\` equals \`0\`:
+  \`\`\`python
+  print(True + True)   # 2
+  print(True == 1)     # True
+  \`\`\`
+- **\`None\` — the special "nothing" value.** Use \`None\` when a variable has no value yet. It has its own type \`NoneType\` and exactly one value:
+  \`\`\`python
+  result = None
+  print(type(result))   # <class 'NoneType'>
+  \`\`\`
+
+#### type() vs isinstance() — Two Ways to Ask "What Type?"
+
+| Function | Asks | Best for |
+|---|---|---|
+| \`type(value)\` | "What is the exact type?" | Quick inspection and debugging |
+| \`isinstance(value, Type)\` | "Is this value of Type (or a subclass)?" | Real checks in your code |
+
+\`\`\`python
+print(type(42))                  # <class 'int'>
+print(isinstance(3.5, float))    # True
+print(isinstance(42, int))       # True
+\`\`\`
+
+Use \`isinstance()\` in real code — it understands inheritance (e.g., \`bool\` is a subclass of \`int\`, so \`isinstance(True, int)\` is \`True\`).
+
+---
+
+### Naming Rules (Non-Negotiable)
 
 | Rule | Example |
 |---|---|
@@ -242,6 +361,10 @@ When you write \`x = 10\`, Python allocates an integer object in memory and poin
 | Case matters: \`Age\` and \`age\` are different | — |
 | Cannot use Python keywords | \`if\`, \`for\`, \`class\` are reserved |
 | Convention: snake_case for variables | \`total_price\`, \`user_name\` |
+
+**Python keywords** you can never use as names include: \`if\`, \`else\`, \`for\`, \`while\`, \`def\`, \`class\`, \`return\`, \`import\`, \`from\`, \`not\`, \`and\`, \`or\`, \`True\`, \`False\`, \`None\`, \`in\`, \`is\`, \`lambda\`, \`pass\`, \`break\`, \`continue\`, and more. Type \`help("keywords")\` in the REPL to see the full list.
+
+**Meaningful names matter.** \`user_age\` is better than \`ua\`; \`final_price_with_tax\` beats \`fpwt\`. You read code far more often than you write it — name things for the future reader (which is usually you, six weeks later).
 
 ---
 
@@ -260,6 +383,8 @@ print("Nice to meet you,", name)
 age = input("Age: ")     # user types 25
 print(age + 1)           # TypeError: can only concatenate str
 \`\`\`
+
+The prompt string inside \`input("...") \` is shown to the user but is *not* part of the returned value. Every interactive program — games, calculators, logins, menu systems — is built on this one function.
 
 ---
 
@@ -282,6 +407,12 @@ price = float(input("Price: "))    # "9.99" -> 9.99
 
 If the user types something that cannot be converted (like \`"abc"\`), Python raises a \`ValueError\`. We will learn how to catch these errors gracefully in Lesson 21.
 
+**Casting gotchas:**
+
+- \`int("3.5")\` fails (\`ValueError\`) — a float *string* needs \`float()\` first, then \`int()\`: \`int(float("3.5"))\` → \`3\`.
+- \`int(3.99)\` truncates toward zero → \`3\` (it does **not** round).
+- \`bool("False")\` is \`True\` — any non-empty string is truthy (Lesson 5).
+
 #### Comparison: Dynamic vs Static Typing
 
 | Aspect | Python (dynamic) | C / Java / TypeScript (static) |
@@ -296,19 +427,24 @@ If the user types something that cannot be converted (like \`"abc"\`), Python ra
 ### Common Mistakes to Avoid
 
 - **Mistake:** Doing math on \`input()\` results directly — **Fix:** cast with \`int()\` or \`float()\` first.
+- **Mistake:** Expecting \`0.1 + 0.2\` to equal \`0.3\` exactly — **Fix:** floats are approximate; use \`round()\` for display or \`Decimal\` when exactness matters.
 - **Mistake:** Using reserved words or invalid characters in names (\`2nd_year\`, \`my-name\`) — **Fix:** use \`second_year\`, \`my_name\`.
 - **Mistake:** Thinking \`age = "25"\` makes \`age\` a number — **Fix:** check with \`type(age)\`; it is a string until you cast it.
+- **Mistake:** Forgetting \`input()\` returns a string even for numbers — **Fix:** always cast: \`int(input(...))\`.
+- **Mistake:** Using \`int(3.99)\` expecting rounding — **Fix:** use \`round(3.99)\` for rounding; \`int()\` truncates.
 
 ### Professional Tips & Tricks
 
 - \`input()\` always returns a string — convert before doing math, or you will get a TypeError.
-- Use f-strings (\`f"...{var}..."\`) instead of messy \`+\` concatenation.
+- Use f-strings (\`f"...{var}..."\`) instead of messy \`+\` concatenation (full power in Lesson 3).
 - Give variables meaningful names: \`user_age\` beats \`ua\`.
+- Use \`type()\` liberally while debugging — "what type is this, really?" solves most puzzles.
 
 ---
 
 ### Key Takeaways
 
+- The five core data types are \`int\`, \`float\`, \`str\`, \`bool\`, and \`None\`.
 - Variables are name-tags pointing to objects in memory; Python uses dynamic typing.
 - \`input()\` reads text and always returns a string.
 - Cast values with \`int()\`, \`float()\`, and \`str()\`.
@@ -317,12 +453,24 @@ If the user types something that cannot be converted (like \`"abc"\`), Python ra
 
 **Next up:** Strings — slicing, methods, and the modern f-string formatting.`,
       codeLanguage: "python",
-      codeSnippet: `# Variables and casting demonstration
-age = "24"  # String representation
-print("Type before casting:", type(age))
+      codeSnippet: `# The five core data types
+age = 25            # int
+price = 9.99        # float
+name = "Amol"       # str
+is_student = True   # bool
+result = None       # NoneType
+
+print("Core data types:")
+print(type(age), type(price), type(name), type(is_student), type(result))
+print("Float gotcha: 0.1 + 0.2 =", 0.1 + 0.2)
+print("Booleans are ints: True + True =", True + True)
+
+# Variables and casting demonstration
+age_str = "24"  # String representation
+print("Type before casting:", type(age_str))
 
 # Cast string to integer to perform math addition
-age_int = int(age)
+age_int = int(age_str)
 next_year_age = age_int + 1
 print("Type after casting:", type(age_int))
 print(f"Age next year: {next_year_age}")
@@ -333,10 +481,14 @@ print("Label type:", type(label))
 label = "Dynamic Label Swapped"
 print("Label new type:", type(label))
 
-# Read user input and convert it
+# Read user input (always returns a string)
 name = input("What is your name? ")
 print("Nice to meet you,", name)`,
-      codeOutput: `Type before casting: <class 'str'>
+      codeOutput: `Core data types:
+<class 'int'> <class 'float'> <class 'str'> <class 'bool'> <class 'NoneType'>
+Float gotcha: 0.1 + 0.2 = 0.30000000000000004
+Booleans are ints: True + True = 2
+Type before casting: <class 'str'>
 Type after casting: <class 'int'>
 Age next year: 25
 Label type: <class 'int'>
@@ -345,6 +497,7 @@ What is your name? Amol
 Nice to meet you, Amol`,
       visualizationTips: [
         "Picture variables as name-tags tied to boxes in memory — reassigning points the tag at a different box.",
+        "Label each box in your memory diagram with its type (int, float, str, bool, None) — you will see the five core data types at a glance.",
         "Use type() as a spyglass to check what kind of object a variable really holds.",
         "Draw a small arrow diagram: age -> \"24\" (str), then age -> 24 (int).",
       ],
@@ -354,6 +507,14 @@ Nice to meet you, Amol`,
         "Give variables meaningful names: user_age beats ua.",
       ],
       practice: [
+        {
+          id: "practice-datatypes",
+          title: "Core Data Types Parade",
+          difficulty: "Easy",
+          task: "Create five variables — one int, one float, one str, one bool, and one None — then print the type of each one.",
+          hint: "age = 25, price = 9.99, name = \"Amol\", is_student = True, result = None",
+          solution: `age = 25\nprice = 9.99\nname = "Amol"\nis_student = True\nresult = None\n\nprint(type(age))          # <class 'int'>\nprint(type(price))        # <class 'float'>\nprint(type(name))         # <class 'str'>\nprint(type(is_student))   # <class 'bool'>\nprint(type(result))       # <class 'NoneType'>`,
+        },
         {
           id: "practice-age-calc",
           title: "Age in Dog Years",
@@ -400,12 +561,17 @@ string"""
 
 Strings are **immutable**: once created, you cannot change a string in place. Any operation that "changes" a string actually creates a brand-new one.
 
-#### What You'll Learn in This lesson
+#### Why Strings Are the Most-Used Type
+
+Every piece of text a program touches is a string: names, emails, messages, JSON payloads, file paths, API responses, log lines. Data cleaning, web scraping, and natural-language processing are almost entirely string gymnastics. Master strings and you master the majority of everyday programming.
+
+#### What You'll Learn in This Lesson
 
 - Index and slice strings with positive and negative indexes
 - Use the most important string methods
 - Master f-strings — the modern, professional way to format text
 - Understand why strings are immutable
+- Escape characters and work with multi-line text
 
 ---
 
@@ -426,6 +592,8 @@ Value:   A    m    o    l    s
 
 Trying to access an index that does not exist raises \`IndexError: string index out of range\`.
 
+> **Mental model:** index numbers sit *between* characters for slicing, but *on* characters for indexing. Index \`0\` is the first character, and \`-1\` is the last — they meet in the middle.
+
 #### Slicing — Grabbing a Range
 
 A **slice** extracts a range of characters using the syntax \`start:end\` — and the end is **exclusive** (it stops just before \`end\`):
@@ -439,7 +607,31 @@ A **slice** extracts a range of characters using the syntax \`start:end\` — an
 | \`name[::2]\` | every 2nd character | \`"AoSkl"\` |
 | \`name[::-1]\` | reversed | \`"alkuhS lomA"\` |
 
+The full slice syntax is \`start:stop:step\`. Leave any part blank to use the default (\`start\` = 0, \`stop\` = end, \`step\` = 1).
+
 > **Fence-post rule:** a slice \`s[1:4]\` includes posts 1, 2, and 3 but stops *before* post 4.
+
+**Classic slice recipes:**
+
+- \`s[::-1]\` — reverse any string (the most popular slice in existence).
+- \`s[:len(s)//2]\` — first half; \`s[len(s)//2:]\` — second half.
+- \`s[-3:]\` — last three characters (e.g., grabbing a file extension: \`"report.pdf"[-3:]\` → \`"pdf"\`).
+
+---
+
+### Escape Characters — Special Text
+
+Some characters need a backslash to be written inside a string:
+
+| Escape | Meaning | Example |
+|---|---|---|
+| \`\\n\` | Newline | \`"line1\\nline2"\` |
+| \`\\t\` | Tab | \`"col1\\tcol2"\` |
+| \`\\\\\` | A literal backslash | \`"C:\\\\Users"\` |
+| \`\\"\` | A quote inside double quotes | \`"He said \\"hi\\""\` |
+| \`\\'\` | A quote inside single quotes | \`'It\\'s fine'\` |
+
+For raw text (like Windows paths or regex), prefix with \`r\`: \`r"C:\\Users\\Amol"\` keeps every backslash literally.
 
 ---
 
@@ -458,6 +650,11 @@ Strings ship with dozens of methods. The most important ones:
 | \`.endswith(x)\` | Ends with x? | \`"py".endswith("y")\` → \`True\` |
 | \`.find(x)\` | Index of first x | \`"abc".find("b")\` → \`1\` |
 | \`.count(x)\` | How many times x appears | \`"aaa".count("a")\` → \`3\` |
+| \`.join(list)\` | Glue a list into a string | \`"-".join(["a", "b"])\` → \`"a-b"\` |
+| \`.capitalize()\` | First letter uppercase | \`"python".capitalize()\` → \`"Python"\` |
+| \`.title()\` | Every word capitalized | \`"hello world".title()\` → \`"Hello World"\` |
+| \`.isdigit()\` | All characters digits? | \`"42".isdigit()\` → \`True\` |
+| \`.isalpha()\` | All characters letters? | \`"abc".isalpha()\` → \`True\` |
 
 Because strings are immutable, **every method returns a new string** — the original is untouched. You can chain methods:
 
@@ -466,6 +663,16 @@ email = "  Amol@Example.COM  "
 clean = email.strip().lower()
 # "amol@example.com"
 \`\`\`
+
+**\`.split()\` and \`.join()\` are the two most-used methods in data work:**
+
+\`\`\`python
+sentence = "Python,is,awesome"
+parts = sentence.split(",")        # ['Python', 'is', 'awesome']
+glued = " ".join(parts)            # 'Python is awesome'
+\`\`\`
+
+> **Mental model:** \`.split()\` chops a string into a list at a delimiter; \`.join()\` is the exact reverse — it welds a list back together with a glue string.
 
 ---
 
@@ -488,6 +695,19 @@ print(f"Price: {price:.2f}")   # Price: 9.57
 print(f"Sum: {2 + 3}")         # Sum: 5
 \`\`\`
 
+**Format specifiers** (after the colon) give precise control:
+
+| Specifier | Meaning | Example → Result |
+|---|---|---|
+| \`:.2f\` | 2 decimal places | \`f"{3.14159:.2f}"\` → \`"3.14"\` |
+| \`:,.2f\` | Thousands separator + decimals | \`f"{1234567.5:,.2f}"\` → \`"1,234,567.50"\` |
+| \`:>10\` | Right-align in 10 chars | \`f"{'hi':>10}"\` → \`"        hi"\` |
+| \`:^10\` | Center in 10 chars | \`f"{'hi':^10}"\` → \`"    hi    "\` |
+| \`:.0%\` | Percentage | \`f"{0.85:.0%}"\` → \`"85%"\` |
+| \`:08d\` | Zero-pad to 8 digits | \`f"{42:08d}"\` → \`"00000042"\` |
+
+These turn ugly numeric output into polished reports — essential for the data tables you will build later in the course.
+
 #### f-strings vs the Old Ways
 
 | Method | Example | Verdict |
@@ -505,12 +725,17 @@ Professional Python code in 2026 uses f-strings almost exclusively.
 - **Mistake:** \`name[5]\` when the string has only 5 characters — **Fix:** remember indexes start at 0; the last valid index is \`len(name) - 1\`.
 - **Mistake:** Expecting \`"Hello".upper()\` to change \`"Hello"\` — **Fix:** methods return new strings; assign the result: \`text = text.upper()\`.
 - **Mistake:** \`"count: " + 5\` — **Fix:** use an f-string: \`f"count: {5}"\`.
+- **Mistake:** Slicing with the end index included — **Fix:** \`s[0:4]\` gives characters 0–3, *not* 0–4.
+- **Mistake:** Forgetting \`\`\` \\n \`\`\` vs \`\\n\` — **Fix:** use \`r"..."\` raw strings for paths and regex.
+- **Mistake:** Using \`.replace()\` and expecting the original to change — **Fix:** assign the result back.
 
 ### Professional Tips & Tricks
 
 - f-strings beat + concatenation: faster, safer, and readable.
 - Chain methods: \`email.strip().lower().replace(' ', '_')\`.
 - Use \`.split()\` to turn messy text into clean lists — the basis of data cleaning.
+- Use \`.join()\` to build strings from lists — it is faster and cleaner than repeated \`+\`.
+- Check \`.isdigit()\` before casting user input to avoid \`ValueError\`.
 
 ---
 
@@ -521,6 +746,7 @@ Professional Python code in 2026 uses f-strings almost exclusively.
 - String methods return new strings — assign the result.
 - f-strings with \`{...}\` are the professional formatting standard.
 - Slicing works identically on lists and tuples (Lesson 8).
+- \`.split()\` and \`.join()\` are the power pair for text processing.
 
 **Next up:** Operators & expressions — how Python does math and logic.`,
       codeLanguage: "python",
@@ -599,12 +825,13 @@ Welcome to Python — 25 lessons!`,
 
 Operators are the **verbs of programming** — they tell Python what to *do* with values. You already use them in math class; Python just gives them superpowers like integer division and modulo. An **expression** is any combination of values and operators that Python can evaluate to a single result.
 
-#### What You'll Learn in This lesson
+#### What You'll Learn in This Lesson
 
 - Use arithmetic, comparison, and logical operators
 - Understand operator precedence (order of operations)
 - Use assignment shortcuts like \`+=\`
 - Split numbers into digits with \`//\` and \`%\`
+- Understand the difference between \`=\` and \`==\`
 
 ---
 
@@ -627,6 +854,16 @@ Two operators deserve special attention:
 
 > **Pizza visualization for modulo:** 17 slices ÷ 5 friends = 3 full slices each, and 2 slices left over. The \`//\` gives you 3, the \`%\` gives you 2.
 
+**\`+\` and \`*\` also work on other types:**
+
+\`\`\`python
+print("Py" + "thon")      # 'Python' — concatenation
+print("ha" * 3)           # 'hahaha' — repetition
+print([1, 2] + [3, 4])    # [1, 2, 3, 4] — list concatenation (Lesson 8)
+\`\`\`
+
+This is called **operator overloading** — the same symbol means different things depending on the type. It is convenient but a common source of surprises: \`"5" + 5\` raises \`TypeError\` because a string and an int don't mix.
+
 ---
 
 ### Comparison Operators
@@ -643,6 +880,15 @@ Comparisons always return a boolean — \`True\` or \`False\`:
 | \`<=\` | Less or equal | \`4 <= 5\` → \`True\` |
 
 **Never confuse \`=\` (assignment) with \`==\` (comparison).** A single \`=\` stores a value; a double \`==\` asks a question.
+
+Comparisons chain naturally in Python:
+
+\`\`\`python
+age = 25
+print(18 <= age < 60)   # True — chained comparison, one expression
+\`\`\`
+
+That single line is equivalent to \`18 <= age and age < 60\` — Python lets you write the math-style version directly.
 
 ---
 
@@ -665,6 +911,13 @@ Logical operators combine booleans:
 
 These let you write real-world rules: *"Can enter if age ≥ 18 **and** has ID"*.
 
+**Short-circuiting** is a powerful side effect: Python evaluates \`and\`/\`or\` left to right and *stops as soon as the answer is decided*. In \`a and b\`, if \`a\` is falsy, \`b\` never runs. In \`a or b\`, if \`a\` is truthy, \`b\` never runs. This is used to write safe one-liners:
+
+\`\`\`python
+# Only divide if denominator is non-zero
+result = x / y if y != 0 else 0
+\`\`\`
+
 ---
 
 ### Precedence — Order of Operations
@@ -682,6 +935,7 @@ Python follows standard math rules. From highest to lowest priority:
 \`\`\`python
 print(3 + 4 * 2)      # 11  (multiplication first)
 print((3 + 4) * 2)    # 14  (parentheses override)
+print(2 ** 3 ** 2)    # 512 — ** binds right-to-left: 2 ** (3 ** 2)
 \`\`\`
 
 **Rule of thumb:** when in doubt, add parentheses. Clarity beats cleverness every time.
@@ -700,6 +954,19 @@ print((3 + 4) * 2)    # 14  (parentheses override)
 | \`x /= 5\` | \`x = x / 5\` |
 | \`x //= 5\` | \`x = x // 5\` |
 | \`x %= 5\` | \`x = x % 5\` |
+| \`x **= 2\` | \`x = x ** 2\` |
+
+These keep counters, totals, and accumulators compact — you will use \`+=\` on almost every loop you write.
+
+---
+
+### Real-World Uses of // and %
+
+- **Time math:** \`total_minutes = 130\` → \`hours = 130 // 60\` (\`2\`), \`mins = 130 % 60\` (\`10\`).
+- **Even/odd checks:** \`n % 2 == 0\` means even.
+- **Splitting digits:** \`123 % 10\` → \`3\`; \`123 // 10\` → \`12\`.
+- **Cycling/wrapping:** \`index % len(items)\` wraps an index around a list forever.
+- **Coin/cash change:** divide by the largest denomination with \`//\`, keep the remainder with \`%\`.
 
 ---
 
@@ -708,12 +975,17 @@ print((3 + 4) * 2)    # 14  (parentheses override)
 - **Mistake:** Using \`=\` inside an \`if\` condition — **Fix:** always use \`==\` for comparison.
 - **Mistake:** Expecting \`7 / 2\` to give \`3\` — **Fix:** \`/\` always gives a float (\`3.5\`); use \`//\` for integer division.
 - **Mistake:** Forgetting that \`and\` binds tighter than \`or\` — **Fix:** add parentheses to make the logic explicit.
+- **Mistake:** \`"5" + 5\` — **Fix:** cast first: \`int("5") + 5\`.
+- **Mistake:** Assuming \`**\` binds left-to-right — **Fix:** it binds right-to-left: \`2 ** 3 ** 2\` is \`512\`.
+- **Mistake:** Using \`%\` when you want \`/\` on negative numbers — **Fix:** \`-7 % 3\` is \`2\` in Python (not \`-1\`); remember modulo results share the sign of the divisor.
 
 ### Professional Tips & Tricks
 
 - Never use \`=\` inside conditions — that is assignment. Use \`==\` for comparison.
 - Wrap long boolean conditions in parentheses for readability.
 - Use \`//\` and \`%\` together to split numbers into digits, coins, or time units.
+- Leverage chained comparisons: \`18 <= age < 60\` is clearer than two separate checks.
+- Use \`+=\` for accumulators inside loops.
 
 ---
 
@@ -721,9 +993,10 @@ print((3 + 4) * 2)    # 14  (parentheses override)
 
 - Arithmetic: \`/\` always floats; \`//\` floors; \`%\` gives the remainder.
 - Comparisons return \`True\`/\`False\`; \`==\` compares, \`=\` assigns.
-- \`and\`/\`or\`/\`not\` combine booleans.
+- \`and\`/\`or\`/\`not\` combine booleans; \`and\`/\`or\` short-circuit.
 - Parentheses control precedence — use them liberally.
 - \`+=\`, \`-=\`, \`*=\` are assignment shortcuts.
+- \`//\` and \`%\` are the real-world workhorses for time, digits, and wrapping.
 
 **Next up:** Control flow — conditionals and loops that make decisions.`,
       codeLanguage: "python",

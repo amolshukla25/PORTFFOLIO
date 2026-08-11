@@ -17,7 +17,9 @@ export const MODULE_5: Module = {
 
 Object-Oriented Programming (OOP) is a design philosophy that groups related data (**attributes**) and behavior (**methods**) into cohesive packages called **objects**. Instead of scattering data and functions around your program, you model real-world things — a User, an Order, a Course — as objects where the data and its operations live together.
 
-#### What You'll Learn in This lesson
+Before OOP, programs were a pile of variables and functions: \`user_name\`, \`user_age\`, \`print_user(user)\`. OOP bundles them: a \`User\` object holds its own data *and* knows how to act. This bundling — called **encapsulation** — keeps programs organized as they grow from 100 lines to 100,000 lines.
+
+#### What You'll Learn in This Lesson
 
 - Define classes and create instances
 - Initialize objects with \`__init__\`
@@ -46,6 +48,8 @@ user = Person("Rahul", "Student")   # user is an INSTANCE
 print(user.get_profile())           # Name: Rahul, Role: Student
 \`\`\`
 
+> **Mental model:** the class is the blueprint — it never exists as a physical thing. The instance is what you actually use. You can stamp out unlimited instances from one blueprint, each with its own data.
+
 ---
 
 ### __init__ — The Constructor
@@ -62,6 +66,18 @@ class Person:
 The \`self\` parameter is the object itself — it is passed automatically, so you never pass it explicitly.
 
 > **Mental model:** \`self.name = name\` means "attach a label called name to THIS object, pointing at the value". Each instance gets its own independent labels.
+
+**What if you skip \`__init__\`?** Instances still work, but every attribute must be set manually after creation:
+
+\`\`\`python
+class Empty:
+    pass
+
+e = Empty()
+e.name = "Amol"   # works, but clunky — attributes appear ad-hoc
+\`\`\`
+
+The \`__init__\` method guarantees every instance is born fully formed with the right attributes — the hallmark of reliable OOP.
 
 ---
 
@@ -83,6 +99,27 @@ class Dog:
 \`\`\`
 
 Call a method on an instance with the dot: \`dog.bark()\`. Python automatically passes \`dog\` as \`self\`.
+
+**Why \`self\` is passed automatically:** \`dog.bark()\` is syntactic sugar for \`Dog.bark(dog)\`. Python injects the receiver as the first argument — that's why every method declares \`self\` first, even when it takes no other arguments.
+
+**Class attributes vs instance attributes:**
+
+| Kind | Defined | Shared? | Example |
+|---|---|---|---|
+| Class attribute | Inside class body | Shared by all instances | \`species = "Canis"\` |
+| Instance attribute | In \`__init__\` via \`self\` | Unique per instance | \`self.name\` |
+
+\`\`\`python
+class Dog:
+    species = "Canis familiaris"   # class attribute — shared
+
+    def __init__(self, name):
+        self.name = name            # instance attribute — unique
+
+d1, d2 = Dog("Rocky"), Dog("Bella")
+print(d1.species, d2.species)   # same for both
+print(d1.name, d2.name)         # different for each
+\`\`\`
 
 ---
 
@@ -108,6 +145,8 @@ Key points:
 - **Overriding** means redefining a parent method in the child; the child's version wins for child instances.
 - A child gets everything the parent has — attributes, methods, even the parent's parent.
 
+> **Mental model:** inheritance is a family tree. The child is born with all the parent's traits and can add its own or change inherited ones. \`super()\` is the "call mom" button — reuse the parent's implementation instead of rewriting it.
+
 ---
 
 ### Why OOP?
@@ -119,6 +158,8 @@ Key points:
 | **Modeling** | Code mirrors the real world |
 | **Maintainability** | Change one class, not every call site |
 
+**When should you NOT use OOP?** For tiny scripts, plain functions are simpler and perfectly fine. OOP earns its keep when you have many objects sharing structure and behavior — user accounts, products, database models, UI components. The rule: *functions first; classes when you see duplication across related data*.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -127,12 +168,15 @@ Key points:
 - **Mistake:** Defining a class but never creating an instance — **Fix:** \`obj = MyClass(...)\` actually runs the code.
 - **Mistake:** Repeating parent setup instead of \`super().__init__(...)\` — **Fix:** call super and add only what's new.
 - **Mistake:** Naming classes in snake_case — **Fix:** classes use PascalCase (\`BankAccount\`), functions/variables use snake_case.
+- **Mistake:** Putting default attributes at the class level when they should be per-instance — **Fix:** mutable defaults belong in \`__init__\` via \`self\`.
 
 ### Professional Tips & Tricks
 
 - \`super().__init__(...)\` keeps the parent setup without repeating code.
 - Name classes in PascalCase (BankAccount) and methods/attributes in snake_case.
 - Give every class a docstring describing its responsibility.
+- Initialize all attributes in \`__init__\` — objects should be born complete.
+- Use class attributes for shared constants; instance attributes for per-object data.
 
 ---
 
@@ -143,6 +187,7 @@ Key points:
 - \`self\` is the object itself, passed automatically.
 - Inheritance reuses parent code; \`super()\` reaches the parent.
 - Overriding lets a child redefine a parent method.
+- Class attributes are shared; instance attributes are per-object.
 
 **Next up:** Inheritance & polymorphism in depth.`,
       codeLanguage: "python",
@@ -224,7 +269,9 @@ Name: Amol Shukla, Role: Instructor | Dept: AI Engineering | Course: Data Scienc
 
 A child class inherits every attribute and method from its parent, then adds or overrides what it needs. This eliminates duplication and expresses **"is-a"** relationships: a \`Dog\` *is an* \`Animal\`, a \`Car\` *is a* \`Vehicle\`.
 
-#### What You'll Learn in This lesson
+Inheritance is the difference between copying code and *reusing* code. When three classes share the same \`__init__\` pattern, you move that pattern to a parent once — and every child inherits it for free.
+
+#### What You'll Learn in This Lesson
 
 - Override parent methods and call \`super()\`
 - Use polymorphism — one interface, many behaviors
@@ -252,6 +299,8 @@ class Dog(Animal):
 
 **Override + super()** keeps parent logic while extending it — never copy-paste parent code into the child.
 
+**The pattern:** the child's \`speak\` replaces the parent's for \`Dog\` instances, while \`Animal\` instances keep the generic version. Both methods coexist; which one runs depends on the object's actual class.
+
 ---
 
 ### Polymorphism — Many Forms, One Interface
@@ -272,6 +321,10 @@ Mystery: ...generic sound...
 
 "Call the method, let the object decide." Python doesn't check types before calling — it just tries the method. This is called **duck typing**: *if it walks like a duck and quacks like a duck, it's a duck*.
 
+> **Mental model:** polymorphism is a universal remote. Same button (the method name), different result per device (per class). The loop doesn't care *what* each animal is — only that it can \`speak()\`.
+
+**Why polymorphism matters:** it lets you write code that works on *categories* of objects instead of specific ones. Add a new class later (\`class Parrot(Animal)\`) and every existing loop, sort, and function that expects \`.speak()\` immediately works with it — zero changes.
+
 ---
 
 ### isinstance() and issubclass()
@@ -289,6 +342,8 @@ print(issubclass(Dog, Animal))            # True
 
 Use \`isinstance()\` instead of \`type(x) == ...\` — it understands inheritance.
 
+> **Why \`type(x) == Dog\` is wrong:** \`type(dog) == Dog\` is True for a \`Dog\`, but \`type(dog) == Animal\` is False even though a Dog *is* an Animal. \`isinstance(dog, Animal)\` correctly returns True. When you check "is this object usable as X", \`isinstance\` is the honest answer.
+
 ---
 
 ### The MRO — Method Resolution Order
@@ -304,6 +359,50 @@ Python looks in \`Dog\` first, then \`Animal\`, then the root \`object\`. In mul
 
 > **Mental model:** the child looks for a method in its own room first; if not found, it walks up the stairs to the parent's room, then the grandparent's.
 
+**Multiple inheritance example:**
+
+\`\`\`python
+class A:
+    def greet(self):
+        return "A"
+
+class B:
+    def greet(self):
+        return "B"
+
+class C(A, B):   # parents searched left to right
+    pass
+
+c = C()
+print(c.greet())              # 'A' — A wins
+print([cls.__name__ for cls in C.mro()])  # ['C', 'A', 'B', 'object']
+\`\`\`
+
+Multiple inheritance is powerful but easy to overuse — most real code stays with single inheritance plus composition.
+
+---
+
+### Composition vs Inheritance — Has-a vs Is-a
+
+| Relationship | Means | Use |
+|---|---|---|
+| Inheritance | **is-a** | \`Dog\` *is an* \`Animal\` |
+| Composition | **has-a** | A \`Car\` *has an* \`Engine\` |
+
+\`\`\`python
+class Engine:
+    def start(self):
+        return "Vroom!"
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()     # composition: has-a
+    def start(self):
+        return self.engine.start()
+\`\`\`
+
+Prefer composition for flexibility — a car with a different engine doesn't need a new class hierarchy.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -311,12 +410,16 @@ Python looks in \`Dog\` first, then \`Animal\`, then the root \`object\`. In mul
 - **Mistake:** Copy-pasting parent methods into children — **Fix:** override + \`super()\`.
 - **Mistake:** \`type(x) == Dog\` instead of \`isinstance(x, Dog)\` — **Fix:** isinstance respects inheritance.
 - **Mistake:** Deep inheritance chains (5+ levels) — **Fix:** prefer composition ("has-a") over inheritance for flexibility.
+- **Mistake:** Forgetting to call \`super().__init__()\` in the child and getting uninitialized attributes — **Fix:** always initialize the parent.
+- **Mistake:** Overusing multiple inheritance and creating confusing MROs — **Fix:** keep it simple; composition usually suffices.
 
 ### Professional Tips & Tricks
 
 - Override + \`super()\` keeps parent logic while extending it — never copy-paste parent code.
 - Use \`isinstance()\` instead of \`type() == ...\` when checking class relationships.
 - Prefer composition (has-a) over deep inheritance chains for flexibility.
+- Print \`ClassName.mro()\` to debug confusing method lookups.
+- Design for polymorphism: code against the *interface* (speak, area, save), not specific classes.
 
 ---
 
@@ -326,6 +429,7 @@ Python looks in \`Dog\` first, then \`Animal\`, then the root \`object\`. In mul
 - Polymorphism: same method name, different behavior per class.
 - \`isinstance()\`/\`issubclass()\` check relationships.
 - \`.mro()\` reveals Python's method search order.
+- Is-a → inheritance; has-a → composition.
 
 **Next up:** Encapsulation, properties & magic methods.`,
       codeLanguage: "python",
@@ -423,11 +527,31 @@ class BankAccount:
         self._balance = balance    # protected by convention
 \`\`\`
 
-#### What You'll Learn in This lesson
+> **Mental model:** \`_\` is a "staff only" sign. Nothing in Python *stops* you from entering — but the convention says "you probably shouldn't". \`__\` (double underscore) actually renames the attribute internally, making accidental access fail loudly.
+
+#### What You'll Learn in This Lesson
 
 - Protect internal state with private conventions
 - Build smart attribute access with \`@property\`
 - Customize objects with magic (dunder) methods
+
+---
+
+### Name Mangling — How __ Works
+
+\`self.__balance\` is *renamed* by Python to \`self._ClassName__balance\` at runtime:
+
+\`\`\`python
+class Account:
+    def __init__(self):
+        self.__secret = 42
+
+acc = Account()
+# print(acc.__secret)   # AttributeError! renamed internally
+print(acc._Account__secret)   # 42 — the mangled name
+\`\`\`
+
+The double underscore exists mainly to prevent *accidental* clashes in inheritance — a child class can't accidentally overwrite the parent's \`__secret\`. It is not true security.
 
 ---
 
@@ -460,6 +584,22 @@ acc.balance = 1500                  # setter validates
 
 > **Mental model:** \`@property\` is a guarded door. Reading is safe; writing goes through a check (the setter).
 
+**The getter-only property (read-only):** omit the \`@setter\` and the attribute becomes read-only — assignment raises \`AttributeError\`. Perfect for computed values:
+
+\`\`\`python
+class Rectangle:
+    def __init__(self, w, h):
+        self.w, self.h = w, h
+
+    @property
+    def area(self):          # computed, read-only
+        return self.w * self.h
+
+r = Rectangle(3, 4)
+print(r.area)    # 12
+# r.area = 99    # AttributeError: can't set attribute
+\`\`\`
+
 ---
 
 ### Magic (Dunder) Methods — Customize Your Objects
@@ -490,6 +630,19 @@ print(acc == other)           # uses __eq__
 
 > **__str__ vs __repr__:** \`str()\` is for people; \`repr()\` is for developers. Implement both; \`__str__\` falls back to \`__repr__\` if missing.
 
+**More dunder methods worth knowing:**
+
+| Method | Powers | Typical use |
+|---|---|---|
+| \`__add__\` | \`a + b\` | Vector math, money |
+| \`__len__\` | \`len(obj)\` | Collections |
+| \`__getitem__\` | \`obj[i]\` | Indexable objects |
+| \`__iter__\` | \`for x in obj\` | Iterable objects |
+| \`__call__\` | \`obj()\` | Callable objects |
+| \`__enter__\`/\`__exit__\` | \`with obj:\` | Context managers (Lesson 20) |
+
+Implementing \`__eq__\` and \`__lt__\` together gives you \`==\`, sorting, and \`min\`/\`max\` for free — professional objects behave exactly like built-ins.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -497,12 +650,16 @@ print(acc == other)           # uses __eq__
 - **Mistake:** Forgetting \`self\` in property methods — **Fix:** properties are methods; \`self\` first.
 - **Mistake:** Naming a property and its backing attribute the same (\`self.balance\` + \`@property balance\`) — **Fix:** back it with \`self._balance\`.
 - **Mistake:** Implementing only \`__eq__\` without \`__hash__\` and putting objects in sets — **Fix:** if you define \`__eq__\`, set \`__hash__ = None\` or define \`__hash__\` explicitly.
+- **Mistake:** Expecting \`__\` attributes to be truly private — **Fix:** it's name mangling, not security; use \`_\` for the convention.
+- **Mistake:** Returning a value from a setter — **Fix:** setters must return \`None\`.
 
 ### Professional Tips & Tricks
 
 - Use \`@property\` to add validation without breaking existing code that reads attributes.
 - Always implement \`__str__\` for user-facing classes — debugging and printing become readable.
 - Implement \`__eq__\` and \`__lt__\` together so your objects work with \`==\`, sorting, and \`min\`/\`max\`.
+- Use getter-only properties for computed values that must stay consistent.
+- Prefer \`_\` conventions over \`__\` for most "private" data — simpler and idiomatic.
 
 ---
 
@@ -512,6 +669,7 @@ print(acc == other)           # uses __eq__
 - \`@property\` + \`@setter\` give attribute-like access with validation.
 - Dunder methods hook objects into Python operators and built-ins.
 - Implement \`__str__\`, \`__repr__\`, \`__eq__\`, and \`__lt__\` for professional objects.
+- Getter-only properties make clean, computed, read-only attributes.
 
 **Next up:** Dataclasses — modern, boilerplate-free OOP.`,
       codeLanguage: "python",
@@ -615,7 +773,9 @@ print(python)              # Course(title='Python', lessons=25, tags=['python', 
 print(python == Course("Python", 25, ["python", "ai"]))   # True — free __eq__
 \`\`\`
 
-#### What You'll Learn in This lesson
+Dataclasses (Python 3.7+) have become the default way to define data containers in modern Python. If a class is mostly "hold these fields and let me compare/print them", a dataclass is the professional choice.
+
+#### What You'll Learn in This Lesson
 
 - Define dataclasses with type-annotated fields
 - Use \`field()\` and \`default_factory\` for mutable defaults
@@ -634,6 +794,27 @@ print(python == Course("Python", 25, ["python", "ai"]))   # True — free __eq__
 | Type hints optional | Type hints required |
 
 What used to take 30 lines takes 10 — and is impossible to get wrong.
+
+**The "before" picture — what the decorator saves you from writing:**
+
+\`\`\`python
+# Without dataclass — 15+ lines of ceremony
+class Course:
+    def __init__(self, title, lessons, tags):
+        self.title = title
+        self.lessons = lessons
+        self.tags = tags
+
+    def __repr__(self):
+        return f"Course(title={self.title!r}, lessons={self.lessons!r}, tags={self.tags!r})"
+
+    def __eq__(self, other):
+        if not isinstance(other, Course):
+            return NotImplemented
+        return (self.title, self.lessons, self.tags) == (other.title, other.lessons, other.tags)
+\`\`\`
+
+The \`@dataclass\` decorator generates exactly this — correctly, every time.
 
 ---
 
@@ -657,6 +838,8 @@ print(Student("Riya").tags)   # [] — separate list!
 
 > **Never write** \`tags: list = []\` — every instance would share one list.
 
+**Why \`field(default_factory=...)\` and not just \`= []\`?** The default value is evaluated once at class definition. \`default_factory\` is a *function* that runs per instance — each object gets its own fresh container.
+
 ---
 
 ### Frozen Data — Immutable by Design
@@ -676,6 +859,15 @@ print(cfg.version)       # 1.0
 
 Immutable data is safer: it cannot be accidentally changed, and instances can be hashed and used as dict keys.
 
+**Modifying a frozen dataclass — the sanctioned way:**
+
+\`\`\`python
+from dataclasses import replace
+cfg2 = replace(cfg, debug=True)   # returns a NEW Config with debug=True
+print(cfg2)                       # Config(version='1.0', debug=True)
+print(cfg.debug)                  # False — original untouched
+\`\`\`
+
 ---
 
 ### order=True — Sorting for Free
@@ -692,6 +884,8 @@ items = [Product(300, "Monitor"), Product(25, "Mouse")]
 print(sorted(items))   # cheapest first
 \`\`\`
 
+**Field ordering matters** with \`order=True\`: objects compare by fields left to right. Put the primary sort key first (\`price\` before \`name\` above).
+
 ---
 
 ### Dataclasses vs NamedTuples vs Plain Classes
@@ -702,6 +896,28 @@ print(sorted(items))   # cheapest first
 | **@dataclass** | Data containers with optional methods |
 | **Plain class** | Objects with significant behavior |
 
+**Dataclasses with methods** are fully supported — a dataclass can have regular methods alongside the auto-generated boilerplate:
+
+\`\`\`python
+@dataclass
+class Course:
+    title: str
+    lessons: int
+
+    def summary(self):          # a normal method
+        return f"{self.title} — {self.lessons} lessons"
+\`\`\`
+
+---
+
+### Real-World Dataclass Uses
+
+- **DTOs (Data Transfer Objects):** API request/response payloads with type hints.
+- **Configuration objects:** frozen settings loaded once.
+- **Database models:** table rows as typed records.
+- **Value objects:** coordinates, money, ranges with \`__eq__\`/\`order\`.
+- **JSON serialization:** combined with \`dataclasses.asdict()\` for quick \`json.dumps\`.
+
 ---
 
 ### Common Mistakes to Avoid
@@ -709,12 +925,16 @@ print(sorted(items))   # cheapest first
 - **Mistake:** \`tags: list = []\` as a default — **Fix:** \`field(default_factory=list)\`.
 - **Mistake:** Expecting to modify a frozen dataclass — **Fix:** use \`dataclasses.replace(obj, field=value)\` for a modified copy.
 - **Mistake:** Using dataclasses for objects with complex behavior — **Fix:** use a regular class.
+- **Mistake:** Forgetting type annotations — **Fix:** dataclass fields need annotations: \`name: str\`.
+- **Mistake:** Relying on field order for \`order=True\` comparisons without checking which field sorts first — **Fix:** put the primary sort key first.
 
 ### Professional Tips & Tricks
 
 - Use \`field(default_factory=list)\` for mutable defaults — never \`[]\` directly (shared trap).
 - Reach for dataclasses for DTOs, API payloads, and config objects.
 - Combine dataclasses with type hints for self-documenting code that linters can verify.
+- Use \`frozen=True\` for config and constants; \`replace()\` for safe "changes".
+- Use \`dataclasses.asdict()\` for quick conversion to plain dicts for JSON.
 
 ---
 
@@ -725,6 +945,7 @@ print(sorted(items))   # cheapest first
 - \`frozen=True\` makes immutable, hashable data.
 - \`order=True\` enables sorting.
 - Use dataclasses for data containers; plain classes for behavioral objects.
+- \`replace()\` modifies frozen instances by returning a new copy.
 
 **Next up:** Module 6 — files, errors & professional Python.`,
       codeLanguage: "python",
