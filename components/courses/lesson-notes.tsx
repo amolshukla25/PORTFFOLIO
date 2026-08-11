@@ -28,7 +28,9 @@ import {
   Circle,
   Trophy,
   PanelLeftClose,
-  PanelLeftOpen
+  PanelLeftOpen,
+  BookOpenText,
+  BookOpenCheck
 } from "lucide-react";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
@@ -94,10 +96,14 @@ export default function LessonNotesPage() {
   const [mounted, setMounted] = useState(false);
   // Desktop syllabus outline collapse state (persisted so it survives navigation)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Distraction-free reading mode — notes only, ideal text measure
+  const [focusMode, setFocusMode] = useState(false);
   // Reading progress 0–100 for the slim progress bar under the sticky header
   const [readingProgress, setReadingProgress] = useState(0);
   // Measures scroll progress through the lesson article itself (not the footer)
   const articleRef = useRef<HTMLElement>(null);
+  // Becomes true once the user explicitly chooses the outline state — stops auto-collapse
+  const userChoseOutline = useRef(false);
 
   // Progress tracking (localStorage-backed via zustand persist)
   const progress = useCourseProgress();
@@ -106,14 +112,23 @@ export default function LessonNotesPage() {
 
   useEffect(() => {
     setMounted(true);
-    // Restore the user's desktop outline preference across lessons
-    try {
-      if (window.localStorage.getItem("course-outline-collapsed") === "1") {
-        setSidebarCollapsed(true);
-      }
-    } catch {
-      // localStorage unavailable — keep the outline open
+    // Restore the user's explicit outline preference; otherwise auto-collapse
+    // on small laptops (< 1280px) to give the notes more room by default.
+    const saved = window.localStorage.getItem("course-outline-collapsed");
+    if (saved === "1" || saved === "0") {
+      userChoseOutline.current = true;
+      setSidebarCollapsed(saved === "1");
+      return;
     }
+    const mq = window.matchMedia("(max-width: 1279px)");
+    const apply = () => {
+      // Never override an explicit choice made this session
+      if (userChoseOutline.current) return;
+      setSidebarCollapsed(mq.matches);
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
 
   // Track reading progress through the lesson article for the progress bar
@@ -140,6 +155,16 @@ export default function LessonNotesPage() {
       window.removeEventListener("resize", updateProgress);
     };
   }, []);
+
+  // Exit reading mode with the Escape key
+  useEffect(() => {
+    if (!focusMode) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFocusMode(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [focusMode]);
 
   // Find course and active lesson
   const course = COURSES.find((c) => c.id === courseId);
@@ -182,19 +207,27 @@ export default function LessonNotesPage() {
 
   // Toggle (and remember) the desktop syllabus outline collapse state
   const toggleOutline = () => {
+    userChoseOutline.current = true;
     setSidebarCollapsed((prev) => {
       const next = !prev;
-      try {
-        window.localStorage.setItem("course-outline-collapsed", next ? "1" : "0");
-      } catch {
-        // ignore storage errors
-      }
+      window.localStorage.setItem("course-outline-collapsed", next ? "1" : "0");
       return next;
     });
   };
 
-  // Wider reading measure while the outline is hidden
-  const contentWidthClass = sidebarCollapsed ? "max-w-5xl" : "max-w-4xl";
+  // Toggle distraction-free reading mode (notes only, ideal measure)
+  const toggleFocusMode = () => {
+    const next = !focusMode;
+    setFocusMode(next);
+    showToast(next ? "Reading mode on — press Esc to exit" : "Reading mode off");
+  };
+
+  // Wider reading measure: tightest in focus mode, widest with no outline
+  const contentWidthClass = focusMode
+    ? "max-w-3xl"
+    : sidebarCollapsed
+      ? "max-w-5xl"
+      : "max-w-4xl";
 
   // Trigger PDF printing (leveraging custom print styles in globals.css)
   const handleDownloadPDF = () => {
@@ -233,7 +266,7 @@ export default function LessonNotesPage() {
         className={cn(
           "w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:relative md:translate-x-0 fixed inset-y-0 left-0 z-40 top-20 md:top-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-          sidebarCollapsed && "md:w-0 md:border-r-0 md:overflow-hidden"
+          (sidebarCollapsed || focusMode) && "md:w-0 md:border-r-0 md:overflow-hidden"
         )}
       >
         {/* Mobile close button inside sidebar */}
@@ -348,7 +381,7 @@ export default function LessonNotesPage() {
       )}
 
       {/* Floating reopen handle — visible on desktop only while the outline is hidden */}
-      {sidebarCollapsed && (
+      {sidebarCollapsed && !focusMode && (
         <button
           onClick={toggleOutline}
           className="hidden md:flex absolute left-1.5 top-1/2 -translate-y-1/2 z-30 h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur-md text-muted-foreground shadow-lg transition-all hover:text-foreground hover:border-accent/40 hover:shadow-xl no-print group"
@@ -372,14 +405,20 @@ export default function LessonNotesPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg border border-border bg-card hover:bg-muted md:hidden"
+              className={cn(
+                "p-2 rounded-lg border border-border bg-card hover:bg-muted md:hidden",
+                focusMode && "hidden"
+              )}
               aria-label="Toggle Syllabus Outline"
             >
               <Menu className="h-4 w-4" />
             </button>
             <button
               onClick={toggleOutline}
-              className="hidden md:inline-flex p-2 rounded-lg border border-border bg-card hover:bg-muted transition-colors"
+              className={cn(
+                "hidden md:inline-flex p-2 rounded-lg border border-border bg-card hover:bg-muted transition-colors",
+                focusMode && "hidden"
+              )}
               aria-label={sidebarCollapsed ? "Show course outline" : "Hide course outline"}
               title={sidebarCollapsed ? "Show course outline (more reading space)" : "Hide course outline (focus on reading)"}
             >
@@ -399,6 +438,26 @@ export default function LessonNotesPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={toggleFocusMode}
+              aria-pressed={focusMode}
+              className={cn(
+                buttonVariants({ variant: focusMode ? "default" : "outline", size: "sm" }),
+                "rounded-xl gap-1.5 text-xs h-9 transition-all"
+              )}
+              title={
+                focusMode
+                  ? "Exit reading mode (Esc)"
+                  : "Focus reading mode — notes only (Esc)"
+              }
+            >
+              {focusMode ? (
+                <BookOpenCheck className="h-3.5 w-3.5" />
+              ) : (
+                <BookOpenText className="h-3.5 w-3.5" />
+              )}
+              <span className="hidden sm:inline">{focusMode ? "Reading" : "Reading Mode"}</span>
+            </button>
             <button
               onClick={handleToggleComplete}
               className={cn(
@@ -472,6 +531,7 @@ export default function LessonNotesPage() {
           </div>
 
           {/* Interactive Code Section Widget (no-print on PDF if you wish, or keep it formatted as standard text box) */}
+          {!focusMode && (
           <div className="border border-border/80 rounded-2xl bg-card overflow-hidden shadow-xs my-8 no-print">
             <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-2">
@@ -539,8 +599,10 @@ export default function LessonNotesPage() {
               </button>
             </div>
           </div>
+          )}
 
           {/* Printable copy of Code snippet for the PDF output (hidden on screen, visible during printing) */}
+          {!focusMode && (
           <div className="hidden print:block border border-black/20 p-5 rounded-lg my-8">
             <h4 className="font-bold mb-2">Lesson Code (Python)</h4>
             <pre className="font-mono text-xs p-3 bg-zinc-50 border border-zinc-200 rounded whitespace-pre-wrap">
@@ -551,8 +613,10 @@ export default function LessonNotesPage() {
               <code>{activeLesson.codeOutput}</code>
             </pre>
           </div>
+          )}
 
           {/* Live Python Playground — runs the lesson code in-browser */}
+          {!focusMode && (
           <div className="my-8 no-print">
             <div className="flex items-center gap-2 mb-3">
               <Terminal className="h-4 w-4 text-primary" />
@@ -568,9 +632,11 @@ export default function LessonNotesPage() {
               expectedOutput={activeLesson.codeOutput}
             />
           </div>
+          )}
 
           {/* Code Visualization Tips */}
-          {activeLesson.visualizationTips &&
+          {!focusMode &&
+            activeLesson.visualizationTips &&
             activeLesson.visualizationTips.length > 0 && (
               <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
                 <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
@@ -593,7 +659,8 @@ export default function LessonNotesPage() {
             )}
 
           {/* Tips & Tricks */}
-          {activeLesson.tipsAndTricks &&
+          {!focusMode &&
+            activeLesson.tipsAndTricks &&
             activeLesson.tipsAndTricks.length > 0 && (
               <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
                 <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
@@ -616,7 +683,7 @@ export default function LessonNotesPage() {
             )}
 
           {/* Practice Exercises */}
-          {activeLesson.practice && activeLesson.practice.length > 0 && (
+          {!focusMode && activeLesson.practice && activeLesson.practice.length > 0 && (
             <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8">
               <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
@@ -678,7 +745,7 @@ export default function LessonNotesPage() {
           )}
 
           {/* Interactive Quiz */}
-          {LESSON_QUIZZES[activeLesson.id] && (
+          {!focusMode && LESSON_QUIZZES[activeLesson.id] && (
             <section className="my-8 no-print">
               <div className="flex items-center gap-2 mb-3">
                 <Trophy className="h-4 w-4 text-star" />
@@ -694,7 +761,7 @@ export default function LessonNotesPage() {
           )}
 
           {/* Up Next — Continue Learning CTA */}
-          {nextLesson ? (
+          {!focusMode && (nextLesson ? (
             <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
               <div className="bg-gradient-to-r from-primary/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">
@@ -769,9 +836,10 @@ export default function LessonNotesPage() {
                 </Link>
               </div>
             </section>
-          )}
+          ))}
 
           {/* Next / Previous lesson Links */}
+          {!focusMode && (
           <div className="pt-8 border-t border-border/60 flex items-center justify-between no-print gap-4">
             {prevLesson ? (
               <Link
@@ -803,8 +871,10 @@ export default function LessonNotesPage() {
               <div />
             )}
           </div>
+          )}
 
           {/* Made with heart credit */}
+          {!focusMode && (
           <div className="flex items-center justify-center pt-10 no-print">
             <Link
               href="/"
@@ -820,6 +890,7 @@ export default function LessonNotesPage() {
               <span className="font-medium">amolshukla.online</span>
             </Link>
           </div>
+          )}
         </article>
       </main>
     </div>
