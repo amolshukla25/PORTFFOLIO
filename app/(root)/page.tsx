@@ -10,6 +10,7 @@ import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
 import { Icons } from "@/components/common/icons";
 import { Code } from "lucide-react";
 import ProjectCard from "@/components/projects/project-card";
+import { PromptsSection } from "@/components/prompts/prompts-section";
 import SkillsCard from "@/components/skills/skills-card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { COURSES } from "@/config/courses";
@@ -370,6 +371,9 @@ export default function IndexPage() {
           </Link>
         </AnimatedText>
       </AnimatedSection>
+
+      {/* ─── Prompts Vault Section ───────────────────────────────────── */}
+      <PromptsSection />
 
       {/* ─── About ────────────────────────────────────────────────────── */}
       <AnimatedSection direction="up" className="container py-16" id="about">
