@@ -1518,4 +1518,328 @@ export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
       },
     ],
   },
+
+  // ─── Module 2: Advanced Prompting Techniques ─────────────────────────────
+  "chain-of-thought-variants": {
+    title: "Chain-of-Thought Variants",
+    questions: [
+      {
+        id: "cotv-1",
+        question: "What is the simplest chain-of-thought variant?",
+        options: [
+          "Few-shot CoT",
+          "Zero-shot CoT",
+          "Self-consistency CoT",
+          "Auto-CoT",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Zero-shot CoT is the simplest — just add 'Let's think step by step' to your prompt.",
+      },
+      {
+        id: "cotv-2",
+        question: "When should you use self-consistency CoT?",
+        options: [
+          "For simple tasks",
+          "When accuracy is critical and you can afford multiple API calls",
+          "When you need fast responses",
+          "For creative writing",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Self-consistency generates multiple solutions and takes the majority vote — best for high-stakes accuracy.",
+      },
+      {
+        id: "cotv-3",
+        question: "What does Auto-CoT do?",
+        options: [
+          "Automatically selects the best CoT variant",
+          "Generates its own reasoning examples when you don't have good ones",
+          "Runs CoT without any configuration",
+          "Turns off chain-of-thought automatically",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Auto-CoT generates its own examples when you don't have good ones available.",
+      },
+    ],
+  },
+  "self-reflection-techniques": {
+    title: "Self-Reflection & Self-Critique",
+    questions: [
+      {
+        id: "sr-1",
+        question: "What is the basic self-reflection pattern?",
+        options: [
+          "Write and submit",
+          "Generate, evaluate, refine",
+          "Ask and answer",
+          "Create and destroy",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The Generate → Evaluate → Refine pattern is the foundation of self-reflection.",
+      },
+      {
+        id: "sr-2",
+        question: "What is Chain of Verification?",
+        options: [
+          "Verifying the user's identity",
+          "Fact-checking the model's own claims",
+          "Checking for grammar errors",
+          "Validating input format",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Chain of Verification extracts factual claims and verifies each one independently.",
+      },
+    ],
+  },
+  "error-recovery-patterns": {
+    title: "Error Recovery & Edge Case Handling",
+    questions: [
+      {
+        id: "er-1",
+        question: "What is defensive prompting?",
+        options: [
+          "Aggressive language in prompts",
+          "Anticipating errors and building safeguards into prompts",
+          "Defending against prompt injection",
+          "Using only safe words",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Defensive prompting anticipates errors and includes instructions to handle them gracefully.",
+      },
+      {
+        id: "er-2",
+        question: "What is graceful degradation?",
+        options: [
+          "Letting the model fail silently",
+          "Getting partial results with clear explanations when full completion isn't possible",
+          "Degrading the model's performance",
+          "Removing features from the output",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Graceful degradation gets useful partial results even when the full task can't be completed.",
+      },
+    ],
+  },
+
+  // ─── Module 3: Domain-Specific Prompting ──────────────────────────────────
+  "prompting-for-code": {
+    title: "Prompting for Code Generation",
+    questions: [
+      {
+        id: "pc-1",
+        question: "What does the CODE framework stand for?",
+        options: [
+          "Create, Optimize, Debug, Execute",
+          "Context, Output, Dependencies, Examples",
+          "Computer, Operating, Development, Environment",
+          "Code, Organize, Design, Engineer",
+        ],
+        correctIndex: 1,
+        explanation:
+          "CODE stands for Context, Output, Dependencies, and Examples — the key elements for code prompts.",
+      },
+      {
+        id: "pc-2",
+        question: "What should you include when asking for code generation?",
+        options: [
+          "Just the task description",
+          "Language, constraints, examples, and edge cases",
+          "Only the programming language",
+          "Previous code you've written",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Good code prompts include language, constraints, examples, and edge cases.",
+      },
+    ],
+  },
+  "prompting-for-writing": {
+    title: "Prompting for Content & Writing",
+    questions: [
+      {
+        id: "pw-1",
+        question: "What does the WRITE framework stand for?",
+        options: [
+          "Words, Research, Ideas, Templates, Editing",
+          "Who, Register, Intent, Type, Examples",
+          "Write, Review, Improve, Transform, Execute",
+          "Writing, Reading, Investigating, Thinking, Exploring",
+        ],
+        correctIndex: 1,
+        explanation:
+          "WRITE stands for Who (audience), Register (tone), Intent (purpose), Type (format), Examples (reference).",
+      },
+      {
+        id: "pw-2",
+        question: "Why is specifying audience important in writing prompts?",
+        options: [
+          "It isn't important",
+          "Different audiences require different tones, vocabulary, and approaches",
+          "It makes the prompt longer",
+          "It's required by the AI model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Audience determines tone, vocabulary, complexity, and what matters to the reader.",
+      },
+    ],
+  },
+  "prompting-for-analysis": {
+    title: "Prompting for Data Analysis",
+    questions: [
+      {
+        id: "pa-1",
+        question: "What does the ANALYZE framework stand for?",
+        options: [
+          "Analyze, Navigate, Assess, Learn, Yield, Zero, Execute",
+          "Ask, Numbers, Angle, Level, Yield, Zeal, Examples",
+          "Assess, Notice, Analyze, Locate, Yield, Examine",
+          "Ask, Negotiate, Assess, Locate, Yield, Examine",
+        ],
+        correctIndex: 1,
+        explanation:
+          "ANALYZE stands for Ask, Numbers, Angle, Level, Yield, Zeal, Examples.",
+      },
+      {
+        id: "pa-2",
+        question: "Why should you always ask for confidence levels in analysis?",
+        options: [
+          "It isn't necessary",
+          "It helps you know when to verify conclusions with other sources",
+          "It makes the analysis longer",
+          "The model requires it",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Confidence levels tell you which conclusions to trust and which to verify.",
+      },
+    ],
+  },
+
+  // ─── Module 4: Building AI Workflows ─────────────────────────────────────
+  "prompt-chaining": {
+    title: "Prompt Chaining & Sequential Processing",
+    questions: [
+      {
+        id: "chain-1",
+        question: "What is prompt chaining?",
+        options: [
+          "Using multiple prompts at once",
+          "Breaking complex tasks into sequential steps where each output feeds the next",
+          "Chaining together different AI models",
+          "Creating very long prompts",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Prompt chaining breaks complex tasks into steps, where each step's output becomes the next step's input.",
+      },
+      {
+        id: "chain-2",
+        question: "What is a branching chain pattern?",
+        options: [
+          "A chain that goes in circles",
+          "Splitting into parallel paths that merge later",
+          "A chain with no clear start or end",
+          "A chain that branches off and never returns",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Branching chains split into parallel paths (like analyzing multiple competitors) then merge results.",
+      },
+      {
+        id: "chain-3",
+        question: "Why include validation checkpoints between chain steps?",
+        options: [
+          "To make the chain longer",
+          "To catch issues early before they propagate",
+          "To confuse the model",
+          "It's required by the framework",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Validation checkpoints catch issues early, preventing errors from propagating through the chain.",
+      },
+    ],
+  },
+  "multi-agent-orchestration": {
+    title: "Multi-Agent Orchestration",
+    questions: [
+      {
+        id: "ma-1",
+        question: "What is a multi-agent system?",
+        options: [
+          "A single AI with multiple capabilities",
+          "Multiple AI agents working together, each with specialized roles",
+          "A system with multiple users",
+          "An AI that can do everything",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Multi-agent systems assign different roles to different prompt instances, each specializing in one task.",
+      },
+      {
+        id: "ma-2",
+        question: "What is the debate pattern in multi-agent systems?",
+        options: [
+          "Agents arguing with each other",
+          "Multiple agents argue different perspectives, then synthesize",
+          "Agents compete to produce the best output",
+          "A single agent considers multiple viewpoints",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The debate pattern has agents argue different sides, then a synthesizer creates a balanced analysis.",
+      },
+      {
+        id: "ma-3",
+        question: "What is the voting pattern?",
+        options: [
+          "Agents vote on which prompt to use",
+          "Multiple agents independently solve a problem, majority wins",
+          "Users vote on the best output",
+          "Agents take turns solving problems",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Voting has multiple agents independently solve the same problem, then takes the majority answer.",
+      },
+    ],
+  },
+  "real-world-applications": {
+    title: "Real-World Applications",
+    questions: [
+      {
+        id: "rw-1",
+        question: "What should you do before implementing an AI workflow?",
+        options: [
+          "Start coding immediately",
+          "Define success metrics and map the existing workflow",
+          "Buy the most expensive AI tools",
+          "Hire more staff",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Always define success metrics and understand the current workflow before automating.",
+      },
+      {
+        id: "rw-2",
+        question: "What is the most common pitfall in real-world AI implementation?",
+        options: [
+          "Using too many agents",
+          "Automating a broken process",
+          "Not using AI at all",
+          "Spending too little money",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Automating a broken process just makes the problems happen faster — fix the process first.",
+      },
+    ],
+  },
 };
