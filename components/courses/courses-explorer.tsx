@@ -44,12 +44,11 @@ const getIcon = (iconName: string) => {
     default:
       return <BookOpen className="h-8 w-8 text-primary" />;
   }
-};
-
-const roadmapSteps = [
+};const roadmapSteps = [
   {
-    step: 1,      title: "Python Foundations",
-      subtitle: "Course: Complete Python Course — 25 lessons",
+    step: 1,
+    title: "Python Foundations",
+    subtitle: "Course: Complete Python Course — 25 lessons",
     description:
       "Master variables, data casting, logic checks, conditional routes, loops, and OOP constructors.",
     skills: ["Syntax", "Conditionals", "Iteration", "OOP basics"],
@@ -93,6 +92,42 @@ const roadmapSteps = [
     link: "/courses/data-science/agentic-ai",
     linkLabel: "Master Agentic AI",
     level: "Advanced",
+  },
+  {
+    step: 5,
+    title: "Digital Marketing Mastery",
+    subtitle: "Course: Complete Digital Marketing Course",
+    description:
+      "Learn SEO fundamentals, keyword research, on-page optimization, content marketing, and social media strategies.",
+    skills: ["SEO", "Keyword Research", "Content Marketing", "Social Media"],
+    duration: "35 hours of content",
+    link: "/courses/digital-marketing",
+    linkLabel: "Start Digital Marketing",
+    level: "Beginner",
+  },
+  {
+    step: 6,
+    title: "Stock Market Investing",
+    subtitle: "Course: Complete Stock Market Course",
+    description:
+      "Understand how the stock market works, analyze companies with fundamental analysis, and build a diversified portfolio.",
+    skills: ["Stock Analysis", "Portfolio Management", "Risk Assessment", "Investment Strategy"],
+    duration: "30 hours of content",
+    link: "/courses/stock-marketing",
+    linkLabel: "Start Investing",
+    level: "Beginner",
+  },
+  {
+    step: 7,
+    title: "Prompt Engineering",
+    subtitle: "Course: Complete Prompt Engineering Course",
+    description:
+      "Master the art of crafting effective prompts for AI models to 10x your productivity with ChatGPT, Claude, and more.",
+    skills: ["Prompt Design", "Chain-of-Thought", "Few-Shot Learning", "AI Communication"],
+    duration: "20 hours of content",
+    link: "/courses/prompt-engineering",
+    linkLabel: "Start Prompt Engineering",
+    level: "Beginner",
   },
 ];
 

@@ -1157,4 +1157,365 @@ export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
       },
     ],
   },
+
+  // ─── Digital Marketing Course ─────────────────────────────────────────────
+  "intro-digital-marketing": {
+    title: "Introduction to Digital Marketing",
+    questions: [
+      {
+        id: "dm-1",
+        question: "What is digital marketing?",
+        options: [
+          "Only social media advertising",
+          "Promoting products/services through digital channels",
+          "Selling products online",
+          "Building websites",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Digital marketing encompasses all marketing efforts that use electronic devices or the internet to reach customers.",
+      },
+      {
+        id: "dm-2",
+        question: "Which of these is NOT a key component of digital marketing?",
+        options: [
+          "SEO",
+          "Email Marketing",
+          "Traditional TV Advertising",
+          "Content Marketing",
+        ],
+        correctIndex: 2,
+        explanation:
+          "Traditional TV advertising is part of traditional marketing, not digital marketing.",
+      },
+      {
+        id: "dm-3",
+        question: "Why is digital marketing measurable?",
+        options: [
+          "Because you can count followers",
+          "Because every click, impression, and conversion can be tracked",
+          "Because it's cheaper",
+          "Because it's easier",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Digital marketing provides detailed analytics that track user interactions in real-time.",
+      },
+    ],
+  },
+  "buyer-personas": {
+    title: "Buyer Personas & Customer Journey",
+    questions: [
+      {
+        id: "bp-1",
+        question: "What is a buyer persona?",
+        options: [
+          "A real customer profile",
+          "A semi-fictional representation of your ideal customer",
+          "A marketing strategy",
+          "A social media profile",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Buyer personas are semi-fictional representations based on market research and real data about your customers.",
+      },
+      {
+        id: "bp-2",
+        question: "What are the 5 stages of the customer journey?",
+        options: [
+          "Awareness, Interest, Decision, Action, Loyalty",
+          "Awareness, Consideration, Decision, Retention, Advocacy",
+          "Research, Compare, Buy, Use, Recommend",
+          "Discover, Learn, Purchase, Use, Review",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The 5 stages are Awareness, Consideration, Decision, Retention, and Advocacy.",
+      },
+      {
+        id: "bp-3",
+        question: "Why is post-purchase experience important?",
+        options: [
+          "It isn't important",
+          "It costs 5x more to acquire a new customer than retain an existing one",
+          "It only matters for B2B companies",
+          "It only affects social media",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Retention and advocacy stages provide the highest ROI because acquiring new customers is much more expensive.",
+      },
+    ],
+  },
+  "smart-goals": {
+    title: "SMART Marketing Goals",
+    questions: [
+      {
+        id: "sg-1",
+        question: "What does SMART stand for in goal setting?",
+        options: [
+          "Simple, Measurable, Achievable, Relevant, Timely",
+          "Specific, Measurable, Achievable, Relevant, Time-bound",
+          "Strategic, Measurable, Actionable, Realistic, Timed",
+          "Smart, Meaningful, Attainable, Results-oriented, Tracked"
+        ],
+        correctIndex: 1,
+        explanation:
+          "SMART stands for Specific, Measurable, Achievable, Relevant, and Time-bound.",
+      },
+      {
+        id: "sg-2",
+        question: "Which is a SMART goal?",
+        options: [
+          "Get more followers",
+          "Increase Instagram followers by 15% in 3 months",
+          "Do better on social media",
+          "Improve marketing",
+        ],
+        correctIndex: 1,
+        explanation:
+          "This goal is Specific (Instagram followers), Measurable (15%), Achievable (realistic), Relevant (marketing), and Time-bound (3 months).",
+      },
+    ],
+  },
+
+  // ─── Stock Market Course ─────────────────────────────────────────────────
+  "intro-stock-market": {
+    title: "Introduction to the Stock Market",
+    questions: [
+      {
+        id: "sm-1",
+        question: "What happens when you buy a stock?",
+        options: [
+          "You lend money to the company",
+          "You purchase a small piece of ownership in the company",
+          "You become an employee",
+          "You guarantee returns",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Buying stock means purchasing shares, which represent ownership stakes in a company.",
+      },
+      {
+        id: "sm-2",
+        question: "What is market capitalization?",
+        options: [
+          "The number of shares a company has",
+          "The total value of all shares (price × shares outstanding)",
+          "The company's annual revenue",
+          "The company's profit margin",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Market cap is calculated by multiplying the current stock price by the total number of outstanding shares.",
+      },
+      {
+        id: "sm-3",
+        question: "What is a bull market?",
+        options: [
+          "A market with falling prices",
+          "A market with rising prices",
+          "A market with stable prices",
+          "A market with high volatility",
+        ],
+        correctIndex: 1,
+        explanation:
+          "A bull market is characterized by rising stock prices and investor optimism.",
+      },
+    ],
+  },
+  "types-of-stocks": {
+    title: "Types of Stocks & Asset Classes",
+    questions: [
+      {
+        id: "ts-1",
+        question: "What characterizes a growth stock?",
+        options: [
+          "High dividend payments",
+          "Expected to grow faster than the market",
+          "Low risk, stable returns",
+          "Only available in certain countries",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Growth stocks are companies expected to grow earnings at an above-average rate compared to the market.",
+      },
+      {
+        id: "ts-2",
+        question: "What is the main advantage of index funds?",
+        options: [
+          "Higher returns than individual stocks",
+          "Instant diversification across many companies",
+          "No risk of loss",
+          "Guaranteed dividends",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Index funds provide instant diversification by holding a basket of stocks that mirror a market index.",
+      },
+      {
+        id: "ts-3",
+        question: "Why is diversification important?",
+        options: [
+          "It guarantees profits",
+          "It can reduce risk without proportionally reducing returns",
+          "It eliminates all risk",
+          "It's required by law",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Diversification spreads investments across different assets, reducing the impact of any single investment's poor performance.",
+      },
+    ],
+  },
+  "fundamental-analysis": {
+    title: "Fundamental Analysis",
+    questions: [
+      {
+        id: "fa-1",
+        question: "What does the P/E ratio measure?",
+        options: [
+          "A company's debt level",
+          "How much you're paying for $1 of earnings",
+          "The company's cash flow",
+          "The stock's trading volume",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The P/E (Price-to-Earnings) ratio shows how much investors are willing to pay per dollar of the company's earnings.",
+      },
+      {
+        id: "fa-2",
+        question: "What is a margin of safety?",
+        options: [
+          "A guaranteed profit",
+          "The difference between intrinsic value and market price",
+          "A type of investment account",
+          "A risk management tool for banks",
+        ],
+        correctIndex: 1,
+        explanation:
+          "A margin of safety is the buffer between a stock's intrinsic value and its current market price, protecting against estimation errors.",
+      },
+    ],
+  },
+
+  // ─── Prompt Engineering Course ────────────────────────────────────────────
+  "intro-prompt-engineering": {
+    title: "Introduction to Prompt Engineering",
+    questions: [
+      {
+        id: "pe-1",
+        question: "What is prompt engineering?",
+        options: [
+          "Coding AI models from scratch",
+          "Crafting inputs that guide LLMs to produce desired outputs",
+          "Building computer hardware",
+          "Writing traditional software code",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Prompt engineering is the skill of creating effective inputs (prompts) to get better results from large language models.",
+      },
+      {
+        id: "pe-2",
+        question: "Why is being specific important in prompts?",
+        options: [
+          "It isn't important",
+          "Vague prompts get vague results",
+          "It makes the prompt shorter",
+          "It costs less tokens",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Specific prompts provide clear instructions that help the model understand exactly what you want.",
+      },
+      {
+        id: "pe-3",
+        question: "What should you do if your first prompt doesn't give good results?",
+        options: [
+          "Give up",
+          "Try a different AI model",
+          "Iterate and refine your prompt",
+          "Use more technical jargon",
+        ],
+        correctIndex: 2,
+        explanation:
+          "Iteration is key — your first prompt is rarely your best. Refine based on what you received.",
+      },
+    ],
+  },
+  "core-prompting-techniques": {
+    title: "Core Prompting Techniques",
+    questions: [
+      {
+        id: "cpt-1",
+        question: "What is zero-shot prompting?",
+        options: [
+          "Using no examples in your prompt",
+          "Asking the model to not respond",
+          "Using only one example",
+          "Turning off the AI",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Zero-shot prompting means giving the model a task with no examples, relying on its pre-trained knowledge.",
+      },
+      {
+        id: "cpt-2",
+        question: "When should you use chain-of-thought prompting?",
+        options: [
+          "For simple classification tasks",
+          "For math, logic, and complex reasoning tasks",
+          "For creative writing",
+          "For translation tasks",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Chain-of-thought prompting asks the model to show its reasoning step by step, which improves accuracy for complex tasks.",
+      },
+      {
+        id: "cpt-3",
+        question: "What is few-shot prompting?",
+        options: [
+          "Using very few words",
+          "Providing examples of the desired input-output pattern",
+          "Asking short questions",
+          "Using a small model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Few-shot prompting provides several examples to show the model the pattern you want before asking for new output.",
+      },
+    ],
+  },
+  "structured-outputs": {
+    title: "Structured Outputs & Templates",
+    questions: [
+      {
+        id: "so-1",
+        question: "Why is it important to specify output format in prompts?",
+        options: [
+          "It isn't important",
+          "To ensure consistent, usable outputs",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Specifying format ensures you get outputs that are consistent and ready to use without reformatting.",
+      },
+      {
+        id: "so-2",
+        question: "What is a prompt template?",
+        options: [
+          "A single-use prompt",
+          "A reusable framework that can be filled with different variables",
+          "A template for the AI model's responses",
+          "A coding template",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Prompt templates are reusable frameworks with placeholders that can be customized for different situations.",
+      },
+    ],
+  },
 };

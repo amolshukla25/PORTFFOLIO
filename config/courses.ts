@@ -47,9 +47,15 @@ export interface Course {
 }
 
 import { PYTHON_COURSE } from "./python-course";
+import { DIGITAL_MARKETING_COURSE } from "./digital-marketing";
+import { STOCK_MARKETING_COURSE } from "./stock-marketing";
+import { PROMPT_ENGINEERING_COURSE } from "./prompt-engineering";
 
 export const COURSES: Course[] = [
   PYTHON_COURSE,
+  DIGITAL_MARKETING_COURSE,
+  STOCK_MARKETING_COURSE,
+  PROMPT_ENGINEERING_COURSE,
   {
     id: "data-science",
     title: "Applied Data Science & Generative AI Hub",
