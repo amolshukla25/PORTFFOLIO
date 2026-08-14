@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 
 import { AnimatedSection } from "@/components/common/animated-section";
 import { AnimatedText } from "@/components/common/animated-text";
@@ -142,9 +141,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       sameAs: [siteConfig.links.github, siteConfig.links.twitter],
     },
     publisher: {
-      "@type": "Person",
+      "@type": "Organization",
       name: siteConfig.authorName,
       url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}${siteConfig.logoIcon}`,
+      },
     },
     url: `${siteConfig.url}/blogs/${slug}`,
     mainEntityOfPage: {
@@ -153,6 +156,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     image: ogImage,
     keywords: post.tags.join(", "),
+    articleSection: post.tags[0],
     wordCount: post.contentHtml.replace(/<[^>]*>/g, "").split(/\s+/).length,
     ...(post.readingTime && {
       timeRequired: `PT${post.readingTime}M`,
@@ -193,13 +197,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <ClientPageWrapper>
-      <Script
-        id="schema-blog-post"
+      {/* JSON-LD as plain <script> tags so it is present in the initial HTML */}
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema) }}
       />
-      <Script
-        id="schema-breadcrumb-post"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />

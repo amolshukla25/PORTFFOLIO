@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Script from "next/script";
 
 import CoursesExplorer from "@/components/courses/courses-explorer";
 import { COURSES } from "@/config/courses";
@@ -7,13 +6,20 @@ import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: pagesConfig.courses.metadata.title,
+  title: {
+    absolute: pagesConfig.courses.metadata.title,
+  },
   description: pagesConfig.courses.metadata.description,
+  keywords: [
+    ...siteConfig.keywords,
+    "Amol Shukla courses",
+    "Amol Shukla Learning Hub",
+  ],
   alternates: {
     canonical: `${siteConfig.url}/courses`,
   },
   openGraph: {
-    title: `${pagesConfig.courses.metadata.title} | ${siteConfig.name}`,
+    title: pagesConfig.courses.metadata.title,
     description: pagesConfig.courses.metadata.description,
     url: `${siteConfig.url}/courses`,
     siteName: siteConfig.name,
@@ -29,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${pagesConfig.courses.metadata.title} | ${siteConfig.name}`,
+    title: pagesConfig.courses.metadata.title,
     description: pagesConfig.courses.metadata.description,
     images: [siteConfig.ogImage],
     creator: `@${siteConfig.username}`,
@@ -88,13 +94,11 @@ export default function CoursesPage() {
 
   return (
     <>
-      <Script
-        id="schema-courses-list"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesSchema) }}
       />
-      <Script
-        id="schema-breadcrumb-courses"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />

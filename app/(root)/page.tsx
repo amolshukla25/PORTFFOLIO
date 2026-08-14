@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 
 import BlogCard from "@/components/blogs/blog-card";
 import { AnimatedSection } from "@/components/common/animated-section";
@@ -113,25 +112,55 @@ export default function IndexPage() {
     "from-primary/80 to-accent/70",
   ];
 
-  // Structured data for personal portfolio
-  const personSchema = {
+  // Structured data for the homepage — WebSite + Organization + Person in a
+  // single @graph. Rendered as a plain <script> tag so it ships in the initial
+  // server HTML crawlers read (next/script would inject it only after hydration).
+  const graphSchema = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.authorName,
-    url: siteConfig.url,
-    image: `${siteConfig.url}${siteConfig.ogImage}`,
-    jobTitle: "AI Developer, Trainer & Agentic AI Expert",
-    description:
-      "AI Developer, Trainer, and Agentic AI Expert building agentic AI systems and training on LLMs and generative AI with Python.",
-    sameAs: [siteConfig.links.github, siteConfig.links.twitter],
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}/#website`,
+        url: siteConfig.url,
+        name: siteConfig.name,
+        description: siteConfig.description,
+        inLanguage: "en-US",
+        publisher: { "@id": `${siteConfig.url}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${siteConfig.url}/#organization`,
+        name: siteConfig.authorName,
+        url: siteConfig.url,
+        logo: {
+          "@type": "ImageObject",
+          url: `${siteConfig.url}${siteConfig.logoIcon}`,
+        },
+        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        description:
+          "AI Developer, Trainer, and Agentic AI Expert building agentic AI systems and training on LLMs and generative AI with Python.",
+        sameAs: [siteConfig.links.github, siteConfig.links.twitter],
+      },
+      {
+        "@type": "Person",
+        "@id": `${siteConfig.url}/#person`,
+        name: siteConfig.authorName,
+        url: siteConfig.url,
+        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        jobTitle: "AI Developer, Trainer & Agentic AI Expert",
+        description:
+          "AI Developer, Trainer, and Agentic AI Expert building agentic AI systems and training on LLMs and generative AI with Python.",
+        sameAs: [siteConfig.links.github, siteConfig.links.twitter],
+        worksFor: { "@id": `${siteConfig.url}/#organization` },
+      },
+    ],
   };
 
   return (
     <ClientPageWrapper>
-      <Script
-        id="schema-person"
+      <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(graphSchema) }}
       />
 
       {/* ─── Hero ─────────────────────────────────────────────────────── */}

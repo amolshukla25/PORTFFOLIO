@@ -1030,9 +1030,9 @@ Next Review: [6 months from now]`,
           id: "practice-first-step",
           title: "Take Your First Step Today",
           difficulty: "Easy",
-          task": "Choose one action from this list and do it today: (1) Open a brokerage account, (2) Set up automatic transfer, (3) Buy your first index fund, (4) Write your IPS. Which one will you choose?",
-          hint": "The best first step is the one you'll actually do.",
-          solution": `Taking the first step:
+          task: "Choose one action from this list and do it today: (1) Open a brokerage account, (2) Set up automatic transfer, (3) Buy your first index fund, (4) Write your IPS. Which one will you choose?",
+          hint: "The best first step is the one you'll actually do.",
+          solution: `Taking the first step:
 
 OPTION 1: Open a brokerage account
 - Go to Fidelity, Vanguard, or Schwab

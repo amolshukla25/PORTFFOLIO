@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Script from "next/script";
 import { Suspense } from "react";
 
 import BlogCard from "@/components/blogs/blog-card";
@@ -10,50 +9,87 @@ import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
 import { getAllBlogsMeta } from "@/lib/blogs";
 
-export const metadata: Metadata = {
-  title: pagesConfig.blogs.metadata.title,
-  description: pagesConfig.blogs.metadata.description,
-  alternates: {
-    canonical: `${siteConfig.url}/blogs`,
-  },
-  openGraph: {
-    title: `${pagesConfig.blogs.metadata.title} | ${siteConfig.name}`,
-    description: pagesConfig.blogs.metadata.description,
-    url: `${siteConfig.url}/blogs`,
-    siteName: siteConfig.name,
-    type: "website",
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.authorName} Blog`,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${pagesConfig.blogs.metadata.title} | ${siteConfig.name}`,
-    description: pagesConfig.blogs.metadata.description,
-    images: [siteConfig.ogImage],
-    creator: `@${siteConfig.username}`,
-  },
-};
+interface BlogsPageProps {
+  searchParams: Promise<{ tag?: string }>;
+}
 
-export default function BlogsPage() {
-  const blogs = getAllBlogsMeta();
+const tagLabel = (tag: string) => `${tag} Articles`;
 
-  // CollectionPage + Blog JSON-LD for the listing page
+export async function generateMetadata({
+  searchParams,
+}: BlogsPageProps): Promise<Metadata> {
+  const { tag } = await searchParams;
+
+  const title = tag
+    ? `${tagLabel(tag)} | ${siteConfig.name}`
+    : `${pagesConfig.blogs.metadata.title} | ${siteConfig.name}`;
+  const description = tag
+    ? `Amol Shukla's articles tagged "${tag}" — tutorials and deep dives for AI engineers and developers.`
+    : pagesConfig.blogs.metadata.description;
+  const url = tag
+    ? `${siteConfig.url}/blogs?tag=${encodeURIComponent(tag)}`
+    : `${siteConfig.url}/blogs`;
+
+  return {
+    title: tag ? { absolute: title } : pagesConfig.blogs.metadata.title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: siteConfig.name,
+      type: "website",
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.authorName} Blog`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [siteConfig.ogImage],
+      creator: `@${siteConfig.username}`,
+    },
+  };
+}
+
+export default async function BlogsPage({ searchParams }: BlogsPageProps) {
+  const { tag } = await searchParams;
+  const allBlogs = getAllBlogsMeta();
+  const blogs = tag ? allBlogs.filter((b) => b.tags.includes(tag)) : allBlogs;
+
+  const pageUrl = tag
+    ? `${siteConfig.url}/blogs?tag=${encodeURIComponent(tag)}`
+    : `${siteConfig.url}/blogs`;
+
+  // CollectionPage + ItemList JSON-LD — the correct schema for the blog index
+  // and tag-filtered listing pages. Rendered as a plain <script> tag so it
+  // ships in the initial HTML (next/script would only inject it after hydration).
   const blogListSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${siteConfig.authorName} — Blog`,
-    description: pagesConfig.blogs.metadata.description,
-    url: `${siteConfig.url}/blogs`,
+    "@id": pageUrl,
+    name: tag
+      ? `${tagLabel(tag)} by ${siteConfig.authorName}`
+      : `${siteConfig.authorName} — Blog`,
+    description: tag
+      ? `Articles tagged "${tag}" by ${siteConfig.authorName} — ${pagesConfig.blogs.metadata.description}`
+      : pagesConfig.blogs.metadata.description,
+    url: pageUrl,
+    inLanguage: "en-US",
     isPartOf: {
-      "@type": "WebSite",
-      name: siteConfig.name,
-      url: siteConfig.url,
+      "@type": "Blog",
+      "@id": `${siteConfig.url}/blogs#blog`,
+      name: `${siteConfig.authorName}'s Blog`,
+      url: `${siteConfig.url}/blogs`,
     },
     author: {
       "@type": "Person",
@@ -61,34 +97,32 @@ export default function BlogsPage() {
       url: siteConfig.url,
     },
     mainEntity: {
-      "@type": "Blog",
-      name: `${siteConfig.authorName}'s Blog`,
-      description: pagesConfig.blogs.metadata.description,
-      url: `${siteConfig.url}/blogs`,
-      author: {
-        "@type": "Person",
-        name: siteConfig.authorName,
-        url: siteConfig.url,
-      },
-      blogPost: blogs.map((blog) => ({
-        "@type": "BlogPosting",
-        headline: blog.title,
-        description: blog.description,
-        datePublished: blog.date,
-        url: `${siteConfig.url}/blogs/${blog.slug}`,
-        author: {
-          "@type": "Person",
-          name: siteConfig.authorName,
+      "@type": "ItemList",
+      numberOfItems: blogs.length,
+      itemListElement: blogs.map((blog, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "BlogPosting",
+          headline: blog.title,
+          description: blog.description,
+          datePublished: new Date(blog.date).toISOString(),
+          url: `${siteConfig.url}/blogs/${blog.slug}`,
+          author: {
+            "@type": "Person",
+            name: siteConfig.authorName,
+            url: siteConfig.url,
+          },
+          keywords: blog.tags.join(", "),
+          ...(blog.coverImage && {
+            image: `${siteConfig.url}${blog.coverImage}`,
+          }),
         },
-        keywords: blog.tags.join(", "),
-        ...(blog.coverImage && {
-          image: `${siteConfig.url}${blog.coverImage}`,
-        }),
       })),
     },
   };
 
-  // BreadcrumbList for site hierarchy
+  // BreadcrumbList for site hierarchy (includes the active tag when filtered)
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -105,24 +139,36 @@ export default function BlogsPage() {
         name: "Blogs",
         item: `${siteConfig.url}/blogs`,
       },
+      ...(tag
+        ? [
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: tag,
+              item: pageUrl,
+            },
+          ]
+        : []),
     ],
   };
 
   return (
     <>
-      <Script
-        id="schema-blog-list"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
       />
-      <Script
-        id="schema-breadcrumb-blogs"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <PageContainer
-        title={pagesConfig.blogs.title}
-        description={pagesConfig.blogs.description}
+        title={tag ? tagLabel(tag) : pagesConfig.blogs.title}
+        description={
+          tag
+            ? `Articles tagged "${tag}" — ${pagesConfig.blogs.description}`
+            : pagesConfig.blogs.description
+        }
         eyebrow="Writing"
       >
         <Suspense

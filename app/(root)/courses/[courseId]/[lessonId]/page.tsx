@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 
 import LessonNotes from "@/components/courses/lesson-notes";
 import { COURSES } from "@/config/courses";
@@ -47,7 +46,14 @@ export async function generateMetadata({
 
   return {
     title,
-    description: lesson.shortDescription,
+    description: `${lesson.shortDescription
+      .trim()
+      .replace(/[.!?…]+$/, "")} — Free lesson notes by Amol Shukla.`,
+    keywords: [
+      ...course.category,
+      siteConfig.authorName,
+      "Amol Shukla notes",
+    ],
     alternates: { canonical: url },
     openGraph: {
       title: `${title} | ${siteConfig.name}`,
@@ -153,8 +159,7 @@ export default async function lessonPage({
 
   return (
     <>
-      <Script
-        id="schema-faq-lesson"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />

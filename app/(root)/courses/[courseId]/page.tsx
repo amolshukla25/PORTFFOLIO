@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap, List } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import CourseProgressPanel from "@/components/courses/course-progress-panel";
@@ -33,9 +32,15 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${course.title} — Notes & Syllabus | Amol Shukla`,
-    description: course.shortDescription,
-    keywords: course.category,
+    title: `${course.title} — Notes & Syllabus`,
+    description: `${course.shortDescription
+      .trim()
+      .replace(/[.!?…]+$/, "")} — Free course notes and syllabus by Amol Shukla, AI Developer & Trainer.`,
+    keywords: [
+      ...course.category,
+      siteConfig.authorName,
+      "Amol Shukla courses",
+    ],
     alternates: {
       canonical: `${siteConfig.url}/courses/${courseId}`,
     },
@@ -131,13 +136,11 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
 
   return (
     <div className="container py-8 max-w-4xl">
-      <Script
-        id="schema-course"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
       />
-      <Script
-        id="schema-breadcrumb-course"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />

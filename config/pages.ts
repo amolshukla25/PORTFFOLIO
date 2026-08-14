@@ -90,7 +90,7 @@ export const pagesConfig: PagesConfig = {
     description:
       "Access comprehensive documented notes, code walk-throughs, and worksheets curated for students and learners.",
     metadata: {
-      title: "Learning Hub — Courses, Notes & Roadmap",
+      title: "Amol Shukla's Learning Hub — Courses, Notes & Roadmap",
       description:
         "Amol Shukla's Learning Hub — free structured courses on Python, data science, machine learning, and agentic AI with detailed notes and code walk-throughs.",
     },

@@ -203,8 +203,8 @@ export default function CoursesExplorer() {
 
   return (
     <PageContainer
-      title="Student Learning Hub"
-      description="Access comprehensive documented notes, code walk-throughs, and PDF worksheets curated for students and learners."
+      title="Amol Shukla's Student Learning Hub"
+      description="Access Amol Shukla's comprehensive documented notes, code walk-throughs, and PDF worksheets curated for students and learners."
       eyebrow="Learning"
     >
       <div className="py-8">

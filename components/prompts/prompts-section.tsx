@@ -102,14 +102,14 @@ export const PromptsSection = () => {
           as="h2"
           className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
         >
-          Production AI System Prompts
+          Amol Shukla's Production AI System Prompts
         </AnimatedText>
         <AnimatedText
           as="p"
           delay={0.2}
           className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
         >
-          A curated collection of production-tested system prompts, agentic ReAct patterns, and LLM optimization templates engineered for real-world applications.
+          Amol Shukla's curated collection of production-tested system prompts, agentic ReAct patterns, and LLM optimization templates engineered for real-world applications.
         </AnimatedText>
       </div>
 
