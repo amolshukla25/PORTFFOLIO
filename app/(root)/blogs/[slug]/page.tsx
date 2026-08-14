@@ -10,7 +10,7 @@ import { Icons } from "@/components/common/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { getAllBlogSlugs, getAllBlogsMeta, getBlogPost } from "@/lib/blogs";
-import { cn } from "@/lib/utils";
+import { cn, truncateMetaTitle } from "@/lib/utils";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -40,7 +40,7 @@ export async function generateMetadata({
         canonical: `${siteConfig.url}/blogs/${slug}`,
       },
       openGraph: {
-        title: post.title,
+        title: truncateMetaTitle(post.title),
         description: post.description,
         url: `${siteConfig.url}/blogs/${slug}`,
         siteName: siteConfig.name,
@@ -60,7 +60,7 @@ export async function generateMetadata({
       },
       twitter: {
         card: "summary_large_image",
-        title: post.title,
+        title: truncateMetaTitle(post.title),
         description: post.description,
         images: [ogImage],
         creator: `@${siteConfig.username}`,

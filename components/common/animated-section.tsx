@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
+
+import { useReveal } from "@/components/common/use-reveal";
+import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -11,6 +13,16 @@ interface AnimatedSectionProps {
   id?: string;
 }
 
+const hiddenOffset: Record<
+  NonNullable<AnimatedSectionProps["direction"]>,
+  string
+> = {
+  up: "translate-y-12",
+  down: "-translate-y-12",
+  left: "translate-x-12",
+  right: "-translate-x-12",
+};
+
 export const AnimatedSection = ({
   children,
   className = "",
@@ -18,33 +30,22 @@ export const AnimatedSection = ({
   direction = "up",
   id,
 }: AnimatedSectionProps) => {
-  const directionOffset = {
-    up: { y: 50 },
-    down: { y: -50 },
-    left: { x: 50 },
-    right: { x: -50 },
-  };
-
-  const initialOffset = directionOffset[direction];
+  const { ref, visible } = useReveal();
 
   return (
-    <motion.div
+    <div
+      ref={ref}
       id={id}
-      className={className}
-      initial={{ opacity: 0, ...initialOffset }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-        y: 0,
-        transition: {
-          duration: 0.8,
-          delay,
-          ease: "easeOut" as const,
-        },
-      }}
-      viewport={{ once: true, margin: "-100px" }}
+      className={cn(
+        "transition-all duration-700 ease-out will-change-transform",
+        visible
+          ? "translate-x-0 translate-y-0 opacity-100"
+          : cn("opacity-0", hiddenOffset[direction]),
+        className
+      )}
+      style={{ transitionDelay: `${delay}s` } as CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };

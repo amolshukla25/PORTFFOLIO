@@ -7,7 +7,7 @@ import CourseProgressPanel from "@/components/courses/course-progress-panel";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, truncateMetaTitle } from "@/lib/utils";
 
 interface CoursePageProps {
   params: Promise<{
@@ -45,7 +45,7 @@ export async function generateMetadata({
       canonical: `${siteConfig.url}/courses/${courseId}`,
     },
     openGraph: {
-      title: `${course.title} | ${siteConfig.name}`,
+      title: truncateMetaTitle(course.title),
       description: course.shortDescription,
       url: `${siteConfig.url}/courses/${courseId}`,
       siteName: siteConfig.name,
@@ -61,7 +61,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${course.title} | ${siteConfig.name}`,
+      title: truncateMetaTitle(course.title),
       description: course.shortDescription,
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,

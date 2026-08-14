@@ -4,6 +4,7 @@ import CoursesExplorer from "@/components/courses/courses-explorer";
 import { COURSES } from "@/config/courses";
 import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
+import { truncateMetaTitle } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     canonical: `${siteConfig.url}/courses`,
   },
   openGraph: {
-    title: pagesConfig.courses.metadata.title,
+    title: truncateMetaTitle(pagesConfig.courses.metadata.title),
     description: pagesConfig.courses.metadata.description,
     url: `${siteConfig.url}/courses`,
     siteName: siteConfig.name,
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: pagesConfig.courses.metadata.title,
+    title: truncateMetaTitle(pagesConfig.courses.metadata.title),
     description: pagesConfig.courses.metadata.description,
     images: [siteConfig.ogImage],
     creator: `@${siteConfig.username}`,

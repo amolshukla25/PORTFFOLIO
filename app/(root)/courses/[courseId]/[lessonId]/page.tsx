@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import LessonNotes from "@/components/courses/lesson-notes";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
+import { truncateMetaTitle } from "@/lib/utils";
 
 interface LessonPageProps {
   params: Promise<{
@@ -56,7 +57,7 @@ export async function generateMetadata({
     ],
     alternates: { canonical: url },
     openGraph: {
-      title: `${title} | ${siteConfig.name}`,
+      title: truncateMetaTitle(title),
       description: lesson.shortDescription,
       url,
       siteName: siteConfig.name,
@@ -65,7 +66,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${siteConfig.name}`,
+      title: truncateMetaTitle(title),
       description: lesson.shortDescription,
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,

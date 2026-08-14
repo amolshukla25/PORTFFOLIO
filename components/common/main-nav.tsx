@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import * as React from "react";
@@ -13,20 +12,6 @@ interface MainNavProps {
   items?: any[];
   children?: React.ReactNode;
 }
-
-// Animation variants for the navigation items
-const navItemVariants = {
-  hidden: { opacity: 0, y: -12 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.06 * i,
-      duration: 0.4,
-      ease: "easeOut" as const,
-    },
-  }),
-};
 
 export function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment();
@@ -47,12 +32,10 @@ export function MainNav({ items, children }: MainNavProps) {
               item.href.startsWith(`/${segment}`) &&
               segment !== null;
             return (
-              <motion.div
+              <div
                 key={index}
-                custom={index}
-                initial="hidden"
-                animate="visible"
-                variants={navItemVariants}
+                className="animate-nav-item"
+                style={{ animationDelay: `${0.06 * index}s` }}
               >
                 <Link
                   href={item.disabled ? "#" : item.href}
@@ -67,20 +50,23 @@ export function MainNav({ items, children }: MainNavProps) {
                 >
                   {item.title}
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </nav>
       ) : null}
-      <motion.button
-        className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-sm font-semibold md:hidden"
+      <button
+        className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-sm font-semibold transition-transform duration-150 active:scale-95 md:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
-        whileTap={{ scale: 0.96 }}
         aria-label="Toggle navigation menu"
       >
-        {showMobileMenu ? <Icons.close className="h-4 w-4" /> : <Icons.menu className="h-4 w-4" />}
+        {showMobileMenu ? (
+          <Icons.close className="h-4 w-4" />
+        ) : (
+          <Icons.menu className="h-4 w-4" />
+        )}
         Menu
-      </motion.button>
+      </button>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>
       )}

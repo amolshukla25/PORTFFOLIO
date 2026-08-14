@@ -228,6 +228,63 @@
   animation-delay: 4s;
 }
 
+/* ─── CSS animation utilities (replace framer-motion) ───────────────────── */
+
+@keyframes text-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-text-in {
+  animation: text-in 0.6s ease-out both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-in {
+  animation: page-in 0.5s ease-in-out both;
+}
+
+@keyframes nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-nav-item {
+  animation: nav-item-in 0.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-text-in,
+  .animate-page-in,
+  .animate-nav-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @supports (animation: grow 0.5s cubic-bezier(0.25, 0.25, 0.25, 1) forwards) {
   .tick {
     stroke-opacity: 0;

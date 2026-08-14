@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { CSSProperties, ReactNode, useRef } from "react";
+
+import { useScrollProgress } from "@/components/common/use-scroll-progress";
 
 interface ScrollAnimationProps {
   children: ReactNode;
@@ -15,36 +16,20 @@ export const ScrollAnimation = ({
   effect = "fade",
 }: ScrollAnimationProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const progress = useScrollProgress(ref);
 
-  // Create transform values outside of any function
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0.2, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
-  const xOffset = useTransform(scrollYProgress, [0, 0.5], [-50, 0]);
-  const rotation = useTransform(scrollYProgress, [0, 0.5], [-10, 0]);
+  // Match the original framer-motion mapping: first half of the scroll
+  // range drives the full effect.
+  const t = Math.min(1, progress * 2);
 
-  // Get the appropriate animation style based on the effect
-  const animationStyle = (() => {
-    switch (effect) {
-      case "fade":
-        return { opacity };
-      case "zoom":
-        return { scale, opacity };
-      case "slide":
-        return { x: xOffset, opacity };
-      case "rotate":
-        return { rotate: rotation, opacity };
-      default:
-        return { opacity };
-    }
-  })();
+  const style: CSSProperties = { opacity: 0.2 + 0.8 * t };
+  if (effect === "zoom") style.transform = `scale(${0.8 + 0.2 * t})`;
+  if (effect === "slide") style.transform = `translateX(${-50 + 50 * t}px)`;
+  if (effect === "rotate") style.transform = `rotate(${-10 + 10 * t}deg)`;
 
   return (
-    <motion.div ref={ref} className={className} style={animationStyle}>
+    <div ref={ref} className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 };
