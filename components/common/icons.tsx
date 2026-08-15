@@ -38,6 +38,7 @@ import {
   Network,
   Activity,
   Workflow,
+  Heart,
 } from "lucide-react";
 import { AiFillStar } from "react-icons/ai";
 import { BiLaugh, BiSolidUser } from "react-icons/bi";
@@ -197,4 +198,5 @@ export const Icons = {
   azure: TbBrandAzure,
   langchain: SiLangchain,
   n8n: SiN8N,
+  heart: Heart,
 };

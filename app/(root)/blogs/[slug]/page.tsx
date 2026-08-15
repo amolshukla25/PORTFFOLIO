@@ -472,13 +472,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 href="/"
                 className="group inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-muted/30 px-4 py-2 text-xs text-muted-foreground transition-all hover:border-accent/30 hover:text-foreground"
               >
-                Made with
-                <span
-                  aria-hidden
-                  className="text-destructive transition-transform duration-300 inline-block group-hover:scale-125 group-hover:animate-pulse"
-                >
-                  ❤
-                </span>
+                Created with
+                <Icons.heart className="h-3.5 w-3.5 fill-red-500 text-red-500 animate-pulse transition-transform duration-300 group-hover:scale-125" />
                 by
                 <span className="font-semibold text-foreground group-hover:text-accent">
                   {siteConfig.authorName}
@@ -486,7 +481,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <span aria-hidden className="text-border">
                   ·
                 </span>
-                <span className="font-medium">amolshukla.online</span>
+                <span className="font-medium text-primary">amolshukla.online</span>
               </Link>
             </div>
           </footer>

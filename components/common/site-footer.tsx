@@ -116,19 +116,21 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/40 pt-6 sm:flex-row">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {siteConfig.authorName} · Made with{" "}
-            <span aria-hidden className="text-destructive transition-transform duration-300 inline-block hover:scale-125">
-              ❤
-            </span>{" "}
-            by{" "}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground sm:justify-start">
+            <span>© {new Date().getFullYear()} {siteConfig.authorName}</span>
+            <span aria-hidden className="hidden sm:inline">·</span>
             <a
               href={siteConfig.url}
-              className="font-medium text-foreground transition-colors hover:text-accent"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 font-medium text-foreground transition-all duration-300 hover:border-red-500/40 hover:bg-red-500/20 hover:scale-105 shadow-sm"
             >
-              amolshukla.online
+              <span>Created with</span>
+              <Icons.heart className="h-3.5 w-3.5 fill-red-500 text-red-500 animate-pulse" />
+              <span>by</span>
+              <span className="font-semibold text-primary">amolshukla.online</span>
             </a>
-          </p>
+          </div>
           <a
             href="#"
             className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
