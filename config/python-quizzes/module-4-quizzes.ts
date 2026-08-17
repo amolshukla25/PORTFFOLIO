@@ -188,6 +188,58 @@ export const PYTHON_MODULE_4_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nIn Python, lambda expressions construct first-class function objects of type `<class 'function'>`.",
       },
+      {
+        id: "fb-17",
+        question: "What does function keyword-only argument enforcement with `*` do?\n\ndef configure(*, debug=False, env='dev'):\n    return f'{env}:{debug}'\nprint(configure(debug=True))",
+        options: [
+          "'dev:True'",
+          "TypeError: missing positional argument",
+          "None",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nA standalone `*` in parameter definitions requires all following arguments (`debug`, `env`) to be passed as named keyword arguments.",
+      },
+      {
+        id: "fb-18",
+        question: "What is the output of positional-only parameter marker `/` in Python 3.8+?\n\ndef double(x, /):\n    return x * 2\nprint(double(5))",
+        options: [
+          "10",
+          "TypeError",
+          "5",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nThe `/` parameter marker requires all preceding parameters to be passed strictly positionally (`double(5)` works; `double(x=5)` raises TypeError).",
+      },
+      {
+        id: "fb-19",
+        question: "What does `func.__annotations__` contain?\n\ndef add(a: int, b: int = 0) -> int:\n    return a + b\nprint(add.__annotations__['return'])",
+        options: [
+          "<class 'int'>",
+          "'int'",
+          "int",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nType annotations are stored in the function's `__annotations__` dictionary mapping parameter names and `'return'` to their type hints.",
+      },
+      {
+        id: "fb-20",
+        question: "What is returned when a function executes without an explicit `return` statement?\n\ndef do_nothing():\n    pass\nprint(do_nothing() is None)",
+        options: [
+          "True",
+          "False",
+          "TypeError",
+          "0",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nIn Python, any function that reaches the end of its body without a `return` statement implicitly returns `None`.",
+      },
     ],
   },
 
@@ -362,6 +414,58 @@ export const PYTHON_MODULE_4_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`*[1, 2], *[3, 4]` unpacks into 4 positional arguments `(1, 2, 3, 4)`. `len(args)` is 4.",
+      },
+      {
+        id: "lak-17",
+        question: "What does unpacking a dictionary with `**` into a format string do?\n\ninfo = {'name': 'Amol', 'role': 'Admin'}\nprint('{name} ({role})'.format(**info))",
+        options: [
+          "'Amol (Admin)'",
+          "'{name} ({role})'",
+          "KeyError",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`**info` unpacks dictionary keys and values as keyword arguments matching `{name}` and `{role}` placeholders.",
+      },
+      {
+        id: "lak-18",
+        question: "What will sorting tuples with a lambda key output?\n\npairs = [(1, 'b'), (2, 'a') blend]\npairs = [(1, 'b'), (2, 'a')]\nprint(sorted(pairs, key=lambda p: p[1]))",
+        options: [
+          "[(2, 'a'), (1, 'b')]",
+          "[(1, 'b'), (2, 'a')]",
+          "['a', 'b']",
+          "[(1, 'a'), (2, 'b')]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`key=lambda p: p[1]` sorts by second element ('a' comes before 'b'), placing `(2, 'a')` first.",
+      },
+      {
+        id: "lak-19",
+        question: "What is the output of immediately invoking an anonymous lambda expression?\n\nprint((lambda x, y: x ** y)(3, 3))",
+        options: [
+          "27",
+          "9",
+          "<function <lambda>>",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nThe lambda expression `lambda x, y: x ** y` is immediately called with arguments `(3, 3)`, computing `3³ = 27`.",
+      },
+      {
+        id: "lak-20",
+        question: "What does `*args` capture when zero arguments are passed?\n\ndef test(*args):\n    return type(args), len(args)\nprint(test())",
+        options: [
+          "(<class 'tuple'>, 0)",
+          "(<class 'list'>, 0)",
+          "(None, 0)",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`*args` always packs positional arguments into a `tuple`. When none are passed, it is an empty tuple `()` of length 0.",
       },
     ],
   },
@@ -552,6 +656,58 @@ export const PYTHON_MODULE_4_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`locals()` returns a dictionary mapping local variable names to their values in the current frame.",
+      },
+      {
+        id: "scd-17",
+        question: "What does `functools.wraps` preserve on decorated functions?\n\nimport functools\ndef dec(f):\n    @functools.wraps(f)\n    def wrapper(*a): return f(*a)\n    return wrapper\n@dec\ndef my_func(): pass\nprint(my_func.__name__)",
+        options: [
+          "'my_func'",
+          "'wrapper'",
+          "'dec'",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`@functools.wraps(f)` copies original metadata like `__name__` and `__doc__` to the wrapper function.",
+      },
+      {
+        id: "scd-18",
+        question: "What does this stateful closure counter output on multiple calls?\n\ndef counter():\n    n = 0\n    def step():\n        nonlocal n\n        n += 1\n        return n\n    return step\nc = counter()\nprint(c(), c(), c())",
+        options: [
+          "1 2 3",
+          "1 1 1",
+          "0 1 2",
+          "UnboundLocalError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`nonlocal n` binds to the enclosing scope variable, retaining and incrementing `n` across consecutive calls: 1, 2, 3.",
+      },
+      {
+        id: "scd-19",
+        question: "What order do stacked decorators execute in?\n\n# @dec_a\n# @dec_b\n# def f(): pass",
+        options: [
+          "dec_b wraps f first (innermost), then dec_a wraps the result (bottom-up application)",
+          "dec_a executes first, then dec_b",
+          "Random order",
+          "Parallel execution",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nDecorator application is bottom-up (inside-out): `@dec_a @dec_b def f()` is equivalent to `f = dec_a(dec_b(f))`.",
+      },
+      {
+        id: "scd-20",
+        question: "What will accessing a global variable without the `global` keyword do when modifying it?\n\nx = 10\ndef change():\n    x += 1\n# change()",
+        options: [
+          "Raises UnboundLocalError: cannot access local variable 'x' where it is not associated with a value",
+          "Changes global x to 11",
+          "Creates a new global",
+          "Silently ignored",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nBecause `x` is assigned to inside the function (`x += 1`), Python marks `x` as local. Reading it before assignment raises `UnboundLocalError`.",
       },
     ],
   },
@@ -762,6 +918,58 @@ export const PYTHON_MODULE_4_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`pip show <package>` displays installation metadata, version, location, and dependencies of an installed package.",
+      },
+      {
+        id: "mp-17",
+        question: "What is the value of `__name__` when a Python script is imported as a module?\n\n# Inside math_utils.py, imported by app.py",
+        options: [
+          "'math_utils'",
+          "'__main__'",
+          "'module'",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nWhen imported, Python assigns the module's file stem (`'math_utils'`) to `__name__`. It is only `'__main__'` when run directly.",
+      },
+      {
+        id: "mp-18",
+        question: "What does `__all__` list define inside a module file?\n\n__all__ = ['public_api', 'Helper']",
+        options: [
+          "The explicit list of symbols exported when another script does `from module import *`",
+          "All private functions in the file",
+          "The list of installed pip packages",
+          "A list of syntax linter rules",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`__all__` specifies the public API exposed to wildcard imports (`from module import *`).",
+      },
+      {
+        id: "mp-19",
+        question: "What does `import sys; sys.path` contain?",
+        options: [
+          "A list of directory path strings where Python searches for imported modules",
+          "The operating system PATH environment variable only",
+          "All open file descriptors",
+          "The Python installation binary directory only",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`sys.path` is the module search path initialized from the current directory, PYTHONPATH, and standard library directories.",
+      },
+      {
+        id: "mp-20",
+        question: "What does `from math import sqrt as square_root` do?",
+        options: [
+          "Imports the sqrt function and renames it to square_root in the current namespace",
+          "Creates a copy of the math module named square_root",
+          "Computes the square root of math",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`as` aliases the imported symbol, binding the identifier `square_root` to `math.sqrt`.",
       },
     ],
   },

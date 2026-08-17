@@ -213,6 +213,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\n`flush()` flushes the internal I/O write buffer to disk without closing the file.",
       },
+      {
+        id: "fh-17",
+        question: "What does `file.seek(0)` do?\n\n# After reading a file to EOF\n# f.seek(0)",
+        options: [
+          "Resets the file stream read/write pointer back to byte offset 0 (the beginning of the file)",
+          "Closes the file",
+          "Deletes line 0",
+          "Flushes file to disk",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`seek(0)` repositions the internal cursor back to the start, allowing the file to be read again from the beginning.",
+      },
+      {
+        id: "fh-18",
+        question: "What does `pathlib.Path.exists()` return?\n\nfrom pathlib import Path\np = Path('non_existent.txt')\nprint(p.exists())",
+        options: [
+          "False",
+          "FileNotFoundError",
+          "None",
+          "0",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`pathlib.Path.exists()` safely tests whether a path exists on the filesystem and returns a boolean without throwing exceptions.",
+      },
+      {
+        id: "fh-19",
+        question: "What does `csv.DictReader` use as keys for each row dictionary?\n\n# file has 'name,score\\nAmol,95'",
+        options: [
+          "The column headers found in the first row of the CSV file",
+          "Integer indices 0, 1, 2",
+          "Alphabet letters A, B, C",
+          "Line numbers",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`csv.DictReader` parses the header row and maps each row's values into a dictionary keyed by those header strings.",
+      },
+      {
+        id: "fh-20",
+        question: "What does opening a file with mode `'x'` do?\n\n# open('file.txt', 'x')",
+        options: [
+          "Exclusive creation: creates and opens for writing only if the file does NOT already exist (raises FileExistsError if exists)",
+          "Opens in execution mode",
+          "Opens XML mode",
+          "Opens binary mode",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nMode `'x'` ensures atomic file creation, failing immediately with `FileExistsError` if the target already exists.",
+      },
     ],
   },
 
@@ -413,6 +465,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nBare `except:` catches `BaseException`, intercepting Ctrl+C exits. Always use `except Exception:` instead.",
       },
+      {
+        id: "eh-17",
+        question: "What does `raise ... from err` achieve in exception handling?\n\ntry:\n    int('abc')\nexcept ValueError as err:\n    raise RuntimeError('Conversion failed') from err",
+        options: [
+          "Explicitly chains exceptions, setting __cause__ to retain the original traceback root cause",
+          "Ignores original error",
+          "Silences RuntimeError",
+          "Restarts execution",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nException chaining via `from err` links high-level domain exceptions directly to the root cause in debug tracebacks.",
+      },
+      {
+        id: "eh-18",
+        question: "What is the output of `try ... else` block execution when an exception occurs?\n\ntry:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print('A')\nelse:\n    print('B')\nfinally:\n    print('C')",
+        options: [
+          "A\nC",
+          "A\nB\nC",
+          "B\nC",
+          "A",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nWhen an exception occurs, `except` runs ('A'), `else` is SKIPPED, and `finally` always runs ('C').",
+      },
+      {
+        id: "eh-19",
+        question: "What built-in exception is raised when looking up a missing key in a dictionary?\n\nd = {}\n# d['missing']",
+        options: [
+          "KeyError",
+          "IndexError",
+          "ValueError",
+          "AttributeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nDirect subscript access on a missing dictionary key triggers a `KeyError`.",
+      },
+      {
+        id: "eh-20",
+        question: "How do you define a custom exception class in Python?\n\nclass DatabaseConnectionError(Exception):\n    pass",
+        options: [
+          "Inherit directly or indirectly from the built-in `Exception` base class",
+          "Inherit from object",
+          "Use def exception",
+          "Inherit from ErrorBase",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nCustom user exceptions should inherit from `Exception` (or subclasses) so standard `except Exception:` blocks can catch them.",
+      },
     ],
   },
 
@@ -612,6 +716,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nGenerator `g` takes tiny constant O(1) memory (~100 bytes) while list `l` allocates megabytes for 1 million integers.",
+      },
+      {
+        id: "ig-17",
+        question: "What does `itertools.chain([1, 2], [3, 4])` do?\n\nimport itertools\nprint(list(itertools.chain([1, 2], [3, 4])))",
+        options: [
+          "[1, 2, 3, 4]",
+          "[[1, 2], [3, 4]]",
+          "[(1, 3), (2, 4)]",
+          "[1, 2]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`itertools.chain()` links multiple iterables consecutively into a single unified lazy stream: `[1, 2, 3, 4]`.",
+      },
+      {
+        id: "ig-18",
+        question: "What does `itertools.islice(gen, 3)` do on an infinite generator?\n\nimport itertools\ndef infinite_nums():\n    n = 0\n    while True:\n        yield n\n        n += 1\nprint(list(itertools.islice(infinite_nums(), 3)))",
+        options: [
+          "[0, 1, 2]",
+          "[1, 2, 3]",
+          "Infinite loop",
+          "[0, 1, 2, 3]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`islice(iterable, 3)` consumes and yields strictly the first 3 items from the generator without hanging infinitely.",
+      },
+      {
+        id: "ig-19",
+        question: "What requirement must data meet before using `itertools.groupby()`?\n\n# itertools.groupby(data, key=...)",
+        options: [
+          "The data iterable MUST be pre-sorted by the grouping key",
+          "Data must be a set",
+          "Data must be all integers",
+          "No requirement",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`groupby()` aggregates consecutive duplicate keys; without prior sorting, duplicate groups will appear multiple times.",
+      },
+      {
+        id: "ig-20",
+        question: "What happens when a generator function finishes executing all statements?\n\ndef simple():\n    yield 1\ng = simple()\nnext(g)\n# next(g)",
+        options: [
+          "Raises StopIteration exception signaling the end of iteration",
+          "Returns None",
+          "Loops back to start",
+          "Raises EOFError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nWhen generator execution reaches the end of the function body, it raises `StopIteration`.",
       },
     ],
   },
@@ -817,6 +973,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`separators=(',', ':')` eliminates whitespace around colons and commas for compact payload serialization.",
+      },
+      {
+        id: "jd-17",
+        question: "What does `json.dumps(..., ensure_ascii=False)` do?\n\nimport json\ndata = {'greeting': 'नमस्ते'}\nprint(json.dumps(data, ensure_ascii=False))",
+        options: [
+          "'{\"greeting\": \"नमस्ते\"}' (outputs raw UTF-8 unicode characters instead of \\u escape sequences)",
+          "'{\"greeting\": \"\\\\u0928\\\\u092e...\"}'",
+          "UnicodeEncodeError",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`ensure_ascii=False` allows non-ASCII characters to be emitted unescaped in the JSON string.",
+      },
+      {
+        id: "jd-18",
+        question: "What exception is raised when `json.loads()` encounters invalid JSON syntax?\n\nimport json\n# json.loads('{invalid_json}')",
+        options: [
+          "json.JSONDecodeError",
+          "ValueError only",
+          "SyntaxError",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nInvalid JSON syntax raises `json.JSONDecodeError` (a subclass of `ValueError`).",
+      },
+      {
+        id: "jd-19",
+        question: "How are Python Booleans and None serialized to JSON format?\n\nimport json\nprint(json.dumps({'a': True, 'b': None}))",
+        options: [
+          "'{\"a\": true, \"b\": null}'",
+          "'{\"a\": True, \"b\": None}'",
+          "'{\"a\": 1, \"b\": 0}'",
+          "Error",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nJSON specification uses lowercase `true` / `false` and `null`, mapped from Python's `True` / `False` and `None`.",
+      },
+      {
+        id: "jd-20",
+        question: "What is the difference between `json.dump()` and `json.dumps()`?",
+        options: [
+          "json.dump() writes to a file-like stream object; json.dumps() returns a Python string (dump string)",
+          "json.dumps() writes to disk",
+          "They are identical aliases",
+          "dump() is for lists only",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`json.dump(obj, file)` serializes directly to a file stream; `json.dumps(obj)` returns a formatted `str`.",
       },
     ],
   },
@@ -1033,6 +1241,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\n`@pytest.mark.skip` skips running unfinished or disabled tests gracefully.",
       },
+      {
+        id: "td-17",
+        question: "What does `@pytest.mark.parametrize` do in test suites?\n\n# @pytest.mark.parametrize('inp, exp', [(1, 2), (2, 4)])",
+        options: [
+          "Executes the test function repeatedly across each parameterized argument tuple",
+          "Skips the test",
+          "Runs the test in parallel threads",
+          "Mocks the arguments",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`@pytest.mark.parametrize` runs the test case against multiple distinct input-output test vectors.",
+      },
+      {
+        id: "td-18",
+        question: "What does `unittest.mock.MagicMock()` provide in Python tests?",
+        options: [
+          "A flexible dummy object that records all method calls and arguments, returning configurable mock return values",
+          "A database clone",
+          "A web server emulator",
+          "A memory profiler",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`MagicMock` simulates external dependencies and records calls for verification (`assert_called_once_with`).",
+      },
+      {
+        id: "td-19",
+        question: "What does `pytest.raises(ValueError)` verify in a test?\n\n# with pytest.raises(ValueError):\n#     int('invalid')",
+        options: [
+          "Verifies that the enclosed code block raises a ValueError (fails test if no error is raised)",
+          "Suppresses the error silently",
+          "Logs the error to disk",
+          "Converts error to warning",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`pytest.raises(ExceptionClass)` asserts that the expected exception is raised during block execution.",
+      },
+      {
+        id: "td-20",
+        question: "What does `breakpoint()` do in Python 3.7+?\n\ndef compute(x):\n    breakpoint()\n    return x * 2",
+        options: [
+          "Pauses execution and launches the interactive pdb debugger in the terminal session",
+          "Terminates the program immediately",
+          "Creates a log file",
+          "Raises BreakException",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`breakpoint()` calls `sys.breakpointhook()` to drop into the interactive debugger at that exact runtime line.",
+      },
     ],
   },
 
@@ -1232,6 +1492,58 @@ export const PYTHON_MODULE_6_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nIn Unix and Windows POSIX standards, exit code 0 indicates successful execution, while non-zero values signal errors.",
+      },
+      {
+        id: "mp-17",
+        question: "What does a menu loop condition `while True:` do in a CLI capstone application?\n\nwhile True:\n    choice = input('1. Add  2. Exit: ')\n    if choice == '2': break",
+        options: [
+          "Creates an interactive persistent event loop that runs until the user explicitly selects the exit condition",
+          "Causes an unrecoverable infinite freeze",
+          "Runs for 60 seconds",
+          "Executes only once",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`while True:` maintains an interactive CLI command loop until `break` is triggered by the user selecting exit.",
+      },
+      {
+        id: "mp-18",
+        question: "Why should file storage read/write be wrapped in `try/except` inside a CLI application?\n\ntry:\n    with open('data.json') as f: data = json.load(f)\nexcept (FileNotFoundError, json.JSONDecodeError):\n    data = []",
+        options: [
+          "Ensures the application starts gracefully with an empty dataset on first run without crashing",
+          "Encrypts the file",
+          "Speeds up reading",
+          "Saves memory",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nHandling `FileNotFoundError` and `JSONDecodeError` provides resilience against missing or corrupted storage files.",
+      },
+      {
+        id: "mp-19",
+        question: "What does sorting dictionary items by total amount in descending order look like?\n\n# sorted(category_totals.items(), key=lambda x: -x[1])",
+        options: [
+          "Sorts category pairs starting with the highest expense amount first",
+          "Sorts alphabetically by category name",
+          "Sorts from lowest to highest",
+          "Randomizes categories",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`key=lambda x: -x[1]` (or `reverse=True`) sorts by numeric values in descending order.",
+      },
+      {
+        id: "mp-20",
+        question: "How do you guarantee clean separation of concerns in a CLI capstone project?",
+        options: [
+          "Separate business logic (calculations, filters), persistence (JSON/CSV IO), and UI presentation (menus, inputs) into modular functions",
+          "Put all 500 lines inside a single main function",
+          "Use only global variables",
+          "Never write functions",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nModular design separates data access, business calculations, and terminal presentation for maintainable, testable code.",
       },
     ],
   },

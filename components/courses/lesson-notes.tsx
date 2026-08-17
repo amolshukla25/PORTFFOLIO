@@ -32,9 +32,6 @@ import {
   BookOpenText,
   BookOpenCheck
 } from "lucide-react";
-import { remark } from "remark";
-import remarkGfm from "remark-gfm";
-import remarkHtml from "remark-html";
 import { COURSES } from "@/config/courses";
 import { LESSON_QUIZZES } from "@/config/quizzes";
 import { siteConfig } from "@/config/site";
@@ -44,45 +41,13 @@ import { cn } from "@/lib/utils";
 import LessonQuiz from "./lesson-quiz";
 import PythonPlayground from "./python-playground";
 
-// Renders $$math$$ tokens as styled inline math spans before remark parses
-// the markdown, so notes that use LaTeX-style delimiters keep their look.
-function protectMath(content: string) {
-  return content.replace(/\$\$([^$]+)\$\$/g, (_, expr) => {
-    return `\`\`\`math\n${expr}\n\`\`\``;
-  });
+interface LessonNotesPageProps {
+  /** Pre-rendered HTML of the lesson body, produced server-side so crawlers
+   *  see the full notes without executing JavaScript. */
+  contentHtml: string;
 }
 
-// Full GFM markdown renderer (tables, blockquotes, links, code blocks,
-// task lists, strikethrough) — same pipeline the blog pages use.
-function RenderMarkdown({ content }: { content: string }) {
-  const [html, setHtml] = React.useState("");
-
-  React.useEffect(() => {
-    let active = true;
-    remark()
-      .use(remarkGfm)
-      .use(remarkHtml, { sanitize: false })
-      .process(protectMath(content))
-      .then((file) => {
-        if (active) setHtml(String(file));
-      })
-      .catch(() => {
-        if (active) setHtml(`<p>Could not render this section.</p>`);
-      });
-    return () => {
-      active = false;
-    };
-  }, [content]);
-
-  return (
-    <div
-      className="blog-content lesson-content max-w-none"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-export default function LessonNotesPage() {
+export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
   const router = useRouter();
   const params = useParams();
   const courseId = params.courseId as string;
@@ -526,9 +491,13 @@ export default function LessonNotesPage() {
             </p>
           </div>
 
-          {/* Documented Notes Content */}
+          {/* Documented Notes Content — pre-rendered on the server so the
+              full lesson text is present in the initial HTML for crawlers. */}
           <div className="lesson-prose">
-            <RenderMarkdown content={activeLesson.contentMarkdown} />
+            <div
+              className="blog-content lesson-content max-w-none"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
           </div>
 
           {/* Interactive Code Section Widget (no-print on PDF if you wish, or keep it formatted as standard text box) */}

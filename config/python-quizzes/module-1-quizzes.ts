@@ -198,6 +198,58 @@ export const PYTHON_MODULE_1_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\n`end=''` removes the trailing newline completely.\nThe subsequent `print('World')` starts immediately after 'Hello', outputting `HelloWorld`.",
       },
+      {
+        id: "hw-17",
+        question: "What does the following statement output?\n\nprint('A', 'B', 'C', sep='*', end='!')",
+        options: [
+          "A*B*C!",
+          "A B C!",
+          "A*B*C\\n!",
+          "*A*B*C*!",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`sep='*'` separates each positional argument with an asterisk.\n`end='!'` appends an exclamation mark instead of a newline, producing `A*B*C!`.",
+      },
+      {
+        id: "hw-18",
+        question: "What will this multi-line print statement output?\n\nprint('''Alpha\nBeta''')",
+        options: [
+          "Alpha\\nBeta",
+          "Alpha Beta",
+          "'''Alpha\\nBeta'''",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nTriple-quoted strings (`'''` or `\"\"\"`) preserve multi-line raw structure including newlines across lines.",
+      },
+      {
+        id: "hw-19",
+        question: "What is the output of the following escaped string?\n\nprint('Path: C:\\\\new\\\\test')",
+        options: [
+          "Path: C:\\new\\test",
+          "Path: C:\\\\new\\\\test",
+          "Path: C:\\n\\t",
+          "SyntaxError: invalid escape",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nEach `\\\\` escapes the backslash character to output a single literal `\\`.\n`C:\\\\new\\\\test` outputs `C:\\new\\test`.",
+      },
+      {
+        id: "hw-20",
+        question: "What will running `print(type(print))` output?",
+        options: [
+          "<class 'builtin_function_or_method'>",
+          "<class 'function'>",
+          "<class 'type'>",
+          "<class 'str'>",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`print` is an internal CPython built-in function, which Python inspects as `<class 'builtin_function_or_method'>`.",
+      },
     ],
   },
 
@@ -367,6 +419,58 @@ export const PYTHON_MODULE_1_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nStrings are unpackable 2-character iterables here.\n`first` gets `'A'`, `second` gets `'B'`, printed as `A B`.",
+      },
+      {
+        id: "v-17",
+        question: "What is the data type of `z = 3 + 4j` in Python?\n\nprint(type(3 + 4j))",
+        options: [
+          "<class 'complex'>",
+          "<class 'float'>",
+          "<class 'imaginary'>",
+          "SyntaxError: invalid syntax",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nPython has built-in support for complex numbers where `j` represents the imaginary unit $\\sqrt{-1}$, classified under `<class 'complex'>`.",
+      },
+      {
+        id: "v-18",
+        question: "What is the output of checking single-item tuples?\n\nx = (42)\ny = (42,)\nprint(type(x), type(y))",
+        options: [
+          "<class 'int'> <class 'tuple'>",
+          "<class 'tuple'> <class 'tuple'>",
+          "<class 'int'> <class 'int'>",
+          "<class 'tuple'> <class 'int'>",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nParentheses alone do not create a tuple; a trailing comma is required.\n`(42)` is integer 42; `(42,)` is a 1-element tuple.",
+      },
+      {
+        id: "v-19",
+        question: "What will `print(isinstance(True, int))` output?",
+        options: [
+          "True",
+          "False",
+          "TypeError",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nIn Python, `bool` is an explicit subclass of `int` (`issubclass(bool, int) == True`).\nTherefore, `isinstance(True, int)` evaluates to `True`.",
+      },
+      {
+        id: "v-20",
+        question: "What is the output of mutating aliased variables?\n\na = b = [10, 20]\na.append(30)\nprint(b)",
+        options: [
+          "[10, 20, 30]",
+          "[10, 20]",
+          "None",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nChained assignment `a = b = [10, 20]` binds both variables to the exact same list in memory.\nMutating `a` via `.append(30)` is reflected in `b`.",
       },
     ],
   },
@@ -538,6 +642,58 @@ export const PYTHON_MODULE_1_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\n`zfill(5)` left-pads the string with zeros until reaching width 5 -> `'00042'`.",
       },
+      {
+        id: "s-17",
+        question: "What does tuple-based `startswith()` evaluate to?\n\nprint('Python 3.12'.startswith(('Java', 'Go', 'Py')))",
+        options: [
+          "True",
+          "False",
+          "TypeError: tuple not allowed",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`startswith()` accepts a tuple of prefix choices and returns `True` if any prefix matches (`'Py'` matches `'Python 3.12'`).",
+      },
+      {
+        id: "s-18",
+        question: "What is the output of `removesuffix()` in Python 3.9+?\n\nfilename = 'report.final.pdf'\nprint(filename.removesuffix('.pdf'))",
+        options: [
+          "'report.final'",
+          "'report'",
+          "'report.final.pdf'",
+          "AttributeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`removesuffix('.pdf')` cleanly strips the exact trailing suffix `.pdf` without affecting dots earlier in the filename -> `'report.final'`.",
+      },
+      {
+        id: "s-19",
+        question: "What does string alignment format specifier `{:>8}` do?\n\nprint(f\"{'Dev':>8}\")",
+        options: [
+          "'     Dev'",
+          "'Dev     '",
+          "'   Dev  '",
+          "'>8Dev'",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`>` indicates right alignment within a total field width of 8 characters (5 leading space pads + 3 letters 'Dev').",
+      },
+      {
+        id: "s-20",
+        question: "What is the type of encoded bytes in Python 3?\n\nraw = 'Python'.encode('utf-8')\nprint(type(raw), raw)",
+        options: [
+          "<class 'bytes'> b'Python'",
+          "<class 'str'> 'Python'",
+          "<class 'bytearray'> [80, 121, 116, 104, 111, 110]",
+          "<class 'int'> 6",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`.encode('utf-8')` transforms unicode string to an immutable binary sequence of `<class 'bytes'>` prefixed with `b'...'`.",
+      },
     ],
   },
 
@@ -692,6 +848,58 @@ export const PYTHON_MODULE_1_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nParentheses take top precedence:\n`(2 + 3) = 5`\n`(4 - 1) = 3`\n`5 * 3 = 15`.",
+      },
+      {
+        id: "o-17",
+        question: "What does bitwise NOT `~x` produce in Python?\n\nprint(~5)",
+        options: [
+          "-6",
+          "-5",
+          "4",
+          "-4",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nBitwise invert `~x` is defined as `-(x + 1)`. For 5, `-(5 + 1) = -6`.",
+      },
+      {
+        id: "o-18",
+        question: "What does list repetition multiplication produce?\n\nitems = [0] * 4\nprint(items)",
+        options: [
+          "[0, 0, 0, 0]",
+          "[0, 4]",
+          "0",
+          "[4]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`[0] * 4` repeats the elements inside the list 4 times, creating `[0, 0, 0, 0]`.",
+      },
+      {
+        id: "o-19",
+        question: "What will `print(x is not y)` output for distinct lists with identical values?\n\nx = [1, 2]\ny = [1, 2]\nprint(x is not y)",
+        options: [
+          "True",
+          "False",
+          "TypeError",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`x` and `y` are two distinct list objects in memory (`id(x) != id(y)`). `x is not y` evaluates to `True`.",
+      },
+      {
+        id: "o-20",
+        question: "How do tuples compare with relational operators?\n\nprint((1, 2, 5) < (1, 2, 40))",
+        options: [
+          "True",
+          "False",
+          "TypeError",
+          "(1, 2, 5)",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nTuples are compared element-by-element lexicographically (1==1, 2==2, 5 < 40 -> `True`).",
       },
     ],
   },

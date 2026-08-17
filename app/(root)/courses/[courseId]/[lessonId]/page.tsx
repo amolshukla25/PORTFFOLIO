@@ -1,10 +1,35 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkHtml from "remark-html";
+
 import LessonNotes from "@/components/courses/lesson-notes";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { truncateMetaTitle } from "@/lib/utils";
+
+// Renders $$math$$ tokens as styled inline math spans before remark parses
+// the markdown, so notes that use LaTeX-style delimiters keep their look.
+// Mirrors the transform previously done client-side in lesson-notes.tsx.
+function protectMath(content: string) {
+  return content.replace(/\$\$([^$]+)\$\$/g, (_, expr) => {
+    return `\`\`\`math\n${expr}\n\`\`\``;
+  });
+}
+
+// Full GFM markdown renderer (tables, blockquotes, links, code blocks,
+// task lists, strikethrough) — same pipeline the blog pages use. Running it
+// here on the server means the full lesson text ships in the initial HTML,
+// which is what Googlebot reads before any JavaScript executes.
+async function renderLessonMarkdown(content: string): Promise<string> {
+  const processed = await remark()
+    .use(remarkGfm)
+    .use(remarkHtml, { sanitize: false })
+    .process(protectMath(content));
+  return processed.toString();
+}
 
 interface LessonPageProps {
   params: Promise<{
@@ -71,7 +96,16 @@ export async function generateMetadata({
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 
@@ -87,79 +121,10 @@ export default async function lessonPage({
 
   const url = `${siteConfig.url}/courses/${courseId}/${lessonId}`;
 
-  // FAQPage schema generated from real lesson content for rich results
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: `What is covered in "${lesson.title}"?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: lesson.shortDescription,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `How long does it take to learn ${lesson.title.split(": ").pop()?.toLowerCase() ?? "this lesson"}?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `The lesson takes about ${lesson.readingTime.replace(/^.*?(\d+)/, "$1")} to read, with an estimated lesson duration of ${lesson.duration}.`,
-        },
-      },
-      ...(lesson.visualizationTips?.length
-        ? [
-            {
-              "@type": "Question",
-              name: `What visualization tips help you master ${lesson.title.split(": ").pop() ?? "this topic"}?`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: lesson.visualizationTips.slice(0, 2).join(" "),
-              },
-            },
-          ]
-        : []),
-      ...(lesson.tipsAndTricks?.length
-        ? [
-            {
-              "@type": "Question",
-              name: `What are the best professional tips and tricks for ${lesson.title.split(": ").pop() ?? "this topic"}?`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: lesson.tipsAndTricks.slice(0, 2).join(" "),
-              },
-            },
-          ]
-        : []),
-      ...(lesson.practice?.length
-        ? [
-            {
-              "@type": "Question",
-              name: `Can you practice ${lesson.title.split(": ").pop() ?? "this topic"} with exercises?`,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: `Yes — this lesson includes ${lesson.practice.length} hands-on practice exercise${lesson.practice.length > 1 ? "s" : ""} with difficulty levels and step-by-step solutions: ${lesson.practice
-                  .slice(0, 2)
-                  .map((p) => p.title)
-                  .join(", ")}.`,
-              },
-            },
-          ]
-        : []),
-      {
-        "@type": "Question",
-        name: `Which course does this lesson belong to?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `This lesson is part of "${course.title}" — a ${course.difficulty} course by ${course.instructor} with ${course.modules.length} modules, available free at ${siteConfig.url}.`,
-        },
-      },
-    ],
-  };
-
   // BreadcrumbList — helps Google understand the site hierarchy (Courses →
   // Course → Lesson) and can earn breadcrumb rich results in the SERP.
+  // (No FAQPage schema: since 2023 Google only shows FAQ rich results on
+  // authoritative government/health sites, so that markup would be ignored.)
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -191,17 +156,19 @@ export default async function lessonPage({
     ],
   };
 
+  // Render the lesson body on the server so crawlers see the full notes
+  // without executing JavaScript (the previous client-only render left the
+  // article body empty in the initial HTML, which Google treats as thin
+  // content and refuses to index).
+  const contentHtml = await renderLessonMarkdown(lesson.contentMarkdown);
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <LessonNotes />
+      <LessonNotes contentHtml={contentHtml} />
     </>
   );
 }

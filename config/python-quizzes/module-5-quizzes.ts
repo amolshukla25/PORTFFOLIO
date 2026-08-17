@@ -178,6 +178,58 @@ export const PYTHON_MODULE_5_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nIn Python 3, all classes inherit from the root `object` base class.",
       },
+      {
+        id: "co-17",
+        question: "What does `@classmethod` receive as its first parameter?\n\nclass Factory:\n    @classmethod\n    def create(cls):\n        return cls()",
+        options: [
+          "The class object itself (`cls`), not the instance",
+          "The instance (`self`)",
+          "The module object",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`@classmethod` transforms a method to receive the class object (`cls`) as its first argument rather than an instance.",
+      },
+      {
+        id: "co-18",
+        question: "What does `@staticmethod` in a class do?\n\nclass MathUtil:\n    @staticmethod\n    def add(a, b):\n        return a + b",
+        options: [
+          "Defines a regular utility function bound to the class namespace without passing self or cls",
+          "Prevents the class from being instantiated",
+          "Makes the method immutable",
+          "Runs the method in a thread",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`@staticmethod` does not receive an implicit first argument (`self` or `cls`), acting as a scoped plain function.",
+      },
+      {
+        id: "co-19",
+        question: "What does `getattr(obj, 'name', 'Default')` do?\n\nclass Item: pass\ni = Item()\nprint(getattr(i, 'title', 'Untitled'))",
+        options: [
+          "'Untitled'",
+          "AttributeError",
+          "None",
+          "''",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`getattr(obj, attr, default)` safely fetches attribute `'title'`, returning `'Untitled'` fallback when missing.",
+      },
+      {
+        id: "co-20",
+        question: "What will checking `isinstance(obj, Class)` return for inheritance chains?\n\nclass Animal: pass\nclass Dog(Animal): pass\nprint(isinstance(Dog(), Animal))",
+        options: [
+          "True",
+          "False",
+          "TypeError",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`isinstance()` respects inheritance hierarchies: an instance of child class `Dog` is an instance of `Animal`.",
+      },
     ],
   },
 
@@ -352,6 +404,58 @@ export const PYTHON_MODULE_5_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`B.mro()` returns the MRO as a list, while `B.__mro__` returns it as a tuple; their contents are identical.",
+      },
+      {
+        id: "ip-17",
+        question: "What happens when an abstract method is not implemented in a child class?\n\nfrom abc import ABC, abstractmethod\nclass Base(ABC):\n    @abstractmethod\n    def run(self): pass\nclass Child(Base): pass\n# Child()",
+        options: [
+          "Raises TypeError: Can't instantiate abstract class Child with abstract method run",
+          "Creates child successfully",
+          "Silently returns None",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nPython's ABC module enforces contract compliance: subclasses missing abstract method implementations cannot be instantiated.",
+      },
+      {
+        id: "ip-18",
+        question: "What does `issubclass(Child, Parent)` check?\n\nclass A: pass\nclass B(A): pass\nprint(issubclass(B, A), issubclass(A, B))",
+        options: [
+          "True False",
+          "True True",
+          "False False",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`issubclass(B, A)` is True because B inherits from A. `issubclass(A, B)` is False.",
+      },
+      {
+        id: "ip-19",
+        question: "What does `__init_subclass__` hook allow in Python 3.6+?\n\nclass PluginBase:\n    registry = []\n    def __init_subclass__(cls, **kwargs):\n        super().__init_subclass__(**kwargs)\n        cls.registry.append(cls)",
+        options: [
+          "Automatically customizes and registers child classes upon class creation without metaclasses",
+          "Deletes child classes",
+          "Initializes instance attributes",
+          "Encrypts subclass code",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`__init_subclass__` is invoked whenever the containing class is subclassed, enabling clean class registration.",
+      },
+      {
+        id: "ip-20",
+        question: "What is the output of inspecting the Method Resolution Order of object?\n\nprint(object.mro())",
+        options: [
+          "[<class 'object'>]",
+          "[]",
+          "None",
+          "AttributeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`object` is the ultimate root base class of all new-style classes in Python, with `[<class 'object'>]` as its MRO.",
       },
     ],
   },
@@ -532,6 +636,58 @@ export const PYTHON_MODULE_5_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nImplementing both `__hash__` and `__eq__` makes objects hashable for dictionary keys and set elements.",
+      },
+      {
+        id: "emm-17",
+        question: "What magic method implements the length operator `len(obj)`?\n\nclass Custom:\n    def __len__(self): return 42\nprint(len(Custom()))",
+        options: [
+          "42",
+          "TypeError",
+          "0",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`len(obj)` invokes the underlying `__len__()` dunder method on the object.",
+      },
+      {
+        id: "emm-18",
+        question: "What magic method implements index subscripting `obj[key]`?\n\nclass Registry:\n    def __getitem__(self, key): return f'val_{key}'\nr = Registry()\nprint(r['test'])",
+        options: [
+          "'val_test'",
+          "KeyError",
+          "TypeError",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nIndex subscript syntax `obj[key]` delegates directly to `__getitem__(self, key)`.",
+      },
+      {
+        id: "emm-19",
+        question: "What magic method enables calling an object like a function `obj()`?\n\nclass Multiplier:\n    def __init__(self, n): self.n = n\n    def __call__(self, x): return self.n * x\ntriple = Multiplier(3)\nprint(triple(10))",
+        options: [
+          "30",
+          "TypeError: object is not callable",
+          "10",
+          "3",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nImplementing `__call__()` makes class instances callable like regular functions.",
+      },
+      {
+        id: "emm-20",
+        question: "What does `@property.setter` require on a class?\n\nclass Account:\n    def __init__(self): self._balance = 0\n    @property\n    def balance(self): return self._balance\n    @balance.setter\n    def balance(self, v): self._balance = v",
+        options: [
+          "A matching @property getter method of the same name declared before the setter",
+          "Private keyword",
+          "dataclass decorator",
+          "ABC import",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nThe getter must be declared first with `@property`, which then provides the `@<name>.setter` decorator.",
       },
     ],
   },
@@ -727,6 +883,58 @@ export const PYTHON_MODULE_5_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`slots=True` automatically configures `__slots__` on the class, combining dataclass ergonomics with slot memory optimizations.",
+      },
+      {
+        id: "dc-17",
+        question: "What does `dataclasses.asdict()` do?\n\nfrom dataclasses import dataclass, asdict\n@dataclass\nclass Point: x: int; y: int\nprint(asdict(Point(1, 2)))",
+        options: [
+          "{'x': 1, 'y': 2}",
+          "Point(x=1, y=2)",
+          "(1, 2)",
+          "['x', 'y']",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`asdict(instance)` converts a dataclass object recursively into a standard Python dictionary.",
+      },
+      {
+        id: "dc-18",
+        question: "What does `__post_init__` do in a dataclass?\n\nfrom dataclasses import dataclass\n@dataclass\nclass Item:\n    price: float\n    qty: int\n    def __post_init__(self): self.total = self.price * self.qty",
+        options: [
+          "Executes additional initialization logic immediately after generated __init__ finishes",
+          "Replaces __init__ entirely",
+          "Runs before field assignment",
+          "Validates types at compile time",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`__post_init__` is called automatically at the end of generated `__init__` for computed fields or validation.",
+      },
+      {
+        id: "dc-19",
+        question: "What does `@dataclass(order=True)` generate?\n\nfrom dataclasses import dataclass\n@dataclass(order=True)\nclass User: id: int; name: str",
+        options: [
+          "Rich comparison dunder methods (__lt__, __le__, __gt__, __ge__) based on tuple comparison of fields",
+          "A sorted dictionary",
+          "Database indices",
+          "Threading locks",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`order=True` synthesizes comparison methods allowing instances to be sorted naturally.",
+      },
+      {
+        id: "dc-20",
+        question: "What does `field(compare=False)` do in a dataclass?\n\nfrom dataclasses import dataclass, field\n@dataclass(order=True)\nclass Task:\n    priority: int\n    desc: str = field(compare=False)",
+        options: [
+          "Excludes the field from comparison and sorting logic",
+          "Prevents field from being printed",
+          "Makes field immutable",
+          "Deletes the field",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`compare=False` instructs dataclass comparison methods to ignore that field during equality and relational checks.",
       },
     ],
   },

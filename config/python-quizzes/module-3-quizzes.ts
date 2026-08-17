@@ -188,6 +188,58 @@ export const PYTHON_MODULE_3_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nWhile the tuple itself cannot be reassigned, the list contained at `t[1]` is mutable.\nMutating `t[1].append(4)` succeeds, producing `(1, [2, 3, 4])`.",
       },
+      {
+        id: "lt-17",
+        question: "What does starred unpacking assign to `b`?\n\ntup = (1, 2, 3, 4)\na, *b, c = tup\nprint(b)",
+        options: [
+          "[2, 3]",
+          "(2, 3)",
+          "[2, 3, 4]",
+          "2",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nExtended tuple unpacking assigns `a = 1`, `c = 4`, and captures the middle elements as a list `b = [2, 3]`.",
+      },
+      {
+        id: "lt-18",
+        question: "What is the difference between `append()` and `extend()`?\n\na = [1, 2]\na.extend([3, 4])\nprint(len(a))",
+        options: [
+          "4",
+          "3",
+          "2",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`extend()` iterates over `[3, 4]` and appends each element individually, increasing length to 4 (`[1, 2, 3, 4]`).",
+      },
+      {
+        id: "lt-19",
+        question: "What does in-place `reverse()` return?\n\nnums = [1, 2, 3]\nres = nums.reverse()\nprint(res, nums)",
+        options: [
+          "None [3, 2, 1]",
+          "[3, 2, 1] [3, 2, 1]",
+          "[3, 2, 1] None",
+          "None [1, 2, 3]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`nums.reverse()` mutates the list in-place and returns `None`.",
+      },
+      {
+        id: "lt-20",
+        question: "What is the output of concatenating two tuples?\n\nprint((1, 2) + (3, 4))",
+        options: [
+          "(1, 2, 3, 4)",
+          "((1, 2), (3, 4))",
+          "[1, 2, 3, 4]",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nTuple concatenation `+` returns a new merged tuple containing all elements: `(1, 2, 3, 4)`.",
+      },
     ],
   },
 
@@ -383,6 +435,58 @@ export const PYTHON_MODULE_3_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\n`dict.fromkeys(keys, initial_val)` creates a new dict with specified keys all initialized to 0: `{'a': 0, 'b': 0}`.",
       },
+      {
+        id: "sd-17",
+        question: "What does symmetric difference `^` compute on sets?\n\ns1 = {1, 2, 3}\ns2 = {2, 3, 4}\nprint(sorted(s1 ^ s2))",
+        options: [
+          "[1, 4]",
+          "[2, 3]",
+          "[1, 2, 3, 4]",
+          "[1]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nSymmetric difference `^` returns elements present in either set but NOT in both: `{1, 4}`.",
+      },
+      {
+        id: "sd-18",
+        question: "What does `d.setdefault(key, default)` do when a key is absent?\n\nd = {'role': 'admin'}\nval = d.setdefault('level', 1)\nprint(val, d['level'])",
+        options: [
+          "1 1",
+          "1 None",
+          "None None",
+          "KeyError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`setdefault('level', 1)` inserts `'level': 1` into `d` if absent and returns 1.",
+      },
+      {
+        id: "sd-19",
+        question: "What does `s.discard(x)` do when `x` is not in the set?\n\ns = {1, 2, 3}\ns.discard(99)\nprint(len(s))",
+        options: [
+          "3 (no error raised)",
+          "KeyError",
+          "None",
+          "2",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nUnlike `s.remove(99)` which raises KeyError, `s.discard(99)` silently ignores missing elements.",
+      },
+      {
+        id: "sd-20",
+        question: "What does dictionary merge operator `|=` do in Python 3.9+?\n\nd1 = {'a': 1, 'b': 2}\nd2 = {'b': 99, 'c': 3}\nd1 |= d2\nprint(d1['b'], len(d1))",
+        options: [
+          "99 3",
+          "2 3",
+          "99 2",
+          "Error",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`d1 |= d2` updates `d1` in-place. Conflicting key `'b'` is overwritten by `d2` (99), producing 3 total keys.",
+      },
     ],
   },
 
@@ -558,6 +662,58 @@ export const PYTHON_MODULE_3_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nThe custom factory lambda returns `'N/A'` whenever an uninitialized key is queried.",
       },
+      {
+        id: "ac-17",
+        question: "What does accessing a missing key on a `Counter` return?\n\nfrom collections import Counter\nc = Counter(['apple', 'banana'])\nprint(c['orange'])",
+        options: [
+          "0",
+          "KeyError",
+          "None",
+          "-1",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`Counter` returns `0` for any missing key rather than raising a KeyError.",
+      },
+      {
+        id: "ac-18",
+        question: "What does `deque.extendleft([1, 2])` produce on an empty deque?\n\nfrom collections import deque\nq = deque()\nq.extendleft([1, 2])\nprint(list(q))",
+        options: [
+          "[2, 1]",
+          "[1, 2]",
+          "[1]",
+          "[2]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`extendleft([1, 2])` appends 1 first to the left, then appends 2 to the left, resulting in `[2, 1]`.",
+      },
+      {
+        id: "ac-19",
+        question: "What does `namedtuple._fields` return?\n\nfrom collections import namedtuple\nPerson = namedtuple('Person', ['name', 'age'])\nprint(Person._fields)",
+        options: [
+          "('name', 'age')",
+          "['name', 'age']",
+          "{'name', 'age'}",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`_fields` is a class-level tuple containing field name strings in declared order.",
+      },
+      {
+        id: "ac-20",
+        question: "What does nested autovivification with `defaultdict` output?\n\nfrom collections import defaultdict\ntree = lambda: defaultdict(tree)\nroot = tree()\nroot['users']['admins']['count'] = 5\nprint(root['users']['admins']['count'])",
+        options: [
+          "5",
+          "KeyError",
+          "defaultdict",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nA recursive lambda factory automatically instantiates nested sub-dictionaries on the fly at arbitrary depth.",
+      },
     ],
   },
 
@@ -732,6 +888,58 @@ export const PYTHON_MODULE_3_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`a * 3` duplicates the reference to `[0]` three times.\nModifying `b[0][0] = 5` affects all 3 elements: `[[5], [5], [5]]`.",
+      },
+      {
+        id: "nc-17",
+        question: "What will `is` check output between top-level list and its slice?\n\nx = [1, 2, 3]\ny = x[:]\nprint(x is y, x == y)",
+        options: [
+          "False True",
+          "True True",
+          "False False",
+          "True False",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`x[:]` creates a new shallow copy list object in memory (`x is y` is False), but with equal contents (`x == y` is True).",
+      },
+      {
+        id: "nc-18",
+        question: "What is the output of modifying a list nested inside a shallow-copied dictionary?\n\norig = {'data': {'id': 1}}\ncopy_dict = orig.copy()\ncopy_dict['data']['id'] = 99\nprint(orig['data']['id'])",
+        options: [
+          "99",
+          "1",
+          "None",
+          "KeyError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`dict.copy()` is shallow. The inner dict `orig['data']` is shared by reference, so mutating it modifies the original.",
+      },
+      {
+        id: "nc-19",
+        question: "What will recursively flattening a 2D matrix with a list comprehension produce?\n\nmatrix = [[10, 20], [30, 40]]\nflat = [val for row in matrix for val in row]\nprint(flat[2])",
+        options: [
+          "30",
+          "20",
+          "40",
+          "10",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`flat` evaluates to `[10, 20, 30, 40]`. Index 2 accesses 30.",
+      },
+      {
+        id: "nc-20",
+        question: "What does `deepcopy` do when given a tuple containing a list?\n\nimport copy\nt = ([1, 2],)\ncloned = copy.deepcopy(t)\ncloned[0].append(3)\nprint(len(t[0]), len(cloned[0]))",
+        options: [
+          "2 3",
+          "3 3",
+          "2 2",
+          "TypeError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`deepcopy()` clones the inner list recursively. Appending to `cloned[0]` leaves the original list `t[0]` with 2 items.",
       },
     ],
   },

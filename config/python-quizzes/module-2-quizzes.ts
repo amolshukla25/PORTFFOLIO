@@ -148,6 +148,58 @@ export const PYTHON_MODULE_2_QUIZZES: Record<string, LessonQuiz> = {
         explanation:
           "Code walkthrough:\nWhen x reaches 2, `flag = True` is executed. The loop finishes with `flag = True`.",
       },
+      {
+        id: "lc-17",
+        question: "What does Python 3.10+ match/case output?\n\nstatus = 404\nmatch status:\n    case 200:\n        res = 'OK'\n    case 404:\n        res = 'Not Found'\n    case _:\n        res = 'Other'\nprint(res)",
+        options: [
+          "Not Found",
+          "OK",
+          "Other",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nStructural pattern matching evaluates `case 404:`, setting `res = 'Not Found'` and breaking out automatically.",
+      },
+      {
+        id: "lc-18",
+        question: "What will `list(range(5, 0, -1))` produce?",
+        options: [
+          "[5, 4, 3, 2, 1]",
+          "[5, 4, 3, 2, 1, 0]",
+          "[4, 3, 2, 1, 0]",
+          "[]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`range(start=5, stop=0, step=-1)` starts at 5 and steps down by 1 until stop (0 is excluded): `[5, 4, 3, 2, 1]`.",
+      },
+      {
+        id: "lc-19",
+        question: "What does `enumerate(..., start=1)` print for indices?\n\nfor idx, char in enumerate(['x', 'y'], start=1):\n    print(f'{idx}:{char}', end=' ')",
+        options: [
+          "1:x 2:y",
+          "0:x 1:y",
+          "1:x 1:y",
+          "x:1 y:2",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`start=1` configures the initial counter index to 1, producing `1:x 2:y `.",
+      },
+      {
+        id: "lc-20",
+        question: "What will this walrus loop output?\n\nx = 3\nwhile (x := x - 1) > 0:\n    print(x, end=' ')",
+        options: [
+          "2 1",
+          "3 2 1",
+          "2 1 0",
+          "3 2",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nIteration 1: x becomes 2 (2 > 0) -> prints 2\nIteration 2: x becomes 1 (1 > 0) -> prints 1\nIteration 3: x becomes 0 (0 > 0 is False) -> loop exits.",
+      },
     ],
   },
 
@@ -292,6 +344,58 @@ export const PYTHON_MODULE_2_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\nc='a': 'a1', 'a2'\nc='b': 'b1', 'b2'\nc='c': 'c1', 'c2'\nJoined: `a1a2b1b2c1c2`.",
+      },
+      {
+        id: "ln-17",
+        question: "What is the scope of `break` inside nested loops?\n\nfor outer in [1, 2]:\n    for inner in [10, 20]:\n        if inner == 20:\n            break\n        print(f'{outer}-{inner}', end=' ')",
+        options: [
+          "1-10 2-10",
+          "1-10",
+          "1-10 1-20 2-10 2-20",
+          "SyntaxError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`break` terminates ONLY the closest enclosing loop (the inner loop).\nThe outer loop continues to its second iteration, printing `1-10 2-10 `.",
+      },
+      {
+        id: "ln-18",
+        question: "What will this sentinel loop output?\n\nitems = ['apple', 'stop', 'banana']\nfor item in items:\n    if item == 'stop':\n        break\n    print(item, end=' ')",
+        options: [
+          "apple",
+          "apple stop banana",
+          "apple stop",
+          "banana",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`'apple'` prints. When item matches sentinel `'stop'`, `break` fires immediately before printing `'stop'` or `'banana'`.",
+      },
+      {
+        id: "ln-19",
+        question: "What does this diagonal matrix loop sum output?\n\ngrid = [\n    [1, 2, 3],\n    [4, 5, 6],\n    [7, 8, 9]\n]\ndiag_sum = sum(grid[i][i] for i in range(3))\nprint(diag_sum)",
+        options: [
+          "15",
+          "45",
+          "12",
+          "9",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nDiagonal items: `grid[0][0] = 1`, `grid[1][1] = 5`, `grid[2][2] = 9`.\n`1 + 5 + 9 = 15`.",
+      },
+      {
+        id: "ln-20",
+        question: "What is the output of handling exceptions inside a loop?\n\nraw_data = ['10', 'abc', '30']\ntotal = 0\nfor x in raw_data:\n    try:\n        total += int(x)\n    except ValueError:\n        continue\nprint(total)",
+        options: [
+          "40",
+          "10",
+          "ValueError",
+          "0",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`'10'` -> total=10.\n`'abc'` raises ValueError -> caught by except block -> `continue` skips to next item.\n`'30'` -> total=40.",
       },
     ],
   },
@@ -467,6 +571,58 @@ export const PYTHON_MODULE_2_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 0,
         explanation:
           "Code walkthrough:\n`tuple(generator)` consumes generator items and builds a tuple: `('a', 'b', 'c')`.",
+      },
+      {
+        id: "comp-17",
+        question: "What does this dictionary comprehension using `zip()` produce?\n\nkeys = ['id', 'user']\nvals = [101, 'Amol']\nprint({k: v for k, v in zip(keys, vals)})",
+        options: [
+          "{'id': 101, 'user': 'Amol'}",
+          "{101: 'id', 'Amol': 'user'}",
+          "[('id', 101), ('user', 'Amol')]",
+          "{'id', 101, 'user', 'Amol'}",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`zip(keys, vals)` pairs `('id', 101)` and `('user', 'Amol')` into `{k: v}` -> `{'id': 101, 'user': 'Amol'}`.",
+      },
+      {
+        id: "comp-18",
+        question: "What will `any(x < 0 for x in [10, 20, -5, 30])` return?",
+        options: [
+          "True",
+          "False",
+          "-5",
+          "None",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`any()` returns `True` as soon as at least one element satisfies the condition (`-5 < 0` is True).",
+      },
+      {
+        id: "comp-19",
+        question: "What does a list comprehension with consecutive `if` clauses do?\n\nres = [x for x in range(20) if x % 2 == 0 if x % 3 == 0]\nprint(res)",
+        options: [
+          "[0, 6, 12, 18]",
+          "[0, 2, 3, 4, 6, 8, 9, 10, 12, 14, 15, 16, 18]",
+          "[6, 12, 18]",
+          "[0, 6, 12]",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\nConsecutive `if` clauses act as logical `and`. Numbers divisible by both 2 and 3 (multiples of 6) under 20 are `[0, 6, 12, 18]`.",
+      },
+      {
+        id: "comp-20",
+        question: "What does this dictionary inversion comprehension produce?\n\norig = {'a': 1, 'b': 2}\ninv = {v: k for k, v in orig.items()}\nprint(inv[2])",
+        options: [
+          "'b'",
+          "'a'",
+          "2",
+          "KeyError",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Code walkthrough:\n`{v: k}` swaps keys and values, producing `{1: 'a', 2: 'b'}`. Accessing `inv[2]` yields `'b'`.",
       },
     ],
   },

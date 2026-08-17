@@ -82,12 +82,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // lesson note pages — lastModified prompts re-crawl of new/updated lessons
+  // Lesson note pages — no lastModified. Content rarely changes, and stamping
+  // every lesson with the build time on each deploy tells Google the whole
+  // site changed, triggering wasteful re-crawls of all 80+ lesson URLs.
+  // Without a lastmod hint Google falls back to its own recrawl logic.
   const lessonRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
     course.modules.flatMap((module) =>
       module.lessons.map((lesson) => ({
         url: `${baseUrl}/courses/${course.id}/${lesson.id}`,
-        lastModified: new Date(),
         changeFrequency: "yearly" as const,
         priority: 0.5,
       }))
