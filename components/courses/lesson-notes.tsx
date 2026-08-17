@@ -585,25 +585,6 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           </div>
           )}
 
-          {/* Live Python Playground — runs the lesson code in-browser */}
-          {!focusMode && (
-          <div className="my-8 no-print">
-            <div className="flex items-center gap-2 mb-3">
-              <Terminal className="h-4 w-4 text-primary" />
-              <h2 className="text-sm font-semibold text-foreground">
-                Try It Yourself
-              </h2>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                No setup · runs in your browser
-              </span>
-            </div>
-            <PythonPlayground
-              initialCode={activeLesson.codeSnippet}
-              expectedOutput={activeLesson.codeOutput}
-            />
-          </div>
-          )}
-
           {/* Code Visualization Tips */}
           {!focusMode &&
             activeLesson.visualizationTips &&

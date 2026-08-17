@@ -1,5 +1,5 @@
 import type { Course } from "./courses";
-import { ALL_PYTHON_CHALLENGES } from "./python-challenges";
+import { ALL_PYTHON_CHALLENGES } from "./python-challenges/index";
 import { MODULE_1 } from "./python-course-modules/module-1";
 import { MODULE_2 } from "./python-course-modules/module-2";
 import { MODULE_3 } from "./python-course-modules/module-3";
