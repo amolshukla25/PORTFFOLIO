@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import FrozenKeyboard from "@/components/FrozenKeyboard";
 import SmoothScroll from "@/components/smooth-scroll";
 import Reveal from "@/components/Reveal";
@@ -272,6 +273,14 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-2 pointer-events-auto">
+            <Link
+              href="/courses"
+              data-cursor="hover"
+              className="frost-btn frost-btn--primary !py-1.5 !px-3 !text-xs font-semibold"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-ice-400 animate-pulse" />
+              <span>Courses Hub</span>
+            </Link>
             <SeasonPicker />
             <span className="hidden md:inline-flex">
             <a
