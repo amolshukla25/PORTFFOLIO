@@ -299,15 +299,94 @@ export default function IndexPage() {
           {/* Scroll indicator */}
           <AnimatedText delay={1.3} className="mt-12">
             <a
-              href="#learning"
+              href="#about"
               className="flex justify-center text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Scroll down to learning hub"
+              aria-label="Scroll down to about me"
             >
               <Icons.chevronDown className="h-6 w-6 animate-bounce" />
             </a>
           </AnimatedText>
         </div>
       </section>
+
+      {/* ─── About ────────────────────────────────────────────────────── */}
+      <AnimatedSection direction="up" className="container py-16" id="about">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Bio */}
+          <div className="space-y-6">
+            <span className="eyebrow">
+              <Icons.userFill className="h-3.5 w-3.5" /> About Me
+            </span>
+            <AnimatedText
+              as="h2"
+              className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl"
+            >
+              Turning complex AI into practical skills
+            </AnimatedText>
+            <div className="space-y-4 leading-relaxed text-muted-foreground">
+              <p>
+                I&apos;m {siteConfig.authorName} — an AI Developer, Trainer,
+                and Agentic AI Expert with {yearsTraining}+ years of
+                experience helping developers and data professionals master
+                Python, machine learning, and generative AI.
+              </p>
+              <p>
+                As a full-time AI trainer at Ikigai School of AI, I design
+                project-based curricula, mentor students through placements,
+                and build production applications — from agentic AI pipelines
+                to full-stack web products — in parallel.
+              </p>
+            </div>
+
+            {/* Socials + Resume */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {SocialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.name}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-muted/40 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent"
+                >
+                  <item.icon className="h-4 w-4" />
+                </a>
+              ))}
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_RESUME_LINK ||
+                  siteConfig.links.resume
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "ml-1 rounded-xl"
+                )}
+              >
+                <Icons.post className="mr-2 h-4 w-4" /> Resume
+              </a>
+            </div>
+          </div>
+
+          {/* Highlights */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {aboutHighlights.map((h, i) => (
+              <AnimatedSection key={h.title} delay={0.1 * (i + 1)} direction="up">
+                <div className="card-hover h-full rounded-2xl border border-border bg-card p-5">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent">
+                    <h.icon size={22} />
+                  </div>
+                  <h3 className="mt-4 font-bold text-foreground">{h.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {h.description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
 
       {/* ─── Learning Hub (Courses) ───────────────────────────────────── */}
       <AnimatedSection
@@ -403,85 +482,6 @@ export default function IndexPage() {
 
       {/* ─── Prompts Vault Section ───────────────────────────────────── */}
       <PromptsSection />
-
-      {/* ─── About ────────────────────────────────────────────────────── */}
-      <AnimatedSection direction="up" className="container py-16" id="about">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Bio */}
-          <div className="space-y-6">
-            <span className="eyebrow">
-              <Icons.userFill className="h-3.5 w-3.5" /> About Me
-            </span>
-            <AnimatedText
-              as="h2"
-              className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-            >
-              Turning complex AI into practical skills
-            </AnimatedText>
-            <div className="space-y-4 leading-relaxed text-muted-foreground">
-              <p>
-                I&apos;m {siteConfig.authorName} — an AI Developer, Trainer,
-                and Agentic AI Expert with {yearsTraining}+ years of
-                experience helping developers and data professionals master
-                Python, machine learning, and generative AI.
-              </p>
-              <p>
-                As a full-time AI trainer at Ikigai School of AI, I design
-                project-based curricula, mentor students through placements,
-                and build production applications — from agentic AI pipelines
-                to full-stack web products — in parallel.
-              </p>
-            </div>
-
-            {/* Socials + Resume */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              {SocialLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={item.name}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-muted/40 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent"
-                >
-                  <item.icon className="h-4 w-4" />
-                </a>
-              ))}
-              <a
-                href={
-                  process.env.NEXT_PUBLIC_RESUME_LINK ||
-                  siteConfig.links.resume
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                  "ml-1 rounded-xl"
-                )}
-              >
-                <Icons.post className="mr-2 h-4 w-4" /> Resume
-              </a>
-            </div>
-          </div>
-
-          {/* Highlights */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {aboutHighlights.map((h, i) => (
-              <AnimatedSection key={h.title} delay={0.1 * (i + 1)} direction="up">
-                <div className="card-hover h-full rounded-2xl border border-border bg-card p-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent">
-                    <h.icon size={22} />
-                  </div>
-                  <h3 className="mt-4 font-bold text-foreground">{h.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {h.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
 
       {/* ─── Experience ───────────────────────────────────────────────── */}
       <AnimatedSection
