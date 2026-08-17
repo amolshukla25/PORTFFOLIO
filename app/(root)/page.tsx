@@ -388,92 +388,112 @@ export default function IndexPage() {
         </div>
       </AnimatedSection>
 
-      {/* ─── Learning Hub (Courses) ───────────────────────────────────── */}
+      {/* ─── Syllabus & Courses (Directly Next to About Me) ──────────── */}
       <AnimatedSection
         direction="up"
         className="container space-y-10 py-16"
-        id="learning"
+        id="courses"
       >
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <span className="eyebrow">
-            <Icons.brain className="h-3.5 w-3.5" /> Learning Hub
+            <Icons.brain className="h-3.5 w-3.5" /> Syllabus & Courses
           </span>
           <AnimatedText
             as="h2"
             className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
           >
-            Structured courses, built for learners
+            Syllabus & Courses
           </AnimatedText>
           <AnimatedText
             as="p"
             delay={0.2}
             className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
           >
-            Explore interactive notes, code walk-throughs, and downloadable
-            worksheets curated for students and professionals.
+            Access interactive notes, code walk-throughs, and downloadable PDF worksheets curated for students and learners.
           </AnimatedText>
         </div>
 
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
-          {COURSES.map((course, index) => {
-            const totalLessons = course.modules.reduce(
-              (acc, module) => acc + module.lessons.length,
-              0
-            );
+        <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full items-stretch">
+            {COURSES.map((course, index) => {
+              const totalLessons = course.modules.reduce(
+                (acc, module) => acc + module.lessons.length,
+                0
+              );
 
-            return (
-              <AnimatedSection
-                key={course.id}
-                delay={0.1 * (index + 1)}
-                direction="up"
-                className="h-full w-full min-w-0"
-              >
-                <Link
-                  href={`/courses/${course.id}`}
-                  className="card-hover group relative flex h-full flex-col gap-5 overflow-hidden rounded-2xl border border-border bg-background p-6"
+              return (
+                <AnimatedSection
+                  key={course.id}
+                  delay={0.08 * (index + 1)}
+                  direction="up"
+                  className="h-full w-full min-w-0"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent transition-transform duration-300 group-hover:scale-105">
-                      {getCourseIcon(course.iconName, "h-6 w-6")}
+                  <Link
+                    href={`/courses/${course.id}`}
+                    className="card-hover group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden h-full p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1"
+                  >
+                    <div className="flex flex-col h-full gap-4">
+                      {/* Top bar with icon and difficulty */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent transition-transform duration-300 group-hover:scale-110">
+                          {getCourseIcon(course.iconName, "h-5 w-5")}
+                        </div>
+                        <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent">
+                          {course.difficulty}
+                        </span>
+                      </div>
+
+                      {/* Category tags */}
+                      <div className="flex flex-wrap gap-1.5" aria-label="Tags">
+                        {course.category.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-primary/10 text-primary border border-primary/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="font-heading text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors duration-200">
+                        {course.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed flex-grow">
+                        {course.shortDescription}
+                      </p>
+
+                      {/* Stats footer */}
+                      <div className="mt-auto flex items-center justify-between pt-4 border-t border-border/60">
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1.5">
+                            <Icons.clock className="h-3.5 w-3.5" />
+                            {course.duration}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <Icons.page className="h-3.5 w-3.5" />
+                            {totalLessons} lessons
+                          </span>
+                        </div>
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent group-hover:text-primary transition-colors">
+                          View Syllabus
+                          <Icons.chevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </span>
+                      </div>
                     </div>
-                    <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-[11px] font-semibold text-accent">
-                      {course.difficulty}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-xl font-bold text-foreground transition-colors duration-200 group-hover:text-accent">
-                      {course.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-                      {course.shortDescription}
-                    </p>
-                  </div>
-                  <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4">
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1.5">
-                        <Icons.clock className="h-3.5 w-3.5" />
-                        {course.duration}
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <Icons.page className="h-3.5 w-3.5" />
-                        {totalLessons} lessons
-                      </span>
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent">
-                      Open
-                      <Icons.chevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </Link>
-              </AnimatedSection>
-            );
-          })}
+                  </Link>
+                </AnimatedSection>
+              );
+            })}
+          </div>
         </div>
 
-        <AnimatedText delay={0.4} className="flex justify-center">
+        <AnimatedText delay={0.4} className="flex justify-center pt-2">
           <Link href="/courses">
             <Button variant={"outline"} className="group rounded-xl">
-              Browse the full Learning Hub
+              <Icons.page className="mr-2 h-4 w-4" /> View All Courses
               <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Link>
