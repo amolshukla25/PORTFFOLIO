@@ -6,6 +6,13 @@
  * at the bottom of every lesson page.
  */
 
+import { PYTHON_MODULE_1_QUIZZES } from "./python-quizzes/module-1-quizzes";
+import { PYTHON_MODULE_2_QUIZZES } from "./python-quizzes/module-2-quizzes";
+import { PYTHON_MODULE_3_QUIZZES } from "./python-quizzes/module-3-quizzes";
+import { PYTHON_MODULE_4_QUIZZES } from "./python-quizzes/module-4-quizzes";
+import { PYTHON_MODULE_5_QUIZZES } from "./python-quizzes/module-5-quizzes";
+import { PYTHON_MODULE_6_QUIZZES } from "./python-quizzes/module-6-quizzes";
+
 export interface QuizQuestion {
   id: string;
   question: string;
@@ -20,934 +27,13 @@ export interface LessonQuiz {
 }
 
 export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
-  // ─── Module 1: Python Fundamentals ────────────────────────────────────────
-  "hello-world-python": {
-    title: "Hello, Python!",
-    questions: [
-      {
-        id: "hw-1",
-        question: "Which command prints text to the console in Python?",
-        options: ["console.log()", "print()", "echo()", "write()"],
-        correctIndex: 1,
-        explanation:
-          "print() writes whatever is inside the parentheses to the console — Python's most-used function.",
-      },
-      {
-        id: "hw-2",
-        question: "What does the # character mean in Python code?",
-        options: [
-          "It starts a comment",
-          "It starts a string",
-          "It imports a module",
-          "It is an error",
-        ],
-        correctIndex: 0,
-        explanation:
-          "# begins a comment. Everything after it on the same line is ignored by Python.",
-      },
-      {
-        id: "hw-3",
-        question: "Why does Python care about indentation (spaces at the start of a line)?",
-        options: [
-          "It is only for style",
-          "It defines blocks of code",
-          "It makes the file bigger",
-          "It is optional",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Indentation defines blocks. Code at the same indent level belongs to the same block — Python has no braces like C or Java.",
-      },
-    ],
-  },
-  "variables-io": {
-    title: "Variables & I/O",
-    questions: [
-      {
-        id: "v-1",
-        question: "Which line creates a valid variable in Python?",
-        options: [
-          "2myvar = 5",
-          "my-var = 5",
-          "my_var = 5",
-          "class = 5",
-        ],
-        correctIndex: 2,
-        explanation:
-          "Variable names can contain letters, digits and underscores — but cannot start with a digit or be a reserved keyword.",
-      },
-      {
-        id: "v-2",
-        question: "What does input() always return?",
-        options: ["An integer", "A string", "A float", "A boolean"],
-        correctIndex: 1,
-        explanation:
-          "input() returns a string. To use numbers you must convert, e.g. int(input()) or float(input()).",
-      },
-      {
-        id: "v-3",
-        question: "Which type does Python use for whole numbers without a decimal point?",
-        options: ["float", "str", "int", "bool"],
-        correctIndex: 2,
-        explanation:
-          "int is Python's integer type (e.g. 42). float is for decimals like 3.14.",
-      },
-      {
-        id: "v-4",
-        question: "What is the type of the value True in Python?",
-        options: ["int", "str", "bool", "float"],
-        correctIndex: 2,
-        explanation:
-          "True and False are booleans (type bool) — and secretly integers: True equals 1, False equals 0.",
-      },
-      {
-        id: "v-5",
-        question: "Which value represents 'nothing here' in Python?",
-        options: ["0", "False", "None", "null"],
-        correctIndex: 2,
-        explanation:
-          "None is Python's special 'no value' object — its type is NoneType.",
-      },
-    ],
-  },
-  "strings-mastery": {
-    title: "Strings Mastery",
-    questions: [
-      {
-        id: "s-1",
-        question: "What is the result of 'Hello' + ' World'?",
-        options: [
-          "'Hello World'",
-          "'Hello+ World'",
-          "An error",
-          "'Hello World '",
-        ],
-        correctIndex: 0,
-        explanation:
-          "The + operator concatenates strings, joining them into one: 'Hello World'.",
-      },
-      {
-        id: "s-2",
-        question: "Which method converts a string to uppercase?",
-        options: ["upper()", "big()", "capital()", "up()"],
-        correctIndex: 0,
-        explanation:
-          "text.upper() returns the string with all characters uppercased.",
-      },
-      {
-        id: "s-3",
-        question: "What is the length of the string 'Python'?",
-        options: ["5", "6", "7", "Python"],
-        correctIndex: 1,
-        explanation:
-          "len('Python') returns 6 — one character for each letter, including zero-based indexing of 0..5.",
-      },
-    ],
-  },
-  "operators-expressions": {
-    title: "Operators & Expressions",
-    questions: [
-      {
-        id: "o-1",
-        question: "What does the ** operator do?",
-        options: ["Multiplication", "Exponentiation", "Modulo", "Floor division"],
-        correctIndex: 1,
-        explanation: "** raises the left operand to the power of the right: 2 ** 3 → 8.",
-      },
-      {
-        id: "o-2",
-        question: "What is the result of 17 // 5?",
-        options: ["3.4", "3", "2", "4"],
-        correctIndex: 1,
-        explanation:
-          "// is floor division — it divides and rounds down to the nearest whole number: 17 // 5 → 3.",
-      },
-      {
-        id: "o-3",
-        question: "What is the result of 10 % 3?",
-        options: ["1", "3", "0", "3.33"],
-        correctIndex: 0,
-        explanation:
-          "% is the modulo operator — it returns the remainder: 10 % 3 → 1.",
-      },
-    ],
-  },
-  "loops-conditionals": {
-    title: "Loops & Conditionals",
-    questions: [
-      {
-        id: "lc-1",
-        question: "How many times does this loop run? for i in range(3):",
-        options: ["2", "3", "4", "Infinite"],
-        correctIndex: 1,
-        explanation:
-          "range(3) produces 0, 1, 2 — exactly three iterations.",
-      },
-      {
-        id: "lc-2",
-        question: "Which keyword is used to decide between branches?",
-        options: ["switch", "case", "if", "when"],
-        correctIndex: 2,
-        explanation:
-          "Python uses if / elif / else to branch on conditions.",
-      },
-      {
-        id: "lc-3",
-        question: "What does break do inside a loop?",
-        options: [
-          "Skips to the next iteration",
-          "Exits the loop immediately",
-          "Restarts the loop",
-          "Pauses the program",
-        ],
-        correctIndex: 1,
-        explanation:
-          "break exits the nearest loop entirely; continue skips only the current iteration.",
-      },
-    ],
-  },
-  "loop-control-nested": {
-    title: "Loop Control & Nested Loops",
-    questions: [
-      {
-        id: "ln-1",
-        question: "What does continue do inside a loop?",
-        options: [
-          "Exits the loop",
-          "Skips the rest of the current iteration",
-          "Restarts the loop from 0",
-          "Raises an error",
-        ],
-        correctIndex: 1,
-        explanation:
-          "continue jumps straight to the next iteration, skipping any code after it in the loop body.",
-      },
-      {
-        id: "ln-2",
-        question: "Which statement makes a loop with no condition run forever?",
-        options: ["while True:", "for x in []:", "for x in range(1):", "if 1:"],
-        correctIndex: 0,
-        explanation:
-          "while True: loops forever unless a break or return escapes it — useful for menus and games.",
-      },
-      {
-        id: "ln-3",
-        question: "In a nested loop, break affects which loop?",
-        options: [
-          "The outermost loop",
-          "The nearest enclosing loop",
-          "All loops",
-          "The next loop after it",
-        ],
-        correctIndex: 1,
-        explanation:
-          "break always exits the innermost loop that contains it — the nearest enclosing loop.",
-      },
-    ],
-  },
-  "comprehensions": {
-    title: "Comprehensions",
-    questions: [
-      {
-        id: "c-1",
-        question: "What does [x * 2 for x in range(3)] produce?",
-        options: ["[0, 2, 4]", "[2, 4, 6]", "[1, 2, 3]", "[0, 1, 2]"],
-        correctIndex: 0,
-        explanation:
-          "Each x from 0, 1, 2 is doubled: [0, 2, 4] — a list comprehension builds a new list inline.",
-      },
-      {
-        id: "c-2",
-        question: "How do you filter items in a list comprehension?",
-        options: [
-          "With a for clause",
-          "With an if clause at the end",
-          "With a while clause",
-          "You cannot filter",
-        ],
-        correctIndex: 1,
-        explanation:
-          "The optional if at the end keeps only items where the condition is True.",
-      },
-      {
-        id: "c-3",
-        question: "Which comprehension builds a dictionary?",
-        options: [
-          "[k: v for k, v in items]",
-          "{k: v for k, v in items}",
-          "(k, v for k, v in items)",
-          "dict(k, v for items)",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Curly braces with key: value produce a dict comprehension: {k: v for k, v in items}.",
-      },
-    ],
-  },
-  "lists-tuples": {
-    title: "Lists & Tuples",
-    questions: [
-      {
-        id: "lt-1",
-        question: "Which statement is true about lists?",
-        options: [
-          "They are immutable",
-          "They can change after creation",
-          "They cannot hold different types",
-          "They use parentheses",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Lists are mutable — you can append, insert, remove and reassign elements after creation.",
-      },
-      {
-        id: "lt-2",
-        question: "What is the main difference between a tuple and a list?",
-        options: [
-          "Tuples are faster to type",
-          "Tuples are immutable",
-          "Lists cannot hold numbers",
-          "There is no difference",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Tuples are immutable — once created they cannot be changed. Lists are mutable.",
-      },
-      {
-        id: "lt-3",
-        question: "What is the index of the last element in a list of length 5?",
-        options: ["4", "5", "-1", "Both 4 and -1"],
-        correctIndex: 3,
-        explanation:
-          "The last element is at index 4 (0-based) or index -1 (negative indexing from the end).",
-      },
-    ],
-  },
-  "sets-dictionaries": {
-    title: "Sets & Dictionaries",
-    questions: [
-      {
-        id: "sd-1",
-        question: "Which property is unique to a set?",
-        options: [
-          "Ordered elements",
-          "No duplicate values",
-          "Key-value pairs",
-          "Mutable keys",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Sets automatically remove duplicates — each element appears only once.",
-      },
-      {
-        id: "sd-2",
-        question: "How do you access the value for key 'name' in dict d?",
-        options: [
-          "d('name')",
-          "d.name",
-          "d['name']",
-          "d->name",
-        ],
-        correctIndex: 2,
-        explanation:
-          "Square-bracket lookup d['name'] returns the value stored under that key.",
-      },
-      {
-        id: "sd-3",
-        question: "Which method adds a key-value pair to a dictionary?",
-        options: ["append()", "add()", "d[key] = value", "push()"],
-        correctIndex: 2,
-        explanation:
-          "Assigning d[key] = value inserts or updates the entry — no separate method needed.",
-      },
-    ],
-  },
-  "advanced-collections": {
-    title: "Advanced Collections",
-    questions: [
-      {
-        id: "ac-1",
-        question: "Which import provides Counter for counting items?",
-        options: [
-          "from collections import Counter",
-          "import counter",
-          "from itertools import Counter",
-          "from math import Counter",
-        ],
-        correctIndex: 0,
-        explanation:
-          "Counter lives in the collections module: from collections import Counter.",
-      },
-      {
-        id: "ac-2",
-        question: "What does defaultdict return for a missing key?",
-        options: [
-          "None",
-          "A KeyError",
-          "A default value from the factory",
-          "An empty string",
-        ],
-        correctIndex: 2,
-        explanation:
-          "defaultdict never raises KeyError — it calls the factory (e.g. list, int) to create a default.",
-      },
-      {
-        id: "ac-3",
-        question: "What does deque optimize?",
-        options: [
-          "Sorting",
-          "Appending and popping at both ends",
-          "Searching",
-          "Memory size of numbers",
-        ],
-        correctIndex: 1,
-        explanation:
-          "deque (double-ended queue) gives O(1) append/pop at both ends — faster than a list at the front.",
-      },
-    ],
-  },
-  "nested-copies": {
-    title: "Nested Data & Copies",
-    questions: [
-      {
-        id: "nc-1",
-        question: "What is the value of a[0] after: a = [1,2]; b = a; b[0] = 99?",
-        options: ["1", "99", "An error", "None"],
-        correctIndex: 1,
-        explanation:
-          "b = a copies the reference, not the list. Both names point to the same list, so the change shows in a too.",
-      },
-      {
-        id: "nc-2",
-        question: "Which import provides copy.deepcopy()?",
-        options: ["from copy import deepcopy", "import deepcopy", "from utils import deepcopy", "from clone import deepcopy"],
-        correctIndex: 0,
-        explanation: "deepcopy lives in the copy module: from copy import deepcopy.",
-      },
-      {
-        id: "nc-3",
-        question: "When does a shallow copy (copy.copy) cause shared data?",
-        options: [
-          "Always",
-          "When the container holds nested mutable objects",
-          "Never",
-          "Only for strings",
-        ],
-        correctIndex: 1,
-        explanation:
-          "A shallow copy duplicates the outer container but shares nested objects — mutating a nested list affects both.",
-      },
-    ],
-  },
-  "functions-basics": {
-    title: "Functions Basics",
-    questions: [
-      {
-        id: "fb-1",
-        question: "Which keyword defines a function?",
-        options: ["func", "function", "def", "define"],
-        correctIndex: 2,
-        explanation: "Python uses def to define functions: def greet(): ...",
-      },
-      {
-        id: "fb-2",
-        question: "What does return do?",
-        options: [
-          "Prints a value",
-          "Sends a value back to the caller",
-          "Ends the program",
-          "Repeats the function",
-        ],
-        correctIndex: 1,
-        explanation:
-          "return hands a value back to the caller so it can be stored or used.",
-      },
-      {
-        id: "fb-3",
-        question: "What is a default parameter?",
-        options: [
-          "A parameter that cannot change",
-          "A parameter with a fallback value if none is passed",
-          "A required parameter",
-          "A keyword-only parameter",
-        ],
-        correctIndex: 1,
-        explanation:
-          "def f(x=10): gives x a default of 10 when the caller omits it.",
-      },
-    ],
-  },
-  "lambda-args-kwargs": {
-    title: "Lambda, *args & **kwargs",
-    questions: [
-      {
-        id: "lk-1",
-        question: "What does lambda x: x + 1 represent?",
-        options: [
-          "A loop",
-          "An anonymous one-line function",
-          "A class",
-          "A module",
-        ],
-        correctIndex: 1,
-        explanation:
-          "lambda creates a small anonymous function — here, one that adds 1 to its argument.",
-      },
-      {
-        id: "lk-2",
-        question: "What does *args collect?",
-        options: [
-          "Keyword arguments as a dict",
-          "Extra positional arguments as a tuple",
-          "Only the first argument",
-          "Arguments as a set",
-        ],
-        correctIndex: 1,
-        explanation: "*args bundles extra positional arguments into a tuple.",
-      },
-      {
-        id: "lk-3",
-        question: "What does **kwargs collect?",
-        options: [
-          "Positional args as a list",
-          "Extra keyword arguments as a dict",
-          "Default arguments",
-          "Lambda functions",
-        ],
-        correctIndex: 1,
-        explanation: "**kwargs gathers extra name=value arguments into a dictionary.",
-      },
-    ],
-  },
-  "scope-closures-decorators": {
-    title: "Scope, Closures & Decorators",
-    questions: [
-      {
-        id: "sc-1",
-        question: "Which keyword lets a function modify a global variable?",
-        options: ["global", "public", "extern", "static"],
-        correctIndex: 0,
-        explanation: "Declaring global x inside a function lets you reassign the module-level x.",
-      },
-      {
-        id: "sc-2",
-        question: "What is a closure?",
-        options: [
-          "A function that remembers variables from its enclosing scope",
-          "A closed loop",
-          "An anonymous class",
-          "A file that cannot open",
-        ],
-        correctIndex: 0,
-        explanation:
-          "A closure is a nested function that keeps access to variables from the scope where it was defined.",
-      },
-      {
-        id: "sc-3",
-        question: "What does a decorator do?",
-        options: [
-          "Deletes functions",
-          "Wraps a function to add behavior",
-          "Speeds up loops",
-          "Renames functions",
-        ],
-        correctIndex: 1,
-        explanation:
-          "A decorator takes a function, wraps it with extra logic, and returns the enhanced version.",
-      },
-    ],
-  },
-  "modules-packages": {
-    title: "Modules & Packages",
-    questions: [
-      {
-        id: "mp-1",
-        question: "Which keyword imports a module?",
-        options: ["include", "using", "import", "require"],
-        correctIndex: 2,
-        explanation: "import math makes math module functions available.",
-      },
-      {
-        id: "mp-2",
-        question: "How do you import only the sqrt function from math?",
-        options: [
-          "from math import sqrt",
-          "import sqrt",
-          "use math.sqrt",
-          "include math.sqrt",
-        ],
-        correctIndex: 0,
-        explanation: "from math import sqrt pulls just that name into the current namespace.",
-      },
-      {
-        id: "mp-3",
-        question: "What is a package in Python?",
-        options: [
-          "A single function",
-          "A directory of modules with __init__.py",
-          "A compiled binary",
-          "A virtual environment",
-        ],
-        correctIndex: 1,
-        explanation:
-          "A package is a folder containing modules plus an __init__.py file that marks it as importable.",
-      },
-    ],
-  },
-  "classes-objects": {
-    title: "Classes & Objects",
-    questions: [
-      {
-        id: "co-1",
-        question: "Which keyword defines a class?",
-        options: ["struct", "object", "class", "type"],
-        correctIndex: 2,
-        explanation: "class Dog: defines a new class named Dog.",
-      },
-      {
-        id: "co-2",
-        question: "What does __init__ do?",
-        options: [
-          "Deletes an object",
-          "Initializes a new object's attributes",
-          "Prints the object",
-          "Compares objects",
-        ],
-        correctIndex: 1,
-        explanation:
-          "__init__ is the constructor — it runs when you create an instance and sets up its attributes.",
-      },
-      {
-        id: "co-3",
-        question: "What does self refer to inside a method?",
-        options: [
-          "The class itself",
-          "The current instance",
-          "The module",
-          "The parent class",
-        ],
-        correctIndex: 1,
-        explanation:
-          "self is the specific instance the method was called on.",
-      },
-    ],
-  },
-  "inheritance-polymorphism": {
-    title: "Inheritance & Polymorphism",
-    questions: [
-      {
-        id: "ip-1",
-        question: "How does class Dog inherit from Animal?",
-        options: [
-          "class Dog extends Animal",
-          "class Dog(Animal):",
-          "class Animal(Dog):",
-          "Dog inherits Animal",
-        ],
-        correctIndex: 1,
-        explanation: "Putting the parent in parentheses — class Dog(Animal): — creates inheritance.",
-      },
-      {
-        id: "ip-2",
-        question: "What is method overriding?",
-        options: [
-          "Defining the same method twice in a file",
-          "A child class redefining a parent method",
-          "Deleting a method",
-          "Renaming a method",
-        ],
-        correctIndex: 1,
-        explanation:
-          "A subclass can override a method by redefining it with the same name — polymorphic calls use the override.",
-      },
-      {
-        id: "ip-3",
-        question: "What does super() do?",
-        options: [
-          "Deletes the parent",
-          "Calls a method on the parent class",
-          "Creates a super class",
-          "Slows down the code",
-        ],
-        correctIndex: 1,
-        explanation: "super() lets you call the parent's version of a method, e.g. super().__init__().",
-      },
-    ],
-  },
-  "encapsulation-magic-methods": {
-    title: "Encapsulation & Magic Methods",
-    questions: [
-      {
-        id: "em-1",
-        question: "What does a single leading underscore (_value) signal?",
-        options: [
-          "A private attribute by convention",
-          "A required attribute",
-          "A constant",
-          "An error",
-        ],
-        correctIndex: 0,
-        explanation:
-          "_name is a convention meaning 'internal — don't touch from outside' (not enforced by Python).",
-      },
-      {
-        id: "em-2",
-        question: "Which magic method controls string conversion for print()?",
-        options: ["__init__", "__str__", "__len__", "__call__"],
-        correctIndex: 1,
-        explanation: "__str__ returns the human-friendly string used by print() and str().",
-      },
-      {
-        id: "em-3",
-        question: "What are magic methods (dunder methods)?",
-        options: [
-          "Secret hacks",
-          "Special methods surrounded by double underscores that hook into Python syntax",
-          "Deprecated functions",
-          "Built-in constants",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Dunder methods like __init__, __len__, __eq__ let your objects work with Python's operators and built-ins.",
-      },
-    ],
-  },
-  dataclasses: {
-    title: "Dataclasses",
-    questions: [
-      {
-        id: "dc-1",
-        question: "Which import brings in dataclasses?",
-        options: [
-          "from dataclasses import dataclass",
-          "import dataclass",
-          "from classes import dataclass",
-          "from data import dataclass",
-        ],
-        correctIndex: 0,
-        explanation: "from dataclasses import dataclass is the standard import.",
-      },
-      {
-        id: "dc-2",
-        question: "What does @dataclass generate for you?",
-        options: [
-          "Nothing",
-          "__init__, __repr__, and __eq__ automatically",
-          "Only __init__",
-          "Only __str__",
-        ],
-        correctIndex: 1,
-        explanation:
-          "The decorator auto-generates __init__, __repr__, __eq__ and more from the annotated fields.",
-      },
-      {
-        id: "dc-3",
-        question: "How is a field marked read-only?",
-        options: [
-          "frozen=True on the decorator",
-          "final=True on the field",
-          "readonly keyword",
-          "const keyword",
-        ],
-        correctIndex: 0,
-        explanation: "@dataclass(frozen=True) makes instances immutable — assigning raises FrozenInstanceError.",
-      },
-    ],
-  },
-  "iterators-generators": {
-    title: "Iterators & Generators",
-    questions: [
-      {
-        id: "ig-1",
-        question: "Which keyword makes a function a generator?",
-        options: ["yield", "return", "pause", "emit"],
-        correctIndex: 0,
-        explanation:
-          "Using yield instead of return turns a function into a generator that produces values lazily.",
-      },
-      {
-        id: "ig-2",
-        question: "What is lazy evaluation?",
-        options: [
-          "Computing everything upfront",
-          "Producing values only when asked",
-          "Skipping errors",
-          "Caching results forever",
-        ],
-        correctIndex: 1,
-        explanation:
-          "Generators compute one value at a time on demand — great for huge or infinite sequences.",
-      },
-      {
-        id: "ig-3",
-        question: "What does next(gen) do?",
-        options: [
-          "Restarts the generator",
-          "Asks the generator for its next value",
-          "Deletes the generator",
-          "Copies the generator",
-        ],
-        correctIndex: 1,
-        explanation: "next(gen) resumes the generator until the next yield and returns that value.",
-      },
-    ],
-  },
-  "exception-handling": {
-    title: "Exception Handling",
-    questions: [
-      {
-        id: "eh-1",
-        question: "Which keyword catches an exception?",
-        options: ["try/except", "catch", "throw", "handle"],
-        correctIndex: 0,
-        explanation: "Python uses try/except — there is no catch keyword.",
-      },
-      {
-        id: "eh-2",
-        question: "Which block always runs, whether or not an error occurred?",
-        options: ["else", "finally", "except", "final"],
-        correctIndex: 1,
-        explanation: "finally runs unconditionally — perfect for cleanup like closing files.",
-      },
-      {
-        id: "eh-3",
-        question: "How do you raise an error deliberately?",
-        options: ["throw Error()", "raise ValueError('msg')", "error()", "except ValueError"],
-        correctIndex: 1,
-        explanation: "raise creates and throws an exception you control, with your own message.",
-      },
-    ],
-  },
-  "file-handling": {
-    title: "File Handling",
-    questions: [
-      {
-        id: "fh-1",
-        question: "Which mode opens a file for reading?",
-        options: ["'w'", "'r'", "'a'", "'x'"],
-        correctIndex: 1,
-        explanation: "'r' opens for reading (default). 'w' overwrites, 'a' appends.",
-      },
-      {
-        id: "fh-2",
-        question: "What is the safest way to open a file?",
-        options: [
-          "open() alone",
-          "The with statement",
-          "file() function",
-          "read() without open",
-        ],
-        correctIndex: 1,
-        explanation:
-          "with open(...) as f: guarantees the file is closed automatically, even on errors.",
-      },
-      {
-        id: "fh-3",
-        question: "What does f.readline() return?",
-        options: [
-          "All lines as a list",
-          "The entire file as one string",
-          "The next line including its newline",
-          "The file size",
-        ],
-        correctIndex: 2,
-        explanation: "readline() reads one line at a time; read() reads everything; readlines() returns a list.",
-      },
-    ],
-  },
-  "json-data": {
-    title: "JSON & Data",
-    questions: [
-      {
-        id: "j-1",
-        question: "Which function converts a Python dict to a JSON string?",
-        options: ["json.load()", "json.dumps()", "json.parse()", "json.stringify()"],
-        correctIndex: 1,
-        explanation: "json.dumps() serializes Python objects to a JSON string.",
-      },
-      {
-        id: "j-2",
-        question: "Which function parses a JSON string into a Python dict?",
-        options: ["json.loads()", "json.dumps()", "json.read()", "json.open()"],
-        correctIndex: 0,
-        explanation: "json.loads() parses a JSON string; json.load() reads from a file object.",
-      },
-      {
-        id: "j-3",
-        question: "What Python type does a JSON array become?",
-        options: ["Tuple", "List", "Set", "String"],
-        correctIndex: 1,
-        explanation: "JSON arrays map to Python lists; JSON objects map to dicts.",
-      },
-    ],
-  },
-  "testing-debugging": {
-    title: "Testing & Debugging",
-    questions: [
-      {
-        id: "td-1",
-        question: "Which statement verifies a condition in tests?",
-        options: ["assert", "verify", "check", "expect"],
-        correctIndex: 0,
-        explanation: "assert condition raises AssertionError when the condition is False.",
-      },
-      {
-        id: "td-2",
-        question: "Which library provides test functions and methods?",
-        options: ["pytest", "numpy", "requests", "flask"],
-        correctIndex: 0,
-        explanation:
-          "pytest is the most popular testing framework — you write test_ functions and run pytest.",
-      },
-      {
-        id: "td-3",
-        question: "What is a breakpoint?",
-        options: [
-          "A syntax error",
-          "A pause point in code to inspect state",
-          "The end of a file",
-          "A type of exception",
-        ],
-        correctIndex: 1,
-        explanation:
-          "A breakpoint pauses execution so you can inspect variables — in Python, breakpoint() drops into the debugger.",
-      },
-    ],
-  },
-  "mini-project-expense-tracker": {
-    title: "Expense Tracker Mini-Project",
-    questions: [
-      {
-        id: "exp-1",
-        question: "Which data structure is ideal for storing expense categories and amounts?",
-        options: ["A dictionary", "A string", "A boolean", "An integer"],
-        correctIndex: 0,
-        explanation:
-          "A dict maps each category name to its total amount — perfect for this tracker.",
-      },
-      {
-        id: "exp-2",
-        question: "How do you add a new expense to a dict total?",
-        options: [
-          "totals[key] = totals.get(key, 0) + amount",
-          "totals.append(key)",
-          "totals + key",
-          "add(totals, key)",
-        ],
-        correctIndex: 0,
-        explanation:
-          "totals.get(key, 0) safely reads the existing total (or 0) before adding the amount.",
-      },
-      {
-        id: "exp-3",
-        question: "Which loop keeps a menu running until the user chooses to quit?",
-        options: ["for _ in range(5):", "while True: with break on quit", "foreach", "repeat(10):"],
-        correctIndex: 1,
-        explanation:
-          "while True: loops the menu forever, and a break on the quit option exits cleanly.",
-      },
-    ],
-  },
+  // ─── Complete Python Course (Modules 1 - 6: 25 Lessons, 16 Code Questions Each) ───
+  ...PYTHON_MODULE_1_QUIZZES,
+  ...PYTHON_MODULE_2_QUIZZES,
+  ...PYTHON_MODULE_3_QUIZZES,
+  ...PYTHON_MODULE_4_QUIZZES,
+  ...PYTHON_MODULE_5_QUIZZES,
+  ...PYTHON_MODULE_6_QUIZZES,
 
   // ─── Data Science Hub ─────────────────────────────────────────────────────
   "python-basics": {
@@ -2146,6 +1232,246 @@ export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
         correctIndex: 1,
         explanation:
           "Prompting is a loop — diagnose the gap and adjust the prompt, then re-run.",
+      },
+    ],
+  },
+
+  // ─── AI Tools Course · Prompt Engineering Track (Expanded) ───────────────
+  "self-consistency-sampling": {
+    title: "Self-Consistency",
+    questions: [
+      {
+        id: "sc-1",
+        question: "What does self-consistency do?",
+        options: [
+          "Run the same prompt once with more tokens",
+          "Run a reasoning prompt several times and take the majority answer",
+          "Lower the temperature to 0",
+          "Use a bigger model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Self-consistency samples multiple reasoning paths and votes — wrong paths are diverse, the right one repeats.",
+      },
+      {
+        id: "sc-2",
+        question: "When does self-consistency help the most?",
+        options: [
+          "Creative writing",
+          "Math and multi-step reasoning",
+          "Remembering facts from training data",
+          "Generating images",
+        ],
+        correctIndex: 1,
+        explanation:
+          "It fixes reasoning errors. Memory errors are shared across all runs, so voting doesn't help facts.",
+      },
+      {
+        id: "sc-3",
+        question: "What temperature should you use for the samples?",
+        options: ["0 (identical answers)", "0.5–0.7 (varied paths)", "2.0 (maximum chaos)", "It doesn't matter"],
+        correctIndex: 1,
+        explanation:
+          "Too low gives clones; too high gives noise. 0.5–0.7 gives diverse-but-sensible reasoning paths.",
+      },
+    ],
+  },
+  "tree-of-thought-prompting": {
+    title: "Tree of Thought & Personas",
+    questions: [
+      {
+        id: "tot-1",
+        question: "How is tree of thought different from chain-of-thought?",
+        options: [
+          "It is faster",
+          "It explores several reasoning branches before choosing",
+          "It uses no reasoning at all",
+          "It only works on code",
+        ],
+        correctIndex: 1,
+        explanation:
+          "CoT walks one path; ToT explores multiple branches and compares them before deciding.",
+      },
+      {
+        id: "tot-2",
+        question: "What makes a persona prompt effective?",
+        options: [
+          "'Be an expert'",
+          "A specific role with expertise, perspective, and constraints",
+          "Longer text",
+          "Shouting in capitals",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Specific personas ('senior tax consultant', 'skeptical code reviewer') steer what the model attends to.",
+      },
+    ],
+  },
+  "prompt-chaining-workflows": {
+    title: "Prompt Chaining",
+    questions: [
+      {
+        id: "chain-1",
+        question: "What is the main benefit of prompt chaining over one giant prompt?",
+        options: [
+          "It always costs more tokens",
+          "Focused context per step and review points between steps",
+          "The model gets smarter",
+          "It avoids all errors",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Each step sees only what it needs, and you can catch and redirect errors between steps.",
+      },
+      {
+        id: "chain-2",
+        question: "What is a validation checkpoint?",
+        options: [
+          "A tool that runs the chain",
+          "A step that checks the output before continuing",
+          "The end of the chain",
+          "A type of model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Validation steps catch issues early instead of letting errors propagate through the chain.",
+      },
+    ],
+  },
+  "pe-code-generation": {
+    title: "Prompting for Code",
+    questions: [
+      {
+        id: "cg-1",
+        question: "What does the CODE framework stand for?",
+        options: [
+          "Create, Optimize, Debug, Execute",
+          "Context, Output, Dependencies, Examples",
+          "Code, Organize, Design, Engineer",
+          "Compile, Operate, Deploy, Execute",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Context, Output, Dependencies, Examples — the contract a code prompt needs.",
+      },
+      {
+        id: "cg-2",
+        question: "What should you ALWAYS do with generated code?",
+        options: [
+          "Deploy it immediately",
+          "Run it, review it, and test edge cases",
+          "Trust it because it looks confident",
+          "Only use it in comments",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Generated code can be subtly wrong — verify by running and testing, never trust it blindly.",
+      },
+    ],
+  },
+  "pe-content-writing": {
+    title: "Prompting for Writing",
+    questions: [
+      {
+        id: "cw-1",
+        question: "What does the WRITE framework stand for?",
+        options: [
+          "Words, Research, Ideas, Templates, Editing",
+          "Who, Register, Intent, Type, Examples",
+          "Write, Review, Improve, Test, Edit",
+          "Warm, Real, Intimate, Terse, Effective",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Who (audience), Register (tone), Intent (purpose), Type (format), Examples (style reference).",
+      },
+      {
+        id: "cw-2",
+        question: "Why pin a concrete reader like 'Priya, a busy non-technical founder'?",
+        options: [
+          "It makes the prompt longer",
+          "It forces a specific level of tone and vocabulary",
+          "Models write better for named people",
+          "It isn't useful",
+        ],
+        correctIndex: 1,
+        explanation:
+          "A concrete reader pins the register the model can't reach with 'general audience'.",
+      },
+    ],
+  },
+  "pe-prompt-injection-safety": {
+    title: "Prompt Injection Defense",
+    questions: [
+      {
+        id: "pi-1",
+        question: "What is prompt injection?",
+        options: [
+          "A faster way to write prompts",
+          "Hidden instructions inside untrusted text that hijack the model",
+          "Using too many tokens",
+          "A type of model fine-tuning",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Attackers smuggle instructions into user input, web pages, or documents to override the system prompt.",
+      },
+      {
+        id: "pi-2",
+        question: "Which defense matters MOST for agents with destructive tools?",
+        options: [
+          "A longer system prompt",
+          "Code-side guardrails: whitelisted tools and human approval",
+          "Higher temperature",
+          "More examples",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Prompts alone can't stop a hijacked model — enforce tool whitelists and approval in your code.",
+      },
+      {
+        id: "pi-3",
+        question: "How should untrusted user text be placed in a prompt?",
+        options: [
+          "Directly next to the instructions",
+          "Wrapped in tags like <user_input> and declared as data",
+          "It should never be included",
+          "Uppercase so the model knows",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Delimiters + 'this is data, not instructions' separates content from commands.",
+      },
+    ],
+  },
+  "pe-prompt-evaluation": {
+    title: "Evaluating Prompts",
+    questions: [
+      {
+        id: "ev-1",
+        question: "What is a golden set?",
+        options: [
+          "The best prompt you've written",
+          "A fixed set of tasks with expected answers used to score changes",
+          "A paid AI service",
+          "A model's training data",
+        ],
+        correctIndex: 1,
+        explanation:
+          "A golden set is your regression test — run every prompt change against the same cases.",
+      },
+      {
+        id: "ev-2",
+        question: "When A/B testing prompts, what should you change at a time?",
+        options: [
+          "Everything at once for speed",
+          "One variable, with the golden set fixed",
+          "The golden set, to match the prompt",
+          "Nothing — prompts can't be tested",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Change one thing and keep the test set fixed — otherwise you can't tell what caused the change.",
       },
     ],
   },

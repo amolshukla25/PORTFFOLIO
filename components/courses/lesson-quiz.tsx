@@ -177,9 +177,9 @@ export default function LessonQuiz({ quiz, courseId, lessonId }: LessonQuizProps
       </div>
 
       <div className="p-5 sm:p-6">
-        <p className="text-base font-semibold text-foreground leading-relaxed">
+        <div className="text-base font-semibold text-foreground leading-relaxed whitespace-pre-line">
           {question.question}
-        </p>
+        </div>
 
         <div className="mt-5 space-y-2.5">
           {question.options.map((option, index) => {
@@ -267,7 +267,7 @@ export default function LessonQuiz({ quiz, courseId, lessonId }: LessonQuizProps
                 ? "Correct! +1 point"
                 : `Not quite — the answer is ${LETTERS[question.correctIndex]}.`}
             </p>
-            <p className="mt-1 leading-relaxed text-muted-foreground">
+            <p className="mt-1 leading-relaxed text-muted-foreground whitespace-pre-line">
               {question.explanation}
             </p>
           </div>
