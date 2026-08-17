@@ -1,8 +1,19 @@
+export interface TestCase {
+  id: string;
+  name?: string;
+  inputCode: string;
+  expectedOutput: string;
+  isHidden?: boolean;
+}
+
 export interface PracticeExercise {
   id: string;
   title: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  points?: number;
   task: string;
+  starterCode?: string;
+  testCases?: TestCase[];
   hint?: string;
   solution?: string;
 }

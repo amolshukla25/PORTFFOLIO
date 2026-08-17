@@ -652,65 +652,17 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               </section>
             )}
 
-          {/* Practice Exercises */}
+          {/* Interactive LeetCode-Style Code Judge & Practice Arena */}
           {!focusMode && activeLesson.practice && activeLesson.practice.length > 0 && (
-            <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8">
-              <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <ListChecks className="h-4 w-4 text-primary" />
-                  <h2 className="text-sm font-semibold text-foreground">
-                    Practice Exercises
-                  </h2>
-                </div>
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  {activeLesson.practice.length} exercises
-                </span>
-              </div>
-              <div className="divide-y divide-border/60">
-                {activeLesson.practice.map((exercise, exIdx) => (
-                  <details key={exercise.id} className="group px-5 py-4">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
-                      <span className="flex items-center gap-2.5 text-sm font-semibold text-foreground transition-colors group-open:text-primary">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/10 text-xs font-bold text-primary">
-                          {exIdx + 1}
-                        </span>
-                        {exercise.title}
-                      </span>
-                      <span
-                        className={cn(
-                          "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold",
-                          exercise.difficulty === "Easy" && "bg-success/10 text-success",
-                          exercise.difficulty === "Medium" && "bg-star/10 text-star",
-                          exercise.difficulty === "Hard" && "bg-destructive/10 text-destructive"
-                        )}
-                      >
-                        {exercise.difficulty}
-                      </span>
-                    </summary>
-                    <div className="mt-4 space-y-3 pl-8 sm:pl-9">
-                      <p className="text-sm leading-relaxed text-muted-foreground">
-                        {exercise.task}
-                      </p>
-                      {exercise.hint && (
-                        <p className="text-xs text-muted-foreground/80">
-                          <span className="font-semibold text-foreground">Hint:</span>{" "}
-                          {exercise.hint}
-                        </p>
-                      )}
-                      {exercise.solution && (
-                        <div className="rounded-xl border border-border/60 bg-code-bg overflow-hidden">
-                          <div className="px-3 py-1.5 bg-muted/40 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                            Solution
-                          </div>
-                          <pre className="p-3.5 font-mono text-xs sm:text-sm overflow-x-auto text-code-fg leading-relaxed">
-                            <code>{exercise.solution}</code>
-                          </pre>
-                        </div>
-                      )}
-                    </div>
-                  </details>
-                ))}
-              </div>
+            <section className="my-8 no-print">
+              <PythonPlayground
+                exercises={activeLesson.practice}
+                courseId={courseId}
+                lessonId={lessonId}
+                onAllCompleted={() => {
+                  progress.markCompleted(courseId, lessonId);
+                }}
+              />
             </section>
           )}
 
