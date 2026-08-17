@@ -50,8 +50,10 @@ import { PYTHON_COURSE } from "./python-course";
 import { DIGITAL_MARKETING_COURSE } from "./digital-marketing";
 import { STOCK_MARKETING_COURSE } from "./stock-marketing";
 import { PROMPT_ENGINEERING_COURSE } from "./prompt-engineering";
+import { AI_TOOLS_COURSE } from "./ai-tools";
 
 export const COURSES: Course[] = [
+  AI_TOOLS_COURSE,
   PYTHON_COURSE,
   DIGITAL_MARKETING_COURSE,
   STOCK_MARKETING_COURSE,

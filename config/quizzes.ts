@@ -1842,4 +1842,311 @@ export const LESSON_QUIZZES: Record<string, LessonQuiz> = {
       },
     ],
   },
+
+  // ─── AI Tools Course · LLM Track ─────────────────────────────────────────
+  "what-is-an-llm": {
+    title: "What Is an LLM?",
+    questions: [
+      {
+        id: "llm-1",
+        question: "What is the core task every LLM is trained to do?",
+        options: [
+          "Search the internet",
+          "Predict the next token in a sequence",
+          "Store facts in a database",
+          "Run calculations",
+        ],
+        correctIndex: 1,
+        explanation:
+          "LLMs are trained to predict the next token — everything else (chat, coding, agents) builds on that loop.",
+      },
+      {
+        id: "llm-2",
+        question: "What does 'autoregressive generation' mean?",
+        options: [
+          "The model generates all tokens at once",
+          "Each generated token is fed back in as input for the next prediction",
+          "The model rewrites its own training data",
+          "The model responds only once per session",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Autoregressive means output feeds back into input, one token at a time.",
+      },
+      {
+        id: "llm-3",
+        question: "Why do LLMs hallucinate?",
+        options: [
+          "They are programmed to lie",
+          "They pick the most plausible next token, not the verified-true one",
+          "Only small models do",
+          "It is a bug that can be patched",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The training objective is plausibility, not truth — so confident-sounding inventions are inevitable.",
+      },
+    ],
+  },
+  "context-window-basics": {
+    title: "The Context Window",
+    questions: [
+      {
+        id: "cw-1",
+        question: "What does the context window include?",
+        options: [
+          "Only the system prompt",
+          "Input tokens plus output tokens combined",
+          "Only the latest user message",
+          "The model's training data",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The window is the total working memory — everything the model processes in one request.",
+      },
+      {
+        id: "cw-2",
+        question: "What typically happens when a prompt exceeds the context window?",
+        options: [
+          "The model answers anyway",
+          "The oldest content is silently truncated",
+          "The model upgrades its window",
+          "The request is rejected with an explanation",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Long inputs usually get truncated from the start — older context quietly disappears.",
+      },
+      {
+        id: "cw-3",
+        question: "Where should your most important instructions go?",
+        options: [
+          "In the middle of the prompt",
+          "At the start and the end",
+          "Only in the output format",
+          "Nowhere special",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Models attend most to the start and end of the context — the middle gets the least attention.",
+      },
+    ],
+  },
+  "temperature-explained": {
+    title: "Temperature Explained",
+    questions: [
+      {
+        id: "tmp-1",
+        question: "What does a low temperature (0–0.3) do?",
+        options: [
+          "Makes output more creative",
+          "Makes output predictable and deterministic",
+          "Speeds up the model",
+          "Adds randomness",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Low temperature collapses the distribution onto the most likely tokens — great for code and math.",
+      },
+      {
+        id: "tmp-2",
+        question: "Which temperature is best for brainstorming ad headlines?",
+        options: ["0.1", "0.9–1.5", "Exactly 0.5", "Temperature doesn't matter"],
+        correctIndex: 1,
+        explanation:
+          "Creative tasks want variety — higher temperature lets the model explore unlikely-but-interesting tokens.",
+      },
+      {
+        id: "tmp-3",
+        question: "Lowering temperature makes a model smarter. True or false?",
+        options: [
+          "True — it improves reasoning",
+          "False — it only makes output more consistent, not more correct",
+          "True — only for math",
+          "False — it makes output worse",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Temperature controls consistency, not capability — a wrong answer at low temperature is confidently wrong.",
+      },
+    ],
+  },
+  "why-llms-hallucinate": {
+    title: "Why LLMs Hallucinate",
+    questions: [
+      {
+        id: "hal-1",
+        question: "Which is NOT a root cause of hallucinations?",
+        options: [
+          "Knowledge cutoff after training",
+          "Next-token objective optimizes plausibility",
+          "The model intentionally deceives users",
+          "Rare facts never seen during training",
+        ],
+        correctIndex: 2,
+        explanation:
+          "Hallucinations are structural, not intentional — the model has no concept of truth, only likelihood.",
+      },
+      {
+        id: "hal-2",
+        question: "Why is 'are you sure?' a weak hallucination check?",
+        options: [
+          "It works perfectly",
+          "The model's confidence is not calibrated to truth — it will often double down",
+          "It costs too many tokens",
+          "Models refuse to answer",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Confidence and correctness are separate; asking for certainty rarely reveals a hallucination.",
+      },
+      {
+        id: "hal-3",
+        question: "What is the strongest fix for hallucination over your own documents?",
+        options: [
+          "Lower temperature to 0",
+          "Ground the answer in retrieved context (RAG) with citations",
+          "Ask the model to be careful",
+          "Use a bigger model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Putting the source material in the prompt removes the need to 'recall from nowhere'.",
+      },
+    ],
+  },
+  "agentic-loop-basics": {
+    title: "Agentic Loops & AI Agents",
+    questions: [
+      {
+        id: "agt-1",
+        question: "What are the phases of the agentic loop?",
+        options: [
+          "Read, Write, Repeat",
+          "Think, Act, Observe, Repeat, Answer",
+          "Prompt, Respond, End",
+          "Search, Download, Save",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The loop is Think → Act → Observe → repeat until done, then a final answer.",
+      },
+      {
+        id: "agt-2",
+        question: "Who actually executes an agent's tool call?",
+        options: [
+          "The LLM itself",
+          "Your application code, based on the model's proposed call",
+          "The tool's vendor",
+          "Another model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The LLM only proposes calls — your code runs them and returns results the model observes.",
+      },
+      {
+        id: "agt-3",
+        question: "Why must agents have stop conditions?",
+        options: [
+          "To make logs shorter",
+          "Without them, agents can loop forever and burn tokens/budget",
+          "APIs require them",
+          "To speed up training",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Max steps, budget caps, and clear completion criteria prevent runaway loops.",
+      },
+    ],
+  },
+  "rag-deep-dive": {
+    title: "RAG — Retrieval-Augmented Generation",
+    questions: [
+      {
+        id: "rag-1",
+        question: "What are the four stages of the RAG pipeline?",
+        options: [
+          "Index, Retrieve, Augment, Generate",
+          "Search, Copy, Paste, Print",
+          "Train, Test, Deploy, Monitor",
+          "Embed, Store, Query, Delete",
+        ],
+        correctIndex: 0,
+        explanation:
+          "Index the docs, retrieve relevant chunks, augment the prompt, then generate.",
+      },
+      {
+        id: "rag-2",
+        question: "What problem does RAG solve best?",
+        options: [
+          "Model speed",
+          "Grounding answers in your own up-to-date documents",
+          "Creative writing",
+          "Token costs",
+        ],
+        correctIndex: 1,
+        explanation:
+          "RAG injects current, domain-specific facts at query time — no retraining needed.",
+      },
+      {
+        id: "rag-3",
+        question: "Which is the biggest lever for retrieval quality?",
+        options: [
+          "Using the biggest embedding model available",
+          "Chunking on semantic boundaries with metadata and testing top-k",
+          "Lowering temperature to 0",
+          "Adding more documents",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Retrieval quality is dominated by chunking strategy, metadata, and search tuning — not model size.",
+      },
+    ],
+  },
+
+  // ─── AI Tools Course · Prompt Engineering Track ──────────────────────────
+  "prompt-anatomy": {
+    title: "Anatomy of an Effective Prompt",
+    questions: [
+      {
+        id: "paa-1",
+        question: "Which five blocks make up an effective prompt?",
+        options: [
+          "Hello, World, Test, Debug, Deploy",
+          "Role, Context, Task, Format, Constraints",
+          "Subject, Verb, Object, Adverb, Noun",
+          "Input, Output, Error, Retry, Done",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Role, Context, Task, Format, and Constraints cover what the model needs to perform well.",
+      },
+      {
+        id: "paa-2",
+        question: "What is the difference between system and user prompts?",
+        options: [
+          "No difference",
+          "System = persistent instructions; user = the current specific request",
+          "System prompts are longer",
+          "User prompts control the model",
+        ],
+        correctIndex: 1,
+        explanation:
+          "The system prompt sets consistent behavior; the user message carries the current task.",
+      },
+      {
+        id: "paa-3",
+        question: "What is the best response to a bad first output?",
+        options: [
+          "Give up on the model",
+          "Iterate: refine the prompt based on what you got",
+          "Raise the temperature",
+          "Ask the same question again verbatim",
+        ],
+        correctIndex: 1,
+        explanation:
+          "Prompting is a loop — diagnose the gap and adjust the prompt, then re-run.",
+      },
+    ],
+  },
 };

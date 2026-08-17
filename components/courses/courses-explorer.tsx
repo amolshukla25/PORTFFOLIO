@@ -129,6 +129,18 @@ const getIcon = (iconName: string) => {
     linkLabel: "Start Prompt Engineering",
     level: "Beginner",
   },
+  {
+    step: 8,
+    title: "AI Tools: LLM & Prompt Engineering Mastery",
+    subtitle: "Course: AI Tools — two tracks in one",
+    description:
+      "Combine both worlds: understand how LLMs work inside out — context windows, temperature, hallucinations, agentic loops — and level up your prompting for AI tools and agents.",
+    skills: ["LLM Internals", "Context Windows", "Agentic Loops", "Advanced Prompting"],
+    duration: "40 hours of content",
+    link: "/courses/ai-tools",
+    linkLabel: "Master AI Tools",
+    level: "Beginner",
+  },
 ];
 
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"] as const;
