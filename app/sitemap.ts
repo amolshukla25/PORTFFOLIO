@@ -73,18 +73,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // Course detail pages — static content, so no lastModified
+  // Course detail pages — lastModified is a freshness hint that prompts
+  // Google to re-crawl after new lessons are shipped.
   const courseRoutes: MetadataRoute.Sitemap = COURSES.map((course) => ({
     url: `${baseUrl}/courses/${course.id}`,
+    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  // lesson note pages — static content, so no lastModified
+  // lesson note pages — lastModified prompts re-crawl of new/updated lessons
   const lessonRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
     course.modules.flatMap((module) =>
       module.lessons.map((lesson) => ({
         url: `${baseUrl}/courses/${course.id}/${lesson.id}`,
+        lastModified: new Date(),
         changeFrequency: "yearly" as const,
         priority: 0.5,
       }))

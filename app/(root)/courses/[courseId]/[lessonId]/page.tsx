@@ -158,11 +158,48 @@ export default async function lessonPage({
     ],
   };
 
+  // BreadcrumbList — helps Google understand the site hierarchy (Courses →
+  // Course → Lesson) and can earn breadcrumb rich results in the SERP.
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Learning Hub",
+        item: `${siteConfig.url}/courses`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: course.title.split(": ")[0] || course.title,
+        item: `${siteConfig.url}/courses/${course.id}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: lesson.title.split(": ")[1] || lesson.title,
+        item: url,
+      },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <LessonNotes />
     </>

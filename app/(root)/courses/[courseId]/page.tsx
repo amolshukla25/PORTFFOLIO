@@ -86,7 +86,9 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
     0
   );
 
-  // Course schema + breadcrumbs for structured data
+  // Course schema + breadcrumbs for structured data.
+  // hasPart lists every lesson as a LearningResource so Google understands
+  // the course structure and can crawl every lesson page from the schema.
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
@@ -107,6 +109,15 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
         name: course.instructor,
       },
     },
+    hasPart: course.modules.flatMap((module) =>
+      module.lessons.map((lesson) => ({
+        "@type": "LearningResource",
+        name: lesson.title,
+        description: lesson.shortDescription,
+        url: `${siteConfig.url}/courses/${course.id}/${lesson.id}`,
+        learningResourceType: "lesson",
+      }))
+    ),
   };
 
   const breadcrumbSchema = {
