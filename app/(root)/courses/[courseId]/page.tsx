@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap, List } from "lucide-react";
+import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import CourseProgressPanel from "@/components/courses/course-progress-panel";
 import { COURSES } from "@/config/courses";
@@ -215,72 +215,6 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
           }))}
         />
       </div>
-
-      {/* Table of Contents — every module & lesson linked for navigation + internal linking */}
-      <nav
-        aria-label="Course table of contents"
-        className="mb-10 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden"
-      >
-        <div className="px-6 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
-          <List className="h-4 w-4 text-primary" />
-          <h2 className="font-heading text-lg font-bold text-foreground">
-            Table of Contents
-          </h2>
-          <span className="ml-auto text-xs font-medium text-muted-foreground">
-            {course.modules.length} modules · {totalLessons} lessons
-          </span>
-        </div>
-        <div className="p-4 sm:p-6 space-y-3">
-          {course.modules.map((module, mIdx) => {
-            const moduleTitle = module.title.split(": ")[1] || module.title;
-            return (
-              <section
-                key={module.id}
-                className="rounded-xl border border-border/60 bg-background overflow-hidden"
-              >
-                <a
-                  href={`#${module.id}`}
-                  className="group flex items-center gap-3.5 px-4 sm:px-5 py-3.5 transition-colors hover:bg-muted/30"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent font-heading text-sm font-bold text-primary-foreground shadow-sm">
-                    {mIdx + 1}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
-                      {moduleTitle}
-                    </span>
-                    <span className="mt-0.5 block text-xs text-muted-foreground line-clamp-1">
-                      {module.description}
-                    </span>
-                  </span>
-                  <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                    {module.lessons.length}{" "}
-                    {module.lessons.length === 1 ? "lesson" : "lessons"}
-                  </span>
-                  <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-primary" />
-                </a>
-                <ol className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 border-t border-border/40 px-4 sm:px-5 py-3">
-                  {module.lessons.map((lesson, lIdx) => (
-                    <li key={lesson.id}>
-                      <Link
-                        href={`/courses/${course.id}/${lesson.id}`}
-                        className="group inline-flex items-start gap-2 rounded-md py-1.5 pr-2 text-xs transition-colors"
-                      >
-                        <span className="mt-[3px] flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-muted text-[9px] font-bold text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                          {lIdx + 1}
-                        </span>
-                        <span className="leading-relaxed text-muted-foreground transition-colors group-hover:text-primary">
-                          {lesson.title.split(": ")[1] || lesson.title}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            );
-          })}
-        </div>
-      </nav>
 
       {/* Syllabus Modules Grid (Card Inside Card Layout) */}
       <div className="space-y-8">
