@@ -462,20 +462,35 @@ export default function CoursesExplorer() {
                         </div>
                       </div>
 
-                      <div className="relative pt-6 flex items-center justify-between">
+                      <div className="relative pt-6 flex flex-wrap items-center justify-between gap-3">
                         <span className="text-xs font-medium text-muted-foreground">
                           Instructor: {course.instructor}
                         </span>
-                        <Link
-                          href={`/courses/${course.id}`}
-                          className={cn(
-                            buttonVariants({ variant: "default" }),
-                            "rounded-xl gap-2 font-medium"
-                          )}
-                        >
-                          View Syllabus
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/courses/${course.id}`}
+                            className={cn(
+                              buttonVariants({ variant: "outline", size: "sm" }),
+                              "rounded-xl gap-1.5 text-xs font-medium"
+                            )}
+                          >
+                            Syllabus
+                          </Link>
+                          <Link
+                            href={
+                              course.modules[0]?.lessons[0]?.id
+                                ? `/courses/${course.id}/${course.modules[0].lessons[0].id}`
+                                : `/courses/${course.id}`
+                            }
+                            className={cn(
+                              buttonVariants({ variant: "default", size: "sm" }),
+                              "rounded-xl gap-1.5 text-xs font-medium"
+                            )}
+                          >
+                            Start Course
+                            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   );

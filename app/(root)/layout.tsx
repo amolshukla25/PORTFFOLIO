@@ -2,7 +2,6 @@ import Link from "next/link";
 import { MainNav } from "@/components/common/main-nav";
 import { ModeToggle } from "@/components/common/mode-toggle";
 import { SiteFooter } from "@/components/common/site-footer";
-import { Icons } from "@/components/common/icons";
 import { routesConfig } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -26,19 +25,6 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
               </span>
             </Link>
 
-            {/* Created with heart credit in upper sight (Header) */}
-            <a
-              href={siteConfig.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-medium text-foreground transition-all duration-300 hover:border-red-500/40 hover:bg-red-500/20 hover:scale-105 shadow-sm"
-              title="Created with ❤️ by amolshukla.online"
-            >
-              <span className="hidden md:inline">Created with</span>
-              <Icons.heart className="h-3.5 w-3.5 fill-red-500 text-red-500 animate-pulse" />
-              <span className="hidden md:inline">by</span>
-              <span className="font-semibold text-primary">amolshukla.online</span>
-            </a>
           </div>
 
           <div className="flex items-center gap-3">

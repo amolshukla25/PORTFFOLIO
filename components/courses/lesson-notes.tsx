@@ -61,6 +61,11 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
   const [mounted, setMounted] = useState(false);
   // Desktop syllabus outline collapse state (persisted so it survives navigation)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Which modules are expanded in the outline sidebar — the active lesson's
+  // module starts (and stays) expanded so students always see where they are.
+  const [expandedModules, setExpandedModules] = useState<Set<string>>(
+    () => new Set()
+  );
   // Distraction-free reading mode — notes only, ideal text measure
   const [focusMode, setFocusMode] = useState(false);
   // Reading progress 0–100 for the slim progress bar under the sticky header
@@ -130,6 +135,22 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [focusMode]);
+
+  // Keep the module containing the active lesson expanded in the outline so
+  // students always see their current position without scrolling a long list.
+  useEffect(() => {
+    const courseData = COURSES.find((c) => c.id === courseId);
+    const moduleId = courseData?.modules.find((m) =>
+      m.lessons.some((l) => l.id === lessonId)
+    )?.id;
+    if (!moduleId) return;
+    setExpandedModules((prev) => {
+      if (prev.has(moduleId)) return prev;
+      const next = new Set(prev);
+      next.add(moduleId);
+      return next;
+    });
+  }, [courseId, lessonId]);
 
   // Find course and active lesson
   const course = COURSES.find((c) => c.id === courseId);
@@ -256,59 +277,89 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           </h2>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {course.modules.map((module, mIdx) => {
             const doneInModule = module.lessons.filter((lec) =>
               completedLessons.includes(lec.id)
             ).length;
+            const isExpanded = expandedModules.has(module.id);
             return (
-              <div key={module.id} className="space-y-2">
-                <div className="flex items-center justify-between gap-2 pl-2 pr-1">
-                  <h3 className="flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground">
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-primary/10 text-[9px] font-bold text-primary">
-                      {mIdx + 1}
-                    </span>
-                    <span className="truncate">
-                      {module.title.split(": ")[1] || module.title}
-                    </span>
-                  </h3>
+              <div
+                key={module.id}
+                className={cn(
+                  "rounded-xl border border-border/60 overflow-hidden transition-colors",
+                  isExpanded && "border-primary/25 bg-background/60"
+                )}
+              >
+                <button
+                  type="button"
+                  onClick={() =>
+                    setExpandedModules((prev) => {
+                      const next = new Set(prev);
+                      if (next.has(module.id)) next.delete(module.id);
+                      else next.add(module.id);
+                      return next;
+                    })
+                  }
+                  aria-expanded={isExpanded}
+                  className="flex w-full items-center gap-2 px-2.5 py-2.5 text-left transition-colors hover:bg-muted/50"
+                >
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-primary/10 text-[10px] font-bold text-primary">
+                    {mIdx + 1}
+                  </span>
+                  <span
+                    className={cn(
+                      "flex-1 truncate text-xs font-semibold",
+                      isExpanded ? "text-foreground" : "text-muted-foreground"
+                    )}
+                  >
+                    {module.title.split(": ")[1] || module.title}
+                  </span>
                   {mounted && doneInModule > 0 && (
                     <span className="shrink-0 rounded-full bg-success/10 px-1.5 py-0.5 text-[10px] font-semibold text-success">
                       {doneInModule}/{module.lessons.length}
                     </span>
                   )}
-                </div>
-                <div className="space-y-1">
-                  {module.lessons.map((lec) => {
-                    const isActive = lec.id === lessonId;
-                    const isDone = completedLessons.includes(lec.id);
-                    return (
-                      <Link
-                        key={lec.id}
-                        href={`/courses/${course.id}/${lec.id}`}
-                        onClick={() => setSidebarOpen(false)}
-                        className={cn(
-                          "flex items-start gap-2.5 p-2 rounded-lg text-xs font-medium transition-all",
-                          isActive
-                            ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        )}
-                      >
-                        {mounted && isDone ? (
-                          <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-success" />
-                        ) : (
-                          <Circle
-                            className={cn(
-                              "h-3.5 w-3.5 mt-0.5 shrink-0",
-                              isActive ? "text-primary-foreground/70" : "text-border"
-                            )}
-                          />
-                        )}
-                        <span className="line-clamp-2">{lec.title.split(": ")[1] || lec.title}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
+                  <ChevronRight
+                    className={cn(
+                      "h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-200",
+                      isExpanded && "rotate-90"
+                    )}
+                  />
+                </button>
+                {isExpanded && (
+                  <div className="space-y-1 px-2 pb-2.5">
+                    {module.lessons.map((lec) => {
+                      const isActive = lec.id === lessonId;
+                      const isDone = completedLessons.includes(lec.id);
+                      return (
+                        <Link
+                          key={lec.id}
+                          href={`/courses/${course.id}/${lec.id}`}
+                          onClick={() => setSidebarOpen(false)}
+                          className={cn(
+                            "flex items-start gap-2.5 p-2 rounded-lg text-xs font-medium transition-all",
+                            isActive
+                              ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          )}
+                        >
+                          {mounted && isDone ? (
+                            <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-success" />
+                          ) : (
+                            <Circle
+                              className={cn(
+                                "h-3.5 w-3.5 mt-0.5 shrink-0",
+                                isActive ? "text-primary-foreground/70" : "text-border"
+                              )}
+                            />
+                          )}
+                          <span className="line-clamp-2">{lec.title.split(": ")[1] || lec.title}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
