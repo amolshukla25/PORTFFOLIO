@@ -12,6 +12,7 @@ import ChipContainer from "@/components/ui/chip-container";
 import { ResponsiveTabs } from "@/components/ui/responsive-tabs";
 import { experiences } from "@/config/experience";
 import { siteConfig } from "@/config/site";
+import { truncateMetaTitle } from "@/lib/utils";
 
 interface ExperienceDetailPageProps {
   params: Promise<{
@@ -47,11 +48,49 @@ export async function generateMetadata({
     };
   }
 
+  const description = experience.description[0];
+
   return {
     title: `${experience.position} at ${experience.company} | Experience`,
-    description: `Detailed information about my role as ${experience.position} at ${experience.company}.`,
+    description: `${description} — Work experience of ${siteConfig.authorName} as ${experience.position} at ${experience.company}.`,
+    keywords: [
+      ...experience.skills,
+      experience.position,
+      experience.company,
+      siteConfig.authorName,
+      "work experience",
+      "career",
+    ],
     alternates: {
       canonical: `${siteConfig.url}/experience/${expId}`,
+    },
+    openGraph: {
+      title: truncateMetaTitle(`${experience.position} at ${experience.company}`),
+      description,
+      url: `${siteConfig.url}/experience/${expId}`,
+      siteName: siteConfig.name,
+      type: "article",
+      images: [
+        {
+          url: siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${experience.position} at ${experience.company}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: truncateMetaTitle(`${experience.position} at ${experience.company}`),
+      description,
+      images: [siteConfig.ogImage],
+      creator: `@${siteConfig.username}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large" as const,
+      "max-snippet": -1,
     },
   };
 }
@@ -135,9 +174,76 @@ export default async function ExperienceDetailPage({
     },
   ];
 
+  // Related experience: same skills, ranked by overlap
+  const relatedExperience = experiences
+    .filter((e) => e.id !== experience.id)
+    .map((e) => ({
+      exp: e,
+      overlap: e.skills.filter((s) => experience.skills.includes(s)).length,
+    }))
+    .filter((r) => r.overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, 2)
+    .map((r) => r.exp);
+
+  // Experience JSON-LD
+  const experienceSchema = {
+    "@context": "https://schema.org",
+    "@type": "WorkExperience",
+    name: experience.position,
+    description: experience.description.join(" "),
+    url: `${siteConfig.url}/experience/${experience.id}`,
+    author: {
+      "@type": "Person",
+      name: siteConfig.authorName,
+      url: siteConfig.url,
+    },
+    keywords: experience.skills.join(", "),
+    startDate: experience.startDate.toISOString(),
+    ...(experience.endDate !== "Present" && {
+      endDate: experience.endDate.toISOString(),
+    }),
+    ...(experience.companyUrl && {
+      url: experience.companyUrl,
+    }),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Experience",
+        item: `${siteConfig.url}/experience`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${experience.position} at ${experience.company}`,
+        item: `${siteConfig.url}/experience/${experience.id}`,
+      },
+    ],
+  };
+
   return (
     <ClientPageWrapper>
-      <div className="container max-w-4xl mx-auto py-8 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(experienceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="container max-w-5xl mx-auto py-8 px-4">
         <AnimatedSection className="mb-6">
           <Button variant="ghost" size="sm" className="mb-4" asChild>
             <Link href="/experience">
@@ -205,6 +311,40 @@ export default async function ExperienceDetailPage({
             </CardContent>
           </Card>
         </AnimatedSection>
+
+        {/* Related experience — internal linking for SEO */}
+        {relatedExperience.length > 0 && (
+          <AnimatedSection delay={0.35} className="mt-10 border-t border-border pt-8">
+            <h2 className="font-heading text-2xl font-bold text-foreground mb-6">
+              Related experience
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {relatedExperience.map((re) => (
+                <Link
+                  key={re.id}
+                  href={`/experience/${re.id}`}
+                  className="card-hover group flex items-start gap-4 rounded-2xl border border-border bg-background p-5"
+                >
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-foreground transition-colors group-hover:text-accent">
+                      {re.position}
+                    </h3>
+                    <p className="mt-0.5 text-sm font-medium text-muted-foreground">
+                      {re.company}
+                    </p>
+                    <p className="mt-1 line-clamp-1 text-sm text-muted-foreground/80">
+                      {re.description[0]}
+                    </p>
+                  </div>
+                  <Icons.chevronRight
+                    aria-hidden="true"
+                    className="mt-1 h-4 w-4 flex-shrink-0 text-muted-foreground transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+                  />
+                </Link>
+              ))}
+            </div>
+          </AnimatedSection>
+        )}
 
         <AnimatedSection delay={0.4} className="flex justify-center mt-8">
           <Button variant="outline" asChild>

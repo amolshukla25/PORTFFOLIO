@@ -291,7 +291,7 @@ Key Insight: I made 4 out of 5 decisions based on emotions, not logic. The fix i
         },
         {
           id: "practice-ips-writing",
-          title": "Write Your Investment Policy Statement",
+          title: "Write Your Investment Policy Statement",
           difficulty: "Hard",
           task: "Write a 1-page Investment Policy Statement that includes: (1) Your goals and time horizon, (2) Target asset allocation, (3) Rebalancing rules, (4) What you will NOT do.",
           hint: "Be specific and realistic. This document is your guide during emotional times.",
@@ -563,9 +563,9 @@ Review IPS            | Annually   | 30 mins`,
       practice: [
         {
           id: "practice-ips-complete",
-          title": "Complete Your IPS",
+          title: "Complete Your IPS",
           difficulty: "Hard",
-          task": "Using the template above, write your complete Investment Policy Statement. Include your goals, target allocation, rules, automation, and what you will NOT do. Print it and keep it on your desk.",
+          task: "Using the template above, write your complete Investment Policy Statement. Include your goals, target allocation, rules, automation, and what you will NOT do. Print it and keep it on your desk.",
           hint: "Be specific and realistic. This document is your guide during emotional times.",
           solution: `My Investment Policy Statement (Example):
 
@@ -606,8 +606,8 @@ Next Review: January 1, 2025`
         },
         {
           id: "practice-discipline-check",
-          title": "Discipline Check Exercise",
-          difficulty": "Easy",
+          title: "Discipline Check Exercise",
+          difficulty: "Easy",
           task: "Review your investment behavior over the past 6 months. How many times did you check your portfolio? Did you make any emotional decisions? Did you follow your IPS? What can you improve?",
           hint: "Be honest with yourself. The goal is to identify areas for improvement.",
           solution: `6-Month Discipline Review:
@@ -915,11 +915,11 @@ LESSONS FOR NEXT TIME:
       practice: [
         {
           id: "practice-crisis-plan",
-          title": "Write Your Crisis Management Plan",
-          difficulty": "Hard",
-          task": "Write a complete crisis management plan that includes: (1) Pre-crisis preparation steps, (2) Actions at each -10% Nifty decline, (3) Your buy-list of 5 quality Indian companies with target prices, (4) Post-crisis review process.",
-          hint": "Be specific and actionable. This plan should guide you during the next crash.",
-          solution": `My Crisis Management Plan
+          title: "Write Your Crisis Management Plan",
+          difficulty: "Hard",
+          task: "Write a complete crisis management plan that includes: (1) Pre-crisis preparation steps, (2) Actions at each -10% Nifty decline, (3) Your buy-list of 5 quality Indian companies with target prices, (4) Post-crisis review process.",
+          hint: "Be specific and actionable. This plan should guide you during the next crash.",
+          solution: `My Crisis Management Plan
 
 1. PRE-CRISIS PREPARATION:
 - Maintain 10% cash buffer in liquid fund (₹2,00,000 on ₹20L portfolio)
@@ -973,12 +973,12 @@ Bharti Airtel| ₹1,200  | ₹960          | Telecom leader, 5G
 - Rebuild cash buffer to 10%`
         },
         {
-          id": "practice-crisis-simulation",
-          title": "Crisis Simulation Exercise",
-          difficulty": "Medium",
-          task": "Simulate the 2008 Financial Crisis for a ₹20,00,000 Indian portfolio. If you had a 60/40 portfolio with a 10% cash buffer and followed the crisis management playbook, what would your portfolio value be at the bottom and at the 1-year recovery mark?",
-          hint": "Nifty dropped 60% peak-to-trough. Debt funds returned ~8% in 2008. Stocks recovered +80% in 2009.",
-          solution": `2008 Crisis Simulation (₹20,00,000 portfolio):
+          id: "practice-crisis-simulation",
+          title: "Crisis Simulation Exercise",
+          difficulty: "Medium",
+          task: "Simulate the 2008 Financial Crisis for a ₹20,00,000 Indian portfolio. If you had a 60/40 portfolio with a 10% cash buffer and followed the crisis management playbook, what would your portfolio value be at the bottom and at the 1-year recovery mark?",
+          hint: "Nifty dropped 60% peak-to-trough. Debt funds returned ~8% in 2008. Stocks recovered +80% in 2009.",
+          solution: `2008 Crisis Simulation (₹20,00,000 portfolio):
 
 STARTING ALLOCATION:
 - Equity MFs: ₹10,80,000 (60%)

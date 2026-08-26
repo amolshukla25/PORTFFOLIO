@@ -293,10 +293,10 @@ For maximum current income: Coal India — 5.5% yield is highest among large-cap
         {
           id: "practice-dividend-tax",
           title: "Dividend Tax Calculation",
-          difficulty": "Easy",
-          task": "You receive ₹50,000 in dividends from Indian stocks this year. Your annual income puts you in the 20% tax slab. Calculate: (1) TDS deducted at source, (2) Total tax payable, (3) Net dividend income after tax.",
-          hint": "TDS is 10% if dividend > ₹5,000 per company. Full tax is at slab rate.",
-          solution": `Indian Dividend Tax Calculation:
+          difficulty: "Easy",
+          task: "You receive ₹50,000 in dividends from Indian stocks this year. Your annual income puts you in the 20% tax slab. Calculate: (1) TDS deducted at source, (2) Total tax payable, (3) Net dividend income after tax.",
+          hint: "TDS is 10% if dividend > ₹5,000 per company. Full tax is at slab rate.",
+          solution: `Indian Dividend Tax Calculation:
 
 Total Dividend Income: ₹50,000
 Tax Slab: 20%
@@ -552,11 +552,11 @@ Lesson: SWP is more tax-efficient than dividends for regular income.`,
       practice: [
         {
           id: "practice-income-portfolio",
-          title": "Build Your Indian Dividend Portfolio",
-          difficulty": "Hard",
-          task": "Design a dividend portfolio for a 55-year-old Indian retiree who needs ₹25,000/month in income. Use at least 5 different Indian investments across at least 3 sectors. Calculate the total portfolio size needed.",
-          hint": "Use a blend of PSU stocks, private dividend stocks, and dividend yield mutual funds.",
-          solution": `Portfolio Design for ₹25,000/month (₹3,00,000/year) income:
+          title: "Build Your Indian Dividend Portfolio",
+          difficulty: "Hard",
+          task: "Design a dividend portfolio for a 55-year-old Indian retiree who needs ₹25,000/month in income. Use at least 5 different Indian investments across at least 3 sectors. Calculate the total portfolio size needed.",
+          hint: "Use a blend of PSU stocks, private dividend stocks, and dividend yield mutual funds.",
+          solution: `Portfolio Design for ₹25,000/month (₹3,00,000/year) income:
 
 Required Portfolio: ₹3,00,000 ÷ 3.5% = ₹85,71,429
 
@@ -580,11 +580,11 @@ Alternative: Add ONGC/BPCL for higher yield but more risk.`
         },
         {
           id: "practice-swp-vs-dividend",
-          title": "SWP vs Dividend Tax Exercise",
-          difficulty": "Medium",
-          task": "You need ₹15,000/month from your investments. Compare two options: (1) Dividend income from stocks yielding 4%, and (2) SWP from a growth mutual fund. Assume you're in 20% tax slab. Which is more tax-efficient?",
-          hint": "Calculate after-tax income for both options. SWP only taxes the gains portion, not the entire withdrawal.",
-          solution": `SWP vs Dividend Comparison (20% tax slab):
+          title: "SWP vs Dividend Tax Exercise",
+          difficulty: "Medium",
+          task: "You need ₹15,000/month from your investments. Compare two options: (1) Dividend income from stocks yielding 4%, and (2) SWP from a growth mutual fund. Assume you're in 20% tax slab. Which is more tax-efficient?",
+          hint: "Calculate after-tax income for both options. SWP only taxes the gains portion, not the entire withdrawal.",
+          solution: `SWP vs Dividend Comparison (20% tax slab):
 
 OPTION 1: DIVIDEND INCOME
 Monthly need: ₹15,000 → Annual: ₹1,80,000
@@ -943,11 +943,11 @@ Equity creates 2.3x more wealth than PPF even after taxes!`,
       practice: [
         {
           id: "practice-swp-calculation",
-          title": "SWP Tax Calculation",
-          difficulty": "Medium",
-          task": "You have ₹1,00,00,000 in a balanced mutual fund. You want ₹25,000/month via SWP. The fund returns 10% annually. Calculate your tax liability if you're in 20% slab and the fund has been held for 3 years.",
-          hint": "SWP taxes only the gains portion. With 3-year holding, gains are taxed at 20% with indexation.",
-          solution": `SWP Tax Calculation:
+          title: "SWP Tax Calculation",
+          difficulty: "Medium",
+          task: "You have ₹1,00,00,000 in a balanced mutual fund. You want ₹25,000/month via SWP. The fund returns 10% annually. Calculate your tax liability if you're in 20% slab and the fund has been held for 3 years.",
+          hint: "SWP taxes only the gains portion. With 3-year holding, gains are taxed at 20% with indexation.",
+          solution: `SWP Tax Calculation:
 
 Corpus: ₹1,00,00,000
 Monthly withdrawal: ₹25,000
@@ -990,12 +990,12 @@ Effective tax rate: 8.1% (vs 20% for dividends)
 SWP saves ₹34,500/year in taxes compared to dividends!`
         },
         {
-          id": "practice-tax-loss-harvest",
-          title": "Indian Tax-Loss Harvesting Exercise",
-          difficulty": "Easy",
-          task": "You bought shares of Zomato at ₹150 (total ₹1,50,000). They're now at ₹100 (₹1,00,000). You also have ₹50,000 in short-term gains from another stock. How do you harvest the loss? What are the tax savings in the 20% slab?",
-          hint": "Sell Zomato to realize the loss, offset against gains, and rebuy if you still believe in the company.",
-          solution": `Indian Tax-Loss Harvesting:
+          id: "practice-tax-loss-harvest",
+          title: "Indian Tax-Loss Harvesting Exercise",
+          difficulty: "Easy",
+          task: "You bought shares of Zomato at ₹150 (total ₹1,50,000). They're now at ₹100 (₹1,00,000). You also have ₹50,000 in short-term gains from another stock. How do you harvest the loss? What are the tax savings in the 20% slab?",
+          hint: "Sell Zomato to realize the loss, offset against gains, and rebuy if you still believe in the company.",
+          solution: `Indian Tax-Loss Harvesting:
 
 Step 1: Sell Zomato
 - Sale price: ₹100 × 1000 shares = ₹1,00,000

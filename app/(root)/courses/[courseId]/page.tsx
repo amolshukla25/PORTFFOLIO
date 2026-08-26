@@ -146,7 +146,7 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
   };
 
   return (
-    <div className="container py-8 max-w-4xl">
+    <div className="container py-8 max-w-7xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}

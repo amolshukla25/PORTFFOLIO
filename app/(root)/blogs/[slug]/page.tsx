@@ -207,7 +207,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <article className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Breadcrumb nav (visible, accessible) */}
         <AnimatedText delay={0}>
           <nav aria-label="Breadcrumb" className="mb-6">

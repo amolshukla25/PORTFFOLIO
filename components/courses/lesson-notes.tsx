@@ -212,8 +212,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
   const contentWidthClass = focusMode
     ? "max-w-3xl"
     : sidebarCollapsed
-      ? "max-w-5xl"
-      : "max-w-4xl";
+      ? "max-w-7xl"
+      : "max-w-6xl";
 
   // Trigger PDF printing (leveraging custom print styles in globals.css)
   const handleDownloadPDF = () => {
@@ -251,7 +251,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
       {/* LEFT SIDEBAR - Course Outline Navigation (hidden on mobile, can slide in) */}
       <aside
         className={cn(
-          "w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:relative md:translate-x-0 fixed inset-y-0 left-0 z-40 top-20 md:top-0",
+          "w-[85vw] max-w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:relative md:translate-x-0 fixed inset-y-0 left-0 z-40 top-16 md:top-0 md:w-80",
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           (sidebarCollapsed || focusMode) && "md:w-0 md:border-r-0 md:overflow-hidden"
         )}
@@ -482,16 +482,17 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
                 "rounded-xl gap-1.5 text-xs h-9 transition-all"
               )}
               aria-pressed={isCompleted}
+              title={isCompleted ? "Mark as incomplete" : "Mark lesson as complete"}
             >
               {isCompleted ? (
                 <>
                   <CheckCircle2 className="h-3.5 w-3.5" />
-                  Completed
+                  <span className="hidden sm:inline">Completed</span>
                 </>
               ) : (
                 <>
                   <Circle className="h-3.5 w-3.5" />
-                  Mark Complete
+                  <span className="hidden sm:inline">Mark Complete</span>
                 </>
               )}
             </button>
@@ -502,13 +503,14 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
                 buttonVariants({ variant: "outline", size: "sm" }),
                 "rounded-xl gap-1.5 text-xs h-9"
               )}
+              title="Download PDF"
             >
               {isExporting ? (
                 <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
               ) : (
                 <Download className="h-3.5 w-3.5" />
               )}
-              {isExporting ? "Formatting..." : "Download PDF"}
+              <span className="hidden sm:inline">{isExporting ? "Formatting..." : "Download PDF"}</span>
             </button>
           </div>
         </div>

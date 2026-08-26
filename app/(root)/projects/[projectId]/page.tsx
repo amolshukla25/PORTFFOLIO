@@ -10,7 +10,7 @@ import ChipContainer from "@/components/ui/chip-container";
 import CustomTooltip from "@/components/ui/custom-tooltip";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
-import { cn, formatDateFromObj } from "@/lib/utils";
+import { cn, formatDateFromObj, truncateMetaTitle } from "@/lib/utils";
 import profileImg from "@/public/profile-img.jpg";
 
 interface ProjectPageProps {
@@ -33,13 +33,48 @@ export async function generateMetadata({
     };
   }
 
+  const description =
+    project.shortDescription || project.descriptionDetails.paragraphs[0];
+
   return {
     title: `${project.companyName} — ${project.category.join(", ")} | Projects`,
-    description:
-      project.shortDescription || project.descriptionDetails.paragraphs[0],
-    keywords: [...project.techStack, ...project.category],
+    description,
+    keywords: [
+      ...project.techStack,
+      ...project.category,
+      siteConfig.authorName,
+      "Amol Shukla projects",
+    ],
     alternates: {
       canonical: `${siteConfig.url}/projects/${projectId}`,
+    },
+    openGraph: {
+      title: truncateMetaTitle(project.companyName),
+      description,
+      url: `${siteConfig.url}/projects/${projectId}`,
+      siteName: siteConfig.name,
+      type: "article",
+      images: [
+        {
+          url: project.companyLogoImg,
+          width: 720,
+          height: 405,
+          alt: project.companyName,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: truncateMetaTitle(project.companyName),
+      description,
+      images: [project.companyLogoImg],
+      creator: `@${siteConfig.username}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large" as const,
+      "max-snippet": -1,
     },
   };
 }
@@ -51,8 +86,76 @@ export default async function Project({ params }: ProjectPageProps) {
     notFound();
   }
 
+  // Related projects: same category overlap, ranked by overlap count
+  const relatedProjects = Projects
+    .filter((p) => p.id !== project.id)
+    .map((p) => ({
+      project: p,
+      overlap: p.category.filter((c) => project.category.includes(c)).length,
+    }))
+    .filter((r) => r.overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, 3)
+    .map((r) => r.project);
+
+  const description =
+    project.shortDescription || project.descriptionDetails.paragraphs[0];
+
+  // Project structured data
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.companyName,
+    description,
+    url: `${siteConfig.url}/projects/${project.id}`,
+    author: {
+      "@type": "Person",
+      name: siteConfig.authorName,
+      url: siteConfig.url,
+    },
+    keywords: [...project.techStack, ...project.category].join(", "),
+    image: project.companyLogoImg,
+    dateCreated: project.startDate.toISOString(),
+    dateModified: project.endDate.toISOString(),
+    ...(project.websiteLink && { sameAs: project.websiteLink }),
+    ...(project.githubLink && { codeRepository: project.githubLink }),
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Projects",
+        item: `${siteConfig.url}/projects`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.companyName,
+        item: `${siteConfig.url}/projects/${project.id}`,
+      },
+    ],
+  };
+
   return (
-    <article className="container relative max-w-3xl py-6 lg:py-10">
+    <article className="container relative max-w-4xl py-6 lg:py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Link
         href="/projects"
         className={cn(
@@ -70,7 +173,7 @@ export default async function Project({ params }: ProjectPageProps) {
         >
           {formatDateFromObj(project.startDate)}
         </time>
-        <h1 className="flex items-center justify-between mt-2 font-heading text-4xl leading-tight lg:text-5xl">
+        <h1 className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mt-2 font-heading text-3xl leading-tight sm:text-4xl lg:text-5xl">
           {project.companyName}
           <div className="flex items-center">
             {project.githubLink && (
@@ -166,6 +269,42 @@ export default async function Project({ params }: ProjectPageProps) {
           </div>
         ))}
       </div>
+
+      {/* Related projects — strong internal linking for SEO */}
+      {relatedProjects.length > 0 && (
+        <section className="mt-14 border-t border-border pt-8">
+          <h2 className="font-heading text-2xl font-bold text-foreground mb-6">
+            Related projects
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {relatedProjects.map((rp) => (
+              <Link
+                key={rp.id}
+                href={`/projects/${rp.id}`}
+                className="card-hover group flex flex-col overflow-hidden rounded-xl border border-border bg-card"
+              >
+                <div className="relative h-24 w-full overflow-hidden bg-muted">
+                  <Image
+                    src={rp.companyLogoImg}
+                    alt={rp.companyName}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-3.5">
+                  <h3 className="line-clamp-2 text-sm font-semibold text-foreground transition-colors group-hover:text-accent">
+                    {rp.companyName}
+                  </h3>
+                  <span className="mt-auto pt-2 text-[11px] text-muted-foreground">
+                    {rp.category.join(" · ")}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <hr className="mt-12" />
       <div className="flex justify-center py-6 lg:py-10">

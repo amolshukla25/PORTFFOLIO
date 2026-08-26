@@ -467,7 +467,7 @@ This is a healthy uptrend — higher highs, higher lows, MAs aligned bullish.`
         },
         {
           id: "practice-rsi-reading",
-          title": "Indian Stock RSI Interpretation",
+          title: "Indian Stock RSI Interpretation",
           difficulty: "Easy",
           task: "Check the current RSI (14-day) for 3 Indian stocks: TCS, HDFC Bank, and ITC. Classify each as overbought, oversold, or neutral based on Indian market thresholds (80/20).",
           hint: "RSI > 80 = overbought, RSI < 20 = oversold (use Indian-adjusted thresholds)",
@@ -686,7 +686,7 @@ Key Lesson: FII flows are a leading indicator for Nifty. When FIIs shift from se
         },
         {
           id: "practice-delivery-analysis",
-          title": "Delivery Volume Analysis",
+          title: "Delivery Volume Analysis",
           difficulty: "Easy",
           task: "Pick an Indian stock that recently had a big price move (up or down). Check its delivery volume on NSE. Was delivery above 50%? Did volume confirm the move?",
           hint: "Check NSE website for delivery data. Compare delivery % to 20-day average.",

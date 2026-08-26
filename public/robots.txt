@@ -1,6 +1,16 @@
 # Allow all crawlers
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
 
 # Sitemap location
 Sitemap: https://www.amolshukla.online/sitemap.xml
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Bingbot
+User-agent: Bingbot
+Allow: /

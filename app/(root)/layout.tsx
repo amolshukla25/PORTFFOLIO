@@ -20,7 +20,7 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-accent font-heading text-sm font-bold text-primary-foreground shadow-md shadow-accent/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
                 AS
               </span>
-              <span className="font-heading text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent">
+              <span className="font-heading text-base font-semibold tracking-tight text-foreground transition-colors group-hover:text-accent sm:text-lg">
                 {siteConfig.authorName}
               </span>
             </Link>

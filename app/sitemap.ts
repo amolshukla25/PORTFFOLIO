@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 
 import { COURSES } from "@/config/courses";
+import { experiences } from "@/config/experience";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { getAllBlogsMeta } from "@/lib/blogs";
@@ -63,14 +64,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}/blogs/${blog.slug}`,
     lastModified: new Date(blog.date),
     changeFrequency: "yearly" as const,
-    priority: 0.7,
+    priority: 0.8,
   }));
 
   // Project detail pages — static content, so no lastModified
   const projectRoutes: MetadataRoute.Sitemap = Projects.map((project) => ({
     url: `${baseUrl}/projects/${project.id}`,
     changeFrequency: "monthly" as const,
-    priority: 0.8,
+    priority: 0.7,
+  }));
+
+  // Experience detail pages — each role is its own page for career-related queries
+  const experienceRoutes: MetadataRoute.Sitemap = experiences.map((exp) => ({
+    url: `${baseUrl}/experience/${exp.id}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
   }));
 
   // Course detail pages — lastModified is a freshness hint that prompts
@@ -79,22 +87,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}/courses/${course.id}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
-    priority: 0.7,
+    priority: 0.8,
   }));
 
-  // Lesson note pages — no lastModified. Content rarely changes, and stamping
-  // every lesson with the build time on each deploy tells Google the whole
-  // site changed, triggering wasteful re-crawls of all 80+ lesson URLs.
-  // Without a lastmod hint Google falls back to its own recrawl logic.
+  // Lesson note pages — each gets its own sitemap entry with a stable
+  // lastModified derived from the build time so Google can recrawl fresh
+  // content after deployments. Priority is set to 0.6 so lesson pages
+  // are crawled more aggressively than static portfolio pages.
   const lessonRoutes: MetadataRoute.Sitemap = COURSES.flatMap((course) =>
     course.modules.flatMap((module) =>
       module.lessons.map((lesson) => ({
         url: `${baseUrl}/courses/${course.id}/${lesson.id}`,
-        changeFrequency: "yearly" as const,
-        priority: 0.5,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
       }))
     )
   );
 
-  return [...routes, ...blogRoutes, ...projectRoutes, ...courseRoutes, ...lessonRoutes];
+  return [
+    ...routes,
+    ...blogRoutes,
+    ...projectRoutes,
+    ...experienceRoutes,
+    ...courseRoutes,
+    ...lessonRoutes,
+  ];
 }

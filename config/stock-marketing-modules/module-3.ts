@@ -321,10 +321,10 @@ Rebalance: Annually or when >5% off target`
         },
         {
           id: "practice-sip-planning",
-          title": "SIP Planning Exercise",
-          difficulty": "Easy",
+          title: "SIP Planning Exercise",
+          difficulty: "Easy",
           task: "You want to accumulate ₹1 crore in 20 years for your child's education. Assuming 12% CAGR from Nifty 50, how much monthly SIP do you need? How much will you actually invest vs. wealth created?",
-          hint": "Use the future value of annuity formula or an online SIP calculator.",
+          hint: "Use the future value of annuity formula or an online SIP calculator.",
           solution: `SIP Planning for ₹1 Crore Goal:
 
 Target: ₹1,00,00,000
@@ -578,10 +578,10 @@ For most Indians, SIP is better because of consistency.`,
       practice: [
         {
           id: "practice-sip-calculation",
-          title": "SIP Calculator",
-          difficulty": "Easy",
-          task": "You invest ₹3,000/month into Nifty 50 index fund for 6 months. Nifty levels are: 21,000, 20,000, 18,500, 19,500, 21,000, 22,000. Calculate: (1) Total units bought, (2) Your average cost per unit, (3) Current portfolio value.",
-          hint": "Shares = Investment ÷ Nifty Level for each month. Average cost = Total invested ÷ Total units.",
+          title: "SIP Calculator",
+          difficulty: "Easy",
+          task: "You invest ₹3,000/month into Nifty 50 index fund for 6 months. Nifty levels are: 21,000, 20,000, 18,500, 19,500, 21,000, 22,000. Calculate: (1) Total units bought, (2) Your average cost per unit, (3) Current portfolio value.",
+          hint: "Shares = Investment ÷ Nifty Level for each month. Average cost = Total invested ÷ Total units.",
           solution: `SIP Calculation:
 
 Month 1: ₹3,000 ÷ 21,000 = 0.143 units
@@ -605,11 +605,11 @@ Return: ₹19,536 - ₹18,000 = ₹1,536 (8.5% in 6 months)
 Key Insight: Even though Nifty went down in months 2-3, your SIP bought more units at lower prices, reducing your average cost.`
         },
         {
-          id": "practice-timing-cost",
-          title": "Market Timing Cost Calculator",
-          difficulty": "Medium",
-          task": "If you had ₹2,00,000 to invest in January 2020, but waited until March 2020 (market bottom) to invest, you would have missed the 30% recovery. Calculate the opportunity cost over 3 years assuming 12% annual returns from the bottom.",
-          hint": "Compare investing ₹2,00,000 in Jan 2020 vs March 2020 with 3 years of 12% returns.",
+          id: "practice-timing-cost",
+          title: "Market Timing Cost Calculator",
+          difficulty: "Medium",
+          task: "If you had ₹2,00,000 to invest in January 2020, but waited until March 2020 (market bottom) to invest, you would have missed the 30% recovery. Calculate the opportunity cost over 3 years assuming 12% annual returns from the bottom.",
+          hint: "Compare investing ₹2,00,000 in Jan 2020 vs March 2020 with 3 years of 12% returns.",
           solution: `Market Timing Exercise:
 
 SCENARIO A: Invest ₹2,00,000 in January 2020
@@ -888,10 +888,10 @@ Tax saved: ₹30,000 × 12.5% = ₹3,750`,
       practice: [
         {
           id: "practice-tax-planning",
-          title": "Tax Planning Exercise",
-          difficulty": "Medium",
-          task": "You earn ₹12,00,000 annually and want to minimize taxes. Design a tax-saving plan using PPF, ELSS, NPS, and SGB. How much tax can you save?",
-          hint": "Max out 80C (₹1.5L), 80CCD (₹50K), and invest in SGB for gold exposure.",
+          title: "Tax Planning Exercise",
+          difficulty: "Medium",
+          task: "You earn ₹12,00,000 annually and want to minimize taxes. Design a tax-saving plan using PPF, ELSS, NPS, and SGB. How much tax can you save?",
+          hint: "Max out 80C (₹1.5L), 80CCD (₹50K), and invest in SGB for gold exposure.",
           solution: `Tax Planning for ₹12,00,000 Annual Income:
 
 Current Tax (without planning):
@@ -930,11 +930,11 @@ Effective Tax Rate: 5.3% (down from 13.7%)
 Additional Benefit: PPF grows at 7.1% tax-free, NPS at 10-12%, ELSS at 12-15%. Your money is working harder while you save taxes!`
         },
         {
-          id": "practice-ltcg-calculation",
-          title": "LTCG Tax Calculation",
-          difficulty": "Easy",
-          task": "You sold Indian stocks this year with the following gains: ₹80,000 STCG and ₹1,50,000 LTCG. Calculate your total tax liability. How much is exempt under the ₹1.25 lakh LTCG exemption?",
-          hint": "STCG is taxed at 20%. LTCG is taxed at 12.5% above ₹1.25 lakh exemption.",
+          id: "practice-ltcg-calculation",
+          title: "LTCG Tax Calculation",
+          difficulty: "Easy",
+          task: "You sold Indian stocks this year with the following gains: ₹80,000 STCG and ₹1,50,000 LTCG. Calculate your total tax liability. How much is exempt under the ₹1.25 lakh LTCG exemption?",
+          hint: "STCG is taxed at 20%. LTCG is taxed at 12.5% above ₹1.25 lakh exemption.",
           solution: `LTCG Tax Calculation:
 
 STCG: ₹80,000 × 20% = ₹16,000
