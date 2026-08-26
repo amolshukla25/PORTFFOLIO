@@ -30,5 +30,5 @@ export const STOCK_MARKETING_COURSE: Course = {
   rating: 4.9,
   instructor: "Amol Shukla",
   iconName: "chart",
-  modules: [MODULE_1, MODULE_2, MODULE_3, MODULE_4, MODULE_5, MODULE_6, MODULE_7, MODULE_8, MODULE_9, MODULE_10],
+  modules: [MODULE_1, MODULE_2, MODULE_3, MODULE_4, MODULE_5, MODULE_6, MODULE_7, MODULE_8, MODULE_9, MODULE_10] as any,
 };

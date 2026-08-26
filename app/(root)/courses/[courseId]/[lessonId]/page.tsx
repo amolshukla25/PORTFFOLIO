@@ -72,7 +72,7 @@ export async function generateMetadata({
 
   return {
     title,
-    description: `${lesson.shortDescription
+    description: `${(lesson.shortDescription || (lesson as any).description || "")
       .trim()
       .replace(/[.!?…]+$/, "")} — Free lesson notes by Amol Shukla.`,
     keywords: [
@@ -83,7 +83,7 @@ export async function generateMetadata({
     alternates: { canonical: url },
     openGraph: {
       title: truncateMetaTitle(title),
-      description: lesson.shortDescription,
+      description: lesson.shortDescription || (lesson as any).description || "",
       url,
       siteName: siteConfig.name,
       type: "article",
@@ -92,7 +92,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: truncateMetaTitle(title),
-      description: lesson.shortDescription,
+      description: lesson.shortDescription || (lesson as any).description || "",
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,
     },
@@ -160,7 +160,7 @@ export default async function lessonPage({
   // without executing JavaScript (the previous client-only render left the
   // article body empty in the initial HTML, which Google treats as thin
   // content and refuses to index).
-  const contentHtml = await renderLessonMarkdown(lesson.contentMarkdown);
+  const contentHtml = await renderLessonMarkdown(lesson.contentMarkdown || (lesson as any).content || "");
 
   return (
     <>

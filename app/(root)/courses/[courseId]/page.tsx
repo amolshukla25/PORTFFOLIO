@@ -113,7 +113,7 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
       module.lessons.map((lesson) => ({
         "@type": "LearningResource",
         name: lesson.title,
-        description: lesson.shortDescription,
+        description: lesson.shortDescription || (lesson as any).description || "",
         url: `${siteConfig.url}/courses/${course.id}/${lesson.id}`,
         learningResourceType: "lesson",
       }))
@@ -256,14 +256,14 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
                       </h4>
                     </div>
                     <p className="text-xs text-muted-foreground line-clamp-2 pl-6">
-                      {lesson.shortDescription}
+                      {lesson.shortDescription || (lesson as any).description || ""}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-4 pl-6 sm:pl-0 shrink-0">
                     <div className="text-right hidden sm:block">
                       <p className="text-xs font-medium text-foreground">{lesson.duration}</p>
-                      <p className="text-[10px] text-muted-foreground">{lesson.readingTime}</p>
+                      <p className="text-[10px] text-muted-foreground">{lesson.readingTime || (lesson as any).duration || ""}</p>
                     </div>
                     <Link
                       href={`/courses/${course.id}/${lesson.id}`}
