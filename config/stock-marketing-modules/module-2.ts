@@ -2,73 +2,47 @@ import type { Module } from "../courses";
 
 export const MODULE_2: Module = {
   id: "module-2-technical-analysis",
-  title: "Module 2: Technical Analysis — Reading Charts & Indicators",
+  title: "Module 2: Technical Analysis — Reading Charts & Indicators on Indian Markets",
   description:
-    "Master chart patterns, technical indicators, and volume analysis to time your entries and exits with confidence.",
+    "Master chart patterns, technical indicators, and volume analysis on NSE/BSE to identify trends and time your entries and exits with confidence.",
   lessons: [
     {
-      id: "chart-basics",
-      title: "Lesson 1: Chart Types & Price Action Fundamentals",
+      id: "chart-basics-indian",
+      title: "Lesson 1: Chart Types & Price Action on Indian Markets",
       shortDescription:
-        "Understand candlestick charts, support/resistance levels, and how to read price action like a professional trader.",
+        "Understand candlestick charts, support/resistance levels, and how to read price action on NSE and BSE stocks like a professional Indian investor.",
       duration: "50 mins",
       readingTime: "10 mins read",
       contentMarkdown: `### What is Technical Analysis?
 
-Technical analysis is the study of price movements and trading volume to forecast future price direction. Unlike fundamental analysis (which evaluates a company's intrinsic value), technical analysis focuses on **what the market is doing**, not **what the company is worth**.
+Technical analysis is the study of price movements and trading volume to forecast future price direction. For Indian markets, you'll use TradingView, Zerodha Kite, or Groww charts to analyze NSE/BSE stocks.
 
-> **Mental model:** Think of technical analysis as reading the market's body language — price action, volume, and patterns tell you whether buyers or sellers are in control.
-
-#### The Three Pillars of Technical Analysis
-
-| Pillar | What It Studies | Key Insight |
-|---|---|---|
-| **Price Action** | How price moves over time | Price discounts everything |
-| **Volume** | How much trading activity occurs | Volume confirms trends |
-| **Time** | How long patterns take to form | Timing matters for entries/exits |
+> **Mental model:** Think of technical analysis as reading the market's body language — price action, volume, and patterns on Indian stocks tell you whether buyers or sellers are in control.
 
 ---
 
-### Chart Types — Choosing Your Window
+### Indian Market Hours & Structure
 
-#### 1. Line Charts
-
-The simplest chart type — connects closing prices with a continuous line.
-
-| Pros | Cons |
-|---|---|
-| Easy to read | Hides intraday volatility |
-| Shows overall trend clearly | No open/high/low data |
-| Good for beginners | Less detail for trading decisions |
-
-#### 2. Bar Charts (OHLC)
-
-Each bar shows four prices: Open, High, Low, Close.
-
-| Component | Position |
-|---|---|
-| **Open** | Horizontal tick on the left |
-| **High** | Top of the vertical line |
-| **Low** | Bottom of the vertical line |
-| **Close** | Horizontal tick on the right |
-
-#### 3. Candlestick Charts (Most Popular)
-
-Japanese candlesticks show the same OHLC data but with a visual "body" that makes patterns easier to spot.
-
-| Candle Color | Meaning | Visual |
+| Session | Time (IST) | What Happens |
 |---|---|---|
-| **Green/White** | Close > Open (bullish) | Filled body |
-| **Red/Black** | Close < Open (bearish) | Hollow/filled body |
+| **Pre-Open** | 9:00 AM - 9:15 AM | Order matching, price discovery |
+| **Market Hours** | 9:15 AM - 3:30 PM | Active trading on NSE/BSE |
+| **Closing Session** | 3:30 PM - 3:40 PM | Closing price calculation |
+| **Post-Close** | 3:40 PM - 4:00 PM | Order entry for next day |
 
-**Candlestick Anatomy:**
-- **Body**: Range between open and close
-- **Upper Wick/Shadow**: High to the higher of open/close
-- **Lower Wick/Shadow**: Low to the lower of open/single
+> **Key insight:** Indian markets are open 6 hours 15 minutes per day. Most price movement happens in the first 1 hour (9:15-10:15 AM) and last 1 hour (2:30-3:30 PM).
+
+#### Circuit Breakers (SEBI Rules)
+
+| Index Drop | Trading Halt | Duration |
+|---|---|---|
+| -10% (Level 1) | 15-minute halt | 15 mins |
+| -15% (Level 2) | 30-minute halt | 30 mins |
+| -20% (Level 3) | Halt for rest of day | Rest of day |
 
 ---
 
-### Key Candlestick Patterns
+### Key Candlestick Patterns on Indian Stocks
 
 #### Single Candle Patterns
 
@@ -86,768 +60,660 @@ Japanese candlesticks show the same OHLC data but with a visual "body" that make
 | **Engulfing** | Current candle engulfs previous | Strong reversal |
 | **Morning Star** | Three-candle bullish reversal | Buy signal |
 | **Evening Star** | Three-candle bearish reversal | Sell signal |
-| **Three White Soldiers** | Three consecutive bullish candles | Strong uptrend |
 
 ---
 
-### Support and Resistance
+### Support and Resistance on Indian Stocks
 
-**Support** is a price level where buying interest is strong enough to prevent further decline. **Resistance** is where selling interest prevents further advance.
+#### How to Identify Support & Resistance on NSE Stocks
 
-#### How to Identify Support & Resistance
+1. **Look for price bounces** — levels where Nifty 50 or stock has reversed multiple times
+2. **Round numbers** — ₹500, ₹1,000, ₹5,000 often act as psychological levels in India
+3. **Previous highs/lows** — historical turning points on NSE charts
+4. **Moving averages** — 50-day, 200-day MA act as dynamic support/resistance
 
-1. **Look for price bounces** — levels where price has reversed multiple times
-2. **Round numbers** — $50, $100, $200 often act as psychological levels
-3. **Previous highs/lows** — historical turning points
-4. **Moving averages** — dynamic support/resistance (covered later)
-
-> **Key insight:** Support becomes resistance once broken, and vice versa — this is called the "polarity principle."
-
-#### The Role of Volume at Key Levels
-
-| Volume at Level | What It Means |
-|---|---|
-| High volume bounce | Strong support/resistance |
-| Low volume bounce | Weak level, likely to break |
-| High volume breakout | Confirmed breakout |
-| Low volume breakout | Likely false breakout |
+> **Key insight:** In India, round numbers like ₹1,000 (HDFC Bank), ₹3,000 (TCS), ₹2,500 (Reliance) are powerful psychological levels.
 
 ---
 
-### Trend Lines and Channels
+### Indian Stock Chart Analysis Platforms
 
-#### Drawing Trend Lines
-
-- **Uptrend line**: Connect at least two higher lows with a straight line
-- **Downtrend line**: Connect at least two lower highs with a straight line
-- **More touches** = stronger trend line
-
-#### Trend Channels
-
-A channel is formed by drawing a parallel line to the trend line:
-
-| Channel Type | How to Draw | Trading Strategy |
-|---|---|---|
-| **Ascending** | Parallel line above trend line | Buy at support, sell at resistance |
-| **Descending** | Parallel line below trend line | Short at resistance, cover at support |
-| **Horizontal** | Both lines flat | Trade the range |
+| Platform | Features | Cost | Best For |
+|---|---|---|---|
+| **TradingView** | Advanced charts, indicators, community | Free/Premium | Serious technical analysis |
+| **Zerodha Kite** | Integrated with brokerage, clean UI | Free (with account) | Active traders |
+| **Groww** | Simple charts, good for beginners | Free | New investors |
+| **ChartInk** | Indian market screeners, pattern detection | Free/Premium | Indian market scans |
+| **Moneycontrol** | News + charts combined | Free | Research + analysis |
 
 ---
 
-### Common Mistakes to Avoid
+### Common Technical Analysis Mistakes on Indian Stocks
 
-- **Mistake:** Drawing too many lines — **Fix:** Focus on the most obvious levels; less is more.
-- **Mistake:** Ignoring the timeframe — **Fix:** Support/resistance on daily charts are more significant than on 5-minute charts.
-- **Mistake:** Treating levels as exact prices — **Fix:** Think of them as zones, not precise numbers.
-- **Mistake:** Forcing patterns where none exist — **Fix:** Let the pattern come to you; don't chase it.
+- **Mistake:** Drawing too many lines on Nifty charts — **Fix:** Focus on the most obvious levels.
+- **Mistake:** Ignoring liquidity — **Fix:** Technical analysis works better on liquid NSE stocks than illiquid BSE stocks.
+- **Mistake:** Treating levels as exact prices — **Fix:** Think of them as zones (e.g., ₹2,480-2,520 for Reliance).
 
 ### Professional Tips & Tricks
 
-- Start with daily charts for the big picture, then zoom in for entries.
-- Use at least 2-3 touches to confirm a trend line.
-- Round numbers ($50, $100) are powerful psychological levels.
-- Always check multiple timeframes before making a decision.
+- Start with daily Nifty 50 charts for the big picture, then zoom in for entries.
+- Use at least 2-3 touches to confirm a trend line on Indian stocks.
+- Round numbers (₹100, ₹500, ₹1,000, ₹5,000) are powerful in India.
+- Always check multiple timeframes before making a decision on Indian stocks.
 
 ---
 
 ### Key Takeaways
 
-- Technical analysis studies price, volume, and time to forecast direction.
+- Indian markets trade 9:15 AM - 3:30 PM IST on NSE/BSE.
 - Candlestick charts are the most popular and informative chart type.
 - Support and resistance are zones where supply and demand shift.
-- Trend lines and channels help you identify the market's direction.
-- Always use multiple indicators and timeframes for confirmation.
+- Use TradingView or Zerodha Kite for Indian stock chart analysis.
+- Technical analysis works best on liquid NSE stocks.
 
-**Next up:** Technical indicators — moving averages, RSI, and MACD.`,
+**Next up:** Technical indicators — moving averages, RSI, and MACD for Indian markets.`,
       codeLanguage: "text",
-      codeSnippet: `# Technical Analysis Fundamentals
+      codeSnippet: `Technical Analysis for Indian Markets — Quick Reference
 
-## Candlestick Anatomy
+INDIAN MARKET SCHEDULE
+Pre-Open:     9:00 AM - 9:15 AM IST
+Market Hours:  9:15 AM - 3:30 PM IST
+Closing:       3:30 PM - 3:40 PM IST
 
-Bullish Candle (Green):
-        ┃  ← Upper Wick (High)
-    ┏━━━━━━┓
-    ┃ BODY ┃  ← Close is ABOVE Open
-    ┗━━━━━━┛
-        ┃  ← Lower Wick (Low)
+NIFTY 50 KEY LEVELS
+Support Levels:    22,000 | 21,500 | 21,000 | 20,500
+Resistance Levels: 22,500 | 23,000 | 23,500 | 24,000
 
-Bearish Candle (Red):
-        ┃  ← Upper Wick (High)
-    ┏━━━━━━┓
-    ┃ BODY ┃  ← Close is BELOW Open
-    ┗━━━━━━┛
-        ┃  ← Lower Wick (Low)
+INDIAN STOCK CHART CHECKLIST
+Before analyzing any Indian stock:
+- Is it traded on NSE? (prefer NSE for liquidity)
+- What is the average daily volume? (>1 lakh shares ideal)
+- What is the market cap? (>₹5,000 crore for reliability)
+- Check weekly chart first (big picture)
+- Then daily chart (entry timing)
+- Then hourly chart (precision entry)
 
-## Support & Resistance Zones
+CANDLESTICK PATTERNS FOR NSE STOCKS
+Pattern        | Signal           | Best On
+---------------|------------------|------------------
+Hammer         | Bullish Reversal | Nifty 50 stocks
+Engulfing      | Strong Reversal  | All liquid stocks
+Doji           | Indecision       | High-volume stocks
+Morning Star   | Buy Signal       | Blue chips
+Shooting Star  | Bearish Reversal | Any stock
 
-Price ($)
-  │
-120 ──────────── Resistance ───────────
-  │                    ╲
-100 ──────────── Support ──────────────
-  │                         ╱
- 80 ──────────── Support ──────────────
-  │
-  └────────────────────────────────────── Time
+KEY PSYCHOLOGICAL LEVELS (INDIAN STOCKS)
+Stock          | Key Support | Key Resistance
+---------------|-------------|----------------
+Reliance       | ₹2,400      | ₹2,800
+TCS            | ₹3,500      | ₹4,000
+HDFC Bank      | ₹1,600      | ₹1,850
+Infosys        | ₹1,400      | ₹1,650
+ITC            | ₹420        | ₹500
+SBI            | ₹700        | ₹850
 
-## Key Pattern Cheat Sheet
+MARKET HOURS STRATEGY
+9:15-9:30 AM:  Avoid — high volatility, gap openings
+9:30-10:30 AM: Watch — first hour sets the trend
+10:30-2:30 PM: Analyze — mid-day is best for research
+2:30-3:30 PM: Watch — closing session can be volatile`,
+      codeOutput: `Technical Analysis for Indian Markets — Quick Reference
 
-| Pattern | Signal | Strength |
-|---------|--------|----------|
-| Hammer | Bullish Reversal | ★★★☆☆ |
-| Engulfing | Strong Reversal | ★★★★☆ |
-| Doji | Indecision | ★★☆☆☆ |
-| Morning Star | Buy Signal | ★★★★☆ |`,
-      codeOutput: `Technical Analysis Fundamentals
+INDIAN MARKET SCHEDULE
+Pre-Open:     9:00 AM - 9:15 AM IST
+Market Hours:  9:15 AM - 3:30 PM IST
+Closing:       3:30 PM - 3:40 PM IST
 
-## Candlestick Anatomy
+NIFTY 50 KEY LEVELS
+Support Levels:    22,000 | 21,500 | 21,000 | 20,500
+Resistance Levels: 22,500 | 23,000 | 23,500 | 24,000
 
-Bullish Candle (Green):
-        ┃  ← Upper Wick (High)
-    ┏━━━━━━┓
-    ┃ BODY ┃  ← Close is ABOVE Open
-    ┗━━━━━━┛
-        ┃  ← Lower Wick (Low)
+INDIAN STOCK CHART CHECKLIST
+Before analyzing any Indian stock:
+- Is it traded on NSE? (prefer NSE for liquidity)
+- What is the average daily volume? (>1 lakh shares ideal)
+- What is the market cap? (>₹5,000 crore for reliability)
+- Check weekly chart first (big picture)
+- Then daily chart (entry timing)
+- Then hourly chart (precision entry)
 
-Bearish Candle (Red):
-        ┃  ← Upper Wick (High)
-    ┏━━━━━━┓
-    ┃ BODY ┃  ← Close is BELOW Open
-    ┗━━━━━━┛
-        ┃  ← Lower Wick (Low)
+CANDLESTICK PATTERNS FOR NSE STOCKS
+Pattern        | Signal           | Best On
+---------------|------------------|------------------
+Hammer         | Bullish Reversal | Nifty 50 stocks
+Engulfing      | Strong Reversal  | All liquid stocks
+Doji           | Indecision       | High-volume stocks
+Morning Star   | Buy Signal       | Blue chips
+Shooting Star  | Bearish Reversal | Any stock
 
-## Support & Resistance Zones
+KEY PSYCHOLOGICAL LEVELS (INDIAN STOCKS)
+Stock          | Key Support | Key Resistance
+---------------|-------------|----------------
+Reliance       | ₹2,400      | ₹2,800
+TCS            | ₹3,500      | ₹4,000
+HDFC Bank      | ₹1,600      | ₹1,850
+Infosys        | ₹1,400      | ₹1,650
+ITC            | ₹420        | ₹500
+SBI            | ₹700        | ₹850
 
-Price ($)
-  │
-120 ──────────── Resistance ───────────
-  │                    ╲
-100 ──────────── Support ──────────────
-  │                         ╱
- 80 ──────────── Support ──────────────
-  │
-  └────────────────────────────────────── Time
-
-## Key Pattern Cheat Sheet
-
-| Pattern | Signal | Strength |
-|---------|--------|----------|
-| Hammer | Bullish Reversal | ★★★☆☆ |
-| Engulfing | Strong Reversal | ★★★★☆ |
-| Doji | Indecision | ★★☆☆☆ |
-| Morning Star | Buy Signal | ★★★★☆ |`,
+MARKET HOURS STRATEGY
+9:15-9:30 AM:  Avoid — high volatility, gap openings
+9:30-10:30 AM: Watch — first hour sets the trend
+10:30-2:30 PM: Analyze — mid-day is best for research
+2:30-3:30 PM: Watch — closing session can be volatile`,
       visualizationTips: [
-        "Draw your own candlestick on paper — label the body, wicks, open, high, low, and close.",
-        "Open a chart on TradingView and identify at least 3 support/resistance levels.",
-        "Practice spotting hammer and shooting star patterns on historical data.",
+        "Open TradingView and apply candlestick charts to Nifty 50 or your favorite NSE stock.",
+        "Draw support/resistance zones (not exact lines) on Nifty daily chart.",
+        "Practice spotting hammer and engulfing patterns on Indian stock historical data."
       ],
       tipsAndTricks: [
-        "Never rely on a single candlestick pattern — wait for confirmation from the next candle.",
-        "Support and resistance are zones, not exact lines — allow some wiggle room.",
-        "Higher timeframe levels (daily, weekly) are more significant than lower ones.",
+        "Never rely on a single candlestick pattern — wait for confirmation.",
+        "Support and resistance are zones, not exact prices — allow wiggle room.",
+        "Higher timeframe levels (weekly, monthly) are more significant on Indian stocks.",
+        "Use NSE data for technical analysis — it has 9x more volume than BSE."
       ],
       practice: [
         {
           id: "practice-chart-reading",
-          title: "Chart Reading Exercise",
+          title: "Indian Stock Chart Reading Exercise",
           difficulty: "Easy",
-          task: "Open TradingView (free) and find 3 different stocks. For each, identify the current trend (up, down, or sideways) and draw a trend line connecting at least 2 points.",
-          hint: "Use the drawing tools on TradingView. Start with daily charts for clearer patterns.",
-          solution: `Example Analysis (AAPL):
-1. Trend: Uptrend (higher highs, higher lows)
-2. Support: ~$170 (recent bounce level)
-3. Resistance: ~$195 (recent high)
-4. Trend line: Connect $155 and $165 lows
+          task: "Open TradingView and analyze Nifty 50 index. Identify the current trend (up, down, or sideways), draw a trend line, and mark 2 support and 2 resistance levels.",
+          hint: "Use the drawing tools. Start with daily charts for clearer patterns on Nifty.",
+          solution: `Example Nifty 50 Analysis:
 
-Example Analysis (TSLA):
-1. Trend: Sideways/Consolidation
-2. Support: ~$180
-3. Resistance: ~$250
-4. Pattern: Triangle forming, breakout expected`,
+1. Trend: Uptrend (higher highs, higher lows since Oct 2023)
+2. Trend line: Connect 21,000 (Oct low) with 21,500 (Dec low)
+3. Support 1: ₹22,000 (recent bounce level)
+4. Support 2: ₹21,500 (trend line support)
+5. Resistance 1: ₹23,500 (recent high)
+6. Resistance 2: ₹24,000 (psychological level)
+
+Key Observation: Nifty is in a strong uptrend with support at the 50-day moving average (~22,200). Any pullback to ₹22,000-21,500 zone would be a buying opportunity.
+
+Risk Management: Stop loss below ₹21,000 (200-day MA) for long positions.`
         },
         {
           id: "practice-candlestick-spotting",
-          title: "Candlestick Pattern Recognition",
+          title: "Indian Stock Candlestick Recognition",
           difficulty: "Medium",
-          task: "Look at the last 30 days of any stock's daily chart. Find and label: 1 Doji, 1 Hammer, and 1 Engulfing pattern. Note the date and what happened to price afterward.",
-          hint: "Zoom in on the daily chart. Dojis have very small bodies; hammers have long lower wicks.",
-          solution: `Example findings for MSFT (hypothetical):
-1. Doji - Jan 15: Small body, price closed near open. Next day: slight pullback
-2. Hammer - Jan 22: Long lower wick at support ($380). Next 3 days: +4% rally
-3. Bullish Engulfing - Feb 3: Green candle engulfed previous red candle. Next week: continued uptrend`,
-        },
-      ],
+          task: "Look at the last 60 days of TCS daily chart on TradingView. Find and label: 1 Hammer, 1 Engulfing pattern, and 1 Doji. Note the date and what happened to price afterward.",
+          hint: "Zoom in on the daily chart. Hammers have long lower wicks; dojis have very small bodies.",
+          solution: `TCS Candlestick Analysis (hypothetical example):
+
+1. Hammer - Found on day when TCS dropped to ₹3,450 intraday but recovered to close at ₹3,520.
+   Result: Next 3 days, TCS rallied 4% to ₹3,660. Hammer at support = reliable reversal.
+
+2. Bullish Engulfing - Green candle completely engulfed previous red candle near ₹3,500 support.
+   Result: Next week, TCS moved up 5% to ₹3,700. Strong buy signal.
+
+3. Doji - Small body at ₹3,600 after a 3-day rally.
+   Result: Next day was flat, followed by a 2% pullback. Doji at resistance = caution.
+
+Key Lesson: Candlestick patterns work best when they appear near support/resistance levels on liquid NSE stocks like TCS. Never use them in isolation.`
+        }
+      ]
     },
     {
-      id: "technical-indicators",
-      title: "Lesson 2: Technical Indicators — Moving Averages, RSI & MACD",
+      id: "technical-indicators-indian",
+      title: "Lesson 2: Technical Indicators for Indian Markets",
       shortDescription:
-        "Learn the most widely-used technical indicators to identify trends, momentum, and overbought/oversold conditions.",
+        "Learn moving averages, RSI, and MACD calibrated for Indian market conditions and NSE/BSE stock analysis.",
       duration: "55 mins",
       readingTime: "11 mins read",
-      contentMarkdown: `### What Are Technical Indicators?
+      contentMarkdown: `### Technical Indicators on Indian Stocks
 
-Technical indicators are mathematical calculations based on price, volume, or open interest. They help traders identify trends, momentum, volatility, and potential reversal points.
+Technical indicators help Indian investors identify trends, momentum, and overbought/oversold conditions on NSE/BSE stocks.
 
-> **Mental model:** Indicators are like dashboard gauges in a car — they don't tell you where to drive, but they tell you how fast you're going, how much fuel you have, and whether the engine is overheating.
-
-#### Types of Indicators
-
-| Category | Purpose | Examples |
-|---|---|---|
-| **Trend** | Identify direction | Moving Averages, ADX |
-| **Momentum** | Measure speed of change | RSI, MACD, Stochastic |
-| **Volatility** | Measure price fluctuation | Bollinger Bands, ATR |
-| **Volume** | Confirm trends with volume | OBV, Volume Profile |
+> **Mental model:** Indicators are like dashboard gauges in your car — they tell you how fast you're going and whether the engine is overheating, but they don't tell you where to drive.
 
 ---
 
-### Moving Averages — The Foundation
+### Moving Averages for Indian Stocks
 
-A **Moving Average (MA)** smooths out price data by creating a constantly updated average price over a specific period.
-
-#### Types of Moving Averages
-
-| Type | Calculation | Characteristics |
+| Period | Name | Use Case on Indian Stocks |
 |---|---|---|
-| **SMA** (Simple) | Equal weight to all periods | Smooth, slower to react |
-| **EMA** (Exponential) | More weight to recent prices | Responsive, faster signals |
+| **9/20 EMA** | Short-term | Intraday/swing trading |
+| **50 SMA** | Medium-term | Trend confirmation for Nifty 50 stocks |
+| **200 SMA** | Long-term | Bull/bear market filter for Nifty |
 
-#### Common Moving Average Periods
+#### Moving Average Crossover Strategy (Indian Context)
 
-| Period | Name | Use Case |
-|---|---|---|
-| **9/10 EMA** | Short-term | Scalping, day trading |
-| **20 EMA** | Short-term | Swing trading, dynamic support |
-| **50 SMA** | Medium-term | Trend confirmation |
-| **100 SMA** | Medium-term | Major trend direction |
-| **200 SMA** | Long-term | Bull/bear market filter |
-
-#### Moving Average Crossover Strategy
-
-| Signal | Description | Action |
+| Signal | Description | Action on Nifty/Stocks |
 |---|---|---|
 | **Golden Cross** | 50 MA crosses above 200 MA | Bullish — consider buying |
-| **Death Cross** | 50 MA crosses below 200 MA | Bearish — consider selling |
+| **Death Cross** | 50 MA crosses below 200 MA | Bearish — consider reducing |
 
-> **Key insight:** Moving averages are lagging indicators — they confirm trends but don't predict them. Use them with other tools, not in isolation.
+> **Key insight:** The 200-day SMA on Nifty 50 has been a reliable bull/bear filter. When Nifty trades above 200 SMA, it's a bull market; below = bear market.
 
 ---
 
-### RSI (Relative Strength Index)
+### RSI (Relative Strength Index) for Indian Stocks
 
-RSI measures the speed and magnitude of recent price changes to identify overbought or oversold conditions.
-
-#### RSI Formula Concept
-
-RSI = 100 - (100 / (1 + RS))
-
-Where RS = Average Gain / Average Loss over the period (typically 14 days)
-
-#### RSI Interpretation
-
-| RSI Value | Condition | Potential Action |
+| RSI Value | Condition | Action on Indian Stocks |
 |---|---|---|
-| **Above 70** | Overbought | Consider selling or waiting for pullback |
+| **Above 80** | Extremely overbought | Strong sell signal |
+| **70-80** | Overbought | Consider booking profits |
 | **50-70** | Bullish momentum | Hold or look for buy opportunities |
 | **30-50** | Bearish momentum | Be cautious, wait for confirmation |
-| **Below 30** | Oversold | Consider buying or watching for reversal |
+| **20-30** | Oversold | Consider buying at support |
+| **Below 20** | Extremely oversold | Strong buy signal (contrarian) |
 
-#### RSI Divergence (Advanced Signal)
-
-| Divergence Type | Price Action | RSI Action | Signal |
-|---|---|---|---|
-| **Bullish Divergence** | Price makes lower low | RSI makes higher low | Potential reversal up |
-| **Bearish Divergence** | Price makes higher high | RSI makes lower high | Potential reversal down |
+> **Key insight:** Indian markets tend to be more volatile than US markets. RSI above 80 on Nifty is more common than on S&P 500 — adjust your thresholds accordingly.
 
 ---
 
-### MACD (Moving Average Convergence Divergence)
+### MACD for Indian Stocks
 
-MACD shows the relationship between two moving averages of a stock's price.
-
-#### MACD Components
-
-| Component | Description | Typical Settings |
-|---|---|---|
-| **MACD Line** | 12 EMA - 26 EMA | Fast line |
-| **Signal Line** | 9 EMA of MACD Line | Slow line |
-| **Histogram** | MACD Line - Signal Line | Shows momentum |
-
-#### MACD Signals
-
-| Signal | Description | Meaning |
+| Signal | Description | Action |
 |---|---|---|
 | **Bullish Crossover** | MACD crosses above Signal | Buy signal |
 | **Bearish Crossover** | MACD crosses below Signal | Sell signal |
 | **Zero Line Cross** | MACD crosses above/below 0 | Trend change |
 | **Histogram Growing** | Bars getting larger | Momentum increasing |
-| **Histogram Shrinking** | Bars getting smaller | Momentum fading |
 
 ---
 
 ### Combining Indicators — The Power of Confluence
-
-The best trading signals come when multiple indicators agree:
 
 | Confluence Setup | Indicators | Signal Strength |
 |---|---|---|
 | Trend + Momentum | 50 MA up + RSI > 50 | Strong buy |
 | Support + Oversold | Price at support + RSI < 30 | High-probability buy |
 | Resistance + Overbought | Price at resistance + RSI > 70 | High-probability sell |
-| Crossover + Volume | MA crossover + high volume | Confirmed signal |
-
-> **Mental model:** Think of confluence as a jury — one indicator alone might be wrong, but when multiple indicators agree, the verdict is much more reliable.
 
 ---
 
-### Common Mistakes to Avoid
+### Indian Market-Specific Indicator Tips
 
-- **Mistake:** Using too many indicators — **Fix:** Stick to 2-3 that complement each other.
-- **Mistake:** Using lagging indicators for prediction — **Fix:** Use them for confirmation, not prediction.
-- **Mistake:** Ignoring the trend — **Fix:** Always know the bigger picture before trading indicators.
-- **Mistake:** Over-optimizing indicator settings — **Fix:** Default settings work well for most situations.
-
-### Professional Tips & Tricks
-
-- RSI works best in ranging markets; MACD works best in trending markets.
-- Moving averages are dynamic support/resistance — watch for bounces.
-- Divergences are early warning signals but require patience to play out.
-- Always check the daily chart before trading on shorter timeframes.
+| Indicator | Indian Market Behavior | Adjustment |
+|---|---|---|
+| **RSI** | Indian markets more volatile | Use 80/20 instead of 70/30 |
+| **Moving Averages** | Works well on Nifty 50, less on small-caps | Use only on liquid stocks |
+| **MACD** | Good for trend confirmation | Use on daily/weekly charts |
 
 ---
 
 ### Key Takeaways
 
-- Moving averages smooth price data and identify trend direction.
-- RSI measures momentum and identifies overbought/oversold conditions.
-- MACD shows trend changes through line crossovers and histogram analysis.
+- Moving averages smooth price data and identify trend direction on Indian stocks.
+- RSI measures momentum — use 80/20 thresholds for Indian market volatility.
+- MACD shows trend changes through crossovers and histogram analysis.
 - Combine multiple indicators for stronger signals (confluence).
-- No single indicator is perfect — use them as part of a complete system.
 
-**Next up:** Volume analysis and trade entry/exit strategies.`,
+**Next up:** Volume analysis and trade execution strategies for Indian markets.`,
       codeLanguage: "text",
-      codeSnippet: `# Technical Indicators Cheat Sheet
+      codeSnippet: `Indian Market Technical Indicators — Reference Guide
 
-## Moving Average Settings
+MOVING AVERAGE SETTINGS (INDIAN STOCKS)
 
 SMA (Simple Moving Average):
 - Short-term: 10, 20 periods
 - Medium-term: 50, 100 periods
-- Long-term: 200 periods
+- Long-term: 200 periods (most important)
 
 EMA (Exponential Moving Average):
 - Short-term: 9, 12 periods
 - Medium-term: 26 periods
 - Signal line: 9 period EMA of MACD
 
-## RSI Calculation (14-period)
-
+RSI FOR INDIAN MARKETS (ADJUSTED)
 RSI = 100 - (100 / (1 + RS))
-RS = Avg Gain / Avg Loss
+RS = Avg Gain / Avg Loss (14-period)
 
-Interpretation:
-- RSI > 70 → Overbought (sell zone)
-- RSI < 30 → Oversold (buy zone)
+Indian Market Calibration:
+- RSI > 80 → Extremely Overbought (sell zone)
+- RSI < 20 → Extremely Oversold (buy zone)
 - RSI = 50 → Neutral
 
-## MACD Formula
+Note: Indian markets are more volatile than US,
+so use wider thresholds (80/20 vs 70/30).
 
+MACD FORMULA
 MACD Line = 12 EMA - 26 EMA
 Signal Line = 9 EMA of MACD Line
 Histogram = MACD Line - Signal Line
 
-Signals:
-- MACD crosses above Signal → BUY
-- MACD crosses below Signal → SELL
-- MACD crosses above 0 → Bullish trend
-- MACD crosses below 0 → Bearish trend
+INDICATOR COMBO GUIDE FOR INDIAN STOCKS
+Trend + Momentum        | Signal
+------------------------|-----------
+50 MA up + RSI > 50     | Strong Buy
+50 MA down + RSI < 50   | Strong Sell
+Price at Support + RSI < 30 | Buy
+Price at Resistance + RSI > 70 | Sell
 
-## Indicator Combo Guide
+NIFTY 50 INDICATOR DASHBOARD
+Current Nifty Level: _____
+50-day SMA: _____ (above/below?)
+200-day SMA: _____ (above/below?)
+RSI (14-day): _____ (overbought/oversold?)
+MACD: _____ (bullish/bearish crossover?)
+Volume: _____ (above/below average?)`,
+      codeOutput: `Indian Market Technical Indicators — Reference Guide
 
-| Trend + Momentum | Signal |
-|------------------|--------|
-| 50 MA up + RSI > 50 | Strong Buy |
-| 50 MA down + RSI < 50 | Strong Sell |
-| Price at Support + RSI < 30 | Buy |
-| Price at Resistance + RSI > 70 | Sell |`,
-      codeOutput: `Technical Indicators Cheat Sheet
-
-## Moving Average Settings
+MOVING AVERAGE SETTINGS (INDIAN STOCKS)
 
 SMA (Simple Moving Average):
 - Short-term: 10, 20 periods
 - Medium-term: 50, 100 periods
-- Long-term: 200 periods
+- Long-term: 200 periods (most important)
 
 EMA (Exponential Moving Average):
 - Short-term: 9, 12 periods
 - Medium-term: 26 periods
 - Signal line: 9 period EMA of MACD
 
-## RSI Calculation (14-period)
-
+RSI FOR INDIAN MARKETS (ADJUSTED)
 RSI = 100 - (100 / (1 + RS))
-RS = Avg Gain / Avg Loss
+RS = Avg Gain / Avg Loss (14-period)
 
-Interpretation:
-- RSI > 70 → Overbought (sell zone)
-- RSI < 30 → Oversold (buy zone)
+Indian Market Calibration:
+- RSI > 80 → Extremely Overbought (sell zone)
+- RSI < 20 → Extremely Oversold (buy zone)
 - RSI = 50 → Neutral
 
-## MACD Formula
+Note: Indian markets are more volatile than US,
+so use wider thresholds (80/20 vs 70/30).
 
+MACD FORMULA
 MACD Line = 12 EMA - 26 EMA
 Signal Line = 9 EMA of MACD Line
 Histogram = MACD Line - Signal Line
 
-Signals:
-- MACD crosses above Signal → BUY
-- MACD crosses below Signal → SELL
-- MACD crosses above 0 → Bullish trend
-- MACD crosses below 0 → Bearish trend
+INDICATOR COMBO GUIDE FOR INDIAN STOCKS
+Trend + Momentum        | Signal
+------------------------|-----------
+50 MA up + RSI > 50     | Strong Buy
+50 MA down + RSI < 50   | Strong Sell
+Price at Support + RSI < 30 | Buy
+Price at Resistance + RSI > 70 | Sell
 
-## Indicator Combo Guide
-
-| Trend + Momentum | Signal |
-|------------------|--------|
-| 50 MA up + RSI > 50 | Strong Buy |
-| 50 MA down + RSI < 50 | Strong Sell |
-| Price at Support + RSI < 30 | Buy |
-| Price at Resistance + RSI > 70 | Sell |`,
+NIFTY 50 INDICATOR DASHBOARD
+Current Nifty Level: _____
+50-day SMA: _____ (above/below?)
+200-day SMA: _____ (above/below?)
+RSI (14-day): _____ (overbought/oversold?)
+MACD: _____ (bullish/bearish crossover?)
+Volume: _____ (above/below average?)`,
       visualizationTips: [
-        "Overlay a 50-day and 200-day moving average on a stock chart and watch for crossovers.",
-        "Mark overbought (>70) and oversold (<30) zones on the RSI indicator.",
-        "Watch the MACD histogram grow and shrink to feel momentum changes.",
+        "Overlay 50-day and 200-day MA on Nifty 50 chart and watch for crossovers.",
+        "Mark overbought (>80) and oversold (<20) zones on RSI indicator.",
+        "Watch the MACD histogram grow and shrink on Reliance or TCS charts."
       ],
       tipsAndTricks: [
-        "RSI works best in ranging markets; MACD works best in trending markets.",
-        "Use the 200-day MA as a bull/bear filter — only buy above it, only sell below it.",
-        "Divergences take time to play out — be patient and wait for confirmation.",
+        "Use 80/20 RSI thresholds for Indian markets (more volatile than US).",
+        "200-day MA on Nifty is the most important indicator for long-term investors.",
+        "RSI divergences on Nifty 50 signal major turning points — be patient.",
+        "Check delivery volume on NSE to confirm if moves are genuine."
       ],
       practice: [
         {
           id: "practice-ma-analysis",
-          title: "Moving Average Analysis",
+          title: "Indian Stock Moving Average Analysis",
           difficulty: "Medium",
-          task: "For any stock, identify: (1) Is price above or below the 50-day MA? (2) Is the 50-day MA above or below the 200-day MA? (3) What does this tell you about the trend?",
-          hint: "Use TradingView or Yahoo Finance to view moving averages. Above = bullish, Below = bearish.",
-          solution: `Example: AAPL (hypothetical)
-1. Price ($185) is ABOVE 50-day MA ($178) → Short-term bullish
-2. 50-day MA ($178) is ABOVE 200-day MA ($165) → Long-term bullish
+          task: "For Reliance Industries (NSE), identify: (1) Is price above or below the 50-day MA? (2) Is the 50-day MA above or below the 200-day MA? (3) What does this tell you about the trend?",
+          hint: "Use TradingView or Zerodha Kite to view moving averages on Reliance daily chart.",
+          solution: `Reliance Industries MA Analysis (hypothetical):
+
+1. Current Price (₹2,650) is ABOVE 50-day MA (₹2,580) → Short-term bullish
+2. 50-day MA (₹2,580) is ABOVE 200-day MA (₹2,400) → Long-term bullish
 3. Conclusion: Strong uptrend confirmed. Golden Cross in effect.
 
-Example: META (hypothetical)
-1. Price ($480) is ABOVE 50-day MA ($465) → Short-term bullish
-2. 50-day MA ($465) is ABOVE 200-day MA ($420) → Long-term bullish
-3. Conclusion: Healthy uptrend with momentum`,
+Trading Strategy:
+- Any pullback to ₹2,500-2,550 zone (near 50-day MA) is a buying opportunity
+- Stop loss below ₹2,400 (200-day MA) for long-term positions
+- Target: ₹2,800-3,000 (based on trend projection)
+
+This is a healthy uptrend — higher highs, higher lows, MAs aligned bullish.`
         },
         {
           id: "practice-rsi-reading",
-          title: "RSI Interpretation",
+          title": "Indian Stock RSI Interpretation",
           difficulty: "Easy",
-          task: "Check the current RSI (14-day) for 3 different stocks. Classify each as overbought, oversold, or neutral. What action would you consider for each?",
-          hint: "RSI > 70 = overbought, RSI < 30 = oversold, 30-70 = neutral",
-          solution: `Example readings:
-1. AAPL RSI = 62 → Neutral/Bullish momentum
-   Action: Hold if owned, wait for pullback to buy
+          task: "Check the current RSI (14-day) for 3 Indian stocks: TCS, HDFC Bank, and ITC. Classify each as overbought, oversold, or neutral based on Indian market thresholds (80/20).",
+          hint: "RSI > 80 = overbought, RSI < 20 = oversold (use Indian-adjusted thresholds)",
+          solution: `Indian Stock RSI Analysis (hypothetical):
 
-2. TSLA RSI = 78 → Overbought
-   Action: Consider taking profits, wait for RSI to cool off
+1. TCS RSI = 72 → Slightly Overbought (using Indian 80 threshold)
+   Action: Hold if owned, wait for pullback to RSI 50-60 for fresh entry
 
-3. NVDA RSI = 45 → Neutral
-   Action: Wait for clearer signal, monitor for RSI direction`,
-        },
-      ],
+2. HDFC Bank RSI = 55 → Neutral/Bullish momentum
+   Action: Good accumulation zone. Can buy at current levels.
+
+3. ITC RSI = 38 → Neutral (approaching oversold)
+   Action: Watch for RSI to drop below 30 for better entry. Support near ₹420.
+
+Indian Market Note: Use 80/20 thresholds instead of 70/30 because Indian stocks are more volatile. A stock at RSI 72 on TCS is not as overbought as it would be on a US stock.`
+        }
+      ]
     },
     {
-      id: "volume-analysis",
-      title: "Lesson 3: Volume Analysis & Trade Execution",
+      id: "volume-analysis-indian",
+      title: "Lesson 3: Volume Analysis & Indian Market Patterns",
       shortDescription:
-        "Use volume to confirm trends, identify accumulation/distribution, and execute trades with proper entry and exit strategies.",
+        "Use delivery volume, OBV, and accumulation/distribution to confirm trends on NSE stocks and identify institutional activity.",
       duration: "50 mins",
       readingTime: "10 mins read",
-      contentMarkdown: `### Why Volume Matters
+      contentMarkdown: `### Why Volume Matters in Indian Markets
 
-Volume is the number of shares or contracts traded during a given period. It's the **fuel** that drives price movement — without volume, price changes are unreliable.
+Volume is the number of shares traded during a given period. In Indian markets, you can check both **total volume** and **delivery volume** on NSE — delivery volume tells you if the move is genuine or just intraday noise.
 
-> **Mental model:** Price is what you pay; volume is what you get. High volume means conviction; low volume means uncertainty.
-
-#### Volume基本原则
-
-| Volume Level | Interpretation | What It Means |
-|---|---|---|
-| **High volume + price up** | Strong buying interest | Bullish confirmation |
-| **High volume + price down** | Strong selling pressure | Bearish confirmation |
-| **Low volume + price up** | Weak rally | Likely to reverse |
-| **Low volume + price down** | Weak selling | Likely to bounce |
+> **Mental model:** Price is what you pay; volume is what you get. High delivery volume means conviction; low delivery means uncertainty.
 
 ---
 
-### Volume Analysis Techniques
+### Total Volume vs. Delivery Volume (India-Specific)
 
-#### 1. On-Balance Volume (OBV)
-
-OBV adds volume on up days and subtracts on down days, creating a cumulative indicator.
-
-| OBV Signal | Price Action | Meaning |
+| Metric | What It Shows | Where to Check |
 |---|---|---|
-| OBV rising + Price rising | Confirmation | Trend is strong |
-| OBV rising + Price flat/rising | Accumulation | Smart money buying |
-| OBV falling + Price flat/falling | Distribution | Smart money selling |
-| OBV divergence | Price up, OBV down | Warning — trend may reverse |
+| **Total Volume** | All shares traded (intraday + delivery) | NSE website, Zerodha |
+| **Delivery Volume** | Shares actually delivered to demat | NSE website |
+| **Delivery %** | Delivery / Total Volume × 100 | NSE market data |
 
-#### 2. Volume Profile
+#### Delivery Volume Interpretation
 
-Volume Profile shows how much volume occurred at each price level, revealing **where** most trading happened.
-
-| Level Type | Description | Significance |
+| Delivery % | Interpretation | What It Means |
 |---|---|---|
-| **POC** (Point of Control) | Price with highest volume | Strongest support/resistance |
-| **Value Area** | 70% of volume | "Fair value" zone |
-| **Low Volume Nodes** | Price with least volume | Price moves quickly through these |
+| **Above 60%** | Strong conviction | Genuine buying/selling |
+| **40-60%** | Normal | Mixed signals |
+| **Below 40%** | Weak conviction | Mostly intraday, not genuine |
 
-#### 3. Accumulation/Distribution Line
-
-This indicator measures money flow into and out of a security.
-
-| A/D Line | Price | Interpretation |
-|---|---|---|
-| Rising | Rising | Healthy uptrend |
-| Rising | Falling | Divergence — potential reversal up |
-| Falling | Rising | Divergence — potential reversal down |
-| Falling | Falling | Healthy downtrend |
+> **Key insight:** In India, check delivery volume on NSE — if a stock rises 5% with 70% delivery, it's genuine institutional buying. If it rises 5% with only 30% delivery, it's mostly intraday speculation.
 
 ---
 
-### Building a Complete Trading System
+### Institutional Activity on Indian Markets
 
-A trading system combines analysis with rules for entry, exit, and risk management.
+#### How to Track FII and DII Activity
 
-#### Entry Rules (Example System)
-
-| Condition | Requirement |
-|---|---|
-| Trend | Price above 50-day MA |
-| Momentum | RSI between 40-70 (not overbought) |
-| Confirmation | MACD bullish crossover |
-| Volume | Above-average volume on entry day |
-| Support | Price near a support level |
-
-#### Exit Rules
-
-| Exit Type | Trigger |
-|---|---|
-| **Stop Loss** | Price falls 7-8% below entry (or below key support) |
-| **Trailing Stop** | Price closes below 20-day MA |
-| **Profit Target** | Price reaches resistance or RSI > 70 |
-| **Time Stop** | No movement after 2-3 weeks |
-
----
-
-### Position Sizing — Protecting Your Capital
-
-The amount you invest in each position should be based on your risk tolerance and account size.
-
-#### The 1% Rule
-
-Never risk more than 1% of your total portfolio on a single trade.
-
-| Portfolio Size | Max Risk Per Trade | Position Size (with 7% stop) |
+| Investor Type | What to Check | Where |
 |---|---|---|
-| $10,000 | $100 | ~$1,428 |
-| $50,000 | $500 | ~$7,142 |
-| $100,000 | $1,000 | ~$14,285 |
+| **FII** (Foreign Institutional Investors) | Daily buy/sell data | NSE website, Moneycontrol |
+| **DII** (Domestic Institutional Investors) | Daily buy/sell data | NSE website, Trendlyne |
+| **Mutual Funds** | Weekly/monthly buying | AMFI data, Value Research |
+| **Promoters** | Insider buying/selling | BSE insider trading disclosures |
 
-**Formula:**
-Position Size = (Account × Risk%) / (Entry Price - Stop Loss Price)
+#### FII/DII Activity Signals
 
----
+| Activity | Signal | What It Means |
+|---|---|---|
+| **FII buying + DII buying** | Very bullish | Both domestic and foreign money flowing in |
+| **FII selling + DII buying** | Neutral-bullish | DIIs providing support |
+| **FII selling + DII selling** | Bearish | Broad institutional selling |
 
-### Trade Journal — Learning from Every Trade
-
-Keep a record of every trade to improve over time:
-
-| Field | Purpose |
-|---|---|
-| **Date/Time** | When you entered |
-| **Stock** | What you traded |
-| **Entry Price** | What you paid |
-| **Stop Loss** | Your risk level |
-| **Target** | Your profit goal |
-| **Reason** | Why you took the trade |
-| **Result** | P/L and lesson learned |
+> **Key insight:** FII flows are a major driver of Indian market direction. When FIIs buy heavily (₹5,000+ crore in a month), Nifty tends to rally.
 
 ---
 
-### Common Mistakes to Avoid
+### Common Volume Analysis Mistakes in India
 
-- **Mistake:** Ignoring volume on breakouts — **Fix:** Always confirm breakouts with above-average volume.
-- **Mistake:** Risking too much per trade — **Fix:** Follow the 1% rule religiously.
-- **Mistake:** Having no exit plan — **Fix:** Define stop loss and target BEFORE entering.
-- **Mistake:** Averaging down on losers — **Fix:** Cut losses short; let winners run.
+- **Mistake:** Ignoring delivery volume — **Fix:** Always check delivery % on NSE.
+- **Mistake:** Not tracking FII/DII flows — **Fix:** Check daily FII/DII data on NSE website.
+- **Mistake:** Trusting volume in illiquid stocks — **Fix:** Volume analysis works best on NSE large/mid-cap stocks.
 
 ### Professional Tips & Tricks
 
-- Volume precedes price — watch for volume spikes before big moves.
-- Keep a trading journal; it's the fastest way to improve.
-- Risk management is more important than stock selection.
-- paper trade (simulate) your system before using real money.
+- Delivery volume above 60% on NSE = genuine institutional activity.
+- Track FII flows weekly — they drive Nifty direction in the short term.
+- Volume precedes price — unusual volume often signals upcoming moves in Indian stocks.
 
 ---
 
 ### Key Takeaways
 
 - Volume confirms trends — price moves without volume are unreliable.
-- OBV and Volume Profile reveal accumulation and distribution patterns.
-- A complete trading system includes entry rules, exit rules, and position sizing.
-- The 1% rule protects your capital from catastrophic losses.
-- Keep a trade journal to continuously improve your performance.
+- Delivery volume on NSE separates genuine moves from intraday noise.
+- FII and DII activity drives Indian market direction.
+- Always check delivery % before trusting a price move in Indian stocks.
 
-**Next up:** Portfolio management and long-term investment strategy.`,
+**Next up:** Portfolio management and long-term investment strategy for Indian investors.`,
       codeLanguage: "text",
-      codeSnippet: `# Volume & Trade Execution Framework
+      codeSnippet: `Indian Market Volume Analysis — Reference Guide
 
-## Volume Interpretation Guide
+NSE VOLUME & DELIVERY GUIDE
 
-| Volume | Price | Signal | Action |
-|--------|-------|--------|--------|
-| High | ↑ Up | Strong Buy | Confirm entry |
-| High | ↓ Down | Strong Sell | Exit/Short |
-| Low | ↑ Up | Weak Rally | Wait/Be cautious |
-| Low | ↓ Down | Weak Sell | Potential bounce |
+How to Check Delivery Volume on NSE:
+1. Go to nseindia.com
+2. Click "Live Market" → "Equity"
+3. Search for stock
+4. Check "Deliv Qty" and "Deliv %" columns
 
-## Position Sizing Calculator
+VOLUME INTERPRETATION (INDIAN CONTEXT)
+Delivery %  | Signal           | Action
+------------|------------------|------------------
+> 60%       | Strong conviction| Genuine move, trust it
+40-60%      | Normal           | Mixed signals
+< 40%       | Weak (intraday)  | Don't trust the move
 
-Account Size: $_______
-Risk Per Trade: 1% = $_______
-Entry Price: $_______
-Stop Loss: $_______
-Risk Per Share: $_______
+FII/DII ACTIVITY DASHBOARD
+Daily FII Activity: ₹_____ crore (Buy/Sell)
+Daily DII Activity: ₹_____ crore (Buy/Sell)
+Monthly FII Net: ₹_____ crore
+Monthly DII Net: ₹_____ crore
 
-Position Size = Risk Amount ÷ Risk Per Share
-= $_______ ÷ $_______
-= _______ shares
+Signal:
+- Both buying = Very Bullish
+- FII selling, DII buying = Support
+- Both selling = Bearish
 
-## Trade Journal Template
+INDIAN MARKET VOLUME PATTERNS
+Pattern                | Volume    | Reliability
+-----------------------|-----------|------------
+Nifty breakout >22K    | High      | ★★★★★
+Small-cap low vol rally| Low       | ★★☆☆☆
+FII buying + high vol  | Very High | ★★★★★
+Block deal (>₹10 Cr)   | Very High | ★★★★☆
 
-| Field | Your Entry |
-|-------|------------|
-| Date | __________ |
-| Stock | __________ |
-| Entry | $_________ |
-| Stop | $_________ |
-| Target | $_________ |
-| Shares | _________ |
-| Risk $ | $_________ |
-| Reason | __________ |
-| Result | __________ |
-| Lesson | __________ |
+BLOCK DEAL TRACKING
+Check NSE block deals daily:
+- Block deals > ₹10 crore
+- Insider trading disclosures on BSE
+- Bulk deals > ₹5 crore`,
+      codeOutput: `Indian Market Volume Analysis — Reference Guide
 
-## Complete System Checklist
+NSE VOLUME & DELIVERY GUIDE
 
-Before EVERY trade, check:
-□ Trend confirmed (50 MA direction)
-□ Momentum aligned (RSI 40-70)
-□ Volume confirms (above average)
-□ Near support/resistance
-□ Risk defined (stop loss set)
-□ Position sized (≤1% risk)
-□ Exit plan ready (target + stop)`,
-      codeOutput: `Volume & Trade Execution Framework
+How to Check Delivery Volume on NSE:
+1. Go to nseindia.com
+2. Click "Live Market" → "Equity"
+3. Search for stock
+4. Check "Deliv Qty" and "Deliv %" columns
 
-## Volume Interpretation Guide
+VOLUME INTERPRETATION (INDIAN CONTEXT)
+Delivery %  | Signal           | Action
+------------|------------------|------------------
+> 60%       | Strong conviction| Genuine move, trust it
+40-60%      | Normal           | Mixed signals
+< 40%       | Weak (intraday)  | Don't trust the move
 
-| Volume | Price | Signal | Action |
-|--------|-------|--------|--------|
-| High | ↑ Up | Strong Buy | Confirm entry |
-| High | ↓ Down | Strong Sell | Exit/Short |
-| Low | ↑ Up | Weak Rally | Wait/Be cautious |
-| Low | ↓ Down | Weak Sell | Potential bounce |
+FII/DII ACTIVITY DASHBOARD
+Daily FII Activity: ₹_____ crore (Buy/Sell)
+Daily DII Activity: ₹_____ crore (Buy/Sell)
+Monthly FII Net: ₹_____ crore
+Monthly DII Net: ₹_____ crore
 
-## Position Sizing Calculator
+Signal:
+- Both buying = Very Bullish
+- FII selling, DII buying = Support
+- Both selling = Bearish
 
-Account Size: $_______
-Risk Per Trade: 1% = $_______
-Entry Price: $_______
-Stop Loss: $_______
-Risk Per Share: $_______
+INDIAN MARKET VOLUME PATTERNS
+Pattern                | Volume    | Reliability
+-----------------------|-----------|------------
+Nifty breakout >22K    | High      | ★★★★★
+Small-cap low vol rally| Low       | ★★☆☆☆
+FII buying + high vol  | Very High | ★★★★★
+Block deal (>₹10 Cr)   | Very High | ★★★★☆
 
-Position Size = Risk Amount ÷ Risk Per Share
-= $_______ ÷ $_______
-= _______ shares
-
-## Trade Journal Template
-
-| Field | Your Entry |
-|-------|------------|
-| Date | __________ |
-| Stock | __________ |
-| Entry | $_________ |
-| Stop | $_________ |
-| Target | $_________ |
-| Shares | _________ |
-| Risk $ | $_________ |
-| Reason | __________ |
-| Result | __________ |
-| Lesson | __________ |
-
-## Complete System Checklist
-
-Before EVERY trade, check:
-□ Trend confirmed (50 MA direction)
-□ Momentum aligned (RSI 40-70)
-□ Volume confirms (above average)
-□ Near support/resistance
-□ Risk defined (stop loss set)
-□ Position sized (≤1% risk)
-□ Exit plan ready (target + stop)`,
+BLOCK DEAL TRACKING
+Check NSE block deals daily:
+- Block deals > ₹10 crore
+- Insider trading disclosures on BSE
+- Bulk deals > ₹5 crore`,
       visualizationTips: [
-        "Compare volume bars during rallies vs. pullbacks — rallies on high volume are healthy.",
-        "Draw horizontal lines at high-volume price levels — they become future support/resistance.",
-        "Watch for volume spikes before earnings or major news — they signal institutional activity.",
+        "Compare volume bars during Nifty rallies vs. pullbacks — rallies on high delivery are healthy.",
+        "Track FII/DII daily flows on NSE website for 1 month to see patterns.",
+        "Watch for volume spikes on Indian stocks before quarterly results."
       ],
       tipsAndTricks: [
-        "Volume precedes price — unusual volume often signals upcoming moves.",
-        "Paper trade your system for at least 3 months before risking real money.",
-        "The best traders lose on 40-50% of trades but make money through position sizing.",
+        "Delivery volume > 60% on NSE = genuine institutional activity.",
+        "Track FII flows weekly — they drive Nifty direction in the short term.",
+        "Block deals on NSE (>₹10 crore) show institutional conviction.",
+        "Volume precedes price — unusual volume often signals upcoming moves."
       ],
       practice: [
         {
           id: "practice-volume-analysis",
-          title: "Volume Analysis Exercise",
+          title: "Indian Stock Volume Analysis",
           difficulty: "Medium",
-          task: "Pick a stock that recently had a big price move (up or down). Analyze the volume pattern: Was volume above average? Did volume confirm the move? What does this tell you about the move's sustainability?",
-          hint: "Look for stocks in the news. Compare volume to the 20-day average volume.",
-          solution: `Example: NVDA earnings report
-- Price: +12% on earnings day
-- Volume: 85M shares (vs 20-day avg of 45M)
-- Analysis: Nearly 2x normal volume confirms institutional buying
-- Conclusion: Strong conviction behind the move, likely to continue
+          task: "Check the NSE website for FII and DII activity over the past week. What was the net buying/selling by FIIs? How did Nifty move during that period? What does this tell you?",
+          hint: "Go to nseindia.com → Live Market → FII/DII Activity. Compare with Nifty movement.",
+          solution: `FII/DII Analysis (hypothetical week):
 
-Example: Stock XYZ breakdown
-- Price: -8% on no news
-- Volume: 2M shares (vs 20-day avg of 5M)
-- Analysis: Below-average volume on sell-off
-- Conclusion: Weak conviction, may be a false breakdown`,
+Monday: FII sold ₹2,500 Cr, DII bought ₹1,800 Cr → Nifty down 0.5%
+Tuesday: FII sold ₹1,200 Cr, DII bought ₹900 Cr → Nifty down 0.3%
+Wednesday: FII bought ₹800 Cr, DII sold ₹200 Cr → Nifty up 0.4%
+Thursday: FII bought ₹1,500 Cr, DII sold ₹500 Cr → Nifty up 0.8%
+Friday: FII bought ₹2,200 Cr, DII sold ₹800 Cr → Nifty up 1.0%
+
+Weekly Total:
+FII Net: +₹1,600 Cr (net buyers)
+DII Net: +₹1,200 Cr (net buyers)
+Nifty: +1.4%
+
+Analysis: Both FIIs and DIIs were net buyers this week, which is a bullish signal. The shift from FII selling (Mon-Tue) to buying (Wed-Fri) suggests changing sentiment.
+
+Key Lesson: FII flows are a leading indicator for Nifty. When FIIs shift from selling to buying, it often signals a short-term bottom.`
         },
         {
-          id: "practice-position-sizing",
-          title: "Position Sizing Calculator",
+          id: "practice-delivery-analysis",
+          title": "Delivery Volume Analysis",
           difficulty: "Easy",
-          task: "Calculate the proper position size for: $25,000 account, 1% risk, buying at $50 with a stop loss at $46.50. How many shares can you buy?",
-          hint: "Position Size = (Account × Risk%) / (Entry - Stop Loss)",
-          solution: `Account: $25,000
-Risk Amount: $25,000 × 1% = $250
-Risk Per Share: $50 - $46.50 = $3.50
-Position Size: $250 ÷ $3.50 = 71 shares
+          task: "Pick an Indian stock that recently had a big price move (up or down). Check its delivery volume on NSE. Was delivery above 50%? Did volume confirm the move?",
+          hint: "Check NSE website for delivery data. Compare delivery % to 20-day average.",
+          solution: `Delivery Volume Analysis (hypothetical example):
 
-Total Position Value: 71 × $50 = $3,550
-Portfolio Allocation: $3,550 / $25,000 = 14.2%
+Stock: Reliance Industries
+Event: Results day — stock rose 4% in one day
 
-This is a properly sized position that limits risk to 1% of portfolio.`,
-        },
-      ],
-    },
+Volume Analysis:
+- Total Volume: 2.5 crore shares (vs 20-day avg: 80 lakh)
+- Delivery Volume: 1.8 crore shares (72% delivery)
+- Previous day delivery avg: 55%
+
+Analysis:
+1. Volume was 3x normal — strong institutional interest
+2. Delivery 72% — well above 50% threshold = genuine buying
+3. Both FIIs and DIIs were buyers (confirmed from FII/DII data)
+
+Conclusion: HIGH CONVICTION MOVE
+- This was not intraday speculation
+- Institutional investors were accumulating
+- The move is likely sustainable
+- Pullback to ₹2,500-2,600 would be a buying opportunity
+
+Key Lesson: When a stock rises on high volume AND high delivery %, it signals genuine institutional conviction.`
+        }
+      ]
+    }
   ],
 };

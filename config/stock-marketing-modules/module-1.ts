@@ -2,716 +2,939 @@ import type { Module } from "../courses";
 
 export const MODULE_1: Module = {
   id: "module-1-stock-foundations",
-  title: "Module 1: Foundations of Stock Market Investing",
+  title: "Module 1: Foundations of the Indian Stock Market",
   description:
-    "Understand how the stock market works, learn key terminology, and build a solid foundation for your investing journey.",
+    "Understand how the Indian stock market works — NSE, BSE, SEBI regulations, key terminology, and build a solid foundation for your investing journey.",
   lessons: [
     {
-      id: "intro-stock-market",
-      title: "Lesson 1: Introduction to the Stock Market",
+      id: "intro-indian-stock-market",
+      title: "Lesson 1: Introduction to the Indian Stock Market",
       shortDescription:
-        "What is the stock market, how it works, and why it's essential for building long-term wealth.",
+        "What is the Indian stock market, how NSE and BSE work, SEBI's role, and why Indian equities are essential for building long-term wealth.",
       duration: "45 mins",
       readingTime: "9 mins read",
-      contentMarkdown: `### What is the Stock Market?
+      contentMarkdown: `### What is the Indian Stock Market?
 
-The stock market is a marketplace where buyers and sellers come together to trade shares of publicly listed companies. When you buy a stock, you're purchasing a small piece of ownership in that company — making you a **shareholder**.
+The Indian stock market is a marketplace where buyers and sellers come together to trade shares of publicly listed companies in India. When you buy a stock on NSE or BSE, you're purchasing a small piece of ownership in that company — making you a **shareholder**.
 
-#### Why the Stock Market Matters
+#### Why the Indian Stock Market Matters
 
-- **Wealth Building**: Historically, stocks have returned ~10% annually on average over the long term.
-- **Beat Inflation**: Cash loses value over time due to inflation; stocks typically outpace it.
-- **Compound Growth**: Reinvested returns generate their own returns, creating exponential growth.
-- **Liquidity**: Stocks can be bought and sold quickly, unlike real estate or other investments.
+- **Wealth Building**: Indian equities have returned ~12-14% annually over the long term (Nifty 50 since 1996)
+- **Beat Inflation**: Indian inflation averages 5-6%; stocks typically outpace it
+- **Compound Growth**: Reinvested dividends and capital gains create exponential wealth
+- **Demographic Dividend**: India's young population (median age 28) fuels decades of growth
+- **Digital India**: UPI, demat accounts, and fintech have democratized access
 
-> **Mental model:** Think of the stock market as a giant auction house where company ownership is auctioned off. Prices go up when more people want to buy, and down when more people want to sell.
-
-#### The History of Stock Markets
-
-| Year | Milestone | Significance |
-|---|---|---|
-| 1602 | Dutch East India Company | First publicly traded company |
-| 1792 | Buttonwood Agreement | Formation of what became the NYSE |
-| 1971 | NASDAQ launches | First electronic stock exchange |
-| 1990s | Internet boom | Democratized access via online brokers |
-| 2008 | Financial crisis | Lessons on risk and regulation |
-| 2020s | Commission-free trading | Accessible to everyone |
-
-#### How Companies Go Public
-
-1. **Initial Public Offering (IPO)**: Company offers shares to the public for the first time
-2. **Listing**: Shares begin trading on a stock exchange (NYSE, NASDAQ)
-3. **Secondary Market**: Investors trade shares among themselves
+> **Mental model:** Think of the Indian stock market as a giant auction house where company ownership is auctioned off. Prices go up when more people want to buy, and down when more people want to sell.
 
 ---
 
-### Key Stock Market Terminology
+### The Two Stock Exchanges of India
+
+| Exchange | Full Name | Founded | Headquarters | Key Index |
+|---|---|---|---|---|
+| **NSE** | National Stock Exchange | 1992 | Mumbai | Nifty 50 |
+| **BSE** | Bombay Stock Exchange | 1875 | Mumbai (Dalal Street) | Sensex |
+
+#### NSE vs. BSE — What's the Difference?
+
+| Feature | NSE | BSE |
+|---|---|---|
+| **Founded** | 1992 (newer) | 1875 (oldest in Asia) |
+| **Trading Volume** | Higher (~90% of equity volume) | Lower (~10% of equity volume) |
+| **Technology** | Fully electronic from day one | Transitioned from open outcry |
+| **Listed Companies** | ~2,200 | ~5,400 (most in the world!) |
+| **Benchmark Index** | Nifty 50 | Sensex (BSE 30) |
+| **Settlement** | T+1 (since 2023) | T+1 |
+
+> **Key insight:** Most investors trade on NSE due to higher liquidity, but BSE has more listed companies including many small-cap and micro-cap stocks.
+
+---
+
+### SEBI — The Regulator
+
+The **Securities and Exchange Board of India (SEBI)** is the regulator that protects investors and ensures fair markets.
+
+#### SEBI's Key Roles
+
+| Role | What It Does | Why It Matters |
+|---|---|---|
+| **Register intermediaries** | Licenses brokers, mutual funds, advisors | Ensures only qualified entities operate |
+| **Protect investors** | Enforces fair practices, insider trading rules | Your money is safer |
+| **Regulate markets** | Sets trading rules, margin requirements | Prevents manipulation |
+| **Promote development** | Introduces new products, market reforms | Better investment options |
+
+#### Key SEBI Regulations Every Investor Should Know
+
+| Regulation | What It Means | Impact on You |
+|---|---|---|
+| **T+1 Settlement** | Shares credited next trading day | Faster access to your stocks |
+| **Circuit Breakers** | Trading halted if index falls 10-13% | Prevents panic selling |
+| **Margin Requirements** | Must maintain margin for F&O | Limits leverage risk |
+| **KYC mandatory** | PAN + Aadhaar + bank proof needed | One-time setup required |
+| **Lock-in for IPOs** | Promoters can't sell for 1-3 years | Aligns promoter interests |
+
+---
+
+### How Companies Go Public in India
+
+#### The Indian IPO Process
+
+| Step | What Happens | Timeline |
+|---|---|---|
+| **1. DRHP Filing** | Company files Draft Red Herring Prospectus with SEBI | Month 1 |
+| **2. SEBI Review** | SEBI reviews disclosures, asks questions | 1-3 months |
+| **3. Roadshow** | Company presents to institutional investors | 1-2 weeks |
+| **4. Price Band** | Company sets price range (e.g., ₹500-520) | Before issue |
+| **5. IPO Opens** | Retail and institutional investors apply | 3-5 days |
+| **6. Allotment** | Shares allotted (lottery if oversubscribed) | 1 week after |
+| **7. Listing** | Shares start trading on NSE/BSE | T+6 from issue close |
+
+#### IPO Application Methods
+
+| Method | Platform | How It Works |
+|---|---|---|
+| **ASBA** | Net banking (SBI, HDFC, etc.) | Money blocked, deducted only on allotment |
+| **UPI** | GPay, PhonePe, BHIM | UPI mandate blocks money |
+| **Broker app** | Zerodha, Groww, Angel One | Integrated IPO application |
+
+> **Key insight:** ASBA (Application Supported by Blocked Amount) means your money stays in your bank account until allotment — no risk of money being stuck.
+
+---
+
+### Key Indian Stock Market Terminology
 
 | Term | Definition | Example |
 |---|---|---|
-| **Stock/Share** | A unit of ownership in a company | "I own 100 shares of Apple" |
-| **Ticker Symbol** | Abbreviated code for a stock | AAPL (Apple), GOOGL (Google) |
-| **Market Capitalization** | Total value of all shares (price × shares outstanding) | Apple: ~$3 trillion |
-| **Dividend** | Payment made to shareholders from company profits | "$0.24 per share quarterly" |
-| **Bull Market** | Period of rising stock prices | 2009-2020 bull run |
-| **Bear Market** | Period of falling stock prices (typically >20% decline) | 2020 COVID crash |
-| **Volatility** | Degree of price fluctuation | High volatility = big swings |
-| **Liquidity** | How easily an asset can be bought/sold | Large-cap stocks = high liquidity |
+| **Nifty 50** | Top 50 companies on NSE by market cap | Reliance, TCS, HDFC Bank |
+| **Sensex** | Top 30 companies on BSE | Same blue chips, fewer stocks |
+| **SEBI** | Market regulator | Like India's SEC |
+| **Demat Account** | Electronic holding of shares | Like a bank account for stocks |
+| **Trading Account** | Account to buy/sell shares | Linked to demat + bank |
+| **PAN** | Permanent Account Number | Mandatory for investing |
+| **Face Value** | Original value of share (usually ₹1 or ₹10) | Reliance FV = ₹10 |
+| **Market Capitalization** | Total value of all shares (price × shares outstanding) | Reliance: ~₹18 lakh crore |
+| **Bull Market** | Period of rising prices | 2020-2024 bull run |
+| **Bear Market** | Period of falling prices (>20% decline) | 2008, 2020 COVID crash |
+| **Circuit Breaker** | Trading halt triggered by SEBI at 10%, 15%, 20% drops | Prevents panic selling |
+| **Delivery** | Buying shares for long-term holding | Shares credited to demat |
 
-> **Key insight:** Understanding these terms is like learning the rules of a game — you can't win if you don't know how the pieces move.
+---
 
-#### Major Stock Exchanges
+### The Power of Compound Growth in INR
 
-| Exchange | Location | Notable Features |
+#### ₹10,000 Invested in Nifty 50 (1996-2024)
+
+| Year | Nifty 50 Level | Portfolio Value | Growth Multiple |
+|---|---|---|---|
+| 1996 | 1,000 | ₹10,000 | 1.0x |
+| 2001 | 1,000 | ₹10,000 | 1.0x |
+| 2006 | 3,300 | ₹33,000 | 3.3x |
+| 2011 | 4,600 | ₹46,000 | 4.6x |
+| 2016 | 7,900 | ₹79,000 | 7.9x |
+| 2021 | 17,000 | ₹1,70,000 | 17.0x |
+| 2024 | 24,000 | ₹2,40,000 | 24.0x |
+
+> **Key insight:** ₹10,000 invested in Nifty 50 in 1996 would be worth ~₹2,40,000 today — that's 24x your money over 28 years!
+
+#### Monthly SIP Example (₹5,000/month for 20 years)
+
+| Scenario | Total Invested | Value at 12% CAGR | Wealth Created |
+|---|---|---|---|
+| **Savings Account (4%)** | ₹12,00,000 | ₹18,40,000 | ₹6,40,000 |
+| **PPF (7.1%)** | ₹12,00,000 | ₹26,40,000 | ₹14,40,000 |
+| **Nifty 50 SIP (12%)** | ₹12,00,000 | ₹49,50,000 | ₹37,50,000 |
+
+**Equity investing created 2.4x more wealth than PPF and 5.8x more than a savings account!**
+
+---
+
+### Major Indian Companies by Sector
+
+| Sector | Top Companies | Index |
 |---|---|---|
-| New York Stock Exchange (NYSE) | New York, USA | Largest exchange by market cap |
-| NASDAQ | New York, USA | Tech-heavy, electronic trading |
-| London Stock Exchange | London, UK | Oldest exchange (1801) |
-| Tokyo Stock Exchange | Tokyo, Japan | Largest in Asia |
-| Shanghai Stock Exchange | Shanghai, China | Rapidly growing |
+| **Oil & Gas** | Reliance, ONGC, BPCL | Nifty |
+| **Banking** | HDFC Bank, ICICI Bank, SBI | Nifty |
+| **IT** | TCS, Infosys, Wipro, HCL Tech | Nifty |
+| **FMCG** | HUL, ITC, Nestle India | Nifty |
+| **Automobile** | Maruti, Tata Motors, M&M | Nifty |
+| **Pharma** | Sun Pharma, Dr. Reddy's, Cipla | Nifty |
+| **Metals** | Tata Steel, JSW Steel, Vedanta | Nifty |
+| **Telecom** | Bharti Airtel, Jio (Reliance) | Nifty |
 
 ---
 
 ### Common Mistakes to Avoid
 
-- **Mistake:** Thinking the stock market is a get-rich-quick scheme — **Fix:** It's a long-term wealth-building tool.
+- **Mistake:** Thinking the stock market is gambling — **Fix:** It's ownership in real businesses with real cash flows.
 - **Mistake:** Investing money you'll need soon — **Fix:** Only invest money you won't need for at least 5 years.
 - **Mistake:** Trying to time the market — **Fix:** Focus on time IN the market, not timing the market.
-- **Mistake:** Not understanding what you're buying — **Fix:** Research companies before investing.
+- **Mistake:** Following tips from WhatsApp/Telegram groups — **Fix:** Do your own research or use SEBI-registered advisors.
 
 ### Professional Tips & Tricks
 
-- Start early — compound growth needs time to work its magic.
+- Start early — compound growth needs time to work its magic in India's growing economy.
 - Diversify — don't put all your eggs in one basket.
-- Invest consistently — regular contributions smooth out market volatility.
-- Stay informed but don't overreact to daily news.
+- Use SIPs for disciplined investing — remove emotion from the equation.
+- Stay informed but don't overreact to daily market noise.
 
 ---
 
 ### Key Takeaways
 
-- The stock market is where company ownership is bought and sold.
-- Stocks have historically provided the best long-term returns of any asset class.
-- Key terminology includes shares, market cap, dividends, and market conditions.
-- Successful investing requires patience, diversification, and consistent contributions.
+- The Indian stock market operates on NSE and BSE, regulated by SEBI.
+- Nifty 50 (NSE) and Sensex (BSE) are the benchmark indices.
+- Indian equities have returned ~12-14% annually over the long term.
+- SEBI ensures investor protection through strict regulations.
+- SIPs in equity mutual funds or index funds are the easiest way to start investing.
+- Open a demat + trading account today to begin your investment journey.
 
-**Next up:** Understanding different types of stocks and how to evaluate them.`,
+**Next up:** Understanding different types of Indian stocks and how to evaluate them.`,
       codeLanguage: "text",
-      codeSnippet: `# Stock Market Fundamentals
+      codeSnippet: `Indian Stock Market — Key Facts & Figures
 
-## The Power of Compound Growth
+THE POWER OF COMPOUND GROWTH (INR)
 
-Initial Investment: $10,000
-Annual Return: 10%
-Time Horizon: 30 years
+Monthly SIP: ₹5,000 | Annual Return: 12% (Nifty 50 historical)
 
-Year 5:   $16,105
-Year 10:  $25,937
-Year 15:  $41,772
-Year 20:  $67,275
-Year 25: $108,347
-Year 30: $174,494
+Year 5:   ₹4,12,000  (Invested: ₹3,00,000)
+Year 10:  ₹11,60,000 (Invested: ₹6,00,000)
+Year 15:  ₹25,00,000 (Invested: ₹9,00,000)
+Year 20:  ₹49,50,000 (Invested: ₹12,00,000)
+Year 25:  ₹94,90,000 (Invested: ₹15,00,000)
+Year 30: ₹1,76,00,000 (Invested: ₹18,00,000)
 
-💡 $10,000 invested at 10% for 30 years = $174,494
-   That's 17.4x your money!
+₹5,000/month for 30 years = ₹1.76 Crore!
+You invested ₹18 lakh, wealth created = ₹1.58 Crore
 
-## Key Market Metrics
+NIFTY 50 HISTORICAL RETURNS
+Average annual return: ~12-14%
+Best year: +75% (1991)
+Worst year: -38% (2008)
+Average bear market: ~1.2 years
+Average bull market: ~4.5 years
 
-S&P 500 Historical Returns:
-- Average annual return: ~10%
-- Best year: +54% (1933)
-- Worst year: -37% (1931)
-- Average bear market duration: ~1.3 years
-- Average bull market duration: ~6.6 years
+KEY INDIAN MARKET METRICS
+Sensex (BSE 30): ~75,000 (2024)
+Nifty 50 (NSE 50): ~22,000 (2024)
+India Market Cap: ~₹400 lakh crore (~$5 trillion)
+Number of demat accounts: ~15 crore (150 million)
+Daily trading volume: ~₹2-3 lakh crore
 
-## Portfolio Basics
+PORTFOLIO ALLOCATION GUIDE (INDIAN CONTEXT)
 
-Conservative Portfolio:
-- 60% Bonds, 40% Stocks
-- Expected return: 6-8% annually
+Conservative (Near Retirement):
+30% Nifty 50 Index Fund | 10% Mid/Small Cap
+20% International Fund | 30% Debt Funds | 10% Gold ETF
 
-Balanced Portfolio:
-- 50% Stocks, 50% Bonds
-- Expected return: 7-9% annually
+Balanced (Mid-Career):
+40% Nifty 50 Index Fund | 15% Mid/Small Cap
+20% International Fund | 15% Debt Funds | 10% Gold ETF
 
-Growth Portfolio:
-- 80% Stocks, 20% Bonds
-- Expected return: 9-11% annually`,
-      codeOutput: `Stock Market Fundamentals
+Aggressive (Early Career):
+50% Nifty 50 Index Fund | 20% Mid/Small Cap
+20% International Fund | 5% Debt Funds | 5% Gold ETF`,
+      codeOutput: `Indian Stock Market — Key Facts & Figures
 
-## The Power of Compound Growth
+THE POWER OF COMPOUND GROWTH (INR)
 
-Initial Investment: $10,000
-Annual Return: 10%
-Time Horizon: 30 years
+Monthly SIP: ₹5,000 | Annual Return: 12% (Nifty 50 historical)
 
-Year 5:   $16,105
-Year 10:  $25,937
-Year 15:  $41,772
-Year 20:  $67,275
-Year 25: $108,347
-Year 30: $174,494
+Year 5:   ₹4,12,000  (Invested: ₹3,00,000)
+Year 10:  ₹11,60,000 (Invested: ₹6,00,000)
+Year 15:  ₹25,00,000 (Invested: ₹9,00,000)
+Year 20:  ₹49,50,000 (Invested: ₹12,00,000)
+Year 25:  ₹94,90,000 (Invested: ₹15,00,000)
+Year 30: ₹1,76,00,000 (Invested: ₹18,00,000)
 
-💡 $10,000 invested at 10% for 30 years = $174,494
-   That's 17.4x your money!
+₹5,000/month for 30 years = ₹1.76 Crore!
+You invested ₹18 lakh, wealth created = ₹1.58 Crore
 
-## Key Market Metrics
+NIFTY 50 HISTORICAL RETURNS
+Average annual return: ~12-14%
+Best year: +75% (1991)
+Worst year: -38% (2008)
+Average bear market: ~1.2 years
+Average bull market: ~4.5 years
 
-S&P 500 Historical Returns:
-- Average annual return: ~10%
-- Best year: +54% (1933)
-- Worst year: -37% (1931)
-- Average bear market duration: ~1.3 years
-- Average bull market duration: ~6.6 years
+KEY INDIAN MARKET METRICS
+Sensex (BSE 30): ~75,000 (2024)
+Nifty 50 (NSE 50): ~22,000 (2024)
+India Market Cap: ~₹400 lakh crore (~$5 trillion)
+Number of demat accounts: ~15 crore (150 million)
+Daily trading volume: ~₹2-3 lakh crore
 
-## Portfolio Basics
+PORTFOLIO ALLOCATION GUIDE (INDIAN CONTEXT)
 
-Conservative Portfolio:
-- 60% Bonds, 40% Stocks
-- Expected return: 6-8% annually
+Conservative (Near Retirement):
+30% Nifty 50 Index Fund | 10% Mid/Small Cap
+20% International Fund | 30% Debt Funds | 10% Gold ETF
 
-Balanced Portfolio:
-- 50% Stocks, 50% Bonds
-- Expected return: 7-9% annually
+Balanced (Mid-Career):
+40% Nifty 50 Index Fund | 15% Mid/Small Cap
+20% International Fund | 15% Debt Funds | 10% Gold ETF
 
-Growth Portfolio:
-- 80% Stocks, 20% Bonds
-- Expected return: 9-11% annually`,
+Aggressive (Early Career):
+50% Nifty 50 Index Fund | 20% Mid/Small Cap
+20% International Fund | 5% Debt Funds | 5% Gold ETF`,
       visualizationTips: [
-        "Draw a simple supply and demand graph to understand how stock prices move.",
-        "Create a timeline of major market events to understand historical context.",
-        "Use a compound interest calculator to visualize long-term growth.",
+        "Draw a simple supply and demand graph to understand how Nifty 50 prices move.",
+        "Create a timeline of major Indian market events (1992 Harshad Mehta, 2000 dot-com, 2008 crisis, 2020 COVID).",
+        "Use a compound interest calculator with Indian returns (12% CAGR) to visualize long-term growth."
       ],
       tipsAndTricks: [
-        "Start with index funds — they provide instant diversification.",
-        "Set up automatic investments — it removes emotion from the equation.",
-        "Keep your investment costs low — fees eat into returns significantly.",
+        "Start with Nifty 50 index funds — they provide instant diversification across India's top 50 companies.",
+        "Set up SIPs on the 1st of every month — it removes emotion from investing.",
+        "Keep your investment costs low — direct plans have 0.5-1% lower expense ratios than regular plans.",
+        "Never invest based on WhatsApp tips — do your own research or use SEBI-registered advisors."
       ],
       practice: [
         {
           id: "practice-market-basics",
-          title: "Market Terminology Quiz",
+          title: "Indian Market Terminology Quiz",
           difficulty: "Easy",
-          task: "Define these terms in your own words: market capitalization, dividend, bear market, ticker symbol.",
-          hint: "Think about how each concept affects your investment decisions.",
-          solution: `Market Capitalization: The total value of a company's shares (share price × number of shares). Helps compare company sizes.
+          task: "Define these terms in your own words: Nifty 50, Sensex, SEBI, demat account, ASBA, circuit breaker, face value.",
+          hint: "Think about how each concept affects your investment decisions in the Indian context.",
+          solution: `Indian Market Terminology:
 
-Dividend: Cash payments made to shareholders from company profits, usually quarterly. Provides income without selling shares.
+Nifty 50: The benchmark index of NSE consisting of 50 of the largest and most liquid Indian companies across 13 sectors. Used to gauge overall market performance.
 
-Bear Market: A period when stock prices fall 20% or more from recent highs. Often accompanied by economic recession.
+Sensex: The benchmark index of BSE consisting of 30 well-established companies. Older than Nifty but covers fewer stocks.
 
-Ticker Symbol: Short abbreviation used to identify a stock on an exchange (e.g., AAPL for Apple). Used when placing trades.`,
+SEBI: Securities and Exchange Board of India — the regulator that protects investors and ensures fair market practices. Like India's version of the SEC.
+
+Demat Account: An electronic account that holds your shares in digital form (like a bank account for stocks). Required to buy/sell shares in India.
+
+ASBA: Application Supported by Blocked Amount — when you apply for an IPO, money is blocked in your bank account but only deducted on allotment. Safe and convenient.
+
+Circuit Breaker: SEBI-mandated trading halts triggered when the market falls 10%, 15%, or 20% in a day. Prevents panic selling.
+
+Face Value: The original value of a share when issued (usually ₹1 or ₹10). The market price (which can be ₹100 or ₹5,000) is different from face value.`
         },
         {
           id: "practice-compound-growth",
-          title: "Compound Growth Calculator",
+          title: "Indian Compound Growth Calculator",
           difficulty: "Medium",
-          task: "Calculate how much $5,000 invested annually at 8% return would grow to in 20 years. Compare this to simply saving $5,000 annually without investing.",
-          hint: "Use the future value of annuity formula or an online calculator.",
-          solution: `Investment Scenario:
-- Annual contribution: $5,000
-- Annual return: 8%
-- Time horizon: 20 years
+          task: "Calculate how much ₹3,000 invested monthly at 12% CAGR would grow to in 25 years. Compare this to keeping the same amount in a bank FD at 7% interest.",
+          hint: "Use the future value of annuity formula or an online SIP calculator.",
+          solution: `Indian Compound Growth Calculation:
 
-With investing (8% return):
-- Total contributed: $100,000
-- Final value: ~$233,048
-- Growth: $133,048
+Monthly SIP: ₹3,000
+Time Horizon: 25 years
+Total Invested: ₹3,000 × 12 × 25 = ₹9,00,000
 
-Without investing (0% return):
-- Total saved: $100,000
-- Final value: $100,000
-- Growth: $0
+With Equity SIP (12% CAGR):
+Final Value: ~₹47,50,000
+Wealth Created: ₹38,50,000
+Total Return: 428%
 
-Difference: $133,048 more with investing!`,
-        },
-      ],
+With Bank FD (7% annual, monthly compounding):
+Final Value: ~₹24,30,000
+Wealth Created: ₹15,30,000
+Total Return: 170%
+
+Difference: Equity SIP created ₹23,20,000 MORE wealth!
+
+Why equity outperforms:
+- Compounding at 12% vs 7% creates exponential difference
+- Over 25 years, the gap becomes massive
+- Even accounting for volatility, equity SIPs outperform FDs
+
+Lesson: Start your SIP today — the longer you wait, the more compound growth you miss.`
+        }
+      ]
     },
     {
-      id: "types-of-stocks",
-      title: "Lesson 2: Types of Stocks & Asset Classes",
+      id: "types-of-indian-stocks",
+      title: "Lesson 2: Types of Indian Stocks & Asset Classes",
       shortDescription:
-        "Understand different stock categories, sectors, and asset classes to build a diversified portfolio.",
+        "Understand different stock categories in India — large-cap, mid-cap, small-cap, sectors, and asset classes like debt funds, gold, and REITs.",
       duration: "50 mins",
       readingTime: "10 mins read",
-      contentMarkdown: `### Categories of Stocks
+      contentMarkdown: `### Categories of Indian Stocks
 
-Stocks can be classified in several ways — by size, style, sector, and geography. Understanding these categories helps you build a diversified portfolio that balances risk and reward.
+Stocks can be classified in several ways — by size, style, sector, and exchange. Understanding these categories helps you build a diversified portfolio.
 
-#### By Market Capitalization
+#### By Market Capitalization (SEBI Definition)
 
-| Category | Market Cap | Characteristics | Risk/Reward |
-|---|---|---|---|
-| **Large-Cap** | > $10 billion | Stable, established companies | Lower risk, moderate returns |
-| **Mid-Cap** | $2-10 billion | Growth potential with some stability | Medium risk, medium returns |
-| **Small-Cap** | < $2 billion | High growth potential, less stable | Higher risk, higher potential returns |
+| Category | Market Cap | SEBI Definition | Risk/Reward | Example |
+|---|---|---|---|---|
+| **Large-Cap** | > ₹20,000 crore | Top 100 companies by market cap | Lower risk, moderate returns | Reliance, TCS, HDFC Bank |
+| **Mid-Cap** | ₹5,000-20,000 crore | Companies ranked 101-250 | Medium risk, medium returns | Trent, Persistent, Zomato |
+| **Small-Cap** | < ₹5,000 crore | Companies ranked beyond 250 | Higher risk, higher potential returns | Many niche companies |
 
-> **Mental model:** Think of market cap like company size — large-caps are like established oak trees (steady, reliable), while small-caps are like young saplings (fast-growing but vulnerable).
+> **Mental model:** Think of market cap like company size — large-caps are like established banyan trees (steady, reliable), while small-caps are like young saplings (fast-growing but vulnerable).
 
 #### By Investment Style
 
-| Style | Description | Best For |
-|---|---|---|
-| **Growth Stocks** | Companies expected to grow faster than the market | Investors seeking capital appreciation |
-| **Value Stocks** | Undervalued companies trading below intrinsic worth | Investors seeking bargains and dividends |
-| **Income Stocks** | Companies that pay high, consistent dividends | Investors seeking regular income |
-| **Blue-Chip Stocks** | Large, well-established, financially sound companies | Conservative, long-term investors |
+| Style | Description | Best For | Indian Examples |
+|---|---|---|---|
+| **Growth Stocks** | Companies growing faster than economy | Capital appreciation | TCS, Infosys, Avenue Supermarts |
+| **Value Stocks** | Undervalued companies below intrinsic worth | Bargains + dividends | SBI, Coal India, ONGC |
+| **Income Stocks** | Companies paying high dividends | Regular income | ITC, Power Grid, Coal India |
+| **Blue-Chip Stocks** | Large, well-established, financially sound | Conservative investors | Reliance, HDFC, TCS |
 
-#### By Sector
+#### By Sector (NSE Nifty Sectoral Indices)
 
-| Sector | Examples | Characteristics |
+| Sector | Key Companies | Nifty Sectoral Index |
 |---|---|---|
-| **Technology** | Apple, Microsoft, Google | High growth, volatile |
-| **Healthcare** | Johnson & Johnson, Pfizer | Defensive, stable demand |
-| **Financial** | JPMorgan, Berkshire Hathaway | Tied to interest rates |
-| **Consumer Staples** | Coca-Cola, Procter & Gamble | Stable, recession-resistant |
-| **Energy** | ExxonMobil, Chevron | Tied to oil prices |
-| **Real Estate (REITs)** | Vanguard Real Estate ETF | High dividends, interest rate sensitive |
+| **IT** | TCS, Infosys, Wipro, HCL Tech | Nifty IT |
+| **Banking** | HDFC Bank, ICICI Bank, SBI, Kotak | Nifty Bank |
+| **FMCG** | HUL, ITC, Nestle, Britannia | Nifty FMCG |
+| **Pharma** | Sun Pharma, Dr. Reddy's, Cipla | Nifty Pharma |
+| **Auto** | Maruti, Tata Motors, M&M, Bajaj Auto | Nifty Auto |
+| **Metals** | Tata Steel, JSW Steel, Hindalco | Nifty Metal |
+| **Energy** | Reliance, ONGC, NTPC, Power Grid | Nifty Energy |
+| **Real Estate** | DLF, Godrej Properties, Oberoi | Nifty Realty |
 
 ---
 
-### Beyond Stocks: Other Asset Classes
+### Beyond Stocks: Indian Asset Classes
 
-| Asset Class | Description | Risk Level | Return Potential |
+| Asset Class | Description | How to Invest | Risk Level |
 |---|---|---|---|
-| **Bonds** | Loans to governments/companies | Low-Medium | 3-6% annually |
-| **Real Estate** | Property or REITs | Medium | 5-10% annually |
-| **Commodities** | Gold, oil, agricultural products | High | Variable |
-| **Cryptocurrency** | Digital currencies (Bitcoin, Ethereum) | Very High | Highly variable |
-| **Cash/Money Market** | Savings accounts, CDs | Very Low | 1-5% annually |
+| **Equity Mutual Funds** | Professionally managed stock portfolios | SIP or lumpsum via MF platforms | Medium-High |
+| **Index Funds (Nifty/Sensex)** | Passive funds tracking benchmark indices | Direct plans on Kuvera, Groww | Medium |
+| **Debt Funds** | Invest in bonds, government securities | Liquid, Short Duration, Gilt funds | Low-Medium |
+| **Gold (SGBs)** | Sovereign Gold Bonds — earn 2.5% interest + gold price appreciation | RBI SGB scheme, Gold ETFs | Medium |
+| **PPF** | Public Provident Fund — 15-year lock-in, 7.1% tax-free | Post office or banks | Very Low |
+| **ELSS** | Equity Linked Savings Scheme — tax saving under 80C | Mutual fund platforms | Medium-High |
+| **REITs** | Real Estate Investment Trusts — own commercial real estate | Embassy REIT, Mindspace REIT | Medium |
+| **NPS** | National Pension System — retirement savings | NPS platforms, banks | Medium |
+| **Fixed Deposits** | Bank deposits with guaranteed returns | Any bank | Very Low |
 
-> **Key insight:** Diversification across asset classes is the closest thing to a "free lunch" in investing — it can reduce risk without proportionally reducing returns.
+> **Key insight:** Equity mutual funds (especially index funds) provide the best long-term wealth creation for most Indian investors.
+
+---
+
+### The Indian Investment Tax Landscape
+
+| Investment | Short-Term Tax | Long-Term Tax | Lock-in |
+|---|---|---|---|
+| **Equity (STCG)** | 20% (if held < 1 year) | — | None |
+| **Equity (LTCG)** | — | 12.5% above ₹1.25 lakh/year | None |
+| **Equity MF (STCG)** | 20% (if held < 1 year) | — | None |
+| **Equity MF (LTCG)** | — | 12.5% above ₹1.25 lakh/year | None |
+| **Debt MF** | Slab rate (if held < 3 years) | 20% with indexation (>3 yrs) | None |
+| **ELSS** | — | 12.5% above ₹1.25 lakh | 3 years |
+| **PPF** | — | Tax-free (EEE status) | 15 years |
+| **SGB** | 20% with indexation (on redemption) | Tax-free if held to maturity (8 yrs) | 5 years (can sell on exchange) |
+| **FD** | Slab rate | Slab rate | Varies |
 
 ---
 
 ### Common Mistakes to Avoid
 
-- **Mistake:** Only investing in one sector — **Fix:** Diversify across multiple sectors.
-- **Mistake:** Confusing stock price with value — **Fix:** A $10 stock isn't "cheaper" than a $100 stock.
-- **Mistake:** Ignoring dividends — **Fix:** Reinvesting dividends significantly boosts long-term returns.
-- **Mistake:** Chasing hot sectors — **Fix:** By the time a sector is "hot," the easy gains are often gone.
+- **Mistake:** Only investing in one sector — **Fix:** Diversify across sectors using index funds.
+- **Mistake:** Confusing stock price with value — **Fix:** A ₹10 stock isn't "cheaper" than a ₹1,000 stock.
+- **Mistake:** Not using SIPs — **Fix:** SIPs remove emotion and provide rupee cost averaging.
 
 ### Professional Tips & Tricks
 
-- Use index funds or ETFs for instant diversification across sectors.
+- Use index funds (Nifty 50, Nifty Next 50) for instant diversification.
 - Consider your age when choosing between growth and value stocks.
-- Younger investors can afford more risk (more growth stocks).
-- Older investors may prefer income and stability (more value/income stocks).
+- ELSS gives you tax savings AND equity growth — best of both worlds.
 
 ---
 
 ### Key Takeaways
 
-- Stocks are categorized by market cap, investment style, and sector.
+- Indian stocks are categorized by market cap (SEBI definition), investment style, and sector.
 - Large-cap stocks are generally safer; small-caps offer higher growth potential.
 - Diversification across asset classes reduces portfolio risk.
-- Index funds and ETFs provide easy diversification for most investors.
+- Index funds and ELSS provide easy diversification for most Indian investors.
+- India's tax regime favors long-term equity investing (LTCG at 12.5% above ₹1.25 lakh).
 
-**Next up:** Fundamental analysis — how to evaluate whether a stock is worth buying.`,
+**Next up:** Fundamental analysis — how to evaluate whether an Indian stock is worth buying.`,
       codeLanguage: "text",
-      codeSnippet: `# Stock Types & Portfolio Allocation Guide
+      codeSnippet: `Indian Stock Types & Portfolio Allocation Guide
 
-## Market Cap Categories
+MARKET CAP CATEGORIES (SEBI DEFINITION)
 
-| Category | Market Cap | Example Companies | Risk Level |
-|----------|------------|-------------------|------------|
-| Large-Cap | > $10B | AAPL, MSFT, AMZN | Low-Medium |
-| Mid-Cap | $2-10B | SNAP, ETSY, ROKU | Medium |
-| Small-Cap | < $2B | Various growth companies | High |
+Category    | Market Cap       | Example Companies      | Risk Level
+------------|------------------|------------------------|------------
+Large-Cap   | > ₹20,000 crore | Reliance, TCS, HDFC    | Low-Medium
+Mid-Cap     | ₹5,000-20,000 cr| Trent, Persistent       | Medium
+Small-Cap   | < ₹5,000 crore  | Many niche companies   | High
 
-## Sample Diversified Portfolio
+SAMPLE DIVERSIFIED PORTFOLIO (INDIAN CONTEXT)
 
-### Conservative (Near Retirement)
-- 30% US Large-Cap Stocks
-- 10% US Mid/Small-Cap Stocks
-- 20% International Stocks
-- 30% Bonds
-- 10% Cash
+Conservative (Near Retirement):
+30% Nifty 50 Index Fund | 10% Mid/Small Cap
+20% International Fund | 30% Debt Funds | 10% Gold ETF
 
-### Balanced (Mid-Career)
-- 40% US Large-Cap Stocks
-- 15% US Mid/Small-Cap Stocks
-- 25% International Stocks
-- 15% Bonds
-- 5% Cash
+Balanced (Mid-Career):
+35% Nifty 50 Index Fund | 10% Nifty Next 50
+10% Mid Cap Fund | 20% International Fund
+15% Debt Funds | 10% Gold ETF
 
-### Aggressive (Early Career)
-- 50% US Large-Cap Stocks
-- 20% US Mid/Small-Cap Stocks
-- 25% International Stocks
-- 5% Bonds
-- 0% Cash
+Aggressive (Early Career):
+30% Nifty 50 Index Fund | 10% Nifty Next 50
+15% Mid Cap Fund | 10% Small Cap Fund
+20% International Fund | 10% Debt Funds | 5% Gold ETF
 
-## Sector Diversification
+INDIAN TAX-EFFICIENT INVESTMENT PRIORITY
 
-Recommended allocation by sector:
-- Technology: 20-25%
-- Healthcare: 10-15%
-- Financial: 10-15%
-- Consumer Discretionary: 10-15%
-- Industrials: 10-15%
-- Other sectors: 15-20%`,
-      codeOutput: `Stock Types & Portfolio Allocation Guide
+1. ELSS (Section 80C): ₹1.5 lakh/year tax saving + equity growth
+2. NPS (Section 80CCD): Additional ₹50,000 tax saving
+3. PPF: Tax-free returns, 15-year lock-in
+4. SGB: Gold exposure + 2.5% interest + tax-free at maturity
+5. Equity Index Funds: 12.5% LTCG tax (above ₹1.25 lakh)
 
-## Market Cap Categories
+SECTOR DIVERSIFICATION (INDIAN CONTEXT)
 
-| Category | Market Cap | Example Companies | Risk Level |
-|----------|------------|-------------------|------------|
-| Large-Cap | > $10B | AAPL, MSFT, AMZN | Low-Medium |
-| Mid-Cap | $2-10B | SNAP, ETSY, ROKU | Medium |
-| Small-Cap | < $2B | Various growth companies | High |
+Banking/NBFC: 20-25% | IT: 15-20%
+Energy/Infrastructure: 10-15% | FMCG: 10-15%
+Healthcare: 10-15% | Auto: 10-15% | Other: 10-15%`,
+      codeOutput: `Indian Stock Types & Portfolio Allocation Guide
 
-## Sample Diversified Portfolio
+MARKET CAP CATEGORIES (SEBI DEFINITION)
 
-### Conservative (Near Retirement)
-- 30% US Large-Cap Stocks
-- 10% US Mid/Small-Cap Stocks
-- 20% International Stocks
-- 30% Bonds
-- 10% Cash
+Category    | Market Cap       | Example Companies      | Risk Level
+------------|------------------|------------------------|------------
+Large-Cap   | > ₹20,000 crore | Reliance, TCS, HDFC    | Low-Medium
+Mid-Cap     | ₹5,000-20,000 cr| Trent, Persistent       | Medium
+Small-Cap   | < ₹5,000 crore  | Many niche companies   | High
 
-### Balanced (Mid-Career)
-- 40% US Large-Cap Stocks
-- 15% US Mid/Small-Cap Stocks
-- 25% International Stocks
-- 15% Bonds
-- 5% Cash
+SAMPLE DIVERSIFIED PORTFOLIO (INDIAN CONTEXT)
 
-### Aggressive (Early Career)
-- 50% US Large-Cap Stocks
-- 20% US Mid/Small-Cap Stocks
-- 25% International Stocks
-- 5% Bonds
-- 0% Cash
+Conservative (Near Retirement):
+30% Nifty 50 Index Fund | 10% Mid/Small Cap
+20% International Fund | 30% Debt Funds | 10% Gold ETF
 
-## Sector Diversification
+Balanced (Mid-Career):
+35% Nifty 50 Index Fund | 10% Nifty Next 50
+10% Mid Cap Fund | 20% International Fund
+15% Debt Funds | 10% Gold ETF
 
-Recommended allocation by sector:
-- Technology: 20-25%
-- Healthcare: 10-15%
-- Financial: 10-15%
-- Consumer Discretionary: 10-15%
-- Industrials: 10-15%
-- Other sectors: 15-20%`,
+Aggressive (Early Career):
+30% Nifty 50 Index Fund | 10% Nifty Next 50
+15% Mid Cap Fund | 10% Small Cap Fund
+20% International Fund | 10% Debt Funds | 5% Gold ETF
+
+INDIAN TAX-EFFICIENT INVESTMENT PRIORITY
+
+1. ELSS (Section 80C): ₹1.5 lakh/year tax saving + equity growth
+2. NPS (Section 80CCD): Additional ₹50,000 tax saving
+3. PPF: Tax-free returns, 15-year lock-in
+4. SGB: Gold exposure + 2.5% interest + tax-free at maturity
+5. Equity Index Funds: 12.5% LTCG tax (above ₹1.25 lakh)
+
+SECTOR DIVERSIFICATION (INDIAN CONTEXT)
+
+Banking/NBFC: 20-25% | IT: 15-20%
+Energy/Infrastructure: 10-15% | FMCG: 10-15%
+Healthcare: 10-15% | Auto: 10-15% | Other: 10-15%`,
       visualizationTips: [
-        "Create a pie chart of your ideal portfolio allocation by asset class.",
-        "Map out sector correlations — some sectors move together, others don't.",
-        "Use a risk/reward graph to visualize where different stock types fall.",
+        "Create a pie chart of your ideal portfolio allocation by asset class (Indian context).",
+        "Map out sector correlations — Nifty IT vs Nifty Bank vs Nifty Pharma.",
+        "Use a risk/reward graph to visualize where different Indian stock types fall."
       ],
       tipsAndTricks: [
-        "Target-date funds automatically adjust your allocation as you age.",
-        "Rebalance your portfolio annually to maintain your target allocation.",
-        "Don't chase performance — what went up last year may not go up this year.",
+        "Start with Nifty 50 or Nifty Next 50 index funds — instant diversification.",
+        "Use direct plans to save 0.5-1% in expense ratios every year.",
+        "ELSS gives you tax savings AND equity growth — best of both worlds.",
+        "Don't chase mid/small-cap hype — they can underperform for years."
       ],
       practice: [
         {
           id: "practice-portfolio-design",
-          title: "Portfolio Design Exercise",
+          title: "Design Your Indian Portfolio",
           difficulty: "Medium",
-          task: "Design a diversified portfolio for a 30-year-old investor with a $50,000 investment. Include specific allocations to different asset classes and explain your reasoning.",
-          hint: "Consider risk tolerance, time horizon, and diversification.",
-          solution: `Portfolio for 30-year-old investor:
-US Total Stock Market Index Fund: 40% ($20,000)
-International Stock Index Fund: 25% ($12,500)
-US Bond Index Fund: 15% ($7,500)
-Real Estate (REIT) Fund: 10% ($5,000)
-Small-Cap Value Fund: 10% ($5,000)
+          task: "Design a diversified portfolio for a 28-year-old Indian investor with ₹5,00,000 to invest. Include specific fund names (from Indian AMCs) and explain your reasoning.",
+          hint: "Consider risk tolerance, time horizon, tax benefits (ELSS), and diversification.",
+          solution: `Portfolio for 28-year-old Indian investor (₹5,00,000):
+
+1. Nifty 50 Index Fund (Direct Growth): ₹1,50,000 (30%)
+   Fund: UTI Nifty 50 Index Fund Direct Growth
+   Why: Core India exposure, low cost (0.10% expense)
+
+2. Nifty Next 50 Index Fund: ₹75,000 (15%)
+   Fund: ICICI Pru Nifty Next 50 Index Fund Direct
+   Why: Emerging blue chips, higher growth potential
+
+3. ELSS Fund (Tax Saving): ₹1,50,000 (30%)
+   Fund: Quant ELSS Tax Saver Fund Direct Growth
+   Why: Section 80C tax saving + equity growth (3yr lock-in)
+
+4. International Fund: ₹75,000 (15%)
+   Fund: Motilal Oswal S&P 500 Index Fund Direct
+   Why: US market exposure, diversification from India
+
+5. Small Cap Fund: ₹50,000 (10%)
+   Fund: Nippon India Small Cap Fund Direct Growth
+   Why: High growth potential, 10+ year horizon
+
+Total: ₹5,00,000
 
 Rationale:
-- Long time horizon allows for growth focus
-- International diversification reduces US-specific risk
-- Bonds provide stability during market downturns
-- REITs add real estate exposure without buying property
-- Small-cap value historically outperforms over long periods`,
+- Long time horizon (30+ years to retirement) allows for aggressive allocation
+- 90% equity for maximum growth
+- ELSS provides ₹1.5 lakh tax saving under 80C
+- International fund reduces India-specific risk
+- Small cap provides asymmetric upside over 10+ years`
         },
         {
           id: "practice-sector-analysis",
-          title: "Sector Analysis",
+          title: "Indian Sector Analysis",
           difficulty: "Easy",
-          task: "List 3 companies from each of these sectors: Technology, Healthcare, and Consumer Staples. For each company, identify one strength and one risk.",
-          hint: "Think about competitive advantages and potential threats.",
-          solution: `Technology:
-- Apple (AAPL): Strength - Brand loyalty; Risk - Regulatory pressure
-- Microsoft (MSFT): Strength - Cloud dominance; Risk - Competition from AWS
-- Google (GOOGL): Strength - Search monopoly; Risk - Ad revenue dependency
+          task: "List 2 companies from each of these Indian sectors: Banking, IT, FMCG, and Pharma. For each company, identify one strength and one risk.",
+          hint: "Think about competitive advantages and potential threats in the Indian context.",
+          solution: `Indian Sector Analysis:
 
-Healthcare:
-- Johnson & JNJ: Strength - Diversified products; Risk - Lawsuit exposure
-- Pfizer (PFE): Strength - Vaccine pipeline; Risk - Patent cliffs
-- UnitedHealth (UNH): Strength - Insurance moat; Risk - Regulatory changes
+Banking:
+- HDFC Bank: Strength - Largest private bank, strong asset quality; Risk - High valuation, merger integration
+- SBI: Strength - Largest bank in India, government backing; Risk - NPA cycles, bureaucratic culture
 
-Consumer Staples:
-- Coca-Cola (KO): Strength - Global brand; Risk - Health trends
-- Procter & Gamble (PG): Strength - Product portfolio; Risk - Commodity costs
-- Walmart (WMT): Strength - Scale; Risk - E-commerce competition`,
-        },
-      ],
+IT:
+- TCS: Strength - Largest IT company in India, trusted brand globally; Risk - US recession risk, visa issues
+- Infosys: Strength - Strong margins, digital transformation leader; Risk - Employee attrition, client concentration
+
+FMCG:
+- HUL: Strength - Market leader in most categories, strong distribution; Risk - Rural demand slowdown, raw material inflation
+- ITC: Strength - Diversified (cigarettes, hotels, FMCG), cash-rich; Risk - Regulatory risk on cigarettes, FMCG margins thin
+
+Pharma:
+- Sun Pharma: Strength - Largest pharma company in India, global presence; Risk - US FDA issues, specialty pipeline risk
+- Dr. Reddy's: Strength - Strong generic portfolio, biosimilars; Risk - Pricing pressure in US generics`
+        }
+      ]
     },
     {
       id: "fundamental-analysis",
-      title: "Lesson 3: Fundamental Analysis for Stock Evaluation",
+      title: "Lesson 3: Fundamental Analysis for Indian Stock Evaluation",
       shortDescription:
-        "Learn how to evaluate stocks using financial statements, ratios, and valuation metrics.",
+        "Learn how to evaluate Indian stocks using financial statements, key ratios, and valuation metrics — with Indian company examples.",
       duration: "55 mins",
       readingTime: "11 mins read",
       contentMarkdown: `### What is Fundamental Analysis?
 
-Fundamental analysis is the process of evaluating a stock's **intrinsic value** by examining its financial health, competitive position, and growth prospects. It answers the question: "Is this company worth what the market is currently charging?"
+Fundamental analysis is the process of evaluating a stock's **intrinsic value** by examining its financial health, competitive position, and growth prospects. For Indian stocks, you'll use BSE/NSE data, company annual reports, and screener.in for analysis.
 
-#### The Three Financial Statements
+> **Mental model:** Think of fundamental analysis as a health check-up for a company — you're checking its blood pressure (revenue), cholesterol (debt), and fitness level (profitability).
+
+---
+
+### Where to Find Indian Company Financials
+
+| Source | What It Provides | Cost |
+|---|---|---|
+| **Screener.in** | Financial ratios, charts, peer comparison | Free |
+| **Trendlyne** | Financial analysis, DCF models, screeners | Free/Premium |
+| **Moneycontrol** | Financial statements, news, analysis | Free |
+| **Company Website** | Annual reports, investor presentations | Free |
+| **BSE/NSE** | Official filings, shareholding pattern | Free |
+| **Tijori Finance** | Industry-level data, sector analysis | Free/Premium |
+
+---
+
+### The Three Financial Statements (Indian Context)
 
 | Statement | What It Shows | Key Metrics |
 |---|---|---|
-| **Income Statement** | Revenue, expenses, and profit over a period | Revenue, Net Income, EPS |
-| **Balance Sheet** | Assets, liabilities, and equity at a point in time | Total Assets, Debt, Equity |
-| **Cash Flow Statement** | Cash generated and used over a period | Operating Cash Flow, Free Cash Flow |
+| **Profit & Loss** | Revenue, expenses, and profit over a year | Revenue, PAT, EPS |
+| **Balance Sheet** | Assets, liabilities, and equity at a point | Total Assets, Debt, Equity |
+| **Cash Flow Statement** | Cash generated and used over a year | Operating CF, Free CF |
 
-> **Mental model:** Think of financial statements as a company's report card — the income statement shows grades (performance), the balance sheet shows resources (assets vs. liabilities), and the cash flow statement shows actual cash in hand.
+> **Key insight:** Indian companies file quarterly results with BSE/NSE, but the detailed annual report (with auditor's report and notes) is the most reliable source.
 
-#### Key Financial Ratios
+---
+
+### Key Financial Ratios for Indian Stocks
+
+#### 1. Valuation Ratios
+
+| Ratio | Formula | What It Tells You | Good Benchmark (India) |
+|---|---|---|---|
+| **P/E Ratio** | Price per share / EPS | How much you're paying for ₹1 of earnings | 15-25 for stable companies |
+| **P/B Ratio** | Price per share / Book value per share | Market value vs. net asset value | < 3.0 is reasonable |
+| **PEG Ratio** | P/E / Earnings Growth Rate | Value adjusted for growth | < 1.0 is undervalued |
+
+#### 2. Profitability Ratios
 
 | Ratio | Formula | What It Tells You | Good Benchmark |
 |---|---|---|---|
-| **P/E Ratio** | Price per share / EPS | How much you're paying for $1 of earnings | 15-25 for stable companies |
-| **P/B Ratio** | Price per share / Book value per share | How market value compares to net asset value | < 3.0 is generally reasonable |
+| **ROE** | Net Profit / Shareholders' Equity | How efficiently equity generates profits | > 15% is strong |
+| **ROCE** | EBIT / Capital Employed | Return on all capital (equity + debt) | > 18% is excellent |
+| **Operating Margin** | Operating Profit / Revenue | Core business profitability | Varies by sector |
+| **Net Profit Margin** | PAT / Revenue | Bottom-line profitability | Varies by sector |
+
+#### 3. Financial Health Ratios
+
+| Ratio | Formula | What It Tells You | Good Benchmark |
+|---|---|---|---|
 | **Debt-to-Equity** | Total Debt / Shareholders' Equity | Financial leverage and risk | < 1.0 is conservative |
 | **Current Ratio** | Current Assets / Current Liabilities | Short-term liquidity | > 1.5 is healthy |
-| **ROE** | Net Income / Shareholders' Equity | How efficiently equity generates profits | > 15% is strong |
-| **ROA** | Net Income / Total Assets | How efficiently assets generate profits | > 5% is good |
-
-#### How to Read an Income Statement
-
-**Revenue** → **Cost of Goods Sold** = **Gross Profit**
-**Gross Profit** → **Operating Expenses** = **Operating Income**
-**Operating Income** → **Interest & Taxes** = **Net Income**
-
-**Example:**
-Revenue: $100M
-COGS: ($40M)
-Gross Profit: $60M (60% margin)
-Operating Expenses: ($30M)
-Operating Income: $30M (30% margin)
-Interest & Taxes: ($10M)
-Net Income: $20M (20% net margin)
+| **Interest Coverage** | EBIT / Interest Expense | Can company afford interest payments | > 3x is safe |
 
 ---
 
-### Valuation Methods
+### Indian-Specific Metrics to Watch
 
-#### 1. Discounted Cash Flow (DCF)
-
-Estimates a company's value based on projected future cash flows, discounted to present value.
-
-**Formula:**
-Value = Σ (Cash Flow / (1 + Discount Rate)^Year)
-
-> **Key insight:** A company is worth the sum of all its future cash flows, adjusted for the time value of money.
-
-#### 2. Comparable Company Analysis (Comps)
-
-Compare a company's valuation multiples to similar companies.
-
-**Example:**
-- Company A P/E: 20
-- Company B P/E: 25
-- Company C P/E: 18
-- Industry Average: 21
-
-If Company A trades at P/E 15, it might be undervalued.
-
-#### 3. Price-to-Earnings Growth (PEG) Ratio
-
-**Formula:** PEG = P/E Ratio / Earnings Growth Rate
-
-| PEG Ratio | Interpretation |
+| Metric | Why It Matters in India |
 |---|---|
-| < 1.0 | Potentially undervalued |
-| 1.0 | Fairly valued |
-| > 1.0 | Potentially overvalued |
+| **Promoter Holding** | High promoter holding (>50%) shows skin in the game |
+| **Pledged Shares** | Promoter pledged shares = risk of forced selling |
+| **FII Holding** | FII buying/selling signals global interest |
+| **MF Holding** | MF buying signals domestic institutional confidence |
+| **Promoter Buying/Selling** | Insider transactions signal conviction |
+
+#### Promoter Holding Guide (India-Specific)
+
+| Promoter Holding | Interpretation | Action |
+|---|---|---|
+| > 60% | Strong alignment | Positive signal |
+| 50-60% | Good alignment | Normal |
+| 40-50% | Moderate | Monitor for changes |
+| < 40% | Low alignment | Caution |
+| Declining rapidly | Red flag | Investigate why |
+
+> **Key insight:** In India, promoter holding is unique to the market — it shows whether the founding family has confidence in the company's future. A sudden drop in promoter holding is a major red flag.
 
 ---
 
-### Building a Stock Analysis Framework
+### Building a Stock Analysis Framework (Indian Context)
 
 **Step 1: Quantitative Analysis**
-- Review financial statements (3-5 years)
-- Calculate key ratios
+- Review 5 years of financials on Screener.in
+- Calculate key ratios (ROE, ROCE, Debt/Equity)
 - Compare to industry averages
-- Check for consistent growth
+- Check for consistent revenue and profit growth
 
 **Step 2: Qualitative Analysis**
+- Promoter background and track record
 - Competitive advantage (moat)
-- Management quality
-- Industry position
-- Growth opportunities
+- Industry position (market leader?)
+- Corporate governance (related party transactions?)
 
 **Step 3: Valuation**
-- Apply 2-3 valuation methods
-- Determine intrinsic value range
-- Compare to current price
-- Calculate margin of safety
-
-> **Margin of Safety:** The difference between intrinsic value and market price. A 20-30% margin of safety provides a cushion against estimation errors.
+- Compare P/E to 5-year average and industry peers
+- Calculate fair value using DCF or relative valuation
+- Check margin of safety (buy at 20-30% below intrinsic value)
 
 ---
 
-### Common Mistakes to Avoid
+### Common Fundamental Analysis Mistakes in India
 
-- **Mistake:** Relying on a single metric — **Fix:** Use multiple ratios and valuation methods.
-- **Mistake:** Ignoring industry context — **Fix:** Compare ratios to industry peers, not the overall market.
-- **Mistake:** Overcomplicating analysis — **Fix:** Focus on the 5-6 most important metrics.
-- **Mistake:** Ignoring qualitative factors — **Fix:** Numbers don't tell the whole story; understand the business.
+- **Mistake:** Ignoring promoter holding — **Fix:** Always check promoter pledge and holding changes.
+- **Mistake:** Comparing P/E across sectors — **Fix:** IT stocks (25-35x P/E) shouldn't be compared to banks (10-15x P/E).
+- **Mistake:** Ignoring related party transactions — **Fix:** Check annual report notes for RPTs with promoter entities.
 
 ### Professional Tips & Tricks
 
-- Use company filings (10-K, 10-Q) for accurate financial data.
-- Look for consistent revenue and earnings growth over 5+ years.
-- Check the debt-to-equity ratio — too much debt is risky.
-- Calculate owner earnings (net income + depreciation - capital expenditures) for a true cash flow picture.
+- Use Screener.in for quick ratio comparison — it's the best free tool for Indian stocks.
+- Look for companies with consistent ROCE > 18% and ROE > 15% over 5 years.
+- Always check the shareholding pattern — FII and MF buying is a positive signal.
 
 ---
 
 ### Key Takeaways
 
-- Fundamental analysis evaluates a stock's intrinsic value through financial statements.
-- Key ratios include P/E, P/B, Debt-to-Equity, ROE, and ROA.
-- Valuation methods include DCF, comps, and PEG ratio.
-- A margin of safety protects against estimation errors.
-- Combine quantitative and qualitative analysis for the best results.
+- Fundamental analysis evaluates intrinsic value through financial statements and ratios.
+- Key Indian metrics: ROE, ROCE, Debt/Equity, and Promoter Holding.
+- Screener.in is the best free tool for Indian stock analysis.
+- Promoter holding and pledge levels are unique to Indian markets — always check them.
+- Look for companies with consistent growth in revenue and profit over 5+ years.
 
 **Next up:** Technical analysis — reading charts and understanding market psychology.`,
       codeLanguage: "text",
-      codeSnippet: `# Stock Analysis Framework
+      codeSnippet: `Indian Stock Analysis Framework — Key Reference
 
-## Financial Ratio Cheat Sheet
+FINANCIAL RATIO CHEAT SHEET (INDIAN CONTEXT)
 
-### Valuation Ratios
-- P/E Ratio: Price ÷ Earnings per share
+Valuation Ratios:
+- P/E Ratio: Price ÷ Earnings per share (compare within sector)
 - P/B Ratio: Price ÷ Book value per share
-- P/S Ratio: Price ÷ Sales per share
-- PEG Ratio: P/E ÷ Earnings growth rate
+- PEG Ratio: P/E ÷ Earnings growth rate (< 1 = undervalued)
 
-### Profitability Ratios
-- Gross Margin: (Revenue - COGS) ÷ Revenue
-- Operating Margin: Operating Income ÷ Revenue
-- Net Margin: Net Income ÷ Revenue
-- ROE: Net Income ÷ Shareholders' Equity
-- ROA: Net Income ÷ Total Assets
+Profitability Ratios:
+- ROE: Net Profit ÷ Shareholders' Equity (> 15% = strong)
+- ROCE: EBIT ÷ Capital Employed (> 18% = excellent)
+- Operating Margin: Operating Profit ÷ Revenue
+- Net Margin: PAT ÷ Revenue
 
-### Financial Health Ratios
-- Current Ratio: Current Assets ÷ Current Liabilities
-- Quick Ratio: (Current Assets - Inventory) ÷ Current Liabilities
-- Debt-to-Equity: Total Debt ÷ Shareholders' Equity
-- Interest Coverage: EBIT ÷ Interest Expense
+Financial Health:
+- Debt/Equity: Total Debt ÷ Shareholders' Equity (< 1.0 = safe)
+- Interest Coverage: EBIT ÷ Interest Expense (> 3x = safe)
+- Current Ratio: Current Assets ÷ Current Liabilities (> 1.5)
 
-## Example Analysis: Apple (AAPL)
+EXAMPLE ANALYSIS: TCS (Tata Consultancy Services)
 
-### Income Statement Highlights
-- Revenue: $394B (TTM)
-- Net Income: $100B
-- Net Margin: 25.4%
-- EPS: $6.13
+Financial Highlights (FY2024):
+Revenue: ₹2,25,000 crore | Growth: ~13% YoY
+EBITDA Margin: ~25% | PAT: ₹42,000 crore | EPS: ₹115
 
-### Key Ratios
-- P/E Ratio: 28.5 (vs industry avg 22)
-- P/B Ratio: 45.2
-- ROE: 160%
-- Debt-to-Equity: 1.8
+Key Ratios:
+P/E Ratio: 32x (vs IT sector avg 28x)
+ROE: 50% (excellent) | ROCE: 65% (excellent)
+Debt/Equity: 0.05 (almost debt-free)
+Promoter Holding: 72% (Tata Group)
 
-### Valuation Assessment
-- Current Price: $175
-- DCF Intrinsic Value: $195
-- Margin of Safety: 10%
-- Recommendation: Fairly valued, hold`,
-      codeOutput: `Stock Analysis Framework
+Promoter Analysis:
+- Promoter: Tata Sons (72%)
+- Promoter Pledged: 0% (no pledge)
+- FII Holding: 12% (stable)
+- MF Holding: 8% (increasing)
 
-## Financial Ratio Cheat Sheet
+Valuation Assessment:
+Current Price: ₹3,700 | Fair Value (DCF): ₹3,500
+Assessment: Slightly overvalued, but quality justifies premium
 
-### Valuation Ratios
-- P/E Ratio: Price ÷ Earnings per share
+QUICK STOCK HEALTH CHECK (SCREENER.IN)
+
+Before investing, check these 5 numbers:
+1. ROE > 15%?  YES / NO
+2. ROCE > 18%? YES / NO
+3. Debt/Equity < 1? YES / NO
+4. Promoter holding > 50%? YES / NO
+5. Revenue growing 5+ years? YES / NO
+
+If all 5 are YES → likely a quality company
+If 3-4 are YES → investigate further
+If < 3 are YES → avoid or deep research`,
+      codeOutput: `Indian Stock Analysis Framework — Key Reference
+
+FINANCIAL RATIO CHEAT SHEET (INDIAN CONTEXT)
+
+Valuation Ratios:
+- P/E Ratio: Price ÷ Earnings per share (compare within sector)
 - P/B Ratio: Price ÷ Book value per share
-- P/S Ratio: Price ÷ Sales per share
-- PEG Ratio: P/E ÷ Earnings growth rate
+- PEG Ratio: P/E ÷ Earnings growth rate (< 1 = undervalued)
 
-### Profitability Ratios
-- Gross Margin: (Revenue - COGS) ÷ Revenue
-- Operating Margin: Operating Income ÷ Revenue
-- Net Margin: Net Income ÷ Revenue
-- ROE: Net Income ÷ Shareholders' Equity
-- ROA: Net Income ÷ Total Assets
+Profitability Ratios:
+- ROE: Net Profit ÷ Shareholders' Equity (> 15% = strong)
+- ROCE: EBIT ÷ Capital Employed (> 18% = excellent)
+- Operating Margin: Operating Profit ÷ Revenue
+- Net Margin: PAT ÷ Revenue
 
-### Financial Health Ratios
-- Current Ratio: Current Assets ÷ Current Liabilities
-- Quick Ratio: (Current Assets - Inventory) ÷ Current Liabilities
-- Debt-to-Equity: Total Debt ÷ Shareholders' Equity
-- Interest Coverage: EBIT ÷ Interest Expense
+Financial Health:
+- Debt/Equity: Total Debt ÷ Shareholders' Equity (< 1.0 = safe)
+- Interest Coverage: EBIT ÷ Interest Expense (> 3x = safe)
+- Current Ratio: Current Assets ÷ Current Liabilities (> 1.5)
 
-## Example Analysis: Apple (AAPL)
+EXAMPLE ANALYSIS: TCS (Tata Consultancy Services)
 
-### Income Statement Highlights
-- Revenue: $394B (TTM)
-- Net Income: $100B
-- Net Margin: 25.4%
-- EPS: $6.13
+Financial Highlights (FY2024):
+Revenue: ₹2,25,000 crore | Growth: ~13% YoY
+EBITDA Margin: ~25% | PAT: ₹42,000 crore | EPS: ₹115
 
-### Key Ratios
-- P/E Ratio: 28.5 (vs industry avg 22)
-- P/B Ratio: 45.2
-- ROE: 160%
-- Debt-to-Equity: 1.8
+Key Ratios:
+P/E Ratio: 32x (vs IT sector avg 28x)
+ROE: 50% (excellent) | ROCE: 65% (excellent)
+Debt/Equity: 0.05 (almost debt-free)
+Promoter Holding: 72% (Tata Group)
 
-### Valuation Assessment
-- Current Price: $175
-- DCF Intrinsic Value: $195
-- Margin of Safety: 10%
-- Recommendation: Fairly valued, hold`,
+Promoter Analysis:
+- Promoter: Tata Sons (72%)
+- Promoter Pledged: 0% (no pledge)
+- FII Holding: 12% (stable)
+- MF Holding: 8% (increasing)
+
+Valuation Assessment:
+Current Price: ₹3,700 | Fair Value (DCF): ₹3,500
+Assessment: Slightly overvalued, but quality justifies premium
+
+QUICK STOCK HEALTH CHECK (SCREENER.IN)
+
+Before investing, check these 5 numbers:
+1. ROE > 15%?  YES / NO
+2. ROCE > 18%? YES / NO
+3. Debt/Equity < 1? YES / NO
+4. Promoter holding > 50%? YES / NO
+5. Revenue growing 5+ years? YES / NO
+
+If all 5 are YES → likely a quality company
+If 3-4 are YES → investigate further
+If < 3 are YES → avoid or deep research`,
       visualizationTips: [
-        "Create a financial dashboard with key metrics for easy comparison.",
-        "Draw a waterfall chart showing how revenue flows to net income.",
-        "Use a radar chart to compare a company's ratios to industry averages.",
+        "Create a financial dashboard on Screener.in for your favorite Indian stock.",
+        "Draw a waterfall chart showing how revenue flows to PAT for an Indian company.",
+        "Use a radar chart to compare a company's ratios to industry averages."
       ],
       tipsAndTricks: [
-        "Always check the footnotes in financial statements — important details are often hidden there.",
-        "Look for companies with consistent revenue growth and expanding margins.",
-        "Compare current ratios to the company's own historical averages, not just industry peers.",
+        "Always check promoter pledge level — high pledge is a major red flag in India.",
+        "Use Screener.in's 'export to Excel' feature for detailed financial analysis.",
+        "Look for companies with consistent ROCE > 18% over 5 years — it signals a durable moat.",
+        "Read the 'Related Party Transactions' section in annual reports for governance issues."
       ],
       practice: [
         {
           id: "practice-ratio-analysis",
-          title: "Financial Ratio Analysis",
+          title: "Indian Stock Ratio Analysis",
           difficulty: "Medium",
-          task: "Calculate the following ratios for a company of your choice using data from Yahoo Finance: P/E Ratio, Debt-to-Equity, ROE, and Current Ratio. Interpret what each ratio tells you about the company.",
-          hint: "Look up the company's latest quarterly report for the most recent numbers.",
-          solution: `Example: Microsoft (MSFT)
-- P/E Ratio: 35.2 → High, but justified by growth expectations
-- Debt-to-Equity: 0.5 → Conservative, healthy balance sheet
-- ROE: 42% → Excellent, efficient use of equity
-- Current Ratio: 1.8 → Strong liquidity, can cover short-term obligations
+          task: "Analyze HDFC Bank using Screener.in. Find: (1) P/E Ratio, (2) ROE, (3) ROCE, (4) Debt/Equity, (5) Promoter Holding, (6) 5-year revenue growth. Is this a quality stock to own?",
+          hint: "Go to Screener.in, search for HDFC Bank, and check the financial ratios section.",
+          solution: `HDFC Bank Analysis (FY2024):
 
-Overall Assessment: MSFT is a high-quality company with strong profitability, reasonable leverage, and good liquidity. The high P/E reflects market confidence in continued growth.`,
+Financial Data:
+- Revenue: ₹2,80,000 crore (TTM)
+- PAT: ₹60,000 crore
+- EPS: ₹78
+
+Key Ratios:
+- P/E Ratio: 19x (reasonable for a bank)
+- ROE: 16.5% (strong for banking)
+- ROCE: 18.2% (excellent)
+- Debt/Equity: N/A (banks use different metric — use Capital Adequacy Ratio: 18.4%, well above 9% requirement)
+- Net Interest Margin: 3.4% (healthy)
+
+Promoter & Shareholding:
+- Promoter Holding: 25.5% (lower due to HDFC Ltd merger)
+- FII Holding: 49% (very high — global confidence)
+- MF Holding: 12% (increasing)
+- Promoter Pledged: 0%
+
+5-Year Revenue Growth: ~15% CAGR
+5-Year Profit Growth: ~18% CAGR
+
+Assessment: QUALITY STOCK ✓
+- Industry-leading bank with strong margins
+- Excellent ROE and ROCE for the sector
+- Low valuation relative to growth
+- Strong institutional backing
+- Risk: Integration with HDFC Ltd, asset quality in stress
+
+Recommendation: Quality stock for long-term holding.`
         },
         {
           id: "practice-valuation",
-          title: "Simple Valuation Exercise",
+          title: "Simple Valuation Exercise (Indian Context)",
           difficulty: "Hard",
-          task: "Perform a basic DCF valuation for a small company. Use the following assumptions: projected cash flows of $5M, $6M, $7M, $8M, $9M over the next 5 years, a discount rate of 10%, and a terminal growth rate of 3%. What is the estimated intrinsic value?",
-          hint: "Use the formula: Value = Σ (Cash Flow / (1 + r)^t) + Terminal Value",
-          solution: `DCF Calculation:
+          task: "You're analyzing Reliance Industries. Current P/E is 28x. Industry average P/E is 22x. Reliance is growing at 15% CAGR. Calculate the PEG ratio and determine if it's fairly valued.",
+          hint: "PEG = P/E ÷ Growth Rate. PEG < 1 = undervalued, PEG 1-1.5 = fairly valued, PEG > 1.5 = overvalued.",
+          solution: `Reliance Industries Valuation:
 
-Year 1: $5M / (1.10)^1 = $4.55M
-Year 2: $6M / (1.10)^2 = $4.96M
-Year 3: $7M / (1.10)^3 = $5.26M
-Year 4: $8M / (1.10)^4 = $5.46M
-Year 5: $9M / (1.10)^5 = $5.59M
+Current P/E: 28x
+Earnings Growth Rate: 15% CAGR
+Industry Average P/E: 22x
 
-Terminal Value = $9M × (1.03) / (0.10 - 0.03) = $132.43M
-PV of Terminal Value = $132.43M / (1.10)^5 = $82.20M
+PEG Ratio Calculation:
+PEG = P/E ÷ Growth Rate
+PEG = 28 ÷ 15 = 1.87
 
-Total Value = $4.55M + $4.96M + $5.26M + $5.46M + $5.59M + $82.20M = $108.02M
+Interpretation:
+- PEG > 1.5 → Potentially overvalued
+- You're paying ₹1.87 for each unit of growth
+- Industry average PEG would be: 22 ÷ 15 = 1.47
 
-Intrinsic Value: ~$108 million`,
-        },
-      ],
-    },
+Assessment:
+Reliance trades at a premium to industry (28x vs 22x P/E)
+PEG of 1.87 suggests slight overvaluation
+However, Reliance deserves premium due to:
+- Diversified business (O2C, Retail, Telecom, New Energy)
+- Market leader in multiple segments
+- Strong cash flow generation
+- Jio's growth potential
+
+Fair Value Estimate:
+If we apply industry P/E of 22x:
+Fair Price = EPS × 22 = ₹100 × 22 = ₹2,200
+Current Price: ₹2,600
+Overvalued by: ~18%
+
+Conclusion: Reliance is quality but slightly expensive at current levels. Wait for a pullback to ₹2,200-2,400 for better entry.`
+        }
+      ]
+    }
   ],
 };

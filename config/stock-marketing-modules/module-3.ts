@@ -2,59 +2,32 @@ import type { Module } from "../courses";
 
 export const MODULE_3: Module = {
   id: "module-3-portfolio-management",
-  title: "Module 3: Portfolio Management & Investment Strategy",
+  title: "Module 3: Portfolio Management & Investment Strategy for Indian Investors",
   description:
-    "Build and manage a diversified portfolio with proven strategies for long-term wealth creation.",
+    "Build and manage a diversified portfolio using Indian mutual funds, SIPs, ELSS, PPF, and NPS for long-term wealth creation.",
   lessons: [
     {
-      id: "portfolio-theory",
-      title: "Lesson 1: Modern Portfolio Theory & Asset Allocation",
+      id: "portfolio-theory-indian",
+      title: "Lesson 1: Asset Allocation for Indian Investors",
       shortDescription:
-        "Understand diversification, the efficient frontier, and how to allocate assets based on your goals and risk tolerance.",
+        "Understand diversification, asset allocation, and how to build a portfolio using Indian mutual funds, PPF, and NPS.",
       duration: "55 mins",
       readingTime: "11 mins read",
       contentMarkdown: `### Why Portfolio Management Matters
 
-Even the best stock picks can fail if your portfolio isn't properly diversified. Portfolio management is the art and science of **allocating assets** to maximize returns while minimizing risk.
+Even the best stock picks can fail if your portfolio isn't properly diversified. For Indian investors, portfolio management means allocating across equity, debt, gold, and international assets.
 
-> **Mental model:** Think of your portfolio as a sports team — you need different players (asset classes) with different strengths to win consistently. A team of only strikers would be terrible at defending.
+> **Mental model:** Think of your portfolio as a thali — you need different items (roti, dal, rice, sabzi, dessert) for a complete meal. Just eating rice alone won't give you all the nutrition.
+
+---
+
+### Asset Allocation for Indian Investors
 
 #### The Core Principle
 
 **Don't put all your eggs in one basket** — but also don't spread them so thin that you can't monitor them.
 
----
-
-### Modern Portfolio Theory (MPT)
-
-Developed by Harry Markowitz (Nobel Prize, 1952), MPT shows that investors can optimize returns by combining assets that don't move in perfect correlation.
-
-#### Key Concepts
-
-| Concept | Definition | Practical Impact |
-|---|---|---|
-| **Diversification** | Combining uncorrelated assets | Reduces overall risk |
-| **Efficient Frontier** | Optimal portfolios for risk/return | Maximum return per unit of risk |
-| **Risk-Return Tradeoff** | Higher return = higher risk | No free lunch |
-| **Correlation** | How assets move together | Lower correlation = better diversification |
-
-#### Asset Class Correlations
-
-| Asset Pair | Correlation | Diversification Benefit |
-|---|---|---|
-| US Stocks + International Stocks | ~0.7 | Moderate |
-| US Stocks + Bonds | ~0.2 | High |
-| US Stocks + Real Estate | ~0.6 | Moderate |
-| Stocks + Commodities | ~0.3 | High |
-| Bonds + Real Estate | ~0.4 | Moderate |
-
-> **Key insight:** The magic of diversification is that combining assets with correlation less than 1.0 can actually **reduce risk without proportionally reducing returns**.
-
----
-
-### Risk Tolerance Assessment
-
-Before allocating assets, you must understand your risk tolerance:
+#### Risk Tolerance Assessment (Indian Context)
 
 | Factor | Conservative | Moderate | Aggressive |
 |---|---|---|---|
@@ -64,65 +37,46 @@ Before allocating assets, you must understand your risk tolerance:
 | **Emergency Fund** | 6+ months | 3-6 months | 3-6 months |
 | **Emotional Response to Loss** | Panic sell | Hold steady | Buy more |
 
-#### The Risk Tolerance Questionnaire
-
-Answer these to find your profile:
-
-1. If your portfolio dropped 20% in a month, would you:
-   - a) Sell everything (Conservative)
-   - b) Hold and wait (Moderate)
-   - c) Buy more at lower prices (Aggressive)
-
-2. Your primary investment goal is:
-   - a) Preserve capital (Conservative)
-   - b) Grow wealth steadily (Moderate)
-   - c) Maximize long-term growth (Aggressive)
-
-3. Your investment timeline is:
-   - a) 1-5 years (Conservative)
-   - b) 5-15 years (Moderate)
-   - c) 15+ years (Aggressive)
-
 ---
 
-### Asset Allocation Models
-
-Based on your risk tolerance, here are proven allocation models:
+### Indian Asset Allocation Models
 
 #### Conservative Portfolio (Low Risk)
 
 | Asset Class | Allocation | Expected Return | Risk Level |
 |---|---|---|---|
-| US Large-Cap Stocks | 25% | 8-10% | Medium |
-| International Stocks | 10% | 7-9% | Medium |
-| Bonds (Intermediate) | 40% | 3-5% | Low |
-| Real Estate (REITs) | 10% | 6-8% | Medium |
-| Cash/Money Market | 15% | 2-4% | Very Low |
-| **Total** | 100% | 5-7% | Low-Medium |
+| Nifty 50 Index Fund | 25% | 12% | Medium |
+| Mid/Small Cap Fund | 5% | 15% | High |
+| PPF | 25% | 7.1% | Very Low |
+| Debt Funds (Short Duration) | 30% | 6-7% | Low |
+| Gold ETF/SGB | 10% | 8-10% | Medium |
+| **Total** | 100% | **8-9%** | Low-Medium |
 
 #### Balanced Portfolio (Medium Risk)
 
 | Asset Class | Allocation | Expected Return | Risk Level |
 |---|---|---|---|
-| US Large-Cap Stocks | 35% | 8-10% | Medium |
-| US Mid/Small-Cap | 10% | 9-12% | High |
-| International Stocks | 15% | 7-9% | Medium |
-| Bonds (Intermediate) | 25% | 3-5% | Low |
-| Real Estate (REITs) | 10% | 6-8% | Medium |
-| Cash/Money Market | 5% | 2-4% | Very Low |
-| **Total** | 100% | 7-9% | Medium |
+| Nifty 50 Index Fund | 35% | 12% | Medium |
+| Nifty Next 50 | 10% | 14% | Medium-High |
+| Mid Cap Fund | 10% | 15% | High |
+| PPF | 15% | 7.1% | Very Low |
+| Debt Funds | 15% | 6-7% | Low |
+| Gold ETF/SGB | 10% | 8-10% | Medium |
+| **Total** | 100% | **10-11%** | Medium |
 
 #### Aggressive Portfolio (High Risk)
 
 | Asset Class | Allocation | Expected Return | Risk Level |
 |---|---|---|---|
-| US Large-Cap Stocks | 40% | 8-10% | Medium |
-| US Mid/Small-Cap | 15% | 9-12% | High |
-| International Stocks | 20% | 7-9% | Medium |
-| Growth/Emerging Markets | 10% | 10-15% | Very High |
-| Bonds (Short-term) | 10% | 3-5% | Low |
-| Real Estate (REITs) | 5% | 6-8% | Medium |
-| **Total** | 100% | 9-11% | High |
+| Nifty 50 Index Fund | 30% | 12% | Medium |
+| Nifty Next 50 | 10% | 14% | Medium-High |
+| Mid Cap Fund | 15% | 15% | High |
+| Small Cap Fund | 10% | 18% | Very High |
+| International Fund | 15% | 12% | Medium |
+| Debt Funds | 10% | 6-7% | Low |
+| Gold ETF | 5% | 8-10% | Medium |
+| PPF | 5% | 7.1% | Very Low |
+| **Total** | 100% | **12-13%** | High |
 
 ---
 
@@ -130,220 +84,312 @@ Based on your risk tolerance, here are proven allocation models:
 
 As you age, your portfolio should gradually shift from aggressive to conservative:
 
-| Age Range | Stocks | Bonds | Rationale |
+| Age Range | Equity | Debt/Gold | Rationale |
 |---|---|---|---|
 | 20s-30s | 80-90% | 10-20% | Long horizon, can recover from losses |
-| 40s | 70-80% | 20-30% | Still growing, but protecting gains |
-| 50s | 50-70% | 30-50% | Nearing retirement, reducing risk |
-| 60s+ | 30-50% | 50-70% | Preserving capital, generating income |
+| 40s | 60-70% | 30-40% | Still growing, but protecting gains |
+| 50s | 40-60% | 40-60% | Nearing retirement, reducing risk |
+| 60s+ | 20-40% | 60-80% | Preserving capital, generating income |
 
-> **Key insight:** The "Rule of 100" says subtract your age from 100 to get your stock allocation. A 30-year-old = 70% stocks; a 60-year-old = 40% stocks.
+> **Key insight:** The "Rule of 100" says subtract your age from 100 to get your equity allocation. A 30-year-old = 70% equity; a 60-year-old = 40% equity.
 
 ---
 
-### Common Mistakes to Avoid
+### Indian Mutual Fund Categories
 
-- **Mistake:** Over-concentrating in one stock or sector — **Fix:** No single position should exceed 5-10% of your portfolio.
-- **Mistake:** Chasing last year's performance — **Fix:** Stick to your target allocation; don't chase hot sectors.
-- **Mistake:** Ignoring fees — **Fix:** High fees compound over time; choose low-cost index funds.
-- **Mistake:** Not rebalancing — **Fix:** Rebalance annually to maintain your target allocation.
+| Category | Risk Level | Expected Return | Best For |
+|---|---|---|---|
+| **Nifty 50 Index Fund** | Medium | 12% | Core holding, diversification |
+| **Nifty Next 50 Index** | Medium-High | 14% | Emerging blue chips |
+| **Large Cap Fund** | Medium | 11-13% | Stable growth |
+| **Mid Cap Fund** | High | 14-16% | Higher growth potential |
+| **Small Cap Fund** | Very High | 16-20% | Maximum growth, high risk |
+| **ELSS Fund** | Medium-High | 12-15% | Tax saving under 80C |
+| **Hybrid Fund** | Medium | 10-12% | Balanced approach |
+| **Debt Fund** | Low-Medium | 6-8% | Stability, income |
+| **Gold ETF** | Medium | 8-10% | Inflation hedge |
+
+---
+
+### The Power of SIP in India
+
+Systematic Investment Plan (SIP) is the most popular way to invest in Indian mutual funds.
+
+#### SIP Benefits for Indian Investors
+
+| Benefit | How It Helps |
+|---|---|
+| **Rupee Cost Averaging** | Buy more units when prices are low, fewer when high |
+| **Discipline** | Removes emotion from investing |
+| **Compound Growth** | Reinvested returns generate their own returns |
+| **Affordability** | Start with as low as ₹500/month |
+| **Convenience** | Auto-debit from bank account |
+
+#### SIP Returns (Historical Nifty 50)
+
+| SIP Duration | Total Invested | Value at 12% CAGR | Wealth Created |
+|---|---|---|---|
+| 5 years | ₹3,00,000 | ₹4,12,000 | ₹1,12,000 |
+| 10 years | ₹6,00,000 | ₹11,60,000 | ₹5,60,000 |
+| 15 years | ₹9,00,000 | ₹25,00,000 | ₹16,00,000 |
+| 20 years | ₹12,00,000 | ₹49,50,000 | ₹37,50,000 |
+| 25 years | ₹15,00,000 | ₹94,90,000 | ₹79,90,000 |
+| 30 years | ₹18,00,000 | ₹1,76,00,000 | ₹1,58,00,000 |
+
+---
+
+### Indian Tax-Saving Investments (Section 80C)
+
+| Investment | Lock-in | Expected Return | Risk Level | Tax Benefit |
+|---|---|---|---|---|
+| **ELSS Mutual Fund** | 3 years | 12-15% | Medium-High | ₹1.5 lakh deduction |
+| **PPF** | 15 years | 7.1% | Very Low | Tax-free (EEE) |
+| **NPS** | Till 60 | 10-12% | Medium | ₹1.5L + ₹50K extra |
+| **SSY (Sukanya)** | Till 21 years | 8.2% | Very Low | Tax-free (EEE) |
+| **5-Year FD** | 5 years | 6-7% | Very Low | ₹1.5 lakh deduction |
+| **Life Insurance Premium** | Varies | 4-5% | Very Low | ₹1.5 lakh deduction |
+
+> **Key insight:** ELSS is the best Section 80C investment — it has the shortest lock-in (3 years) and highest expected returns (12-15%).
+
+---
+
+### Common Portfolio Management Mistakes in India
+
+- **Mistake:** Not using SIPs — **Fix:** Set up SIPs on the 1st of every month.
+- **Mistake:** Ignoring PPF — **Fix:** PPF at 7.1% tax-free is the best fixed-income investment.
+- **Mistake:** Over-investing in FDs — **Fix:** FDs return 6-7% pre-tax; equity returns 12%+ over long term.
+- **Mistake:** Not using ELSS for tax saving — **Fix:** ELSS gives tax savings + equity growth.
+- **Mistake:** Checking portfolio daily — **Fix:** Check quarterly; daily checking leads to emotional decisions.
 
 ### Professional Tips & Tricks
 
-- Use low-cost index funds (Vanguard, Fidelity, Schwab) for core holdings.
-- Automate contributions — dollar-cost averaging removes emotion.
-- Rebalance annually or when allocation drifts more than 5% from target.
-- Keep 3-6 months of expenses in cash before investing aggressively.
+- Start with Nifty 50 index fund as your core holding — add other funds around it.
+- Use direct plans to save 0.5-1% in expense ratios every year.
+- Rebalance annually — sell what's grown, buy what's lagged.
+- Keep 3-6 months of expenses in liquid fund before investing aggressively.
 
 ---
 
 ### Key Takeaways
 
-- Diversification reduces risk without proportionally reducing returns.
 - Asset allocation is the most important decision in portfolio construction.
-- Match your allocation to your risk tolerance, age, and investment horizon.
-- Use the glide path to gradually reduce risk as you approach retirement.
-- Low-cost index funds are the foundation of most successful portfolios.
+- SIPs provide discipline, rupee cost averaging, and compound growth.
+- ELSS is the best Section 80C investment (short lock-in + high returns).
+- PPF at 7.1% tax-free is the best fixed-income option for Indian investors.
+- Adjust your portfolio from aggressive to conservative as you age.
+- Rebalance annually to maintain your target allocation.
 
-**Next up:** Dollar-cost averaging and investment strategies for different market conditions.`,
+**Next up:** Dollar-cost averaging and market timing myths for Indian investors.`,
       codeLanguage: "text",
-      codeSnippet: `# Portfolio Allocation Models
+      codeSnippet: `Indian Portfolio Management — Key Frameworks
 
-## Age-Based Glide Path
+ASSET ALLOCATION MODELS (INDIAN CONTEXT)
 
-| Age | Stocks | Bonds | Risk Level |
-|-----|--------|-------|------------|
-| 25  | 75%    | 25%   | Aggressive |
-| 35  | 65%    | 35%   | Growth     |
-| 45  | 55%    | 45%   | Balanced   |
-| 55  | 45%    | 55%   | Moderate   |
-| 65  | 35%    | 65%   | Conservative |
+Conservative (Low Risk):
+25% Nifty 50 | 5% Mid/Small | 25% PPF | 30% Debt | 10% Gold
+Expected Return: 8-9% | Max Drawdown: -15%
 
-## Sample Balanced Portfolio ($100,000)
+Balanced (Medium Risk):
+35% Nifty 50 | 10% Nifty Next 50 | 10% Mid Cap | 15% PPF | 15% Debt | 10% Gold
+Expected Return: 10-11% | Max Drawdown: -25%
 
-Asset Allocation:
-├── US Stocks (VTI): $35,000 (35%)
-├── International (VXUS): $15,000 (15%)
-├── US Mid-Cap (VO): $10,000 (10%)
-├── Bonds (BND): $25,000 (25%)
-├── REITs (VNQ): $10,000 (10%)
-└── Cash: $5,000 (5%)
+Aggressive (High Risk):
+30% Nifty 50 | 10% Nifty Next 50 | 15% Mid Cap | 10% Small Cap
+15% International | 10% Debt | 5% Gold | 5% PPF
+Expected Return: 12-13% | Max Drawdown: -35%
 
-Expected Annual Return: 7-9%
-Historical Max Drawdown: -25% to -35%
+THE GLIDE PATH (AGE-BASED ALLOCATION)
 
-## Correlation Matrix (Simplified)
+Age 20-30: 80-90% Equity | 10-20% Debt/Gold
+Age 30-40: 70-80% Equity | 20-30% Debt/Gold
+Age 40-50: 60-70% Equity | 30-40% Debt/Gold
+Age 50-60: 40-60% Equity | 40-60% Debt/Gold
+Age 60+:   20-40% Equity | 60-80% Debt/Gold
 
-        Stocks  Bonds  REITs  Commodities
-Stocks    1.0    0.2    0.6     0.3
-Bonds     0.2    1.0    0.4    -0.1
-REITs     0.6    0.4    1.0     0.4
-Commod    0.3   -0.1    0.4     1.0
+SIP RETURNS (HISTORICAL NIFTY 50)
 
-## Rebalancing Schedule
+Monthly SIP: ₹5,000 | Return: 12% CAGR
 
-Review portfolio:
-- Quarterly: Check allocation drift
-- Annually: Full rebalance if >5% off target
-- After major life events: Reassess risk tolerance`,
-      codeOutput: `# Portfolio Allocation Models
+Year 5:  ₹4,12,000  (Invested: ₹3,00,000)
+Year 10: ₹11,60,000 (Invested: ₹6,00,000)
+Year 15: ₹25,00,000 (Invested: ₹9,00,000)
+Year 20: ₹49,50,000 (Invested: ₹12,00,000)
+Year 25: ₹94,90,000 (Invested: ₹15,00,000)
+Year 30: ₹1,76,00,000 (Invested: ₹18,00,000)
 
-## Age-Based Glide Path
+₹5,000/month for 30 years = ₹1.76 Crore!
 
-| Age | Stocks | Bonds | Risk Level |
-|-----|--------|-------|------------|
-| 25  | 75%    | 25%   | Aggressive |
-| 35  | 65%    | 35%   | Growth     |
-| 45  | 55%    | 45%   | Balanced   |
-| 55  | 45%    | 55%   | Moderate   |
-| 65  | 35%    | 65%   | Conservative |
+SECTION 80C TAX-SAVING OPTIONS
 
-## Sample Balanced Portfolio ($100,000)
+Investment      | Lock-in | Return  | Risk    | Tax Benefit
+----------------|---------|---------|---------|------------
+ELSS            | 3 years | 12-15%  | Med-High| ₹1.5L deduction
+PPF             | 15 years| 7.1%    | Very Low| Tax-free (EEE)
+NPS             | Till 60 | 10-12%  | Medium  | ₹1.5L + ₹50K extra
+5-Year FD       | 5 years | 6-7%    | Very Low| ₹1.5L deduction
 
-Asset Allocation:
-├── US Stocks (VTI): $35,000 (35%)
-├── International (VXUS): $15,000 (15%)
-├── US Mid-Cap (VO): $10,000 (10%)
-├── Bonds (BND): $25,000 (25%)
-├── REITs (VNQ): $10,000 (10%)
-└── Cash: $5,000 (5%)
+Best Pick: ELSS (shortest lock-in + highest returns)`,
+      codeOutput: `Indian Portfolio Management — Key Frameworks
 
-Expected Annual Return: 7-9%
-Historical Max Drawdown: -25% to -35%
+ASSET ALLOCATION MODELS (INDIAN CONTEXT)
 
-## Correlation Matrix (Simplified)
+Conservative (Low Risk):
+25% Nifty 50 | 5% Mid/Small | 25% PPF | 30% Debt | 10% Gold
+Expected Return: 8-9% | Max Drawdown: -15%
 
-        Stocks  Bonds  REITs  Commodities
-Stocks    1.0    0.2    0.6     0.3
-Bonds     0.2    1.0    0.4    -0.1
-REITs     0.6    0.4    1.0     0.4
-Commod    0.3   -0.1    0.4     1.0
+Balanced (Medium Risk):
+35% Nifty 50 | 10% Nifty Next 50 | 10% Mid Cap | 15% PPF | 15% Debt | 10% Gold
+Expected Return: 10-11% | Max Drawdown: -25%
 
-## Rebalancing Schedule
+Aggressive (High Risk):
+30% Nifty 50 | 10% Nifty Next 50 | 15% Mid Cap | 10% Small Cap
+15% International | 10% Debt | 5% Gold | 5% PPF
+Expected Return: 12-13% | Max Drawdown: -35%
 
-Review portfolio:
-- Quarterly: Check allocation drift
-- Annually: Full rebalance if >5% off target
-- After major life events: Reassess risk tolerance`,
+THE GLIDE PATH (AGE-BASED ALLOCATION)
+
+Age 20-30: 80-90% Equity | 10-20% Debt/Gold
+Age 30-40: 70-80% Equity | 20-30% Debt/Gold
+Age 40-50: 60-70% Equity | 30-40% Debt/Gold
+Age 50-60: 40-60% Equity | 40-60% Debt/Gold
+Age 60+:   20-40% Equity | 60-80% Debt/Gold
+
+SIP RETURNS (HISTORICAL NIFTY 50)
+
+Monthly SIP: ₹5,000 | Return: 12% CAGR
+
+Year 5:  ₹4,12,000  (Invested: ₹3,00,000)
+Year 10: ₹11,60,000 (Invested: ₹6,00,000)
+Year 15: ₹25,00,000 (Invested: ₹9,00,000)
+Year 20: ₹49,50,000 (Invested: ₹12,00,000)
+Year 25: ₹94,90,000 (Invested: ₹15,00,000)
+Year 30: ₹1,76,00,000 (Invested: ₹18,00,000)
+
+₹5,000/month for 30 years = ₹1.76 Crore!
+
+SECTION 80C TAX-SAVING OPTIONS
+
+Investment      | Lock-in | Return  | Risk    | Tax Benefit
+----------------|---------|---------|---------|------------
+ELSS            | 3 years | 12-15%  | Med-High| ₹1.5L deduction
+PPF             | 15 years| 7.1%    | Very Low| Tax-free (EEE)
+NPS             | Till 60 | 10-12%  | Medium  | ₹1.5L + ₹50K extra
+5-Year FD       | 5 years | 6-7%    | Very Low| ₹1.5L deduction
+
+Best Pick: ELSS (shortest lock-in + highest returns)`,
       visualizationTips: [
-        "Draw a pie chart of your ideal portfolio allocation — seeing it visually makes it real.",
-        "Plot your portfolio's growth over 20 years using different allocations to see the compounding effect.",
-        "Use a correlation heatmap to understand how your assets move together.",
+        "Create a pie chart of your ideal portfolio allocation by asset class.",
+        "Plot the growth of a ₹5,000 SIP over 20 years on Nifty 50.",
+        "Compare returns of PPF vs Nifty 50 SIP over 20 years."
       ],
       tipsAndTricks: [
-        "Target-date funds automatically adjust your allocation as you age — great for hands-off investors.",
-        "Rebalance when allocation drifts more than 5% from your target.",
-        "Don't chase performance — what went up last year may not go up this year.",
+        "Start with Nifty 50 index fund as your core holding.",
+        "Use direct plans to save 0.5-1% in expense ratios every year.",
+        "ELSS is the best 80C investment — shortest lock-in + highest returns.",
+        "Rebalance annually — sell what's grown, buy what's lagged."
       ],
       practice: [
         {
           id: "practice-allocation-design",
-          title: "Design Your Portfolio",
+          title: "Design Your Indian Portfolio",
           difficulty: "Medium",
-          task: "Based on your age and risk tolerance, design a portfolio allocation using the models above. Explain why you chose each allocation percentage.",
+          task: "Based on your age and risk tolerance, design a portfolio allocation using Indian mutual funds and investment options. Include specific fund names and explain your reasoning.",
           hint: "Consider your age, income stability, and when you'll need the money.",
-          solution: `Example: 32-year-old, moderate risk tolerance
+          solution: `Example Portfolio for 32-year-old Indian investor (Moderate Risk):
 
-Portfolio Design:
-- US Total Stock Market (VTI): 40%
-- International Stocks (VXUS): 20%
-- US Small-Cap Value (VBR): 10%
-- Bonds (BND): 20%
-- REITs (VNQ): 10%
+Allocation:
+- Nifty 50 Index Fund (UTI): 35% → ₹1,75,000
+- Nifty Next 50 (ICICI Pru): 10% → ₹50,000
+- Mid Cap Fund (HDFC): 10% → ₹50,000
+- PPF: 15% → ₹75,000
+- Debt Fund (Short Duration): 15% → ₹75,000
+- Gold ETF (Nippon): 10% → ₹50,000
+- ELSS (Quant): 5% → ₹25,000
+
+Total: ₹5,00,000
 
 Rationale:
-- Long time horizon allows for growth focus (70% stocks)
-- International diversification reduces US-specific risk
-- Small-cap value historically outperforms over long periods
-- Bonds provide stability during market downturns
-- REITs add real estate exposure without buying property`,
+- 60% equity for growth (long time horizon)
+- 25% debt/PPF for stability
+- 10% gold for inflation hedge
+- ELSS for additional 80C benefit
+- Direct plans for lower expense ratios
+
+Expected Return: 10-11% CAGR
+Max Drawdown Tolerance: -25%
+Rebalance: Annually or when >5% off target`
         },
         {
-          id: "practice-rebalancing",
-          title: "Rebalancing Exercise",
-          difficulty: "Easy",
-          task: "Your target allocation is 60% stocks, 40% bonds. After a strong year, stocks grew to 70% of your portfolio. How do you rebalance? What are the tax implications?",
-          hint: "Sell some stocks and buy bonds to return to 60/40. Consider tax-advantaged accounts.",
-          solution: `Current: 70% stocks, 30% bonds
-Target: 60% stocks, 40% bonds
+          id: "practice-sip-planning",
+          title": "SIP Planning Exercise",
+          difficulty": "Easy",
+          task: "You want to accumulate ₹1 crore in 20 years for your child's education. Assuming 12% CAGR from Nifty 50, how much monthly SIP do you need? How much will you actually invest vs. wealth created?",
+          hint": "Use the future value of annuity formula or an online SIP calculator.",
+          solution: `SIP Planning for ₹1 Crore Goal:
 
-Rebalancing Action:
-1. Sell 10% of stocks (or enough to return to 60%)
-2. Buy 10% bonds with the proceeds
-3. Result: Back to 60/40 target
+Target: ₹1,00,00,000
+Time Horizon: 20 years
+Expected Return: 12% CAGR
 
-Tax Considerations:
-- If in 401(k) or IRA: No tax implications
-- If in taxable account: Selling triggers capital gains tax
-- Tax-efficient approach: Direct new contributions to bonds
-- Use wash-sale rule: Don't buy similar securities within 30 days`,
-        },
-      ],
+Monthly SIP Required: ~₹10,500
+
+Total Invested: ₹10,500 × 12 × 20 = ₹25,20,000
+Wealth Created: ₹1,00,00,000 - ₹25,20,000 = ₹74,80,000
+
+You invest ₹25.2 lakh, wealth created = ₹74.8 lakh!
+Compound growth did the heavy lifting.
+
+Key Insight: Start early! If you start 5 years later (15 years instead of 20):
+Monthly SIP needed: ~₹22,500 (more than double!)
+Total invested: ₹40,50,000
+
+Starting 5 years early saves you ₹12,00,000 in contributions!
+
+Lesson: The best time to start SIP was yesterday. The second best time is today.`
+        }
+      ]
     },
     {
-      id: "dollar-cost-averaging",
-      title: "Lesson 2: Dollar-Cost Averaging & Market Timing Myths",
+      id: "dollar-cost-averaging-indian",
+      title: "Lesson 2: SIP & Market Timing Myths for Indian Investors",
       shortDescription:
-        "Learn why consistent investing beats trying to time the market, and how to implement a systematic investment plan.",
+        "Learn why consistent SIP investing beats trying to time the Indian market, and how to implement a systematic investment plan.",
       duration: "45 mins",
       readingTime: "9 mins read",
-      contentMarkdown: `### What is Dollar-Cost Averaging (DCA)?
+      contentMarkdown: `### What is Systematic Investment Plan (SIP)?
 
-Dollar-cost averaging is investing a **fixed amount** at **regular intervals** regardless of market conditions. You buy more shares when prices are low and fewer when prices are high.
+SIP is investing a **fixed amount** at **regular intervals** in Indian mutual funds regardless of market conditions. You buy more units when prices are low and fewer when prices are high.
 
-> **Mental model:** DCA is like a subscription to your future self — you pay the same amount each month and let the market do the work.
+> **Mental model:** SIP is like a subscription to your future self — you pay the same amount each month and let the Indian market do the work.
 
-#### How DCA Works
+#### How SIP Works in India
 
-| Month | Investment | Price | Shares Bought |
+| Month | Investment | Nifty Level | Units Bought |
 |---|---|---|---|
-| January | $500 | $50 | 10.0 |
-| February | $500 | $40 | 12.5 |
-| March | $500 | $25 | 20.0 |
-| April | $500 | $50 | 10.0 |
-| May | $500 | $80 | 6.25 |
-| June | $500 | $60 | 8.33 |
-| **Total** | **$3,000** | **Avg: $50.83** | **67.08** |
+| January | ₹5,000 | 22,000 | 2.27 units |
+| February | ₹5,000 | 21,000 | 2.38 units |
+| March | ₹5,000 | 19,500 | 2.56 units |
+| April | ₹5,000 | 20,000 | 2.50 units |
+| May | ₹5,000 | 22,500 | 2.22 units |
+| June | ₹5,000 | 21,500 | 2.33 units |
+| **Total** | **₹30,000** | **Avg: 21,083** | **14.26 units** |
 
-**Key insight:** Your average cost per share ($50.83) is **lower** than the average price ($50.83) because you bought more shares when prices were low!
+**Key insight:** Your average cost per unit (₹2,103) is **lower** than the average Nifty level (21,083) because you bought more units when prices were low!
 
 ---
 
-### Why Market Timing Fails
+### Why Market Timing Fails for Indian Investors
 
-Market timing is trying to predict when to buy low and sell high. Studies consistently show it doesn't work:
+#### The Cost of Missing the Best Days on Nifty
 
-#### The Cost of Missing the Best Days
-
-| Scenario | 20-Year Return | Annual Return |
+| Scenario | 15-Year Return | Annual Return |
 |---|---|---|
-| Stayed fully invested | +6.1% | +6.1% |
-| Missed 10 best days | +2.5% | +2.5% |
-| Missed 20 best days | +0.1% | +0.1% |
-| Missed 30 best days | -1.9% | -1.9% |
-| Missed 40 best days | -3.6% | -3.6% |
+| Stayed fully invested | +12.5% | +12.5% |
+| Missed 10 best days | +6.2% | +6.2% |
+| Missed 20 best days | +2.1% | +2.1% |
+| Missed 30 best days | -1.5% | -1.5% |
 
-> **Key insight:** The best days often happen right after the worst days — selling during a crash means you miss the recovery.
+> **Key insight:** The best days on Nifty often happen right after the worst days — selling during a crash means you miss the recovery.
 
 #### The Math of Recovering from Losses
 
@@ -359,524 +405,555 @@ Market timing is trying to predict when to buy low and sell high. Studies consis
 
 ---
 
-### DCA vs. Lump Sum Investing
+### SIP vs. Lump Sum in India
 
 | Method | Pros | Cons | Best For |
 |---|---|---|---|
-| **DCA** | Reduces timing risk, psychologically easier | May underperform in rising markets | Regular income earners |
-| **Lump Sum** | Historically outperforms DCA ~67% of time | Higher timing risk, emotionally difficult | Large cash windfalls |
+| **SIP** | Reduces timing risk, psychologically easier | May underperform in rising markets | Regular income earners |
+| **Lump Sum** | Historically outperforms SIP ~67% of time | Higher timing risk, emotionally difficult | Large cash windfalls |
 
-**The data:** According to Vanguard research, lump-sum investing beats DCA about 67% of the time. However, DCA is better for most people because:
+**The data:** Lump-sum investing beats SIP about 67% of the time. However, SIP is better for most Indian investors because:
 1. It removes emotion from investing
 2. It's easier to stick with during downturns
 3. It aligns with how most people earn (regular paychecks)
 
 ---
 
-### Implementing a DCA Strategy
+### Implementing a SIP Strategy in India
 
 #### Step 1: Choose Your Investment
 
 | Investment Type | Best For | Risk Level |
 |---|---|---|
-| **S&P 500 Index Fund** | Core US stock exposure | Medium |
-| **Total Stock Market Fund** | Broad US diversification | Medium |
-| **Target-Date Fund** | Hands-off, auto-rebalancing | Varies |
-| **Bond Fund** | Stability, income | Low |
+| **Nifty 50 Index Fund** | Core India exposure | Medium |
+| **Nifty Next 50** | Emerging blue chips | Medium-High |
+| **ELSS Fund** | Tax saving + equity | Medium-High |
+| **PPF** | Guaranteed tax-free returns | Very Low |
 
 #### Step 2: Set Your Amount and Frequency
 
 | Frequency | Pros | Cons |
 |---|---|---|
-| **Weekly** | More DCA benefit | More transactions |
-| **Bi-weekly** | Good balance | — |
-| **Monthly** | Simple, aligns with paycheck | Slightly less DCA benefit |
-| **Quarterly** | Fewer transactions | Less DCA benefit |
+| **Weekly** | More SIP benefit | More transactions |
+| **Monthly** | Simple, aligns with paycheck | Slightly less SIP benefit |
+| **Quarterly** | Fewer transactions | Less SIP benefit |
 
 **Recommended:** Monthly, on the same day each month, regardless of market conditions.
 
 #### Step 3: Automate It
 
-Set up automatic contributions through your broker or 401(k). Automation removes the temptation to time the market.
+Set up auto-debit through your bank or broker. Automation removes the temptation to time the Indian market.
 
 ---
 
-### Common DCA Mistakes to Avoid
+### Common SIP Mistakes to Avoid
 
-- **Mistake:** Stopping contributions during downturns — **Fix:** DCA works best when you buy more during crashes.
+- **Mistake:** Stopping SIPs during downturns — **Fix:** SIP works best when you buy more during crashes.
 - **Mistake:** Checking your portfolio daily — **Fix:** Check quarterly; daily checking leads to emotional decisions.
-- **Mistake:** Switching investments frequently — **Fix:** Stick with your plan for at least 5 years.
-- **Mistake:** Investing money you'll need soon — **Fix:** Only DCA money you won't need for 5+ years.
+- **Mistake:** Switching funds frequently — **Fix:** Stick with your plan for at least 5 years.
+- **Mistake:** Investing money you'll need soon — **Fix:** Only SIP money you won't need for 5+ years.
 
 ### Professional Tips & Tricks
 
-- Automate your investments — it removes emotion and ensures consistency.
-- Increase contributions with every raise — lifestyle inflation kills wealth building.
-- Use tax-advantaged accounts (401k, IRA) for DCA when possible.
-- Don't try to "optimize" your DCA — the benefit is consistency, not timing.
+- Automate your SIPs — it removes emotion and ensures consistency.
+- Increase SIP amount with every raise — lifestyle inflation kills wealth building.
+- Use tax-advantaged accounts (PPF, NPS, ELSS) for SIP when possible.
+- Don't try to "optimize" your SIP — the benefit is consistency, not timing.
 
 ---
 
 ### Key Takeaways
 
-- DCA invests fixed amounts at regular intervals, reducing timing risk.
-- Missing the best 10 days in 20 years cuts returns by more than half.
-- Lump sum beats DCA 67% of the time, but DCA is easier to stick with.
-- Automation is the key to successful DCA — remove emotion from the equation.
+- SIP invests fixed amounts at regular intervals, reducing timing risk.
+- Missing the best 10 days on Nifty cuts returns by more than half.
+- Lump sum beats SIP 67% of the time, but SIP is easier to stick with.
+- Automation is the key to successful SIP — remove emotion from the equation.
 - Start early and stay consistent — time in the market beats timing the market.
 
-**Next up:** Tax-efficient investing and retirement account strategies.`,
+**Next up:** Tax-efficient investing and retirement account strategies for Indian investors.`,
       codeLanguage: "text",
-      codeSnippet: `# Dollar-Cost Averaging Calculator
+      codeSnippet: `SIP & Market Timing — Indian Investor Guide
 
-## Monthly DCA Simulation
+SIP CALCULATION (NIFTY 50 HISTORICAL)
 
-Monthly Investment: $500
-Period: 12 months
+Monthly SIP: ₹5,000 | Period: 12 months
 
-| Month | Price | Shares | Total Value |
-|-------|-------|--------|-------------|
-| Jan   | $100  | 5.00   | $500        |
-| Feb   | $90   | 5.56   | $500        |
-| Mar   | $80   | 6.25   | $500        |
-| Apr   | $85   | 5.88   | $500        |
-| May   | $95   | 5.26   | $500        |
-| Jun   | $110  | 4.55   | $500        |
-| Jul   | $120  | 4.17   | $500        |
-| Aug   | $105  | 4.76   | $500        |
-| Sep   | $90   | 5.56   | $500        |
-| Oct   | $85   | 5.88   | $500        |
-| Nov   | $95   | 5.26   | $500        |
-| Dec   | $100  | 5.00   | $500        |
-|-------|-------|--------|-------------|
-| Total | $95.42| 63.13  | $6,313      |
+Month  | Nifty Level | Units Bought
+-------|-------------|-------------
+Jan    | 22,000      | 2.27
+Feb    | 21,000      | 2.38
+Mar    | 19,500      | 2.56
+Apr    | 20,000      | 2.50
+May    | 22,500      | 2.22
+Jun    | 21,500      | 2.33
+Total  | Avg: 21,083 | 14.26
 
-Your Average Cost: $6,000 ÷ 63.13 = $95.04
-Market Average Price: $95.42
-You SAVED: $0.38 per share (0.4%)
+Your Average Cost: ₹30,000 ÷ 14.26 = ₹2,103
+Market Average: 21,083
+You SAVED: ₹80 per unit (0.4%)
 
-## Cost of Missing Best Days (S&P 500, 2003-2023)
+COST OF MISSING BEST DAYS (NIFTY 50)
 
-Strategy              | 20-Year Return
-Fully Invested        | +6.1% annually
-Miss 10 Best Days     | +2.5% annually  
-Miss 20 Best Days     | +0.1% annually
-Miss 30 Best Days     | -1.9% annually
+Strategy              | 15-Year Return
+Fully Invested        | +12.5% annually
+Miss 10 Best Days     | +6.2% annually
+Miss 20 Best Days     | +2.1% annually
+Miss 30 Best Days     | -1.5% annually
 
-## Recovery Required After Losses
+RECOVERY REQUIRED AFTER LOSSES
 
-| Loss  | Gain to Break Even |
-|-------|-------------------|
-| -10%  | +11%              |
-| -20%  | +25%              |
-| -30%  | +43%              |
-| -40%  | +67%              |
-| -50%  | +100%             |`,
-      codeOutput: `# Dollar-Cost Averaging Calculator
+Loss  | Gain to Break Even
+-10%  | +11%
+-20%  | +25%
+-30%  | +43%
+-40%  | +67%
+-50%  | +100%
 
-## Monthly DCA Simulation
+SIP VS LUMPSUM
 
-Monthly Investment: $500
-Period: 12 months
+Method    | Win Rate | Best For
+----------|----------|------------------
+SIP       | 33%      | Regular income earners
+Lump Sum  | 67%      | Large cash windfalls
 
-| Month | Price | Shares | Total Value |
-|-------|-------|--------|-------------|
-| Jan   | $100  | 5.00   | $500        |
-| Feb   | $90   | 5.56   | $500        |
-| Mar   | $80   | 6.25   | $500        |
-| Apr   | $85   | 5.88   | $500        |
-| May   | $95   | 5.26   | $500        |
-| Jun   | $110  | 4.55   | $500        |
-| Jul   | $120  | 4.17   | $500        |
-| Aug   | $105  | 4.76   | $500        |
-| Sep   | $90   | 5.56   | $500        |
-| Oct   | $85   | 5.88   | $500        |
-| Nov   | $95   | 5.26   | $500        |
-| Dec   | $100  | 5.00   | $500        |
-|-------|-------|--------|-------------|
-| Total | $95.42| 63.13  | $6,313      |
+Lesson: SIP wins on discipline, Lump Sum wins on returns.
+For most Indians, SIP is better because of consistency.`,
+      codeOutput: `SIP & Market Timing — Indian Investor Guide
 
-Your Average Cost: $6,000 ÷ 63.13 = $95.04
-Market Average Price: $95.42
-You SAVED: $0.38 per share (0.4%)
+SIP CALCULATION (NIFTY 50 HISTORICAL)
 
-## Cost of Missing Best Days (S&P 500, 2003-2023)
+Monthly SIP: ₹5,000 | Period: 12 months
 
-Strategy              | 20-Year Return
-Fully Invested        | +6.1% annually
-Miss 10 Best Days     | +2.5% annually  
-Miss 20 Best Days     | +0.1% annually
-Miss 30 Best Days     | -1.9% annually
+Month  | Nifty Level | Units Bought
+-------|-------------|-------------
+Jan    | 22,000      | 2.27
+Feb    | 21,000      | 2.38
+Mar    | 19,500      | 2.56
+Apr    | 20,000      | 2.50
+May    | 22,500      | 2.22
+Jun    | 21,500      | 2.33
+Total  | Avg: 21,083 | 14.26
 
-## Recovery Required After Losses
+Your Average Cost: ₹30,000 ÷ 14.26 = ₹2,103
+Market Average: 21,083
+You SAVED: ₹80 per unit (0.4%)
 
-| Loss  | Gain to Break Even |
-|-------|-------------------|
-| -10%  | +11%              |
-| -20%  | +25%              |
-| -30%  | +43%              |
-| -40%  | +67%              |
-| -50%  | +100%             |`,
+COST OF MISSING BEST DAYS (NIFTY 50)
+
+Strategy              | 15-Year Return
+Fully Invested        | +12.5% annually
+Miss 10 Best Days     | +6.2% annually
+Miss 20 Best Days     | +2.1% annually
+Miss 30 Best Days     | -1.5% annually
+
+RECOVERY REQUIRED AFTER LOSSES
+
+Loss  | Gain to Break Even
+-10%  | +11%
+-20%  | +25%
+-30%  | +43%
+-40%  | +67%
+-50%  | +100%
+
+SIP VS LUMPSUM
+
+Method    | Win Rate | Best For
+----------|----------|------------------
+SIP       | 33%      | Regular income earners
+Lump Sum  | 67%      | Large cash windfalls
+
+Lesson: SIP wins on discipline, Lump Sum wins on returns.
+For most Indians, SIP is better because of consistency.`,
       visualizationTips: [
-        "Plot your DCA purchases on a price chart — see how you bought more shares during dips.",
-        "Calculate your average cost vs. the market average price after 12 months.",
-        "Visualize the compounding effect of consistent investing over 20+ years.",
+        "Plot the growth of a ₹5,000 SIP on Nifty 50 over 20 years.",
+        "Compare the total returns of SIP vs lump sum for different market conditions.",
+        "Show the cost of missing the best 10 days on Nifty 50."
       ],
       tipsAndTricks: [
-        "Automate your investments — it removes emotion and ensures consistency.",
-        "Increase contributions with every raise — lifestyle inflation kills wealth building.",
-        "Don't check your portfolio daily — check quarterly to avoid emotional decisions.",
+        "Automate your SIPs — it removes emotion and ensures consistency.",
+        "Increase SIP amount with every raise — lifestyle inflation kills wealth building.",
+        "Don't try to time the Indian market — SIP works because of consistency.",
+        "Use direct plans to save 0.5-1% in expense ratios every year."
       ],
       practice: [
         {
-          id: "practice-dca-calculation",
-          title: "DCA Calculator",
-          difficulty: "Easy",
-          task: "You invest $300/month into an S&P 500 index fund for 6 months. Prices are: $400, $350, $300, $320, $380, $400. Calculate: (1) Total shares bought, (2) Your average cost per share, (3) Current portfolio value.",
-          hint: "Shares = Investment ÷ Price for each month. Average cost = Total invested ÷ Total shares.",
-          solution: `Month 1: $300 ÷ $400 = 0.75 shares
-Month 2: $300 ÷ $350 = 0.86 shares
-Month 3: $300 ÷ $300 = 1.00 shares
-Month 4: $300 ÷ $320 = 0.94 shares
-Month 5: $300 ÷ $380 = 0.79 shares
-Month 6: $300 ÷ $400 = 0.75 shares
+          id: "practice-sip-calculation",
+          title": "SIP Calculator",
+          difficulty": "Easy",
+          task": "You invest ₹3,000/month into Nifty 50 index fund for 6 months. Nifty levels are: 21,000, 20,000, 18,500, 19,500, 21,000, 22,000. Calculate: (1) Total units bought, (2) Your average cost per unit, (3) Current portfolio value.",
+          hint": "Shares = Investment ÷ Nifty Level for each month. Average cost = Total invested ÷ Total units.",
+          solution: `SIP Calculation:
 
-Total Invested: $1,800
-Total Shares: 5.09
-Average Cost: $1,800 ÷ 5.09 = $353.63
-Market Average: $358.33
-Portfolio Value at $400: 5.09 × $400 = $2,036
+Month 1: ₹3,000 ÷ 21,000 = 0.143 units
+Month 2: ₹3,000 ÷ 20,000 = 0.150 units
+Month 3: ₹3,000 ÷ 18,500 = 0.162 units
+Month 4: ₹3,000 ÷ 19,500 = 0.154 units
+Month 5: ₹3,000 ÷ 21,000 = 0.143 units
+Month 6: ₹3,000 ÷ 22,000 = 0.136 units
 
-You beat the market by $4.70 per share!`,
+Total Invested: ₹18,000
+Total Units: 0.888
+Average Cost: ₹18,000 ÷ 0.888 = ₹20,270
+
+Market Average: (21,000+20,000+18,500+19,500+21,000+22,000) ÷ 6 = 20,333
+
+You beat the market by ₹63 per unit!
+
+Portfolio Value at ₹22,000: 0.888 × 22,000 = ₹19,536
+Return: ₹19,536 - ₹18,000 = ₹1,536 (8.5% in 6 months)
+
+Key Insight: Even though Nifty went down in months 2-3, your SIP bought more units at lower prices, reducing your average cost.`
         },
         {
-          id: "practice-timing-cost",
-          title: "Market Timing Cost Calculator",
-          difficulty: "Medium",
-          task: "If you had $12,000 to invest in January 2020, but waited until March 2020 (market bottom) to invest, you would have missed the 30% recovery. Calculate the opportunity cost over 4 years assuming 10% annual returns from the bottom.",
-          hint: "Compare investing $12,000 in Jan 2020 vs. March 2020 with 4 years of 10% returns.",
-          solution: `Scenario A: Invest in January 2020
-- Initial: $12,000
-- Market dropped 30% by March: $8,400
-- Recovery + growth (10% annually for 4 years):
-  $12,000 × (1.10)^4 = $17,569
+          id": "practice-timing-cost",
+          title": "Market Timing Cost Calculator",
+          difficulty": "Medium",
+          task": "If you had ₹2,00,000 to invest in January 2020, but waited until March 2020 (market bottom) to invest, you would have missed the 30% recovery. Calculate the opportunity cost over 3 years assuming 12% annual returns from the bottom.",
+          hint": "Compare investing ₹2,00,000 in Jan 2020 vs March 2020 with 3 years of 12% returns.",
+          solution: `Market Timing Exercise:
 
-Scenario B: Wait until March 2020 (bottom)
-- Invest at bottom: $12,000
-- Growth (10% annually for 4 years from bottom):
-  $12,000 × (1.10)^4 = $17,569
+SCENARIO A: Invest ₹2,00,000 in January 2020
+- Market dropped 30% by March: Portfolio = ₹1,40,000
+- Recovery + growth (12% annually for 3 years from bottom):
+  ₹2,00,000 × (1.12)^3 = ₹2,81,000
 
-Wait, they're the same? Let's recalculate:
-- If you held cash in Jan 2020, you missed the drop BUT also missed the recovery
-- By March 2020, the market was down 30%, so $12,000 bought 30% more shares
-- From March 2020 bottom to March 2024: market up ~150%
-- $12,000 at bottom = $30,000 after 4 years
-- vs. $12,000 in Jan 2020 = $17,569 after 4 years
+SCENARIO B: Wait until March 2020 (bottom)
+- Invest at bottom: ₹2,00,000
+- Growth (12% annually for 3 years):
+  ₹2,00,000 × (1.12)^3 = ₹2,81,000
 
-Lesson: Market timing CAN work if you're perfect, but most people sell at the bottom and buy at the top.`,
-        },
-      ],
+Wait — they seem the same? Let me recalculate properly.
+
+Actually, if you held cash in Jan 2020:
+- You missed the drop BUT also missed the recovery
+- By March 2020, Nifty was down 30%, so ₹2,00,000 bought 30% more units
+- From March 2020 bottom to March 2023: Nifty up ~90%
+- ₹2,00,000 at bottom = ₹3,80,000 after 3 years
+- vs. ₹2,00,000 in Jan 2020 = ₹2,81,000 after 3 years
+
+Lesson: Market timing CAN work if you're perfect, but most people sell at the bottom and buy at the top. SIP avoids this problem entirely.
+
+The real cost of timing: Emotional stress, missed opportunities, and the difficulty of getting the timing right consistently.`
+        }
+      ]
     },
     {
-      id: "tax-efficient-investing",
-      title: "Lesson 3: Tax-Efficient Investing & Retirement Accounts",
+      id: "tax-efficient-investing-indian",
+      title: "Lesson 3: Tax-Efficient Investing for Indian Investors",
       shortDescription:
-        "Maximize your after-tax returns by understanding tax-advantaged accounts, tax-loss harvesting, and asset location strategies.",
+        "Maximize your after-tax returns by understanding ELSS, PPF, NPS, LTCG/STCG rules, and tax-efficient placement of Indian investments.",
       duration: "50 mins",
       readingTime: "10 mins read",
-      contentMarkdown: `### Why Tax Efficiency Matters
+      contentMarkdown: `### Why Tax Efficiency Matters in India
 
-A dollar saved in taxes is a dollar earned — tax-free. Smart tax planning can add 1-2% to your annual returns, which compounds to a massive difference over decades.
+A rupee saved in taxes is a rupee earned — tax-free. Smart tax planning can add 1-2% to your annual returns, which compounds to a massive difference over decades.
 
-> **Mental model:** Think of taxes as a leak in your investment bucket — the smaller the leak, the more water (money) you keep.
-
-#### The Power of Tax-Deferred Growth
-
-| Scenario | Annual Return | Taxes (25%) | After-Tax Return | 30-Year Value ($10,000) |
-|---|---|---|---|---|
-| Taxable Account | 8% | 2% | 6% | $57,435 |
-| Tax-Deferred (401k/IRA) | 8% | 0% | 8% | $100,627 |
-| Roth IRA | 8% | 0% | 8% | $100,627 (tax-free) |
-
-**Tax-deferred growth nearly doubles your money over 30 years!**
+> **Mental model:** Think of taxes as a leak in your investment bucket — the smaller the leak, the more money you keep.
 
 ---
 
-### Retirement Account Types
+### Indian Capital Gains Tax Rules (Post-2024 Budget)
 
-#### Traditional vs. Roth Accounts
+#### Equity Investments (Direct Stocks & Equity Mutual Funds)
 
-| Feature | Traditional 401k/IRA | Roth 401k/IRA |
+| Holding Period | Tax Type | Tax Rate | Exemption |
+|---|---|---|---|
+| **Less than 1 year** | STCG | 20% | None |
+| **More than 1 year** | LTCG | 12.5% | First ₹1.25 lakh/year exempt |
+
+#### Debt Mutual Funds
+
+| Holding Period | Tax Type | Tax Rate |
 |---|---|---|
-| **Contributions** | Pre-tax (reduces taxable income now) | After-tax (no deduction now) |
-| **Growth** | Tax-deferred | Tax-free |
-| **Withdrawals** | Taxed as ordinary income | Tax-free (if qualified) |
-| **Best When** | Higher tax bracket now | Lower tax bracket now |
-| **Required Distributions** | Yes, at age 73 | No RMDs for original owner |
+| **Less than 3 years** | STCG | Slab rate |
+| **More than 3 years** | LTCG | 20% with indexation |
 
-#### Contribution Limits (2024)
+#### Other Investments
 
-| Account | Under 50 | 50 and Over |
-|---|---|---|
-| **401(k)** | $23,000 | $30,500 |
-| **Traditional/Roth IRA** | $7,000 | $8,000 |
-| **SEP IRA** | $69,000 | $69,000 |
-| **HSA** | $4,150 (individual) | $4,150 + $1,000 catch-up |
+| Investment | Tax Treatment |
+|---|---|
+| **PPF** | Tax-free (EEE status) |
+| **SGB (held to maturity)** | Tax-free |
+| **SGB ( premature redemption)** | 20% with indexation |
+| **NPS** | 60% tax-free at withdrawal |
+| **FD** | Slab rate (no indexation benefit) |
 
 ---
 
-### The Order of Operations for Tax Efficiency
-
-Follow this priority list to maximize tax benefits:
+### The Tax-Efficient Investment Priority for Indian Investors
 
 | Priority | Account | Why First |
 |---|---|---|
-| **1** | 401(k) up to employer match | Free money — 100% instant return |
-| **2** | HSA (if eligible) | Triple tax advantage |
-| **3** | Roth IRA (if eligible) | Tax-free growth and withdrawals |
-| **4** | 401(k) up to maximum | Additional tax-deferred growth |
-| **5** | Taxable brokerage | Only after maxing tax-advantaged |
+| **1** | PPF (7.1% tax-free) | Guaranteed tax-free returns |
+| **2** | ELSS (Section 80C) | Tax saving + equity growth |
+| **3** | NPS (Section 80CCD) | Additional ₹50,000 tax saving |
+| **4** | SGB (gold exposure) | Tax-free at maturity + 2.5% interest |
+| **5** | Equity Index Funds | 12.5% LTCG (above ₹1.25 lakh) |
+| **6** | Debt Funds | Slab rate (less efficient) |
+| **7** | Fixed Deposits | Slab rate (least efficient) |
+
+> **Key insight:** Max out PPF and ELSS first — they provide tax-free or tax-advantaged returns. Only after exhausting these should you invest in taxable accounts.
 
 ---
 
-### Asset Location Strategy
+### Asset Location Strategy for Indian Investors
 
-Where you hold investments matters as much as what you hold:
+Where you hold investments matters:
 
 | Asset Type | Best Location | Why |
 |---|---|---|
-| **Bonds/Fixed Income** | Tax-deferred (401k/IRA) | Interest taxed as ordinary income |
-| **High-Growth Stocks** | Roth IRA | Tax-free appreciation |
-| **Dividend Stocks** | Tax-deferred | Dividends taxed less in retirement |
-| **Index Funds** | Taxable brokerage | Low turnover, tax-efficient |
-| **REITs** | Tax-deferred | Dividends taxed as ordinary income |
-
-> **Key insight:** Put your most tax-inefficient investments in tax-advantaged accounts and your most tax-efficient investments in taxable accounts.
+| **Debt Funds** | PPF/NPS/ELSS | Interest taxed as slab rate in taxable |
+| **High-Growth Equity** | Taxable (LTCG 12.5%) | Lower tax rate than debt |
+| **Gold (SGB)** | Taxable (tax-free at maturity) | SGB is already tax-efficient |
+| **International Funds** | Taxable (LTCG 12.5%) | No specific tax-advantaged option |
+| **PPF** | PPF account only | Tax-free, can't hold elsewhere |
 
 ---
 
-### Tax-Loss Harvesting
+### Capital Gains Tax Calculation Example
 
-Selling investments at a loss to offset gains and reduce taxes.
+#### Scenario: ₹10,00,000 Portfolio with ₹2,00,000 Gains
 
-#### How It Works
+| Investment | Gain | Tax Rate | Tax Payable |
+|---|---|---|---|
+| **Stocks held < 1 year** | ₹50,000 STCG | 20% | ₹10,000 |
+| **Stocks held > 1 year** | ₹1,00,000 LTCG | 12.5% | ₹12,500 |
+| **LTCG exempt** | ₹25,000 | 0% | ₹0 (under ₹1.25L limit) |
+| **Remaining LTCG** | ₹75,000 | 12.5% | ₹9,375 |
+| **Total Tax** | — | — | **₹19,375** |
 
-| Step | Action | Tax Impact |
-|---|---|---|
-| 1 | Sell losing investment | Realize $5,000 loss |
-| 2 | Offset gains | Reduce taxable gains by $5,000 |
-| 3 | Extra losses | Up to $3,000 can offset ordinary income |
-| 4 | Carry forward | Unused losses carry to future years |
-| 5 | Repurchase | Buy similar (not identical) investment |
+**Effective tax rate: 9.7% on ₹2,00,000 gains**
 
-#### Tax-Loss Harvesting Rules
+---
+
+### Tax-Loss Harvesting in India
+
+Sell losing investments to offset gains:
 
 | Rule | Explanation |
 |---|---|
-| **Wash Sale Rule** | Can't buy "substantially identical" security within 30 days |
-| **$3,000 Limit** | Can only deduct $3,000 of losses against ordinary income per year |
-| **Long-term vs. Short-term** | Long-term losses offset long-term gains first |
-| **Carry Forward** | Unused losses carry forward indefinitely |
+| **STCG offset** | Short-term losses can offset short-term gains |
+| **LTCG offset** | Long-term losses can offset long-term gains |
+| **Cross offset** | STCG losses can offset LTCG gains |
+| **Carry forward** | Unused losses can be carried forward for 8 years |
+| **No wash sale** | India doesn't have wash sale restrictions |
+
+> **Key insight:** Unlike the US, India has no wash sale rule — you can sell a losing stock and immediately buy it back to capture the tax loss.
 
 ---
 
-### Capital Gains Tax Rates
+### Common Tax Mistakes for Indian Investors
 
-| Holding Period | Tax Rate | Example |
-|---|---|---|
-| **Short-term (< 1 year)** | Ordinary income rates (10-37%) | $50,000 gain taxed at 22% = $11,000 |
-| **Long-term (> 1 year)** | 0%, 15%, or 20% | $50,000 gain taxed at 15% = $7,500 |
-
-**Holding for at least 1 year saves you thousands in taxes!**
-
-#### Long-Term Capital Gains Brackets (2024)
-
-| Filing Status | 0% Rate | 15% Rate | 20% Rate |
-|---|---|---|---|
-| Single | Up to $47,025 | $47,025 - $518,900 | Over $518,900 |
-| Married Filing Jointly | Up to $94,050 | $94,050 - $583,750 | Over $583,750 |
-
----
-
-### Common Tax Mistakes to Avoid
-
-- **Mistake:** Not maximizing employer 401(k) match — **Fix:** Always contribute enough to get the full match — it's free money.
-- **Mistake:** Holding investments for less than 1 year — **Fix:** Be patient; long-term rates are much lower.
-- **Mistake:** Ignoring asset location — **Fix:** Put tax-inefficient assets in tax-advantaged accounts.
-- **Mistake:** Not tax-loss harvesting — **Fix:** Review your portfolio quarterly for harvesting opportunities.
+- **Mistake:** Not maximizing PPF — **Fix:** PPF at 7.1% tax-free is the best investment in India.
+- **Mistake:** Ignoring ELSS — **Fix:** ELSS saves tax AND provides equity growth.
+- **Mistake:** Holding FDs instead of debt funds — **Fix:** Debt funds have indexation benefit after 3 years.
+- **Mistake:** Not tax-loss harvesting before March 31 — **Fix:** Book losses before financial year end.
+- **Mistake:** Ignoring NPS — **Fix:** NPS provides additional ₹50,000 tax saving under 80CCD.
 
 ### Professional Tips & Tricks
 
-- Use tax-loss harvesting software (Wealthfront, Betterment) to automate the process.
-- Don't let the tax tail wag the investment dog — good investments beat tax optimization.
-- Consider a backdoor Roth IRA if you exceed income limits.
-- Work with a tax professional for complex situations.
+- Max out PPF (₹1.5 lakh/year) before investing in taxable accounts.
+- Use ELSS for 80C — it has the shortest lock-in (3 years) and highest returns.
+- Book tax losses before March 31 to offset gains.
+- SGB is the best gold investment — tax-free at maturity + 2.5% interest.
 
 ---
 
 ### Key Takeaways
 
-- Tax-deferred accounts can nearly double your money over 30 years.
-- Follow the order of operations: 401(k) match → HSA → Roth IRA → 401(k) max → Taxable.
-- Asset location matters: put tax-inefficient assets in tax-advantaged accounts.
-- Tax-loss harvesting can save thousands in taxes each year.
-- Hold investments for at least 1 year to qualify for lower long-term capital gains rates.
+- PPF at 7.1% tax-free is the best fixed-income investment in India.
+- ELSS is the best 80C investment (short lock-in + high returns + tax saving).
+- LTCG on equity is 12.5% above ₹1.25 lakh — very favorable for long-term investors.
+- Tax-loss harvesting before March 31 can save significant taxes.
+- Max out PPF → ELSS → NPS → SGB → Equity Index Funds (priority order).
+- NPS provides additional ₹50,000 tax saving under Section 80CCD.
 
-**Next up:** Behavioral finance — understanding and overcoming the psychology that derails investors.`,
+## 🎓 Module 3 Complete
+
+You now understand portfolio management for Indian investors, SIP strategies, and tax-efficient investing.`,
       codeLanguage: "text",
-      codeSnippet: `# Tax-Efficient Investing Cheat Sheet
+      codeSnippet: `Tax-Efficient Investing for Indian Investors
 
-## Account Priority Order
+INDIAN CAPITAL GAINS TAX RULES (POST-2024)
 
-1. 401(k) up to employer match (FREE MONEY!)
-2. HSA (Triple tax advantage)
-3. Roth IRA (Tax-free growth)
-4. 401(k) to maximum
-5. Taxable brokerage
+Equity (Direct Stocks & Equity MF):
+- STCG (< 1 year): 20%
+- LTCG (> 1 year): 12.5% (first ₹1.25L/year exempt)
 
-## Asset Location Guide
+Debt Mutual Funds:
+- STCG (< 3 years): Slab rate
+- LTCG (> 3 years): 20% with indexation
 
-| Asset Type | Best Account |
-|------------|--------------|
-| Bonds/Fixed Income | 401(k)/IRA |
-| High-Growth Stocks | Roth IRA |
-| Dividend Stocks | 401(k)/IRA |
-| Index Funds | Taxable Brokerage |
-| REITs | 401(k)/IRA |
+Other Investments:
+- PPF: Tax-free (EEE status)
+- SGB (held to maturity): Tax-free
+- NPS: 60% tax-free at withdrawal
+- FD: Slab rate (no indexation)
 
-## Tax-Loss Harvesting Rules
+TAX-EFFICIENT INVESTMENT PRIORITY
 
-✓ Sell losing positions to offset gains
-✓ Up to $3,000 losses offset ordinary income
-✓ Unused losses carry forward indefinitely
-✗ Don't buy same security within 30 days (Wash Sale)
+1. PPF (7.1% tax-free): ₹1.5L/year
+2. ELSS (Section 80C): ₹1.5L/year tax saving
+3. NPS (Section 80CCD): ₹50K extra tax saving
+4. SGB: Gold + 2.5% interest + tax-free
+5. Equity Index Funds: 12.5% LTCG
+6. Debt Funds: Slab rate
+7. FDs: Slab rate (least efficient)
 
-## Capital Gains Tax Rates
+CAPITAL GAINS TAX CALCULATION
 
-| Holding Period | Tax Rate |
-|----------------|----------|
-| < 1 year       | 10-37%   |
-| > 1 year       | 0-20%    |
+Scenario: ₹10,00,000 portfolio, ₹2,00,000 gains
 
-## 30-Year Tax Impact ($10,000 at 8%)
+Stocks < 1 year: ₹50,000 × 20% = ₹10,000
+Stocks > 1 year: ₹75,000 × 12.5% = ₹9,375
+(exempt: ₹25,000 under ₹1.25L limit)
 
-| Account Type | After-Tax Value |
-|--------------|-----------------|
-| Taxable      | $57,435         |
-| Tax-Deferred | $100,627        |
-| Roth         | $100,627        |
+Total Tax: ₹19,375
+Effective Rate: 9.7%
 
-Difference: $43,192 (75% more with tax advantage!)`,
-      codeOutput: `# Tax-Efficient Investing Cheat Sheet
+TAX-LOSS HARVESTING (INDIAN RULES)
 
-## Account Priority Order
+Before March 31 each year:
+- Sell losing positions to book losses
+- Offset against STCG or LTCG gains
+- Carry forward unused losses (8 years)
+- No wash sale rule — can rebuy immediately!
 
-1. 401(k) up to employer match (FREE MONEY!)
-2. HSA (Triple tax advantage)
-3. Roth IRA (Tax-free growth)
-4. 401(k) to maximum
-5. Taxable brokerage
+EXAMPLE: You have ₹30,000 STCG loss
+Offset against ₹50,000 LTCG gain
+Net LTCG: ₹20,000
+Tax saved: ₹30,000 × 12.5% = ₹3,750`,
+      codeOutput: `Tax-Efficient Investing for Indian Investors
 
-## Asset Location Guide
+INDIAN CAPITAL GAINS TAX RULES (POST-2024)
 
-| Asset Type | Best Account |
-|------------|--------------|
-| Bonds/Fixed Income | 401(k)/IRA |
-| High-Growth Stocks | Roth IRA |
-| Dividend Stocks | 401(k)/IRA |
-| Index Funds | Taxable Brokerage |
-| REITs | 401(k)/IRA |
+Equity (Direct Stocks & Equity MF):
+- STCG (< 1 year): 20%
+- LTCG (> 1 year): 12.5% (first ₹1.25L/year exempt)
 
-## Tax-Loss Harvesting Rules
+Debt Mutual Funds:
+- STCG (< 3 years): Slab rate
+- LTCG (> 3 years): 20% with indexation
 
-✓ Sell losing positions to offset gains
-✓ Up to $3,000 losses offset ordinary income
-✓ Unused losses carry forward indefinitely
-✗ Don't buy same security within 30 days (Wash Sale)
+Other Investments:
+- PPF: Tax-free (EEE status)
+- SGB (held to maturity): Tax-free
+- NPS: 60% tax-free at withdrawal
+- FD: Slab rate (no indexation)
 
-## Capital Gains Tax Rates
+TAX-EFFICIENT INVESTMENT PRIORITY
 
-| Holding Period | Tax Rate |
-|----------------|----------|
-| < 1 year       | 10-37%   |
-| > 1 year       | 0-20%    |
+1. PPF (7.1% tax-free): ₹1.5L/year
+2. ELSS (Section 80C): ₹1.5L/year tax saving
+3. NPS (Section 80CCD): ₹50K extra tax saving
+4. SGB: Gold + 2.5% interest + tax-free
+5. Equity Index Funds: 12.5% LTCG
+6. Debt Funds: Slab rate
+7. FDs: Slab rate (least efficient)
 
-## 30-Year Tax Impact ($10,000 at 8%)
+CAPITAL GAINS TAX CALCULATION
 
-| Account Type | After-Tax Value |
-|--------------|-----------------|
-| Taxable      | $57,435         |
-| Tax-Deferred | $100,627        |
-| Roth         | $100,627        |
+Scenario: ₹10,00,000 portfolio, ₹2,00,000 gains
 
-Difference: $43,192 (75% more with tax advantage!)`,
+Stocks < 1 year: ₹50,000 × 20% = ₹10,000
+Stocks > 1 year: ₹75,000 × 12.5% = ₹9,375
+(exempt: ₹25,000 under ₹1.25L limit)
+
+Total Tax: ₹19,375
+Effective Rate: 9.7%
+
+TAX-LOSS HARVESTING (INDIAN RULES)
+
+Before March 31 each year:
+- Sell losing positions to book losses
+- Offset against STCG or LTCG gains
+- Carry forward unused losses (8 years)
+- No wash sale rule — can rebuy immediately!
+
+EXAMPLE: You have ₹30,000 STCG loss
+Offset against ₹50,000 LTCG gain
+Net LTCG: ₹20,000
+Tax saved: ₹30,000 × 12.5% = ₹3,750`,
       visualizationTips: [
-        "Compare the growth of $10,000 in taxable vs. tax-deferred accounts over 30 years.",
-        "Map out which investments go in which accounts using the asset location guide.",
-        "Calculate your current tax savings from maximizing 401(k) contributions.",
+        "Compare the after-tax returns of PPF vs FD vs Equity over 20 years.",
+        "Create a tax-saving priority checklist for Indian investors.",
+        "Plot the tax savings from ELSS + PPF + NPS combined."
       ],
       tipsAndTricks: [
-        "Always contribute enough to get the full 401(k) match — it's an instant 100% return.",
-        "Use tax-loss harvesting software to automate the process.",
-        "Consider a backdoor Roth IRA if you exceed income limits.",
+        "Max out PPF first — 7.1% tax-free is the best guaranteed return in India.",
+        "Use ELSS for 80C — shortest lock-in (3 years) + highest returns.",
+        "Book tax losses before March 31 — India has no wash sale rule.",
+        "SGB is the best gold investment — tax-free at maturity + 2.5% interest."
       ],
       practice: [
         {
-          id: "practice-account-selection",
-          title: "Account Selection Exercise",
-          difficulty: "Medium",
-          task: "You have $15,000 to invest and access to: 401(k) with 4% match, Roth IRA, and taxable brokerage. Your employer matches 100% up to 4% of salary ($60,000 salary = $2,400 match). How do you allocate?",
-          hint: "Follow the priority order: 401(k) match → HSA → Roth IRA → 401(k) max → Taxable",
-          solution: `Allocation Strategy:
+          id: "practice-tax-planning",
+          title": "Tax Planning Exercise",
+          difficulty": "Medium",
+          task": "You earn ₹12,00,000 annually and want to minimize taxes. Design a tax-saving plan using PPF, ELSS, NPS, and SGB. How much tax can you save?",
+          hint": "Max out 80C (₹1.5L), 80CCD (₹50K), and invest in SGB for gold exposure.",
+          solution: `Tax Planning for ₹12,00,000 Annual Income:
 
-1. 401(k): $2,400 (gets full $2,400 match)
-   - Your contribution: $2,400
-   - Employer match: $2,400
-   - Total: $4,800
+Current Tax (without planning):
+Income: ₹12,00,000
+Standard Deduction: ₹50,000
+Taxable: ₹11,50,000
 
-2. HSA (if eligible): $4,150
-   - Triple tax advantage
+Tax Calculation (Old Regime):
+0-2.5L: Nil
+2.5-5L: 5% = ₹12,500
+5-10L: 20% = ₹1,00,000
+10-11.5L: 30% = ₹45,000
+Total Tax: ₹1,57,500
 
-3. Roth IRA: $7,000
-   - Tax-free growth
+Tax-Saving Investments:
+1. PPF: ₹1,50,000 (Section 80C)
+2. ELSS: ₹0 (already covered by PPF in 80C)
+   Wait — 80C limit is ₹1.5L total. PPF covers it.
+3. NPS: ₹50,000 (Section 80CCD(1B) — additional)
+4. Health Insurance: ₹25,000 (Section 80D)
 
-4. Remaining to taxable: $1,450
+Total Tax Saving: ₹2,25,000 deduction
 
-Total invested: $15,000
-Total with match: $17,400 (16% instant return!)
+New Taxable Income: ₹11,50,000 - ₹2,25,000 = ₹9,25,000
 
-Tax savings (estimated):
-- 401(k) deduction: $2,400 × 22% = $528
-- HSA deduction: $4,150 × 22% = $913
-- Total tax savings: $1,441`,
+New Tax Calculation:
+0-2.5L: Nil
+2.5-5L: 5% = ₹12,500
+5-9.25L: 20% = ₹85,000
+Total Tax: ₹97,500
+
+Tax Saved: ₹1,57,500 - ₹97,500 = ₹60,000
+
+Effective Tax Rate: 5.3% (down from 13.7%)
+
+Additional Benefit: PPF grows at 7.1% tax-free, NPS at 10-12%, ELSS at 12-15%. Your money is working harder while you save taxes!`
         },
         {
-          id: "practice-tax-loss-harvest",
-          title: "Tax-Loss Harvesting Scenario",
-          difficulty: "Easy",
-          task: "You bought 100 shares of Stock A at $50 ($5,000). It's now at $40 ($4,000). You also sold Stock B for a $3,000 gain. How do you harvest the loss? What are the tax implications?",
-          hint: "Sell Stock A to realize the loss, offset Stock B's gain, and buy a similar (not identical) stock.",
-          solution: `Tax-Loss Harvesting:
+          id": "practice-ltcg-calculation",
+          title": "LTCG Tax Calculation",
+          difficulty": "Easy",
+          task": "You sold Indian stocks this year with the following gains: ₹80,000 STCG and ₹1,50,000 LTCG. Calculate your total tax liability. How much is exempt under the ₹1.25 lakh LTCG exemption?",
+          hint": "STCG is taxed at 20%. LTCG is taxed at 12.5% above ₹1.25 lakh exemption.",
+          solution: `LTCG Tax Calculation:
 
-1. Sell Stock A: 100 shares at $40 = $4,000
-   - Realized loss: $5,000 - $4,000 = $1,000
+STCG: ₹80,000 × 20% = ₹16,000
 
-2. Offset Stock B gain:
-   - Stock B gain: $3,000
-   - After Stock A loss: $3,000 - $1,000 = $2,000 net gain
+LTCG: ₹1,50,000
+Exemption: ₹1,25,000 (first ₹1.25L exempt)
+Taxable LTCG: ₹1,50,000 - ₹1,25,000 = ₹25,000
+Tax on LTCG: ₹25,000 × 12.5% = ₹3,125
 
-3. Tax impact (assuming 15% long-term rate):
-   - Without harvesting: $3,000 × 15% = $450 tax
-   - With harvesting: $2,000 × 15% = $300 tax
-   - Tax saved: $150
+Total Tax: ₹16,000 + ₹3,125 = ₹19,125
 
-4. Repurchase strategy:
-   - Buy Stock C (similar sector, not identical to Stock A)
-   - Avoid wash sale (don't buy Stock A within 30 days)
+Effective Tax Rate: ₹19,125 ÷ ₹2,30,000 = 8.3%
 
-Net result: $150 tax saved, maintained market exposure`,
-        },
-      ],
-    },
+Key Insight: The ₹1.25 lakh LTCG exemption saves you ₹15,625 in taxes!
+(₹1,25,000 × 12.5% = ₹15,625)
+
+Strategy: If possible, spread your LTCG across multiple financial years to maximize the ₹1.25L exemption each year.`
+        }
+      ]
+    }
   ],
 };
