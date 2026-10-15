@@ -277,6 +277,27 @@ export default function IndexPage() {
             </AnimatedText>
           </div>
 
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/student/login"
+              className={buttonVariants({ size: "lg" })}
+            >
+              Student login
+            </Link>
+            <Link
+              href="/admin/login"
+              className={buttonVariants({ size: "lg", variant: "outline" })}
+            >
+              Admin login
+            </Link>
+            <Link
+              href="/admin/batches"
+              className={buttonVariants({ size: "lg", variant: "outline" })}
+            >
+              Student batches
+            </Link>
+          </div>
+
           {/* Stats */}
           <AnimatedText delay={1.15} className="mt-14 w-full max-w-2xl">
             <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border/60 bg-border/60 shadow-sm sm:grid-cols-4">

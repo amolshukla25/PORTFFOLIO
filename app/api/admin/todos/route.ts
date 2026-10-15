@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { fail, ok, parseBody, serverError } from "@/lib/api";
-import { getSession } from "@/lib/auth";
+import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { requireAdmin } from "@/lib/auth";
 import { isValidDateKey, todayKey } from "@/lib/dates";
 import { Todo, type ITodo } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
@@ -34,10 +34,11 @@ function serializeTodo(todo: ITodo & { _id: unknown }): SerializedTodo {
 
 /**
  * GET /api/admin/todos?date=YYYY-MM-DD
- * Lists the public guest session's to-dos for a day (defaults to today).
+ * Lists the signed-in admin's to-dos for a day (defaults to today).
  */
 export async function GET(req: Request) {
-  const session = getSession();
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
 
   try {
     await connectToDatabase();
@@ -63,10 +64,11 @@ export async function GET(req: Request) {
 
 /**
  * POST /api/admin/todos
- * Creates a to-do for the public guest session.
+ * Creates a to-do for the signed-in admin.
  */
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
 
   const parsed = await parseBody(req, createSchema);
   if ("response" in parsed) return parsed.response;

@@ -42,26 +42,22 @@ A private portal for running training batches, alongside the public site.
 - Log each day's activity: what they studied, hours, notes, and a 1–5 star score of how much they got out of the session (1 = nothing, 5 = a lot)
 - See their current streak, average score and pending assignments, and submit assignments
 
-### Viewing mode (auth disabled)
+### Password login
 
-The portal can run in a **viewing mode** where authentication is disabled so you can inspect what has been built without needing a password. In that mode:
+Both admin and student portals require email and password. The landing page links
+to `/student/login` and `/admin/login`. Students use accounts created by the
+trainer; admins use the seeded account. Role checks run on the server before a
+signed, httpOnly session cookie is issued. Portal APIs require the matching role.
 
-- Both `/admin/login` and `/student/login` show an informational banner instead of the real sign-in form.
-- The `/admin` and `/student` portals are reachable without signing in.
-- `getSession()` returns a placeholder session based on the route.
+Configure `MONGODB_URI` and a strong `AUTH_SECRET` locally and in hosting settings.
+The old `AUTH_ENABLED` / `NEXT_PUBLIC_AUTH_ENABLED` flags no longer disable login.
+MongoDB credentials are separate from portal passwords: Atlas authentication
+failures must be corrected in `MONGODB_URI`.
 
-This is intentionally a temporary viewing setup. When you are finished reviewing the build, enable authentication again before making the portal public.
-
-To enable authentication, set both of these environment variables:
-
-```
-AUTH_ENABLED=true
-NEXT_PUBLIC_AUTH_ENABLED=true
-```
-
-Then redeploy.
-
-Do not commit `AUTH_ENABLED=true` or `NEXT_PUBLIC_AUTH_ENABLED=true` into `.env.copy`. They belong only in the real environment (for example, your Vercel project settings).
+Accounts created or password-reset during the public build may have placeholder
+hashes. Reset affected student passwords in the admin portal. To reset an admin,
+rerun the seed script with a strong `SEED_ADMIN_PASSWORD`. Plaintext and placeholder
+password hashes are not accepted by the restored login flow.
 
 ### Seeding the admin account
 

@@ -22,14 +22,14 @@ export default async function AdminTodosPage({
   searchParams,
 }: AdminTodosPageProps) {
   const params = await searchParams;
-  const session = getSession();
+  const session = await getSession();
 
   const date =
     params.date && isValidDateKey(params.date) ? params.date : todayKey();
 
   await connectToDatabase();
 
-  const todos = await Todo.find({ owner: session.userId, date })
+  const todos = await Todo.find({ owner: session!.userId, date })
     .sort({ done: 1, createdAt: 1 })
     .lean();
 

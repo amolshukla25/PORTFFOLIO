@@ -1,4 +1,5 @@
-import { notFound, ok, serverError } from "@/lib/api";
+import { notFound, ok, serverError, unauthorized } from "@/lib/api";
+import { requireAdmin } from "@/lib/auth";
 import { Assignment, Batch, Submission, User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -14,6 +15,9 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const { id } = await params;
   if (!OBJECT_ID_PATTERN.test(id)) return notFound("Assignment");
 
@@ -77,6 +81,9 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const { id } = await params;
   if (!OBJECT_ID_PATTERN.test(id)) return notFound("Assignment");
 

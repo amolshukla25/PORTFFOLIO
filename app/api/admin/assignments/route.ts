@@ -1,9 +1,10 @@
 import { z } from "zod";
 
-import { fail, ok, parseBody, serverError } from "@/lib/api";
+import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { requireAdmin } from "@/lib/auth";
+import { isValidDateKey } from "@/lib/dates";
 import { Assignment, Batch, Submission, User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
-import { isValidDateKey } from "@/lib/dates";
 
 const OBJECT_ID_PATTERN = /^[0-9a-fA-F]{24}$/;
 
@@ -29,6 +30,9 @@ const createSchema = z.object({
 
 /** GET /api/admin/assignments — every assignment with submission counts. */
 export async function GET() {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   try {
     await connectToDatabase();
 
@@ -83,6 +87,9 @@ export async function GET() {
 
 /** POST /api/admin/assignments — record a new assignment for a batch. */
 export async function POST(req: Request) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const parsed = await parseBody(req, createSchema);
   if ("response" in parsed) return parsed.response;
 
@@ -112,6 +119,7 @@ export async function POST(req: Request) {
       description: description?.trim() ?? "",
       givenAt: given,
       dueDate: due,
+      createdBy: session.userId,
     });
 
     return ok(

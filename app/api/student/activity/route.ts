@@ -1,12 +1,26 @@
-import { ok, serverError } from "@/lib/api";
-import { getSession } from "@/lib/auth";
+import { z } from "zod";
+
+import { ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { requireStudent } from "@/lib/auth";
 import { isValidDateKey, todayKey } from "@/lib/dates";
 import { Activity } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
-/** GET /api/student/activity?days=30 — the public guest session's own log. */
+const activitySchema = z.object({
+  topic: z.string().trim().min(2, "Tell us what you studied."),
+  notes: z.string().trim().max(2000, "Keep notes under 2000 characters.").optional(),
+  hours: z.number().min(0).max(24).nullable().optional(),
+  rating: z.number().int().min(1).max(5),
+  date: z
+    .string()
+    .refine(isValidDateKey, "Date must be in YYYY-MM-DD format.")
+    .optional(),
+});
+
+/** GET /api/student/activity?days=30 — the signed-in student's own log. */
 export async function GET(req: Request) {
-  const session = getSession();
+  const session = await requireStudent();
+  if (!session) return unauthorized();
 
   try {
     await connectToDatabase();
@@ -44,13 +58,55 @@ export async function GET(req: Request) {
 }
 
 /**
- * POST /api/student/activity — disabled in this public build.
+ * POST /api/student/activity — create or update one day's entry.
  *
- * Activity posting required a real student session, so it is intentionally
- * non-functional now.
+ * The (student, date) index is unique, so this upserts: logging twice on the
+ * same day edits that day's row instead of failing on a duplicate key.
  */
-export async function POST() {
-  return ok({
-    error: "Activity posting is disabled in this build.",
-  });
+export async function POST(req: Request) {
+  const session = await requireStudent();
+  if (!session) return unauthorized();
+
+  const parsed = await parseBody(req, activitySchema);
+  if ("response" in parsed) return parsed.response;
+
+  try {
+    await connectToDatabase();
+
+    const date = parsed.data.date ?? todayKey();
+
+    const write = () =>
+      Activity.findOneAndUpdate(
+        { student: session.userId, date },
+        {
+          $set: {
+            topic: parsed.data.topic,
+            notes: parsed.data.notes ?? "",
+            hours: parsed.data.hours ?? null,
+            rating: parsed.data.rating,
+            batch: session.batchId ?? null,
+          },
+          $setOnInsert: { student: session.userId, date },
+        },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      ).lean();
+
+    let activity;
+    try {
+      activity = await write();
+    } catch (error) {
+      // Two saves in the same instant can race on the unique (student, date)
+      // index — the row now exists, so a plain update succeeds.
+      const duplicateKey =
+        typeof error === "object" &&
+        error !== null &&
+        (error as { code?: number }).code === 11000;
+      if (!duplicateKey) throw error;
+      activity = await write();
+    }
+
+    return ok({ activity }, 201);
+  } catch (error) {
+    return serverError(error);
+  }
 }

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { fail, ok, parseBody, serverError } from "@/lib/api";
+import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { requireAdmin } from "@/lib/auth";
 import { Batch, User } from "@/lib/db/models";
 import { fromDateKey, isValidDateKey } from "@/lib/dates";
 import { connectToDatabase } from "@/lib/mongodb";
@@ -50,6 +51,9 @@ function serializeBatch(batch: BatchLike, studentCount?: number) {
 }
 
 export async function GET() {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   try {
     await connectToDatabase();
 
@@ -76,6 +80,9 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const parsed = await parseBody(req, batchInputSchema);
   if ("response" in parsed) return parsed.response;
 

@@ -1,50 +1,51 @@
-import { Info } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { LoginForm } from "@/components/portal/login-form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { getSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Student portal",
+  title: "Student sign-in",
   robots: { index: false, follow: false },
 };
 
-export default function StudentLoginPage() {
+export default async function StudentLoginPage() {
+  const session = await getSession();
+  if (session?.role === "student") redirect("/student");
+
   return (
-    <main className="relative flex min-h-screen items-start justify-center border-t-4 border-star/40 bg-background px-4 py-16">
-      <div className="w-full max-w-lg space-y-5">
-        <div className="flex items-start gap-3 rounded-xl bg-star/10 p-4 text-star">
-          <Info className="shrink-0 h-5 w-5" />
-          <div>
-            <p className="font-medium">Authentication has been removed.</p>
-            <p className="text-sm opacity-80">
-              The student portal is publicly viewable in this build. There is no
-              sign-in step anymore.
-            </p>
-          </div>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-12">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,hsl(var(--star)/0.16),transparent_70%)]"
+      />
+      <div className="w-full max-w-md space-y-6">
+        <div className="space-y-2 text-center">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-star/15 text-star">
+            <GraduationCap className="h-6 w-6" />
+          </span>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight">
+            Student sign-in
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Log your daily activity and track your assignments.
+          </p>
         </div>
 
         <Card className="border-border/60 shadow-lg">
           <CardHeader className="pb-4">
-            <p className="text-sm font-medium">Student portal</p>
+            <p className="text-sm font-medium">Welcome back</p>
             <p className="text-xs text-muted-foreground">
-              This area no longer requires credentials.
+              Use the account your trainer created for you.
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Link
-              href="/student"
-              className={buttonVariants({ variant: "default", size: "lg" })}
-            >
-              Go to student portal
-            </Link>
-
+            <LoginForm role="student" redirectTo="/student" />
             <p className="text-center text-xs text-muted-foreground">
-              Currently viewing as{" "}
-              <span className="font-medium text-foreground">Public Guest</span>
-              <br />
-              This is a public build. No real account is required.
+              Forgot your password? Ask your trainer to reset it.
             </p>
           </CardContent>
         </Card>

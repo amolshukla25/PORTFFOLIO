@@ -1,7 +1,8 @@
 import { isValidObjectId } from "mongoose";
 import { z } from "zod";
 
-import { fail, notFound, ok, parseBody, serverError } from "@/lib/api";
+import { fail, notFound, ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { requireAdmin } from "@/lib/auth";
 import { Batch, User } from "@/lib/db/models";
 import { fromDateKey, isValidDateKey } from "@/lib/dates";
 import { connectToDatabase } from "@/lib/mongodb";
@@ -26,6 +27,9 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const { id } = await params;
   if (!isValidObjectId(id)) return notFound("Batch");
 
@@ -81,6 +85,9 @@ export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await requireAdmin();
+  if (!session) return unauthorized();
+
   const { id } = await params;
   if (!isValidObjectId(id)) return notFound("Batch");
 

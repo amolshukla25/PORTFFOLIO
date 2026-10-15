@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminDashboardPage() {
-  const session = getSession();
+  const session = await getSession();
   await connectToDatabase();
 
   const today = todayKey();
@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
         },
       },
     ]),
-    Todo.find({ owner: session.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
+    Todo.find({ owner: session!.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
     Activity.find()
       .sort({ date: -1, createdAt: -1 })
       .limit(6)
@@ -107,7 +107,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title={`Good to see you, ${session.name.split(" ")[0]}`}
+        title={`Good to see you, ${session!.name.split(" ")[0]}`}
         description="Everything happening across your batches today."
       >
         <Link href="/admin/activities" className={buttonVariants({ variant: "outline", size: "sm" })}>
