@@ -25,6 +25,7 @@ interface PageProps {
 interface PopulatedActivity {
   _id: unknown;
   date: string;
+  session: string;
   topic: string;
   notes: string;
   hours: number | null;
@@ -90,6 +91,7 @@ export default async function AdminActivitiesPage({ searchParams }: PageProps) {
   const activities: ActivityRow[] = rows.map((row) => ({
     _id: String(row._id),
     date: row.date,
+    session: row.session ?? "",
     topic: row.topic,
     notes: row.notes ?? "",
     hours: row.hours ?? null,
@@ -141,7 +143,7 @@ export default async function AdminActivitiesPage({ searchParams }: PageProps) {
     <div className="space-y-6">
       <PageHeader
         title="Daily activity"
-        description={`${shortDate(from)} – ${shortDate(to)} · what every student studied and how much they got from it.`}
+        description={`${shortDate(from)} – ${shortDate(to)} · the day-wise sessions students attended, with their 1–5 feedback and remarks.`}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -153,11 +155,11 @@ export default async function AdminActivitiesPage({ searchParams }: PageProps) {
           hint={`${range.length} days in range`}
         />
         <StatCard
-          label="Average score"
+          label="Average feedback"
           value={avgRating ? avgRating.toFixed(1) : "—"}
           icon={Star}
           tone="star"
-          hint="1 = nothing, 5 = got it fully"
+          hint="1 = poor session, 5 = excellent"
         />
         <StatCard
           label="Hours logged"

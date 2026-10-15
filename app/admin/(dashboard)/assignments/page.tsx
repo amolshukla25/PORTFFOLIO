@@ -14,12 +14,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function AdminAssignmentsPage() {
+interface AdminAssignmentsPageProps {
+  searchParams: Promise<{ batchId?: string }>;
+}
+
+export default async function AdminAssignmentsPage({
+  searchParams,
+}: AdminAssignmentsPageProps) {
+  const params = await searchParams;
+  const batchId = params.batchId ?? "";
+
   await connectToDatabase();
 
   const [assignments, submissionCounts, studentsPerBatch, batches] =
     await Promise.all([
-      Assignment.find().sort({ givenAt: -1 }).lean(),
+      Assignment.find(batchId ? { batch: batchId } : {})
+        .sort({ givenAt: -1 })
+        .lean(),
       Submission.aggregate<{ _id: unknown; count: number }>([
         { $group: { _id: "$assignment", count: { $sum: 1 } } },
       ]),
@@ -65,13 +76,23 @@ export default async function AdminAssignmentsPage() {
     name: batch.name,
   }));
 
+  const batchName = batchOptions.find((batch) => batch.id === batchId)?.name;
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="Assignments"
-        description="Track what you have given each batch and who has submitted it."
+        description={
+          batchName
+            ? `Work given to ${batchName}. Overall submission counts come from the active students in that batch.`
+            : "Track what you have given each batch and who has submitted it."
+        }
       />
-      <AssignmentManager assignments={rows} batches={batchOptions} />
+      <AssignmentManager
+        assignments={rows}
+        batches={batchOptions}
+        initialBatchId={batchId}
+      />
     </div>
   );
 }

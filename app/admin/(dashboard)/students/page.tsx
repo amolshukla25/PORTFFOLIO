@@ -12,7 +12,16 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default async function StudentsPage() {
+interface StudentsPageProps {
+  searchParams: Promise<{ batchId?: string }>;
+}
+
+export default async function StudentsPage({
+  searchParams,
+}: StudentsPageProps) {
+  const params = await searchParams;
+  const initialBatchId = params.batchId ?? "";
+
   await connectToDatabase();
 
   const [students, batches] = await Promise.all([
@@ -89,7 +98,11 @@ export default async function StudentsPage() {
         />
       </div>
 
-      <StudentManager students={rows} batches={batchOptions} />
+      <StudentManager
+        students={rows}
+        batches={batchOptions}
+        initialBatchId={initialBatchId}
+      />
 
       <p className="flex items-center gap-2 text-xs text-muted-foreground">
         <UserPlus className="h-3.5 w-3.5" />

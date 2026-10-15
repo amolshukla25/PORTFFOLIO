@@ -29,6 +29,7 @@ interface SerializedTodo {
   title: string;
   notes: string;
   done: boolean;
+  batchId: string | null;
   createdAt: string;
 }
 
@@ -39,6 +40,7 @@ function serializeTodo(todo: ITodo & { _id: unknown }): SerializedTodo {
     title: todo.title,
     notes: todo.notes ?? "",
     done: Boolean(todo.done),
+    batchId: todo.batch ? String(todo.batch) : null,
     createdAt: new Date(todo.createdAt).toISOString(),
   };
 }

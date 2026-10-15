@@ -144,11 +144,11 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
           hint={report.range.label}
         />
         <StatCard
-          label="Average learning score"
+          label="Average feedback"
           value={report.summary.avgRating ? report.summary.avgRating.toFixed(1) : "—"}
           icon={Star}
           tone="star"
-          hint="1 = nothing, 5 = everything"
+          hint="1 = poor session, 5 = excellent"
         />
         <StatCard
           label="Pending submissions"
@@ -181,7 +181,8 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
                   <TableHead>Student</TableHead>
                   <TableHead>Batch</TableHead>
                   <TableHead>Days logged</TableHead>
-                  <TableHead>Average score</TableHead>
+                  <TableHead>Sessions attended</TableHead>
+                  <TableHead>Average feedback</TableHead>
                   <TableHead>Hours</TableHead>
                   <TableHead>Last logged</TableHead>
                 </TableRow>
@@ -203,6 +204,18 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
                         <Badge variant="destructive">No logs</Badge>
                       ) : (
                         student.daysLogged
+                      )}
+                    </TableCell>
+                    <TableCell className="max-w-64">
+                      {student.sessions.length === 0 ? (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">
+                          {student.sessions.slice(0, 3).join(" · ")}
+                          {student.sessions.length > 3
+                            ? ` +${student.sessions.length - 3} more`
+                            : ""}
+                        </p>
                       )}
                     </TableCell>
                     <TableCell>

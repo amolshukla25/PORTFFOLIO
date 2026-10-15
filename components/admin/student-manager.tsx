@@ -51,6 +51,8 @@ export interface BatchOption {
 interface StudentManagerProps {
   students: StudentRow[];
   batches: BatchOption[];
+  /** Batch the batch card linked from, used to pre-select the filter. */
+  initialBatchId?: string;
 }
 
 async function sendJson(
@@ -70,10 +72,18 @@ async function sendJson(
   }
 }
 
-export function StudentManager({ students, batches }: StudentManagerProps) {
+export function StudentManager({
+  students,
+  batches,
+  initialBatchId,
+}: StudentManagerProps) {
   const router = useRouter();
   const { toast } = useToast();
-  const [batchFilter, setBatchFilter] = React.useState("all");
+  const [batchFilter, setBatchFilter] = React.useState(
+    initialBatchId && batches.some((batch) => batch._id === initialBatchId)
+      ? initialBatchId
+      : "all"
+  );
 
   const visible =
     batchFilter === "all"

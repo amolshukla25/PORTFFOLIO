@@ -14,10 +14,10 @@ interface StatCardProps {
 }
 
 const toneStyles: Record<NonNullable<StatCardProps["tone"]>, string> = {
-  default: "bg-muted/60 text-muted-foreground",
-  accent: "bg-accent/15 text-accent",
-  success: "bg-success/15 text-success",
-  star: "bg-star/15 text-star",
+  default: "border-border/60 bg-muted/40 text-muted-foreground",
+  accent: "border-accent/20 bg-accent/10 text-accent",
+  success: "border-success/20 bg-success/10 text-success",
+  star: "border-star/20 bg-star/10 text-star",
 };
 
 export function StatCard({
@@ -31,30 +31,30 @@ export function StatCard({
   return (
     <Card
       className={cn(
-        "border-border/60 transition-shadow hover:shadow-md",
+        "border-border/70 transition-shadow hover:shadow-sm",
         className
       )}
     >
       <CardContent className="flex items-start justify-between gap-3 p-5">
         <div className="min-w-0">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
             {label}
           </p>
-          <p className="mt-1.5 truncate text-2xl font-semibold leading-none">
+          <p className="mt-2 truncate text-2xl font-semibold tracking-tight tabular-nums">
             {value}
           </p>
           {hint ? (
-            <p className="mt-1.5 text-xs text-muted-foreground">{hint}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
           ) : null}
         </div>
         {Icon ? (
           <span
             className={cn(
-              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
               toneStyles[tone]
             )}
           >
-            <Icon className="h-5 w-5" />
+            <Icon className="h-4 w-4" />
           </span>
         ) : null}
       </CardContent>

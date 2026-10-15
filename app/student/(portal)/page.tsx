@@ -75,10 +75,10 @@ export default async function StudentDashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title={`Hi ${session.name.split(" ")[0]}`}
-        description="Log what you studied today and keep your streak alive."
+        description="Log today's session — what it covered, your 1–5 feedback and a remark."
       >
         <Link href="/student/activity" className={buttonVariants({ size: "sm" })}>
-          {todayLog ? "Update today's log" : "Log today's activity"}
+          {todayLog ? "Update today's session" : "Log today's session"}
         </Link>
       </PageHeader>
 
@@ -90,8 +90,8 @@ export default async function StudentDashboardPage() {
           tone={todayLog ? "success" : "accent"}
           hint={
             todayLog
-              ? `Logged ${todayLog.topic}`
-              : "Take a minute to record what you studied"
+              ? `Logged ${todayLog.session || todayLog.topic}`
+              : "Take a minute to record today's session"
           }
         />
         <StatCard
@@ -102,7 +102,7 @@ export default async function StudentDashboardPage() {
           hint={streak === 0 ? "Log today to start a streak" : "Keep it going"}
         />
         <StatCard
-          label="Average score"
+          label="Average feedback"
           value={avgRating ? avgRating.toFixed(1) : "—"}
           icon={Star}
           tone="star"
@@ -142,6 +142,7 @@ export default async function StudentDashboardPage() {
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {formatDay(todayLog.date)}
+                      {todayLog.session ? ` · ${todayLog.session}` : ""}
                       {todayLog.hours ? ` · ${todayLog.hours}h` : ""}
                     </p>
                   </div>
@@ -157,7 +158,7 @@ export default async function StudentDashboardPage() {
               <EmptyState
                 icon={BookOpenCheck}
                 title="Nothing logged today"
-                description="Tap “Log today's activity” and rate how much you got out of the session."
+                description="Tap “Log today's session” to record which session you had, your 1–5 feedback and a remark."
               />
             )}
           </CardContent>
@@ -245,9 +246,14 @@ export default async function StudentDashboardPage() {
                     <p className="truncate text-sm font-medium">{log.topic}</p>
                     <p className="text-xs text-muted-foreground">
                       {shortDate(log.date)}
+                      {log.session ? ` · ${log.session}` : ""}
                       {log.hours ? ` · ${log.hours}h` : ""}
-                      {log.notes ? ` · ${log.notes}` : ""}
                     </p>
+                    {log.notes ? (
+                      <p className="line-clamp-1 max-w-xl text-xs text-muted-foreground">
+                        {log.notes}
+                      </p>
+                    ) : null}
                   </div>
                   <StarDisplay value={log.rating} />
                 </li>

@@ -128,7 +128,7 @@ export default async function AdminDashboardPage() {
           hint={logsToday === 0 ? "No activity logged yet today" : "Daily activity entries"}
         />
         <StatCard
-          label="Avg. learning score"
+          label="Avg. feedback"
           value={avgRating ? avgRating.toFixed(1) : "—"}
           icon={Star}
           tone="star"
@@ -199,7 +199,7 @@ export default async function AdminDashboardPage() {
               <EmptyState
                 icon={BookOpenCheck}
                 title="No activity logged yet"
-                description="Student entries will appear here with their 1–5 learning score."
+                description="Day-wise session logs will appear here with their 1–5 feedback and remarks."
               />
             ) : (
               <ul className="space-y-3">
@@ -210,7 +210,8 @@ export default async function AdminDashboardPage() {
                         {log.student?.name ?? "Student"}
                       </p>
                       <p className="truncate text-xs text-muted-foreground">
-                        {shortDate(log.date)} · {log.topic}
+                        {shortDate(log.date)} · {log.session ? `${log.session} · ` : ""}
+                        {log.topic}
                       </p>
                     </div>
                     <StarDisplay value={log.rating} className="mt-0.5 shrink-0" />

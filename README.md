@@ -29,18 +29,18 @@ A private portal for running training batches, alongside the public site.
 
 ### What the trainer can do
 
-- **Batches** — create batches and see how many students are in each
+- **Batches** — create batches and see how many students are in each. Every batch card has buttons that open that batch's **students, daily activity, assignments and daily to-dos** already filtered to it
 - **Students** — create each student's login (name, email, password, batch), reset passwords, deactivate accounts, or move them between batches
-- **Daily activity** — review every student's daily log with their 1–5 learning score, plus a list of students who did not log on a given day
+- **Daily activity** — review each student's day-wise session log — which session they attended, what it covered, their 1–5 feedback and any remark — plus a list of students with no entry for a day
 - **Assignments** — record when an assignment was given and its due date, then track who submitted and when (late submissions are flagged)
-- **Daily to-dos** — a per-day task list for the trainer
-- **Reports** — download weekly (Monday–Sunday) or monthly reports as **CSV** or **PDF**, with per-student logs, average scores, hours and assignment submission rates
+- **Daily to-dos** — a per-day task list for the trainer; each task can be tagged to a batch (or left general), and the batch card links to that batch's list
+- **Reports** — download weekly (Monday–Sunday) or monthly reports as **CSV** or **PDF**, with per-student logs, sessions attended, average feedback, hours and assignment submission rates
 
 ### What students can do
 
 - Sign in with the credentials the trainer created
-- Log each day's activity: what they studied, hours, notes, and a 1–5 star score of how much they got out of the session (1 = nothing, 5 = a lot)
-- See their current streak, average score and pending assignments, and submit assignments
+- Log each day's session, including a past day they missed: pick the date, name the session, say what it covered, add hours, score their feedback 1–5 and leave a remark. One entry per day.
+- See their current streak, average feedback and pending assignments, and submit assignments
 
 ### Student self-registration
 

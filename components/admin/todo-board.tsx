@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -20,12 +21,17 @@ export interface TodoItem {
   title: string;
   notes: string;
   done: boolean;
+  /** Batch the task belongs to, or null for a general task. */
+  batchId: string | null;
   createdAt: string;
 }
 
 interface TodoBoardProps {
   date: string;
   initialTodos: TodoItem[];
+  batches: { _id: string; name: string }[];
+  /** Batch the board is scoped to; "" shows every task for the day. */
+  batchId: string;
 }
 
 function sortTodos(todos: TodoItem[]): TodoItem[] {
@@ -35,7 +41,12 @@ function sortTodos(todos: TodoItem[]): TodoItem[] {
   });
 }
 
-export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
+export function TodoBoard({
+  date,
+  initialTodos,
+  batches,
+  batchId,
+}: TodoBoardProps) {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -44,6 +55,13 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
   );
   const [title, setTitle] = React.useState("");
   const [notes, setNotes] = React.useState("");
+  const [taskBatch, setTaskBatch] = React.useState(batchId);
+
+  const scopeQuery = batchId ? `&batchId=${batchId}` : "";
+  const batchNameById = React.useMemo(
+    () => new Map(batches.map((batch) => [batch._id, batch.name])),
+    [batches]
+  );
   const [adding, setAdding] = React.useState(false);
   const [busyId, setBusyId] = React.useState<string | null>(null);
   const [isPending, startTransition] = React.useTransition();
@@ -71,7 +89,12 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
       const res = await fetch("/api/admin/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: trimmed, notes: notes.trim(), date }),
+        body: JSON.stringify({
+          title: trimmed,
+          notes: notes.trim(),
+          date,
+          batchId: taskBatch || null,
+        }),
       });
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
@@ -90,6 +113,7 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
       setTodos((current) => sortTodos([...current, data.todo as TodoItem]));
       setTitle("");
       setNotes("");
+      setTaskBatch(batchId);
       toast({ title: "Task added", description: trimmed });
       refresh();
     } catch {
@@ -194,7 +218,9 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
     <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
       <Card className="border-border/60">
         <CardHeader className="flex-row flex-wrap items-center justify-between gap-2 space-y-0">
-          <CardTitle className="text-base">Plan for the day</CardTitle>
+          <CardTitle className="text-base">
+            {batchId ? `Plan for ${batchNameById.get(batchId) ?? "this batch"}` : "Plan for the day"}
+          </CardTitle>
           <div className="flex items-center gap-3">
             <div className="hidden w-32 sm:block">
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
@@ -224,15 +250,30 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="todo-notes">Notes (optional)</Label>
-                <Input
-                  id="todo-notes"
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
-                  placeholder="Anything to remember"
-                  maxLength={1000}
-                />
+                <Label htmlFor="todo-batch">Batch</Label>
+                <Select
+                  id="todo-batch"
+                  value={taskBatch}
+                  onChange={(event) => setTaskBatch(event.target.value)}
+                >
+                  <option value="">General — no batch</option>
+                  {batches.map((batch) => (
+                    <option key={batch._id} value={batch._id}>
+                      {batch.name}
+                    </option>
+                  ))}
+                </Select>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="todo-notes">Notes (optional)</Label>
+              <Input
+                id="todo-notes"
+                value={notes}
+                onChange={(event) => setNotes(event.target.value)}
+                placeholder="Anything to remember"
+                maxLength={1000}
+              />
             </div>
             <Button type="submit" size="sm" disabled={adding || !title.trim()}>
               {adding ? (
@@ -303,6 +344,11 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
                           {todo.notes}
                         </p>
                       ) : null}
+                      {todo.batchId ? (
+                        <Badge variant="outline" className="mt-1">
+                          {batchNameById.get(todo.batchId) ?? "Batch"}
+                        </Badge>
+                      ) : null}
                     </div>
 
                     <ConfirmDialog
@@ -343,19 +389,20 @@ export function TodoBoard({ date, initialTodos }: TodoBoardProps) {
               value={date}
               onChange={(event) => {
                 const next = event.target.value;
-                if (next) router.push(`/admin/todos?date=${next}`);
+                if (next) router.push(`/admin/todos?date=${next}${scopeQuery}`);
               }}
             />
           </div>
           <p className="text-xs text-muted-foreground">
-            To-dos are private to your admin account and saved per day.
+            To-dos are private to your admin account and saved per day. Tag a
+            task to a batch to find it from that batch.
           </p>
           <Button
             type="button"
             variant="outline"
             size="sm"
             className="w-full"
-            onClick={() => router.push("/admin/todos")}
+            onClick={() => router.push(`/admin/todos${scopeQuery}`)}
             disabled={isPending}
           >
             Jump to today

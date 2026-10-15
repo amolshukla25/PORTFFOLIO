@@ -64,6 +64,8 @@ export interface AssignmentRow {
 interface AssignmentManagerProps {
   assignments: AssignmentRow[];
   batches: BatchOption[];
+  /** Pre-selects the batch when arriving from a batch card. */
+  initialBatchId?: string;
 }
 
 /**
@@ -73,6 +75,7 @@ interface AssignmentManagerProps {
 export function AssignmentManager({
   assignments,
   batches,
+  initialBatchId,
 }: AssignmentManagerProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -81,14 +84,18 @@ export function AssignmentManager({
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  const [batchId, setBatchId] = React.useState(batches[0]?.id ?? "");
+  const defaultBatchId =
+    initialBatchId && batches.some((batch) => batch.id === initialBatchId)
+      ? initialBatchId
+      : batches[0]?.id ?? "";
+  const [batchId, setBatchId] = React.useState(defaultBatchId);
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [givenAt, setGivenAt] = React.useState(todayKey());
   const [dueDate, setDueDate] = React.useState("");
 
   function resetForm() {
-    setBatchId(batches[0]?.id ?? "");
+    setBatchId(defaultBatchId);
     setTitle("");
     setDescription("");
     setGivenAt(todayKey());

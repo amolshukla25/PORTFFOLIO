@@ -37,6 +37,8 @@ export interface IActivity {
   batch: mongoose.Types.ObjectId | null;
   /** Local calendar day as YYYY-MM-DD — one entry per student per day. */
   date: string;
+  /** Which session of the programme that day covered, e.g. "Session 6 – Data cleaning". */
+  session: string;
   topic: string;
   notes: string;
   hours: number | null;
@@ -48,6 +50,8 @@ export interface IActivity {
 
 export interface ITodo {
   owner: mongoose.Types.ObjectId;
+  /** Batch the task belongs to; null means a general task. */
+  batch: mongoose.Types.ObjectId | null;
   date: string;
   title: string;
   notes: string;
@@ -111,6 +115,7 @@ const ActivitySchema = new Schema<IActivity>(
     student: { type: ObjectId, ref: "User", required: true, index: true },
     batch: { type: ObjectId, ref: "Batch", default: null, index: true },
     date: { type: String, required: true, index: true },
+    session: { type: String, default: "", trim: true },
     topic: { type: String, required: true, trim: true },
     notes: { type: String, default: "" },
     hours: { type: Number, default: null, min: 0, max: 24 },
@@ -123,6 +128,7 @@ ActivitySchema.index({ student: 1, date: 1 }, { unique: true });
 const TodoSchema = new Schema<ITodo>(
   {
     owner: { type: ObjectId, ref: "User", required: true, index: true },
+    batch: { type: ObjectId, ref: "Batch", default: null, index: true },
     date: { type: String, required: true, index: true },
     title: { type: String, required: true, trim: true },
     notes: { type: String, default: "" },

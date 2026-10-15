@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/portal/portal-page-header";
 import { StatCard } from "@/components/common/stat-card";
 import { getSession } from "@/lib/auth";
 import { isValidDateKey, shortDate, todayKey } from "@/lib/dates";
-import { Todo } from "@/lib/db/models";
+import { Batch, Todo } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 interface AdminTodosPageProps {
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; batchId?: string }>;
 }
 
 export default async function AdminTodosPage({
@@ -26,12 +26,27 @@ export default async function AdminTodosPage({
 
   const date =
     params.date && isValidDateKey(params.date) ? params.date : todayKey();
+  const batchId = params.batchId ?? "";
 
   await connectToDatabase();
 
-  const todos = await Todo.find({ owner: session!.userId, date })
-    .sort({ done: 1, createdAt: 1 })
-    .lean();
+  const filter: Record<string, unknown> = {
+    owner: session!.userId,
+    date,
+  };
+  if (batchId) filter.batch = batchId;
+
+  const [todos, batches] = await Promise.all([
+    Todo.find(filter).sort({ done: 1, createdAt: 1 }).lean(),
+    Batch.find().sort({ name: 1 }).select("name").lean(),
+  ]);
+
+  const batchOptions = batches.map((batch) => ({
+    _id: String(batch._id),
+    name: batch.name,
+  }));
+  const batchName =
+    batchOptions.find((batch) => batch._id === batchId)?.name ?? null;
 
   const serialized = todos.map((todo) => ({
     _id: String(todo._id),
@@ -39,6 +54,7 @@ export default async function AdminTodosPage({
     title: todo.title,
     notes: todo.notes ?? "",
     done: Boolean(todo.done),
+    batchId: todo.batch ? String(todo.batch) : null,
     createdAt: new Date(todo.createdAt).toISOString(),
   }));
 
@@ -49,7 +65,11 @@ export default async function AdminTodosPage({
     <div className="space-y-6">
       <PageHeader
         title="Daily to-dos"
-        description="Plan each day and tick off what you actually got through."
+        description={
+          batchName
+            ? `Tasks for ${batchName} on ${shortDate(date)} — plan the day and tick off what got done.`
+            : "Plan each day and tick off what you actually got through. Tag a task to a batch to keep it with that batch."
+        }
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -57,7 +77,7 @@ export default async function AdminTodosPage({
           label="Planned"
           value={serialized.length}
           icon={ListChecks}
-          hint={`For ${shortDate(date)}`}
+          hint={`${batchName ?? "All batches"} · ${shortDate(date)}`}
         />
         <StatCard
           label="Completed"
@@ -79,7 +99,12 @@ export default async function AdminTodosPage({
         />
       </div>
 
-      <TodoBoard date={date} initialTodos={serialized} />
+      <TodoBoard
+        date={date}
+        initialTodos={serialized}
+        batches={batchOptions}
+        batchId={batchId}
+      />
     </div>
   );
 }

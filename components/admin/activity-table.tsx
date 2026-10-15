@@ -25,6 +25,7 @@ import { shortDate } from "@/lib/dates";
 export interface ActivityRow {
   _id: string;
   date: string;
+  session: string;
   topic: string;
   notes: string;
   hours: number | null;
@@ -165,9 +166,10 @@ export function ActivityTable({
                   <TableHead>Student</TableHead>
                   <TableHead>Batch</TableHead>
                   <TableHead>Date</TableHead>
-                  <TableHead>What they studied</TableHead>
+                  <TableHead>Session</TableHead>
+                  <TableHead>Covered &amp; remarks</TableHead>
                   <TableHead>Hours</TableHead>
-                  <TableHead>Score</TableHead>
+                  <TableHead>Feedback</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -185,10 +187,20 @@ export function ActivityTable({
                     <TableCell className="whitespace-nowrap text-sm">
                       {shortDate(row.date)}
                     </TableCell>
+                    <TableCell className="max-w-56 text-sm">
+                      {row.session ? (
+                        <Badge variant="outline">{row.session}</Badge>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
+                    </TableCell>
                     <TableCell className="max-w-md">
                       <p className="font-medium">{row.topic}</p>
                       {row.notes ? (
                         <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
+                          <span className="font-medium text-foreground/70">
+                            Remark:
+                          </span>{" "}
                           {row.notes}
                         </p>
                       ) : null}

@@ -12,6 +12,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 interface PopulatedActivity {
   _id: unknown;
   date: string;
+  session: string;
   topic: string;
   notes: string;
   hours: number | null;
@@ -78,6 +79,7 @@ export async function GET(req: Request) {
     const activities = rows.map((row) => ({
       _id: String(row._id),
       date: row.date,
+      session: row.session ?? "",
       topic: row.topic,
       notes: row.notes ?? "",
       hours: row.hours ?? null,

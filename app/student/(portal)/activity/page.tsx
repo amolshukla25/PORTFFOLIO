@@ -12,7 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getSession } from "@/lib/auth";
-import { formatDay, shortDate, todayKey } from "@/lib/dates";
+import { shortDate, todayKey } from "@/lib/dates";
 import { Activity } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -40,6 +40,7 @@ export default async function StudentActivityPage() {
   const toEntry = (entry: (typeof entries)[number]): ActivityEntry => ({
     _id: String(entry._id),
     date: entry.date,
+    session: entry.session ?? "",
     topic: entry.topic,
     notes: entry.notes ?? "",
     hours: entry.hours ?? null,
@@ -50,7 +51,7 @@ export default async function StudentActivityPage() {
     <div className="space-y-6">
       <PageHeader
         title="Daily activity"
-        description="Log what you studied today and how much you got out of it."
+        description="Day-wise session log — add the session you attended, your 1–5 feedback and any remark."
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -59,14 +60,14 @@ export default async function StudentActivityPage() {
           value={entries.length}
           icon={CalendarCheck}
           tone="accent"
-          hint="Every day you check in counts"
+          hint="One entry per day you attended"
         />
         <StatCard
-          label="Average score"
+          label="Average feedback"
           value={avgRating ? avgRating.toFixed(1) : "—"}
           icon={Star}
           tone="star"
-          hint="Across all your check-ins"
+          hint="Your own 1–5 ratings"
         />
         <StatCard
           label="Hours studied"
@@ -77,26 +78,30 @@ export default async function StudentActivityPage() {
         />
       </div>
 
-      <Card className="border-border/60">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-base">
-            {todaysEntry ? "Today's check-in" : "Check in for today"}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">
-            {formatDay(new Date())}
-            {todaysEntry
-              ? " — already logged. Edit it any time."
-              : " — takes less than a minute."}
-          </p>
+      <Card className="border-border/70">
+        <CardHeader className="flex-row items-start justify-between gap-3 space-y-0 pb-4">
+          <div className="space-y-1">
+            <CardTitle className="text-base">Session log</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Pick the day, write which session you had, score your feedback from
+              1 to 5 and leave a remark.
+            </p>
+          </div>
+          <Badge variant={todaysEntry ? "success" : "outline"}>
+            {todaysEntry ? "Today logged" : "Today pending"}
+          </Badge>
         </CardHeader>
         <CardContent>
-          <ActivityForm today={todaysEntry ? toEntry(todaysEntry) : null} />
+          <ActivityForm
+            entries={entries.map(toEntry)}
+            today={today}
+          />
         </CardContent>
       </Card>
 
-      <Card className="border-border/60">
+      <Card className="border-border/70">
         <CardHeader className="flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-base">Your history</CardTitle>
+          <CardTitle className="text-base">Your session history</CardTitle>
           <Badge variant="outline">
             {entries.length} {entries.length === 1 ? "entry" : "entries"}
           </Badge>
@@ -105,8 +110,8 @@ export default async function StudentActivityPage() {
           {entries.length === 0 ? (
             <EmptyState
               icon={BookOpenCheck}
-              title="No check-ins yet"
-              description="Save today's activity above and your progress will start showing up here."
+              title="No sessions logged yet"
+              description="Save your first session above and your day-wise history will show up here."
             />
           ) : (
             <ul className="divide-y divide-border/60">
@@ -116,8 +121,13 @@ export default async function StudentActivityPage() {
                   className="flex flex-wrap items-start justify-between gap-3 py-3 first:pt-0 last:pb-0"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-medium">{entry.topic}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-medium">{entry.topic}</p>
+                      {entry.session ? (
+                        <Badge variant="outline">{entry.session}</Badge>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {shortDate(entry.date)}
                       {entry.hours !== null && entry.hours !== undefined
                         ? ` · ${entry.hours} h`
@@ -125,6 +135,9 @@ export default async function StudentActivityPage() {
                     </p>
                     {entry.notes ? (
                       <p className="mt-1 line-clamp-2 max-w-xl text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground/70">
+                          Remark:
+                        </span>{" "}
                         {entry.notes}
                       </p>
                     ) : null}

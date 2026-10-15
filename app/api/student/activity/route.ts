@@ -1,14 +1,23 @@
 import { z } from "zod";
 
-import { ok, parseBody, serverError, unauthorized } from "@/lib/api";
+import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
 import { requireStudent } from "@/lib/auth";
 import { isValidDateKey, todayKey } from "@/lib/dates";
 import { Activity } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
 const activitySchema = z.object({
-  topic: z.string().trim().min(2, "Tell us what you studied."),
-  notes: z.string().trim().max(2000, "Keep notes under 2000 characters.").optional(),
+  session: z
+    .string()
+    .trim()
+    .min(2, "Write which session you attended, e.g. Session 6 – Data cleaning.")
+    .max(120, "Keep the session name under 120 characters."),
+  topic: z.string().trim().min(2, "Tell us what you covered in the session."),
+  notes: z
+    .string()
+    .trim()
+    .max(2000, "Keep the remark under 2000 characters.")
+    .optional(),
   hours: z.number().min(0).max(24).nullable().optional(),
   rating: z.number().int().min(1).max(5),
   date: z
@@ -75,11 +84,17 @@ export async function POST(req: Request) {
 
     const date = parsed.data.date ?? todayKey();
 
+    // Sessions happen in the past — a future day is almost always a typo.
+    if (date > todayKey()) {
+      return fail("You can't log a session for a future day.", 400);
+    }
+
     const write = () =>
       Activity.findOneAndUpdate(
         { student: session.userId, date },
         {
           $set: {
+            session: parsed.data.session,
             topic: parsed.data.topic,
             notes: parsed.data.notes ?? "",
             hours: parsed.data.hours ?? null,

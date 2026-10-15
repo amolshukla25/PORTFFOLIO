@@ -1,14 +1,18 @@
 "use client";
 
 import {
+  BookOpenCheck,
   CalendarDays,
+  ClipboardList,
   GraduationCap,
+  ListChecks,
   Loader2,
   Pencil,
   Plus,
   Trash2,
   Users,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 
@@ -369,6 +373,59 @@ export function BatchManager({ batches }: { batches: BatchRow[] }) {
                       {formatDay(batch.startDate)} – {formatDay(batch.endDate)}
                     </Badge>
                   ) : null}
+                </div>
+
+                {/* Everything the trainer needs for this batch, scoped to it. */}
+                <div className="space-y-2 border-t border-border/60 pt-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Open in this batch
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="justify-start px-2.5 text-xs"
+                    >
+                      <Link href={`/admin/students?batchId=${batch._id}`}>
+                        <Users className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+                        Students
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="justify-start px-2.5 text-xs"
+                    >
+                      <Link href={`/admin/activities?batchId=${batch._id}`}>
+                        <BookOpenCheck className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+                        Daily activity
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="justify-start px-2.5 text-xs"
+                    >
+                      <Link href={`/admin/assignments?batchId=${batch._id}`}>
+                        <ClipboardList className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+                        Assignments
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="justify-start px-2.5 text-xs"
+                    >
+                      <Link href={`/admin/todos?batchId=${batch._id}`}>
+                        <ListChecks className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+                        Daily to-dos
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">

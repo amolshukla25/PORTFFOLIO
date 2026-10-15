@@ -18,6 +18,8 @@ export interface ReportStudent {
   totalHours: number;
   lastLoggedAt: string | null;
   topics: string[];
+  /** Session names the student logged in the period, in date order. */
+  sessions: string[];
 }
 
 export interface ReportAssignment {
@@ -70,7 +72,7 @@ export async function buildReport(
       .sort({ name: 1 })
       .lean(),
     Activity.find({ date: { $gte: range.from, $lte: range.to } })
-      .select("student date topic hours rating")
+      .select("student date session topic hours rating")
       .lean(),
     Batch.find().select("name").lean(),
     Assignment.find({ givenAt: { $gte: rangeStart, $lte: rangeEnd } })
@@ -100,12 +102,19 @@ export async function buildReport(
 
   const logsByStudent = new Map<
     string,
-    { date: string; topic: string; hours: number | null; rating: number }[]
+    {
+      date: string;
+      session: string;
+      topic: string;
+      hours: number | null;
+      rating: number;
+    }[]
   >();
   for (const log of logs) {
     const key = String(log.student);
     const entry = {
       date: log.date,
+      session: log.session ?? "",
       topic: log.topic,
       hours: log.hours ?? null,
       rating: log.rating,
@@ -135,6 +144,9 @@ export async function buildReport(
       totalHours: round1(hours),
       lastLoggedAt,
       topics: Array.from(new Set(entries.map((entry) => entry.topic))).slice(0, 8),
+      sessions: Array.from(
+        new Set(entries.map((entry) => entry.session).filter(Boolean))
+      ).slice(0, 12),
     };
   });
 
@@ -240,6 +252,7 @@ export function reportToCsv(report: ActivityReport): string {
       "Average rating",
       "Total hours",
       "Last logged",
+      "Sessions",
       "Topics",
     ])
   );
@@ -256,6 +269,7 @@ export function reportToCsv(report: ActivityReport): string {
           student.avgRating,
           student.totalHours,
           student.lastLoggedAt ? formatDay(student.lastLoggedAt) : "",
+          student.sessions.join("; "),
           student.topics.join("; "),
         ])
       );
