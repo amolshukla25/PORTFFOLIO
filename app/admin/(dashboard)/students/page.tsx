@@ -63,7 +63,7 @@ export default async function StudentsPage() {
     <div className="space-y-6">
       <PageHeader
         title="Students"
-        description="Create the logins your students use — they sign in at /student/login with the email and password you set here."
+        description="Students can register at /student/register. To approve access, edit their account, assign a batch, and enable Active. You can also create accounts here."
       />
 
       <div className="grid gap-4 sm:grid-cols-3">

@@ -39,11 +39,15 @@ export default async function StudentLoginPage() {
           <CardHeader className="pb-4">
             <p className="text-sm font-medium">Welcome back</p>
             <p className="text-xs text-muted-foreground">
-              Use the account your trainer created for you.
+              Use your approved student account.
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
             <LoginForm role="student" redirectTo="/student" />
+            <p className="text-center text-sm text-muted-foreground">
+              New student? <Link href="/student/register" className="font-medium text-accent hover:underline">Register here</Link>
+            </p>
+            <p className="text-center text-xs text-muted-foreground">New registrations need trainer approval before sign-in.</p>
             <p className="text-center text-xs text-muted-foreground">
               Forgot your password? Ask your trainer to reset it.
             </p>

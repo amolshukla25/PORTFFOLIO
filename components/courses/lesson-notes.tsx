@@ -251,7 +251,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
       {/* LEFT SIDEBAR - Course Outline Navigation (hidden on mobile, can slide in) */}
       <aside
         className={cn(
-          "w-[85vw] max-w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:relative md:translate-x-0 fixed inset-y-0 left-0 z-40 top-16 md:top-0 md:w-80",
+          "w-[85vw] max-w-80 border-r border-border bg-card/50 backdrop-blur-md flex-shrink-0 flex flex-col no-print transition-all duration-300 md:sticky md:self-start md:h-[calc(100dvh-4rem)] md:translate-x-0 fixed inset-y-0 left-0 z-40 top-16 md:top-16 md:w-80",
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           (sidebarCollapsed || focusMode) && "md:w-0 md:border-r-0 md:overflow-hidden"
         )}
@@ -277,7 +277,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           </h2>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 space-y-2">
           {course.modules.map((module, mIdx) => {
             const doneInModule = module.lessons.filter((lec) =>
               completedLessons.includes(lec.id)

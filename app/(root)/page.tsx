@@ -285,6 +285,12 @@ export default function IndexPage() {
               Student login
             </Link>
             <Link
+              href="/student/register"
+              className={buttonVariants({ size: "lg", variant: "outline" })}
+            >
+              Student registration
+            </Link>
+            <Link
               href="/admin/login"
               className={buttonVariants({ size: "lg", variant: "outline" })}
             >

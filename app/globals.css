@@ -101,7 +101,8 @@
 
   html,
   body {
-    overflow-x: hidden;
+    /* Clip horizontal overflow without creating a scroll container that breaks sticky sidebars. */
+    overflow-x: clip;
   }
 
   body {

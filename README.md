@@ -42,6 +42,18 @@ A private portal for running training batches, alongside the public site.
 - Log each day's activity: what they studied, hours, notes, and a 1–5 star score of how much they got out of the session (1 = nothing, 5 = a lot)
 - See their current streak, average score and pending assignments, and submit assignments
 
+### Student self-registration
+
+Students can click **Student registration** on the homepage or **Register here**
+on `/student/login`, then submit their name, email, and password at
+`/student/register`. Registration creates an inactive student account and does
+not sign the student in. No admin role or batch can be selected during signup.
+
+To approve a student, open `/admin/students`, edit their account, assign their
+batch, enable **Active**, and save. They can then sign in at `/student/login` with
+the password they registered. Registration does not send approval emails; the
+student should contact their trainer for approval.
+
 ### Password login
 
 Both admin and student portals require email and password. The landing page links
