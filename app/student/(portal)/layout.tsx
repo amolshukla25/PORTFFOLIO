@@ -1,13 +1,17 @@
 import { redirect } from "next/navigation";
 
 import { PortalShell } from "@/components/portal/portal-shell";
-import { getSession } from "@/lib/auth";
-import { Batch } from "@/lib/db/models";
-import { connectToDatabase } from "@/lib/mongodb";
+import { getSession, isAuthDisabled } from "@/lib/auth";
 
 /**
- * Server-side guard for every /student page: readers without a valid student
- * session are redirected to the student sign-in page.
+ * Server-side guard for every /student page.
+ *
+ * With authentication enabled, readers without a valid student session are
+ * redirected to the student sign-in page.
+ *
+ * With authentication disabled, the portal is publicly viewable: the student
+ * layout still renders the portal shell with a placeholder session so the whole
+ * student experience is reachable without credentials.
  */
 export default async function StudentLayout({
   children,
@@ -15,27 +19,20 @@ export default async function StudentLayout({
   children: React.ReactNode;
 }) {
   const session = await getSession();
+  const disabled = isAuthDisabled();
 
-  if (!session || session.role !== "student") {
+  if (!disabled && (!session || session.role !== "student")) {
     redirect("/student/login");
-  }
-
-  let batchName: string | null = null;
-  if (session.batchId) {
-    try {
-      await connectToDatabase();
-      const batch = await Batch.findById(session.batchId).lean();
-      batchName = batch?.name ?? null;
-    } catch {
-      // A missing batch should never block the portal.
-      batchName = null;
-    }
   }
 
   return (
     <PortalShell
       role="student"
-      user={{ name: session.name, email: session.email, batchName }}
+      user={{
+        name: session?.name ?? "Demo Student",
+        email: session?.email ?? "student@demo.local",
+        batchName: session?.batchId ? "My batch" : null,
+      }}
     >
       {children}
     </PortalShell>

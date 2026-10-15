@@ -17,43 +17,6 @@ A modern, responsive, and SEO-optimized portfolio for [Amol Shukla](https://amol
 - **Contact Form**: Functional contact form with server-action validation
 - **Open Source**: Free to use and modify under the MIT License
 
-## 🛠️ Tech Stack
-
-- **Framework**: [Next.js 16](https://nextjs.org/) with Turbopack
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- **Animations**: Lightweight CSS animations
-- **Form Handling**: Server actions with validation
-- **Deployment**: [Vercel](https://vercel.com)
-
-## 🔧 Getting Started
-
-To run this portfolio locally:
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/amolshukla25/PORTFFOLIO.git my-portfolio
-   cd my-portfolio
-   ```
-
-2. Copy the contents of `.env.copy` to a new `.env` file and fill in the required information.
-
-3. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
 ## 🎓 Training portal (admin & students)
 
 A private portal for running training batches, alongside the public site.
@@ -78,6 +41,27 @@ A private portal for running training batches, alongside the public site.
 - Sign in with the credentials the trainer created
 - Log each day's activity: what they studied, hours, notes, and a 1–5 star score of how much they got out of the session (1 = nothing, 5 = a lot)
 - See their current streak, average score and pending assignments, and submit assignments
+
+### Viewing mode (auth disabled)
+
+The portal can run in a **viewing mode** where authentication is disabled so you can inspect what has been built without needing a password. In that mode:
+
+- Both `/admin/login` and `/student/login` show an informational banner instead of the real sign-in form.
+- The `/admin` and `/student` portals are reachable without signing in.
+- `getSession()` returns a placeholder session based on the route.
+
+This is intentionally a temporary viewing setup. When you are finished reviewing the build, enable authentication again before making the portal public.
+
+To enable authentication, set both of these environment variables:
+
+```
+AUTH_ENABLED=true
+NEXT_PUBLIC_AUTH_ENABLED=true
+```
+
+Then redeploy.
+
+Do not commit `AUTH_ENABLED=true` or `NEXT_PUBLIC_AUTH_ENABLED=true` into `.env.copy`. They belong only in the real environment (for example, your Vercel project settings).
 
 ### Seeding the admin account
 
@@ -123,24 +107,6 @@ Easily personalize the site using the configuration files below:
 | **Contributions**  | Display open-source/community contributions            | `config/contributions.ts` |
 | **Colors & Theme** | Customize color palette and themes                     | `tailwind.config.js`      |
 
-## 🌟 Features In Detail
-
-### Professional Experience Timeline
-
-An interactive, animated timeline that showcases your career journey with expandable sections for details about each position and company.
-
-### Learning Hub
-
-Free structured courses on Python, data science, machine learning, prompt engineering, and more — with detailed notes, code walk-throughs, quizzes, and hands-on exercises.
-
-### Technical Blog
-
-Articles on agentic AI, LLMs, generative AI, Python, and software engineering, each with JSON-LD Article schema and SEO-optimized metadata.
-
-### Contact Form Integration
-
-A ready-to-use contact form that connects to a backend service.
-
 ## 📱 Performance
 
 - Excellent Core Web Vitals metrics
@@ -158,4 +124,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Built with ❤️ by [Amol Shukla](https://github.com/amolshukla)**
+**Built with ❤️ by [Amol Shukla](https://github.com/amolshukla25)**

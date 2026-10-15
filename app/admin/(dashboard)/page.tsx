@@ -16,7 +16,7 @@ import { StatCard } from "@/components/common/stat-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getSession } from "@/lib/auth";
+import { getSession, serverIsAuthDisabled } from "@/lib/auth";
 import {
   Activity,
   Assignment,
@@ -35,6 +35,8 @@ export const metadata: Metadata = {
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
+  const isDisabled = serverIsAuthDisabled();
+  const realSession = isDisabled ? null : session;
   await connectToDatabase();
 
   const today = todayKey();
@@ -65,8 +67,7 @@ export default async function AdminDashboardPage() {
           count: { $sum: 1 },
         },
       },
-    ]),
-    Todo.find({ owner: session!.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
+    ]),      Todo.find({ owner: realSession?.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
     Activity.find()
       .sort({ date: -1, createdAt: -1 })
       .limit(6)
@@ -106,8 +107,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title={`Good to see you, ${session!.name.split(" ")[0]}`}
+      <PageHeader          title={`Good to see you, ${realSession?.name.split(" ")[0] ?? "Demo"}`}
         description="Everything happening across your batches today."
       >
         <Link href="/admin/activities" className={buttonVariants({ variant: "outline", size: "sm" })}>

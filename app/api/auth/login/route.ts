@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 import { fail, ok, parseBody, serverError } from "@/lib/api";
-import { setSessionCookie, type SessionUser } from "@/lib/auth";
+import {
+  setSessionCookie,
+  type SessionUser,
+  isAuthDisabled,
+} from "@/lib/auth";
 import { User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -13,6 +17,12 @@ const loginSchema = z.object({
 export async function POST(req: Request) {
   const parsed = await parseBody(req, loginSchema);
   if ("response" in parsed) return parsed.response;
+
+  if (isAuthDisabled()) {
+    const admin = await placeholderAdmin();
+    await setSessionCookie(admin);
+    return ok({ user: admin });
+  }
 
   const email = parsed.data.email.toLowerCase().trim();
   const { password } = parsed.data;
@@ -44,4 +54,14 @@ export async function POST(req: Request) {
   } catch (error) {
     return serverError(error);
   }
+}
+
+async function placeholderAdmin(): Promise<SessionUser> {
+  return {
+    userId: "placeholder-admin",
+    email: "admin@demo.local",
+    name: "Amol Shukla",
+    role: "admin",
+    batchId: null,
+  };
 }

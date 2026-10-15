@@ -1,11 +1,19 @@
 import { ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-import { LoginForm } from "@/components/portal/login-form";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getSession } from "@/lib/auth";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/components/ui/card";
+import {
+  Button,
+  buttonVariants,
+} from "@/components/ui/button";
+import { Info } from "lucide-react";
+import * as React from "react";
+import { getSession, isAuthDisabled } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Admin sign-in",
@@ -14,7 +22,55 @@ export const metadata: Metadata = {
 
 export default async function AdminLoginPage() {
   const session = await getSession();
-  if (session?.role === "admin") redirect("/admin");
+  const disabled = isAuthDisabled();
+
+  if (disabled && session?.role === "admin") {
+    return (
+      <main className="relative flex min-h-screen items-start justify-center border-t-4 border-accent/40 bg-background px-4 py-16">
+        <div className="w-full max-w-lg space-y-5">
+          <div className="flex items-start gap-3 rounded-xl bg-accent/10 p-4 text-accent">
+            <Info className="shrink-0 h-5 w-5" />
+            <div>
+              <p className="font-medium">Authentication is currently disabled.</p>
+              <p className="text-sm opacity-80">
+                The admin portal is public for viewing right now. Toggle authentication
+                back on when you are ready.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4 text-center">
+            <Link
+              href="/admin"
+              className={buttonVariants({ variant: "default", size: "lg" })}
+            >
+              Go to admin portal
+            </Link>
+
+            <p className="text-xs text-muted-foreground">
+              Currently signed in as <span className="font-medium text-foreground">admin@demo.local</span>
+              <br />
+              This is a placeholder session. No real credentials are required while
+              auth is disabled.
+            </p>
+          </div>
+
+          <p className="text-center text-xs text-muted-foreground">
+            <Link
+              href="/admin/login"
+              className="hover:text-foreground hover:underline"
+            >
+              Keep viewing login page
+            </Link>
+            {" · "}
+            <Link href="/" className="hover:text-foreground hover:underline">
+              Back to amolshukla.online
+            </Link>
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-12">
@@ -63,5 +119,26 @@ export default async function AdminLoginPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+function LoginForm({ role, redirectTo }: { role: "admin" | "student"; redirectTo: string }) {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        const res = await fetch("http://localhost:3000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: "", password: "", role }),
+        });
+        console.log("login attempted", res.status);
+      }}
+      className="space-y-4 pointer-events-none"
+    >
+      <p className="text-sm text-muted-foreground text-center">
+        Login is currently disabled.
+      </p>
+    </form>
   );
 }
