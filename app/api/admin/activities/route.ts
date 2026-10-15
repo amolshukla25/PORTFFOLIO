@@ -1,5 +1,4 @@
-import { ok, serverError, unauthorized } from "@/lib/api";
-import { requireAdmin } from "@/lib/auth";
+import { ok, serverError } from "@/lib/api";
 import {
   eachDayKey,
   isValidDateKey,
@@ -35,9 +34,6 @@ function dayKeyAfter(fromKey: string, daysBack: number): string {
 
 /** GET /api/admin/activities — every student's daily log in a date range. */
 export async function GET(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   try {
     await connectToDatabase();
 

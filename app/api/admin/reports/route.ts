@@ -1,5 +1,4 @@
-import { fail, ok, serverError, unauthorized } from "@/lib/api";
-import { requireAdmin } from "@/lib/auth";
+import { fail, ok, serverError } from "@/lib/api";
 import {
   fromDateKey,
   isValidDateKey,
@@ -14,9 +13,6 @@ import { buildReport, reportToCsv } from "@/lib/reports";
  * JSON powers the on-screen preview, CSV is the download.
  */
 export async function GET(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   try {
     const url = new URL(req.url);
 

@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
 import { z } from "zod";
 
-import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
-import { hashPassword, requireAdmin } from "@/lib/auth";
+import { fail, ok, parseBody, serverError } from "@/lib/api";
+import { hashPassword } from "@/lib/auth";
 import { Batch, User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
+import mongoose from "mongoose";
 
 const createStudentSchema = z.object({
   name: z
@@ -49,16 +49,11 @@ function toRow(
   };
 }
 
-export async function GET(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
+export async function GET() {
   try {
     await connectToDatabase();
 
-    const batchId = new URL(req.url).searchParams.get("batchId");
     const filter: Record<string, unknown> = { role: "student" };
-    if (batchId) filter.batch = batchId;
 
     const students = await User.find(filter).sort({ createdAt: -1 }).lean();
 
@@ -86,9 +81,6 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   const parsed = await parseBody(req, createStudentSchema);
   if ("response" in parsed) return parsed.response;
 
@@ -109,11 +101,10 @@ export async function POST(req: Request) {
     const batch = await Batch.findById(parsed.data.batchId).select("name").lean();
     if (!batch) return fail("Please choose a valid batch.", 400);
 
-    const passwordHash = await hashPassword(parsed.data.password);
     const student = await User.create({
       name: parsed.data.name.trim(),
       email,
-      passwordHash,
+      passwordHash: await hashPassword(parsed.data.password),
       role: "student",
       batch: new mongoose.Types.ObjectId(parsed.data.batchId),
       active: true,
@@ -129,7 +120,6 @@ export async function POST(req: Request) {
       201
     );
   } catch (error) {
-    // Unique index on email — handles the race between the check and the insert.
     if (
       typeof error === "object" &&
       error !== null &&

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+
+import { fail, notFound, ok, parseBody, serverError } from "@/lib/api";
+import { hashPassword } from "@/lib/auth";
 import { z } from "zod";
 
-import { fail, notFound, ok, parseBody, serverError, unauthorized } from "@/lib/api";
-import { hashPassword, requireAdmin } from "@/lib/auth";
 import { Activity, Batch, Submission, User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -22,9 +23,6 @@ interface RouteContext {
 }
 
 export async function PATCH(req: Request, context: RouteContext) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   const { id } = await context.params;
 
   const parsed = await parseBody(req, updateStudentSchema);
@@ -88,9 +86,6 @@ export async function PATCH(req: Request, context: RouteContext) {
 }
 
 export async function DELETE(_req: Request, context: RouteContext) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   const { id } = await context.params;
 
   try {
@@ -101,7 +96,6 @@ export async function DELETE(_req: Request, context: RouteContext) {
     const student = await User.findOneAndDelete({ _id: id, role: "student" });
     if (!student) return notFound("Student");
 
-    // Remove the student's own data so no orphans are left behind.
     await Promise.all([
       Activity.deleteMany({ student: student._id }),
       Submission.deleteMany({ student: student._id }),

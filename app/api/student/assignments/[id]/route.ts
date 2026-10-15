@@ -1,15 +1,7 @@
 import { z } from "zod";
 
-import {
-  fail,
-  forbidden,
-  notFound,
-  ok,
-  parseBody,
-  serverError,
-  unauthorized,
-} from "@/lib/api";
-import { requireStudent } from "@/lib/auth";
+import { fail, notFound, ok, parseBody, serverError } from "@/lib/api";
+import { getSession } from "@/lib/auth";
 import { Assignment, Submission } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -21,18 +13,15 @@ const submitSchema = z.object({
 });
 
 /**
- * POST /api/student/assignments/[id] — submit (or re-submit) an assignment.
+ * POST /api/student/assignments/[id] — disabled in this public build.
  *
- * The Submission schema has a unique index on (assignment, student), so this
- * upserts instead of inserting to keep resubmissions working.
+ * Assignment submission required a real student session and a real batch, so
+ * it is intentionally non-functional now.
  */
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await requireStudent();
-  if (!session) return unauthorized();
-
   const parsed = await parseBody(req, submitSchema);
   if ("response" in parsed) return parsed.response;
 
@@ -42,38 +31,11 @@ export async function POST(
   try {
     await connectToDatabase();
 
-    if (!session.batchId) return forbidden();
-
     const assignment = await Assignment.findById(id).lean();
     if (!assignment) return notFound("Assignment");
 
-    if (String(assignment.batch) !== session.batchId) return forbidden();
-
-    const submission = await Submission.findOneAndUpdate(
-      { assignment: assignment._id, student: session.userId },
-      {
-        $set: {
-          submittedAt: new Date(),
-          note: parsed.data.note?.trim() ?? "",
-          link: parsed.data.link?.trim() ?? "",
-        },
-        $setOnInsert: {
-          assignment: assignment._id,
-          student: session.userId,
-        },
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    ).lean();
-
-    if (!submission) return fail("Could not save your submission.", 500);
-
     return ok({
-      submission: {
-        _id: String(submission._id),
-        submittedAt: submission.submittedAt,
-        note: submission.note,
-        link: submission.link,
-      },
+      error: "Assignment submission is disabled in this build.",
     });
   } catch (error) {
     return serverError(error);

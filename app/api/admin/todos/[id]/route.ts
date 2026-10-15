@@ -1,15 +1,8 @@
 import mongoose from "mongoose";
 import { z } from "zod";
 
-import {
-  fail,
-  notFound,
-  ok,
-  parseBody,
-  serverError,
-  unauthorized,
-} from "@/lib/api";
-import { requireAdmin } from "@/lib/auth";
+import { fail, notFound, ok, parseBody, serverError } from "@/lib/api";
+import { getSession } from "@/lib/auth";
 import { Todo, type ITodo } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -43,11 +36,8 @@ function serializeTodo(todo: ITodo & { _id: unknown }): SerializedTodo {
   };
 }
 
-/** PATCH /api/admin/todos/[id] — update a to-do owned by the signed-in admin. */
+/** PATCH /api/admin/todos/[id] — update a to-do for the public guest session. */
 export async function PATCH(req: Request, { params }: RouteContext) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   const parsed = await parseBody(req, updateSchema);
   if ("response" in parsed) return parsed.response;
 
@@ -66,6 +56,8 @@ export async function PATCH(req: Request, { params }: RouteContext) {
   try {
     await connectToDatabase();
 
+    const session = getSession();
+
     const todo = await Todo.findOneAndUpdate(
       { _id: id, owner: session.userId },
       { $set: update },
@@ -82,16 +74,15 @@ export async function PATCH(req: Request, { params }: RouteContext) {
   }
 }
 
-/** DELETE /api/admin/todos/[id] — remove a to-do owned by the signed-in admin. */
+/** DELETE /api/admin/todos/[id] — remove a to-do for the public guest session. */
 export async function DELETE(_req: Request, { params }: RouteContext) {
-  const session = await requireAdmin();
-  if (!session) return unauthorized();
-
   const { id } = await params;
   if (!mongoose.Types.ObjectId.isValid(id)) return notFound("To-do");
 
   try {
     await connectToDatabase();
+
+    const session = getSession();
 
     const deleted = await Todo.findOneAndDelete({
       _id: id,
