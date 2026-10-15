@@ -1,0 +1,28 @@
+# Amol Shukla — AI Developer, Trainer & Agentic AI Expert
+
+> Portfolio, technical blog, and free course notes covering agentic AI systems, LLMs, RAG pipelines, Python, and full-stack development with Next.js.
+
+## Site
+
+- Home: https://www.amolshukla.online
+- Blog: https://www.amolshukla.online/blogs
+- Courses (Learning Hub): https://www.amolshukla.online/courses
+- Projects: https://www.amolshukla.online/projects
+- Experience: https://www.amolshukla.online/experience
+- Contact: https://www.amolshukla.online/contact
+- RSS feed: https://www.amolshukla.online/feed.xml
+
+## About
+
+Amol Shukla is an AI Developer, Trainer, and Agentic AI Expert. He builds agentic AI systems (ReAct-style agent pipelines, tool-calling systems, production LLM workflows), trains developers and data professionals on Python, machine learning, and generative AI, and ships production software with Python, FastAPI, Next.js, React, and TypeScript.
+
+## Articles
+
+- [Deep Dive into Transformers and Self-Attention Mechanisms](https://www.amolshukla.online/blogs/deep-dive-into-transformers-and-self-attention-mechanisms): Mathematical breakdown of self-attention, multi-head attention, positional encodings, and a NumPy implementation.
+- [How to Build an LLM RAG Pipeline with Next.js and FastAPI](https://www.amolshukla.online/blogs/how-to-build-an-llm-rag-pipeline-with-nextjs-and-fastapi): Production-ready RAG architecture — ingestion, chunking, FastAPI backend, Next.js chat UI, caching and rate limiting.
+- [Mastering Python Generators for Memory-Efficient Data Pipelines](https://www.amolshukla.online/blogs/mastering-python-generators-for-memory-efficient-data-pipelines): Streaming data lazily with yield, pipeline chains, and coroutine patterns.
+- [Understanding Vector Databases: Pinecone vs Chroma vs Qdrant](https://www.amolshukla.online/blogs/understanding-vector-databases-pinecone-vs-chroma-vs-qdrant): Comparison of the leading vector stores for production LLM systems.
+
+## Courses
+
+- Course catalog: https://www.amolshukla.online/courses — structured lesson notes with code walk-throughs for AI and Python topics.

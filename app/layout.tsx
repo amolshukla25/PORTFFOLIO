@@ -78,6 +78,9 @@ export const metadata = {
   manifest: `${siteConfig.url}/manifest.webmanifest`,
   alternates: {
     canonical: siteConfig.url,
+    types: {
+      "application/rss+xml": `${siteConfig.url}/feed.xml`,
+    },
   },
   robots: {
     index: true,
