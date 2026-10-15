@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import * as React from "react";
 
+import { MotionCard } from "@/components/common/reveal";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,10 @@ const toneStyles: Record<NonNullable<StatCardProps["tone"]>, string> = {
   star: "border-star/20 bg-star/10 text-star",
 };
 
+/**
+ * Portal metric card. Stays a server component so callers can keep passing
+ * icon components; the entrance/hover motion comes from `MotionCard`.
+ */
 export function StatCard({
   label,
   value,
@@ -29,35 +34,37 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <Card
-      className={cn(
-        "border-border/70 transition-shadow hover:shadow-sm",
-        className
-      )}
-    >
-      <CardContent className="flex items-start justify-between gap-3 p-5">
-        <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            {label}
-          </p>
-          <p className="mt-2 truncate text-2xl font-semibold tracking-tight tabular-nums">
-            {value}
-          </p>
-          {hint ? (
-            <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
+    <MotionCard className="h-full">
+      <Card
+        className={cn(
+          "h-full border-border/70 transition-shadow hover:shadow-sm",
+          className
+        )}
+      >
+        <CardContent className="flex items-start justify-between gap-3 p-5">
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              {label}
+            </p>
+            <p className="mt-2 truncate text-2xl font-semibold tracking-tight tabular-nums">
+              {value}
+            </p>
+            {hint ? (
+              <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
+            ) : null}
+          </div>
+          {Icon ? (
+            <span
+              className={cn(
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
+                toneStyles[tone]
+              )}
+            >
+              <Icon className="h-4 w-4" />
+            </span>
           ) : null}
-        </div>
-        {Icon ? (
-          <span
-            className={cn(
-              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border",
-              toneStyles[tone]
-            )}
-          >
-            <Icon className="h-4 w-4" />
-          </span>
-        ) : null}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </MotionCard>
   );
 }

@@ -13,7 +13,8 @@ A modern, responsive, and SEO-optimized portfolio for [Amol Shukla](https://amol
 - **Multiple Themes**: Dark, Light, Retro, Cyberpunk, Aurora, Synthwave, and Paper themes
 - **Responsive Design**: Optimized for mobile, tablet, and desktop
 - **SEO-Ready**: JSON-LD structured data (Organization, Article/BlogPosting, Course, FAQ), meta tags, sitemap, and canonical URLs
-- **Lightweight CSS Animations**: Subtle scroll-reveal and page-transition effects without a heavy animation library
+- **Lightweight CSS Animations**: The public site's scroll-reveal and page transitions are plain CSS — no animation library ships to visitors
+- **Animated portal**: The admin and student portals ease their pages and cards in with Framer Motion, and render static markup for visitors who prefer reduced motion
 - **Contact Form**: Functional contact form with server-action validation
 - **Open Source**: Free to use and modify under the MIT License
 
@@ -29,7 +30,7 @@ A private portal for running training batches, alongside the public site.
 
 ### What the trainer can do
 
-- **Batches** — create batches and see how many students are in each. Every batch card has buttons that open that batch's **students, daily activity, assignments and daily to-dos** already filtered to it
+- **Batches** — create batches, see how many students are in each, and click any batch to open **its own dashboard**: students, sessions covered with average feedback, attendance, days without a log, latest sessions with remarks, assignments and to-dos for that batch. Every batch card also has buttons that open that batch's **students, daily activity, assignments and daily to-dos** already filtered to it
 - **Students** — create each student's login (name, email, password, batch), reset passwords, deactivate accounts, or move them between batches
 - **Daily activity** — review each student's day-wise session log — which session they attended, what it covered, their 1–5 feedback and any remark — plus a list of students with no entry for a day
 - **Assignments** — record when an assignment was given and its due date, then track who submitted and when (late submissions are flagged)

@@ -5,6 +5,7 @@ import {
   CalendarDays,
   ClipboardList,
   GraduationCap,
+  LayoutDashboard,
   ListChecks,
   Loader2,
   Pencil,
@@ -18,6 +19,10 @@ import * as React from "react";
 
 import { ConfirmDialog } from "@/components/common/confirm-dialog";
 import { EmptyState } from "@/components/common/empty-state";
+import {
+  StaggerGroup,
+  staggerItemVariants,
+} from "@/components/common/reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,6 +39,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { formatDay } from "@/lib/dates";
+import { motion } from "framer-motion";
+
+/** The batch card, promoted to a motion component so it can stagger in. */
+const MotionCard = motion.create(Card);
 
 export interface BatchRow {
   _id: string;
@@ -340,16 +349,22 @@ export function BatchManager({ batches }: { batches: BatchRow[] }) {
           </Button>
         </EmptyState>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <StaggerGroup className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {batches.map((batch) => (
-            <Card
+            <MotionCard
               key={batch._id}
-              className="flex flex-col border-border/60 transition-shadow hover:shadow-md"
+              variants={staggerItemVariants}
+              className="card-hover flex h-full flex-col border-border/60"
             >
               <CardHeader className="space-y-2 pb-3">
                 <div className="flex items-start justify-between gap-2">
                   <CardTitle className="text-base leading-snug">
-                    {batch.name}
+                    <Link
+                      href={`/admin/batches/${batch._id}`}
+                      className="transition-colors hover:text-accent"
+                    >
+                      {batch.name}
+                    </Link>
                   </CardTitle>
                   <Badge variant={batch.active ? "success" : "outline"}>
                     {batch.active ? "Active" : "Archived"}
@@ -428,7 +443,13 @@ export function BatchManager({ batches }: { batches: BatchRow[] }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button asChild size="sm">
+                    <Link href={`/admin/batches/${batch._id}`}>
+                      <LayoutDashboard className="mr-1.5 h-3.5 w-3.5" />
+                      Dashboard
+                    </Link>
+                  </Button>
                   <Button
                     variant="outline"
                     size="sm"
@@ -459,9 +480,9 @@ export function BatchManager({ batches }: { batches: BatchRow[] }) {
                   />
                 </div>
               </CardContent>
-            </Card>
+            </MotionCard>
           ))}
-        </div>
+        </StaggerGroup>
       )}
 
       <BatchFormDialog

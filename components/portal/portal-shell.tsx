@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   BookOpenCheck,
   ClipboardList,
@@ -82,8 +83,11 @@ function initialsOf(name: string): string {
   return initials || "AS";
 }
 
+const EASE = [0.19, 1, 0.22, 1] as const;
+
 export function PortalShell({ role, user, children }: PortalShellProps) {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const nav = role === "admin" ? ADMIN_NAV : STUDENT_NAV;
@@ -122,8 +126,10 @@ export function PortalShell({ role, user, children }: PortalShellProps) {
                 )}
               >
                 {active ? (
-                  <span
-                    className="absolute left-0.5 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-accent"
+                  <motion.span
+                    layoutId={`portal-nav-active-${role}`}
+                    className="absolute left-0.5 top-2 h-5 w-[3px] rounded-full bg-accent"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
                     aria-hidden="true"
                   />
                 ) : null}
@@ -198,12 +204,23 @@ export function PortalShell({ role, user, children }: PortalShellProps) {
         </div>
       </header>
 
-      {mobileOpen ? (
-        <div className="sticky top-[57px] z-30 space-y-3 border-b border-border/60 bg-background/95 px-4 py-4 backdrop-blur lg:hidden">
-          {navLinks}
-          {userBlock}
-        </div>
-      ) : null}
+      <AnimatePresence initial={false}>
+        {mobileOpen ? (
+          <motion.div
+            key="portal-mobile-nav"
+            className="sticky top-[57px] z-30 overflow-hidden border-b border-border/60 bg-background/95 backdrop-blur lg:hidden"
+            initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: EASE }}
+          >
+            <div className="space-y-3 px-4 py-4">
+              {navLinks}
+              {userBlock}
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <div className="flex">
         <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border/60 bg-card lg:flex">
@@ -216,7 +233,15 @@ export function PortalShell({ role, user, children }: PortalShellProps) {
         </aside>
 
         <main className="mx-auto w-full min-w-0 max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-          {children}
+          {/* Keyed on the route so every portal page eases in as it loads. */}
+          <motion.div
+            key={pathname}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
+          >
+            {children}
+          </motion.div>
         </main>
       </div>
     </div>
