@@ -26,6 +26,36 @@ export const MYSQL_MODULES: MysqlModule[] = [
     "number": 5,
     "title": "Build and change",
     "description": "Design tables, change data safely, use views and indexes, and ship a capstone report."
+  },
+  {
+    "number": 6,
+    "title": "Real life database: Hospital records",
+    "description": "50 practice problems on a 2,000-row hospital database, all checked in the browser."
+  },
+  {
+    "number": 7,
+    "title": "Real life database: Retail banking",
+    "description": "50 practice problems on a 2,000-row bank database, all checked in the browser."
+  },
+  {
+    "number": 8,
+    "title": "Real life database: E-commerce marketplace",
+    "description": "50 practice problems on a 2,000-row ecommerce database, all checked in the browser."
+  },
+  {
+    "number": 9,
+    "title": "Real life database: College records",
+    "description": "50 practice problems on a 2,000-row college database, all checked in the browser."
+  },
+  {
+    "number": 10,
+    "title": "Real life database: Ride-hailing",
+    "description": "50 practice problems on a 2,000-row rides database, all checked in the browser."
+  },
+  {
+    "number": 11,
+    "title": "Real life database: Streaming service",
+    "description": "50 practice problems on a 2,000-row streaming database, all checked in the browser."
   }
 ];
 
@@ -209,15 +239,87 @@ export const MYSQL_SYLLABUS = [
     "questions": 15,
     "quiz": 4,
     "dataset": "shop"
+  },
+  {
+    "slug": "real-life-hospital",
+    "shortTitle": "Real life: hospital records",
+    "title": "Real life database practice: hospital records (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-appointment hospital database — filtering, joins, grouping and window functions, checked in your browser.",
+    "module": 6,
+    "minutes": 200,
+    "words": 552,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "hospital"
+  },
+  {
+    "slug": "real-life-bank",
+    "shortTitle": "Real life: retail bank",
+    "title": "Real life database practice: retail banking (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-transaction bank database — customer segments, balances, channels and monthly reporting, checked in your browser.",
+    "module": 7,
+    "minutes": 200,
+    "words": 550,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "bank"
+  },
+  {
+    "slug": "real-life-marketplace",
+    "shortTitle": "Real life: e-commerce marketplace",
+    "title": "Real life database practice: e-commerce marketplace (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-order marketplace database — catalog, customers, revenue and returns, checked in your browser.",
+    "module": 8,
+    "minutes": 200,
+    "words": 541,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "ecommerce"
+  },
+  {
+    "slug": "real-life-college",
+    "shortTitle": "Real life: college records",
+    "title": "Real life database practice: college records (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-result college database — students, courses, enrolments, marks and pass rates, checked in your browser.",
+    "module": 9,
+    "minutes": 200,
+    "words": 546,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "college"
+  },
+  {
+    "slug": "real-life-rides",
+    "shortTitle": "Real life: ride-hailing",
+    "title": "Real life database practice: ride-hailing (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-trip ride-hailing database — drivers, riders, fares, surge and city performance, checked in your browser.",
+    "module": 10,
+    "minutes": 200,
+    "words": 538,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "rides"
+  },
+  {
+    "slug": "real-life-streaming",
+    "shortTitle": "Real life: streaming service",
+    "title": "Real life database practice: streaming service (50 SQL problems)",
+    "summary": "Practise 50 SQL problems on a 2,000-session streaming database — plans, titles, watch time and completion rates, checked in your browser.",
+    "module": 11,
+    "minutes": 200,
+    "words": 549,
+    "questions": 50,
+    "quiz": 3,
+    "dataset": "streaming"
   }
 ] as const;
 
 export const MYSQL_COURSE_FACTS = {
-  "lessons": 15,
-  "modules": 5,
-  "minutes": 1310,
-  "hours": 22,
-  "problems": 266,
-  "quizQuestions": 60,
+  "lessons": 21,
+  "modules": 11,
+  "minutes": 2510,
+  "hours": 42,
+  "problems": 566,
+  "quizQuestions": 78,
   "mysqlVersion": "8.0.16+ (8.4 LTS recommended)"
 } as const;

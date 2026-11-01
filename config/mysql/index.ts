@@ -21,6 +21,7 @@ import { lesson12 } from "./lessons/12-create-tables-constraints";
 import { lesson13 } from "./lessons/13-insert-update-delete-transactions";
 import { lesson14 } from "./lessons/14-views-indexes-explain";
 import { lesson15 } from "./lessons/15-capstone-retail-report";
+import { REAL_LIFE_LESSONS } from "./real-life";
 import results from "./results.generated.json";
 import { snippetKey } from "./snippet-key";
 import type { DatasetChoice, MysqlLesson } from "./types";
@@ -30,6 +31,7 @@ export { MYSQL_MODULES, MYSQL_SYLLABUS, MYSQL_COURSE_FACTS } from "./syllabus";
 export const MYSQL_LESSONS: MysqlLesson[] = [
   lesson01, lesson02, lesson03, lesson04, lesson05, lesson06, lesson07, lesson08,
   lesson09, lesson10, lesson11, lesson12, lesson13, lesson14, lesson15,
+  ...REAL_LIFE_LESSONS,
 ];
 
 export function getMysqlLesson(slug: string) {

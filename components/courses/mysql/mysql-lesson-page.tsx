@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import LessonQuiz from "@/components/courses/lesson-quiz";
 import { useMysqlProgress } from "@/hooks/use-mysql-progress";
+import { DATASET_INFO } from "@/lib/sql-practice/dataset-info";
 import type { RenderedLesson, RenderedSection } from "@/lib/mysql-course/render";
 import { cn } from "@/lib/utils";
 import CopyButton from "./copy-button";
@@ -297,7 +298,7 @@ export default function MysqlLessonPage({
                 <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {lesson.minutes} min</span>
                 <span className="inline-flex items-center gap-1.5"><BookOpen className="h-3.5 w-3.5" /> {Math.max(3, Math.round(lesson.words / 200))} min read</span>
                 <span className="inline-flex items-center gap-1.5"><ListChecks className="h-3.5 w-3.5" /> {lesson.questions.length} problems · {solvedHere} solved</span>
-                <span className="inline-flex items-center gap-1.5"><Database className="h-3.5 w-3.5" /> {lesson.dataset === "none" ? "No tables needed" : "Learning Shop data"}</span>
+                <span className="inline-flex items-center gap-1.5"><Database className="h-3.5 w-3.5" /> {lesson.dataset === "none" ? "No tables needed" : DATASET_INFO[lesson.dataset].label}</span>
               </div>
             </header>
 
@@ -422,7 +423,11 @@ export default function MysqlLessonPage({
 
             {/* ── 2. Database ── */}
             <section id="panel-database" role="tabpanel" aria-labelledby="tab-database" hidden={step !== "database"} className="mysql-panel mt-6 space-y-6">
-              <DatabaseStep noImport={lesson.dataset === "none"} usesLarge={lesson.questions.some((q) => q.dataset === "large") || lesson.sections.some((s) => s.dataset === "large")} />
+              {lesson.dataset !== "none" && !["shop", "large"].includes(lesson.dataset) ? (
+                <RealLifeDatabaseStep dataset={lesson.dataset} />
+              ) : (
+                <DatabaseStep noImport={lesson.dataset === "none"} usesLarge={lesson.questions.some((q) => q.dataset === "large") || lesson.sections.some((s) => s.dataset === "large")} />
+              )}
               <NextStepButton onClick={() => go("guided")}>Data ready? Follow the guided example</NextStepButton>
             </section>
 
@@ -632,6 +637,38 @@ function LessonSectionView({ s }: { s: RenderedSection }) {
         </aside>
       )}
     </section>
+  );
+}
+
+function RealLifeDatabaseStep({ dataset }: { dataset: keyof typeof DATASET_INFO }) {
+  const info = DATASET_INFO[dataset];
+  return (
+    <>
+      <div>
+        <h2 className="font-heading text-2xl font-semibold tracking-tight">Meet the {info.short} practice database</h2>
+        <p className="mt-2 max-w-[720px] text-[15px] leading-relaxed text-muted-foreground">
+          {info.label} with 20 columns and 2,000 rows in its busiest table — enough data that you have to let SQL count for you. The practice editor on this page already has it loaded, and the database is preselected for every problem.
+        </p>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <DownloadCard href={`/downloads/mysql-reallife-${dataset}.sql`} title="Practice database (.sql)" note={`Creates ${info.schema} · one row is ${info.grain} · safe to re-run`} primary />
+        <DownloadCard href="/downloads/mysql-retail-lab.sql" title="Learning Shop (course database)" note="The small four-table shop used by the first five modules · creates portfolio_retail_lab" />
+      </div>
+      <div className="max-w-[760px] space-y-3 rounded-2xl border border-border bg-card p-4 sm:p-5">
+        <h3 className="font-semibold">Import in MySQL Workbench</h3>
+        <ol className="list-decimal space-y-1.5 pl-5 text-[15px] leading-relaxed text-muted-foreground">
+          <li>Connect to your local MySQL server (8.0.16 or newer; 8.4 recommended).</li>
+          <li>Choose <strong className="text-foreground">File → Open SQL Script</strong> and open the downloaded file.</li>
+          <li>Click the lightning bolt to execute the whole script. The last result proves every table was loaded.</li>
+          <li>Refresh the Schemas panel, then select the database:</li>
+        </ol>
+        <div className="relative">
+          <SqlPre sql={`USE ${info.schema};\nSHOW TABLES;`} />
+          <div className="absolute right-1.5 top-1.5"><CopyButton text={`USE ${info.schema};`} label="Copy USE" /></div>
+        </div>
+        <p className="text-sm text-muted-foreground">In the practice editor you do not need the USE line — the database is already selected for every problem.</p>
+      </div>
+    </>
   );
 }
 

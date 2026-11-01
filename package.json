@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test:mysql": "tsx scripts/mysql/check-course.ts",
     "mysql:syllabus": "tsx scripts/mysql/gen-syllabus.ts",
+    "mysql:targets": "tsx scripts/mysql/gen-real-life-targets.ts",
     "mysql:downloads": "tsx scripts/mysql/gen-downloads.ts",
     "mysql:results": "tsx scripts/mysql/export-snippets.ts > .mysql-snippets.json && python3 scripts/mysql/gen-results.py .mysql-snippets.json",
     "mysql:vendor": "node -e \"for (const f of ['sql-wasm.js','sql-wasm.wasm']) require('fs').copyFileSync('node_modules/sql.js/dist/'+f,'public/vendor/sql.js/'+f)\""

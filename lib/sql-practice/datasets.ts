@@ -8,7 +8,12 @@
  * Keep this file free of browser-only or Node-only imports.
  */
 
-export type DatasetId = "shop" | "large" | "none";
+import { REAL_LIFE_IDS, buildRealLifeDataset, type RealLifeDatasetId } from "./real-life-datasets";
+
+export type { RealLifeDatasetId };
+
+/** Every practice database the code arena can preselect. */
+export type DatasetId = "shop" | "large" | "none" | RealLifeDatasetId;
 
 export type Row = (string | number | null)[];
 
@@ -230,6 +235,7 @@ export function buildLargeDataset(): Dataset {
 export function getDataset(id: DatasetId): Dataset | null {
   if (id === "shop") return SHOP_DATASET;
   if (id === "large") return buildLargeDataset();
+  if ((REAL_LIFE_IDS as string[]).includes(id)) return buildRealLifeDataset(id as RealLifeDatasetId);
   return null;
 }
 

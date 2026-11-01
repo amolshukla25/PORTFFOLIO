@@ -4,6 +4,7 @@ import { MYSQL_COURSE_FACTS, MYSQL_LESSONS, MYSQL_MODULES, MYSQL_SYLLABUS, mysql
 import { HERO_SQL } from "@/config/mysql/extra-snippets";
 import { siteConfig } from "@/config/site";
 import { MYSQL_COURSE_FAQ, MYSQL_OUTCOMES } from "@/lib/mysql-course/seo";
+import { DATASET_INFO } from "@/lib/sql-practice/dataset-info";
 import { LessonStatus, MobileStartBar, ProgressRing, StartButton } from "./course-progress-islands";
 import { ErDiagram } from "./diagrams";
 import ResultTable from "./result-table";
@@ -16,6 +17,7 @@ export default function MysqlCourseLanding() {
   const ids = (slug: string) => MYSQL_LESSONS.find((l) => l.slug === slug)!.questions.map((q) => q.id);
   const allIds = MYSQL_LESSONS.flatMap((l) => l.questions.map((q) => q.id));
   const capstone = MYSQL_LESSONS.find((l) => l.slug === "capstone-retail-report")!;
+  const realLife = MYSQL_LESSONS.filter((l) => l.module >= 6);
   const summaryQ = capstone.questions.find((q) => q.id === "C15-13")!;
   const summary = mysqlResult("shop", summaryQ.answerSql);
   const heroResult = mysqlResult("shop", HERO_SQL);
@@ -51,7 +53,7 @@ export default function MysqlCourseLanding() {
               MySQL course: practical SQL from beginner to professional
             </h1>
             <p className="max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
-              Learn SQL on one small, realistic shop database. Every lesson explains an idea with real MySQL 8 output, walks you through an example, and gives you 15–20 problems you can run and check right here — then you finish with an audited sales report for your portfolio.
+              Learn SQL on one small, realistic shop database. Every lesson explains an idea with real MySQL 8 output, walks you through an example, and gives you problems you can run and check right here — then you finish with an audited sales report and six real-life databases with 50 problems each.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row">
               <StartButton firstSlug={first} />
@@ -162,6 +164,26 @@ export default function MysqlCourseLanding() {
               <a key={href} href={href} download className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border px-4 text-sm hover:bg-muted"><Download className="h-4 w-4" /> {label}</a>
             ))}
           </div>
+        </section>
+
+        {/* Real-life practice databases */}
+        <section className="mt-14 space-y-4" aria-labelledby="real-life">
+          <h2 id="real-life" className="flex items-center gap-2 font-heading text-2xl font-semibold tracking-tight"><Database className="h-5 w-5 text-accent" /> Six real-life databases, 300 more problems</h2>
+          <p className="max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+            Six extra modules each ship a different database with 20 columns and 2,000 rows in its busiest table. Every problem preselects its database in the code arena, so you open a lesson and start writing queries — no import, no <span className="font-mono text-[13px]">USE</span>, no setup. Each download is a ready MySQL 8 script with the same rows.
+          </p>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {realLife.map((l) => (
+              <li key={l.slug} className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-4">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">Module {l.module}</span>
+                <Link href={`/courses/mysql/${l.slug}`} className="font-semibold leading-snug hover:text-accent">{l.shortTitle}</Link>
+                <span className="text-sm leading-relaxed text-muted-foreground">{l.questions.length} problems · {DATASET_INFO[l.dataset].label}</span>
+                <a href={`/downloads/mysql-reallife-${l.dataset}.sql`} download className="mt-auto inline-flex min-h-9 w-fit items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">
+                  <Download className="h-3.5 w-3.5" /> Download .sql
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* FAQ */}

@@ -5,7 +5,20 @@
  */
 
 export type Level = "Easy" | "Medium" | "Hard" | "Professional";
-export type DatasetChoice = "shop" | "large" | "none";
+
+export type DatasetChoice =
+  | "shop"
+  | "large"
+  | "none"
+  | "hospital"
+  | "bank"
+  | "ecommerce"
+  | "college"
+  | "rides"
+  | "streaming";
+
+/** Modules 1–5 are the core course; 6–11 are the real-life database modules. */
+export type ModuleNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
 export interface QuestionCheck {
   /** Results depend on the learner's own server or are written notes: compare by eye. */
@@ -70,7 +83,7 @@ export interface MysqlLesson {
   title: string;
   /** One-line description for cards and meta descriptions (≤ 160 chars). */
   summary: string;
-  module: 1 | 2 | 3 | 4 | 5;
+  module: ModuleNumber;
   /** Only set when the estimate (reading + guided + practice + quiz) is wrong, e.g. the capstone. */
   minutesOverride?: number;
   dataset: DatasetChoice;
@@ -95,7 +108,7 @@ export interface MysqlLesson {
 }
 
 export interface MysqlModule {
-  number: 1 | 2 | 3 | 4 | 5;
+  number: ModuleNumber;
   title: string;
   description: string;
 }

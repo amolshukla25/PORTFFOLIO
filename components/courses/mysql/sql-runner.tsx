@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, CircleAlert, Database, Loader2, Play, RotateCcw, Undo2, Wand2 } from "lucide-react";
 import { usePracticeEngine } from "@/hooks/use-practice-engine";
 import type { CheckVerdict } from "@/lib/sql-practice/compare";
+import { DATASET_INFO } from "@/lib/sql-practice/dataset-info";
 import type { DatasetId } from "@/lib/sql-practice/datasets";
 import type { RunOutput } from "@/lib/sql-practice/engine";
 import { cn } from "@/lib/utils";
@@ -33,8 +34,6 @@ export interface RunnerCheck {
   orderMatters?: boolean;
   numericTolerance?: number;
 }
-
-const DATASET_LABEL: Record<DatasetId, string> = { shop: "Shop (small)", large: "Large (4,000 orders)", none: "No database" };
 
 export default function SqlRunner({
   initialSql,
@@ -123,13 +122,23 @@ export default function SqlRunner({
     setBusy(null);
     setOutput(null);
     setVerdict(null);
-    setNotice(`${DATASET_LABEL[dataset]} database restored to its original rows.`);
+    setNotice(`${DATASET_INFO[dataset].label} restored to its original rows.`);
   }
 
   const loading = engine.status === "loading" && busy !== null;
 
   return (
     <div className="space-y-3">
+      {!datasetSwitch && dataset !== "none" && (
+        <p className="flex flex-wrap items-center gap-1.5 rounded-xl border border-accent/30 bg-accent/5 px-3 py-2 text-xs leading-relaxed text-muted-foreground">
+          <Database className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+          <span>
+            <strong className="font-semibold text-foreground">Database already selected:</strong> {DATASET_INFO[dataset].label}
+          </span>
+          <span className="font-mono text-[11px] text-muted-foreground/80">({DATASET_INFO[dataset].schema})</span>
+          <span className="basis-full sm:basis-auto">— write the query directly, no USE needed.</span>
+        </p>
+      )}
       <SqlEditor value={sql} onChange={setSql} onRun={check ? doCheck : run} label={label} minLines={minLines} />
       <div className="flex flex-wrap items-center gap-2">
         <button
@@ -167,9 +176,11 @@ export default function SqlRunner({
                 }}
                 className="bg-transparent py-1 text-xs font-medium text-foreground outline-none"
               >
-                <option value="shop">Shop (small)</option>
-                <option value="large">Large (4,000 orders)</option>
-                <option value="none">No database</option>
+                {(["shop", "large", "hospital", "bank", "ecommerce", "college", "rides", "streaming", "none"] as DatasetId[]).map((id) => (
+                  <option key={id} value={id}>
+                    {DATASET_INFO[id].label}
+                  </option>
+                ))}
               </select>
             </label>
           )}

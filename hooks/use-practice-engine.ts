@@ -8,7 +8,18 @@ type Pending = { resolve: (r: WorkerResponse) => void; timer: ReturnType<typeof 
 type Req = WorkerRequest extends infer R ? (R extends { id: number } ? Omit<R, "id"> : never) : never;
 
 /** Time limits per dataset, mirroring the "3 s query timeout" rule of the spec. */
-const LIMIT_MS: Record<DatasetId, number> = { none: 3000, shop: 3000, large: 8000 };
+const LIMIT_MS: Record<DatasetId, number> = {
+  none: 3000,
+  shop: 3000,
+  large: 8000,
+  // The real-life databases hold 2,000 rows in their busiest table.
+  hospital: 8000,
+  bank: 8000,
+  ecommerce: 10000,
+  college: 10000,
+  rides: 8000,
+  streaming: 8000,
+};
 
 let worker: Worker | null = null;
 let nextId = 1;

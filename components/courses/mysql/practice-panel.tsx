@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CheckCircle2, ChevronRight, Circle, CircleDot, Eye, Lightbulb, ListFilter } from "lucide-react";
 import { useMysqlProgress } from "@/hooks/use-mysql-progress";
+import { DATASET_INFO } from "@/lib/sql-practice/dataset-info";
 import type { RenderedQuestion } from "@/lib/mysql-course/render";
 import { cn } from "@/lib/utils";
 import CopyButton from "./copy-button";
@@ -19,8 +20,6 @@ export const LEVEL_STYLE: Record<string, string> = {
   Hard: "border-star/50 bg-star/10 text-[hsl(var(--star))]",
   Professional: "border-accent/40 bg-accent/10 text-accent",
 };
-
-const DATASET_NOTE = { shop: "Shop database", large: "Large dataset", none: "No tables needed" } as const;
 
 function starterFor(q: RenderedQuestion) {
   if (q.dataset === "none") return "-- write your query here\n";
@@ -146,7 +145,13 @@ export default function PracticePanel({ questions, lessonSlug }: { questions: Re
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={cn("rounded-lg border px-2 py-0.5 text-xs font-semibold", LEVEL_STYLE[x.level])}>{x.level}</span>
                   <span className="font-mono text-xs text-muted-foreground">Problem {i + 1} of {questions.length}</span>
-                  <span className="rounded-lg bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">{DATASET_NOTE[x.dataset]}</span>
+                  {x.dataset === "none" ? (
+                    <span className="rounded-lg bg-muted px-2 py-0.5 text-[11px] text-muted-foreground">No database needed</span>
+                  ) : (
+                    <span className="rounded-lg border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] text-accent">
+                      Database already selected: {DATASET_INFO[x.dataset].label}
+                    </span>
+                  )}
                   {isSolved && <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold text-success"><CheckCircle2 className="h-3.5 w-3.5" />Solved</span>}
                 </div>
                 <h3 id={`problem-title-${x.id}`} className="text-base font-semibold leading-relaxed sm:text-lg">{x.prompt}</h3>
@@ -227,7 +232,7 @@ export default function PracticePanel({ questions, lessonSlug }: { questions: Re
         </div>
       </div>
       <p className="text-[11px] leading-relaxed text-muted-foreground">
-        Practice mode runs in your browser on a SQLite engine with a MySQL compatibility layer, so you can practise without installing anything. Every reference answer has been checked on MySQL 8, and a few MySQL-only features (EXPLAIN columns, WITH ROLLUP, user variables) behave differently here — run those in MySQL Workbench.
+        Practice mode runs in your browser on a SQLite engine with a MySQL compatibility layer, so you can practise without installing anything. Your result is compared with the reference answer on a fresh copy of the same rows, so any correct query is accepted. A few MySQL-only features (EXPLAIN columns, WITH ROLLUP, user variables) behave differently here — run those in MySQL Workbench.
       </p>
     </div>
   );

@@ -7,6 +7,7 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
 import { MYSQL_LESSONS } from "../../config/mysql/index";
+import { REAL_LIFE_MODULES } from "../../config/mysql/real-life";
 import { estimateMinutes, lessonWordCount } from "../../config/mysql/estimate";
 
 const MODULES = [
@@ -15,6 +16,7 @@ const MODULES = [
   { number: 3, title: "Many tables", description: "Joins, subqueries, CTEs and set operations without double counting." },
   { number: 4, title: "Analysis", description: "Monthly reporting and window functions on small and large data." },
   { number: 5, title: "Build and change", description: "Design tables, change data safely, use views and indexes, and ship a capstone report." },
+  ...REAL_LIFE_MODULES,
 ];
 
 const syllabus = MYSQL_LESSONS.map((l) => ({

@@ -27,7 +27,7 @@ export const MYSQL_COURSE_FAQ = [
   { q: "How long does the course take?", a: `About ${MYSQL_COURSE_FACTS.hours} hours in total: reading, worked examples, guided practice, ${MYSQL_COURSE_FACTS.problems} practice problems, quizzes and a 3-hour capstone. Most learners finish in 3–5 weeks at 5–6 hours a week.` },
   { q: "Which MySQL version does the course use?", a: "MySQL 8.0.16 or newer, with 8.4 LTS recommended. Window functions, CTEs and enforced CHECK constraints all need MySQL 8." },
   { q: "Is this course enough for a data analyst job?", a: "It covers the SQL most data analyst roles test: filtering, aggregation, joins, subqueries, CTEs, window functions and data quality, finishing with a portfolio capstone. Pair it with a spreadsheet or BI tool and practise explaining your results." },
-  { q: "How are the practice answers checked?", a: "Your query and the reference answer run on fresh copies of the same data, and the results are compared row by row. Every reference answer was also run on MySQL 8, and the expected MySQL output is shown next to each answer." },
+  { q: "How are the practice answers checked?", a: "Your query and the reference answer run on fresh copies of the same data in your browser, and the results are compared row by row. The core lessons' reference answers were also run on MySQL 8 and show the expected MySQL output; the six real-life modules are checked the same way, against 2,000-row databases that are already selected when each problem opens." },
 ];
 
 export const MYSQL_OUTCOMES = [
@@ -59,6 +59,12 @@ export function datasetSchema() {
       { "@type": "DataDownload", name: "Small shop (portfolio_retail_lab)", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-retail-lab.sql` },
       { "@type": "DataDownload", name: "Reset script for the small shop", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-retail-lab-reset.sql` },
       { "@type": "DataDownload", name: "Large shop (portfolio_retail_large)", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-retail-large.sql` },
+      { "@type": "DataDownload", name: "Hospital practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-hospital.sql` },
+      { "@type": "DataDownload", name: "Retail bank practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-bank.sql` },
+      { "@type": "DataDownload", name: "E-commerce marketplace practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-ecommerce.sql` },
+      { "@type": "DataDownload", name: "College records practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-college.sql` },
+      { "@type": "DataDownload", name: "Ride-hailing practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-rides.sql` },
+      { "@type": "DataDownload", name: "Streaming service practice database", encodingFormat: "application/sql", contentUrl: `${siteConfig.url}/downloads/mysql-reallife-streaming.sql` },
     ],
   };
 }

@@ -24,7 +24,7 @@ export default function MysqlPlayground() {
         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Free · no install · no sign-up</p>
         <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">MySQL practice playground</h1>
         <p className="max-w-[720px] text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Write and run SQL in your browser on the Learning Shop database — 4 related tables, or a large version with 4,000 orders. Use it to try ideas from any lesson. Changes stay in your browser; <strong className="text-foreground">Reset database</strong> brings the original rows back.
+          Write and run SQL in your browser on the Learning Shop database — 4 related tables, or a large version with 4,000 orders. The database dropdown also lists the six real-life practice databases from the last six modules (hospital, bank, marketplace, college, rides, streaming), each with 2,000 rows. Changes stay in your browser; <strong className="text-foreground">Reset database</strong> brings the original rows back.
         </p>
       </header>
       <div className="mt-6 flex flex-wrap gap-2">

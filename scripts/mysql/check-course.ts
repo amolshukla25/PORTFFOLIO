@@ -5,6 +5,9 @@
  *  - a snippet has no stored MySQL result (run gen-results.py);
  *  - the browser practice engine disagrees with real MySQL on any auto-checked
  *    reference answer (so the "Check" button would mark the reference wrong);
+ *  - a real-life module does not have exactly 50 problems, or one of its
+ *    reference answers does not run in the practice engine (its expected
+ *    output is generated from the engine, not from a MySQL snapshot);
  *  - syllabus.ts is out of date.
  * Run: npm run test:mysql
  */
@@ -26,9 +29,13 @@ import type { DatasetChoice } from "../../config/mysql/types";
     return new PracticeDb(SQL, ds, cache.get(ds));
   };
   let checked = 0;
+  let checkedAgainstMysql = 0;
 
   for (const l of MYSQL_LESSONS) {
-    if (l.questions.length < 15 || l.questions.length > 20) problems.push(`${l.slug}: ${l.questions.length} problems (need 15–20)`);
+    // Core lessons carry 15–20 problems; each real-life module carries exactly 50.
+    const realLife = l.module >= 6;
+    if (realLife ? l.questions.length !== 50 : l.questions.length < 15 || l.questions.length > 20)
+      problems.push(`${l.slug}: ${l.questions.length} problems (need ${realLife ? "exactly 50" : "15–20"})`);
     if (l.quiz.length < 3 || l.quiz.length > 5) problems.push(`${l.slug}: ${l.quiz.length} quiz items (need 3–5)`);
     if (l.summary.length > 160) problems.push(`${l.slug}: summary longer than 160 characters`);
     const syl = MYSQL_SYLLABUS.find((s) => s.slug === l.slug);
@@ -37,12 +44,27 @@ import type { DatasetChoice } from "../../config/mysql/types";
       ...l.sections.filter((s) => s.sql).map((s, i) => [s.dataset ?? l.dataset, s.sql!, `section ${i + 1}`] as [DatasetChoice, string, string]),
       [l.guided.dataset, l.guided.sql, "guided"],
     ];
-    for (const [ds, sql, where] of snippets) if (!mysqlResult(ds, sql)) problems.push(`${l.slug} ${where}: no stored MySQL result — run gen-results.py`);
+    // Real-life modules ship without MySQL snapshots: their expected values are
+    // generated from the practice engine itself (npm run mysql:targets), so the
+    // engine is the source of truth for them.
+    if (!realLife) for (const [ds, sql, where] of snippets) if (!mysqlResult(ds, sql)) problems.push(`${l.slug} ${where}: no stored MySQL result — run gen-results.py`);
 
     for (const q of l.questions) {
       if (ids.has(q.id)) problems.push(`duplicate question id ${q.id}`);
       ids.add(q.id);
       const ds = q.dataset ?? l.dataset;
+
+      if (realLife) {
+        if (!q.target || q.target.startsWith("Run the reference answer")) problems.push(`${q.id}: no generated target — run npm run mysql:targets`);
+        const db = fresh(ds);
+        const run = db.run(q.answerSql);
+        db.close();
+        checked++;
+        if (run.error) problems.push(`${q.id}: practice engine error ${run.error.code}: ${run.error.message}`);
+        else if (!run.resultSets.length) problems.push(`${q.id}: reference answer returned no result grid`);
+        continue;
+      }
+
       const stored = mysqlResult(ds, q.answerSql);
       if (!stored) { problems.push(`${q.id}: no stored MySQL result — run gen-results.py`); continue; }
       if (q.check?.manual) continue;
@@ -50,6 +72,7 @@ import type { DatasetChoice } from "../../config/mysql/types";
       const run = db.run(q.answerSql);
       db.close();
       checked++;
+      checkedAgainstMysql++;
       if (q.check?.expectError) {
         if (run.error?.code !== q.check.expectError) problems.push(`${q.id}: expected error ${q.check.expectError}, practice engine gave ${run.error ? run.error.code : "no error"}`);
         if (stored.error?.code !== q.check.expectError) problems.push(`${q.id}: MySQL gave ${stored.error?.code ?? "no error"}, expected ${q.check.expectError}`);
@@ -64,7 +87,7 @@ import type { DatasetChoice } from "../../config/mysql/types";
     }
   }
 
-  console.log(`${MYSQL_LESSONS.length} lessons, ${ids.size} problems, ${checked} auto-checked against MySQL output`);
+  console.log(`${MYSQL_LESSONS.length} lessons, ${ids.size} problems, ${checked} reference answers checked (${checkedAgainstMysql} against stored MySQL output, ${checked - checkedAgainstMysql} in the practice engine)`);
   if (problems.length) {
     console.error(`\n${problems.length} problem(s):\n- ${problems.join("\n- ")}`);
     process.exit(1);
