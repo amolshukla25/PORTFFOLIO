@@ -22,14 +22,31 @@ export async function POST(req: Request) {
     await connectToDatabase();
 
     const user = await User.findOne({ email });
-    if (!user || !user.active) {
+    if (!user) {
       return fail("Invalid email or password.", 401);
     }
 
     const { verifyPassword } = await import("@/lib/auth");
     const valid = await verifyPassword(password, user.passwordHash);
-    if (!valid || user.role !== parsed.data.role) {
+    if (!valid) {
       return fail("Invalid email or password.", 401);
+    }
+
+    if (user.role !== parsed.data.role) {
+      return fail("Invalid email or password.", 401);
+    }
+
+    // The password was correct, so we can safely explain why sign-in is
+    // blocked. Registered students stay inactive until a trainer assigns a
+    // batch — reporting that as "invalid password" made those accounts look
+    // broken.
+    if (user.active === false) {
+      return fail(
+        user.role === "student"
+          ? "Your account is waiting for trainer approval. Sign in once your trainer has assigned your batch and activated your account."
+          : "This account has been disabled.",
+        403
+      );
     }
 
     const session: SessionUser = {
@@ -40,7 +57,7 @@ export async function POST(req: Request) {
       batchId: user.batch ? String(user.batch) : null,
     };
 
-    await setSessionCookie(session);
+    await setSessionCookie(session, user.sessionVersion ?? 0);
     return ok({ user: session });
   } catch (error) {
     return serverError(error);

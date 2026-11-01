@@ -1,5 +1,6 @@
 import { BookOpenCheck, CalendarCheck, Clock, Star } from "lucide-react";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { EmptyState } from "@/components/common/empty-state";
 import { PageHeader } from "@/components/portal/portal-page-header";
@@ -23,9 +24,13 @@ export const metadata: Metadata = {
 
 export default async function StudentActivityPage() {
   const session = await getSession();
+  // Layouts and pages render in parallel, so the layout's redirect does not
+  // stop this page from querying with a null session.
+  if (!session) redirect("/student/login");
+
   await connectToDatabase();
 
-  const entries = await Activity.find({ student: session!.userId })
+  const entries = await Activity.find({ student: session.userId })
     .sort({ date: -1, createdAt: -1 })
     .lean();
 

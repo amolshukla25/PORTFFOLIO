@@ -34,7 +34,11 @@ export async function generateMetadata({
     title: tag ? { absolute: title } : pagesConfig.blogs.metadata.title,
     description,
     alternates: {
-      canonical: url,
+      // Tag-filtered views (`/blogs?tag=AI`, and every misspelled variant of
+      // it, which also answers 200) are the same list with a filter applied.
+      // Pointing them at the hub keeps the whole tag space out of the index
+      // as duplicate pages instead of letting Google crawl unlimited URLs.
+      canonical: `${siteConfig.url}/blogs`,
     },
     openGraph: {
       title,

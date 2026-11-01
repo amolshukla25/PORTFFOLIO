@@ -5,6 +5,7 @@ import SkillsCard from "@/components/skills/skills-card";
 import { pagesConfig } from "@/config/pages";
 import { skills } from "@/config/skills";
 import { siteConfig } from "@/config/site";
+import { pageBreadcrumb } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: pagesConfig.skills.metadata.title,
@@ -16,12 +17,22 @@ export const metadata: Metadata = {
 
 export default function SkillsPage() {
   return (
-    <PageContainer
-      title={pagesConfig.skills.title}
-      description={pagesConfig.skills.description}
-      eyebrow="Expertise"
-    >
-      <SkillsCard skills={skills} />
-    </PageContainer>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageBreadcrumb(pagesConfig.skills.title, "/skills")
+          ),
+        }}
+      />
+      <PageContainer
+        title={pagesConfig.skills.title}
+        description={pagesConfig.skills.description}
+        eyebrow="Expertise"
+      >
+        <SkillsCard skills={skills} />
+      </PageContainer>
+    </>
   );
 }

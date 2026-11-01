@@ -61,6 +61,9 @@ export async function PATCH(req: Request, context: RouteContext) {
         return fail("Password must be at least 6 characters.", 400);
       }
       student.passwordHash = await hashPassword(password);
+      // The student may still be signed in somewhere with the old password —
+      // invalidate those sessions immediately.
+      student.sessionVersion = (student.sessionVersion ?? 0) + 1;
     }
 
     await student.save();

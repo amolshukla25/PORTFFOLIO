@@ -1,7 +1,12 @@
 import { z } from "zod";
 
 import { fail, ok, parseBody, serverError, unauthorized } from "@/lib/api";
-import { getSession, hashPassword, verifyPassword } from "@/lib/auth";
+import {
+  getSession,
+  hashPassword,
+  setSessionCookie,
+  verifyPassword,
+} from "@/lib/auth";
 import { User } from "@/lib/db/models";
 import { connectToDatabase } from "@/lib/mongodb";
 
@@ -30,7 +35,12 @@ export async function POST(req: Request) {
     if (!valid) return fail("Current password is incorrect.", 400);
 
     user.passwordHash = await hashPassword(parsed.data.newPassword);
+    // Invalidate every other signed-in device, then re-issue this session so
+    // the person who changed the password stays signed in.
+    user.sessionVersion = (user.sessionVersion ?? 0) + 1;
     await user.save();
+
+    await setSessionCookie(session, user.sessionVersion);
 
     return ok({ ok: true });
   } catch (error) {

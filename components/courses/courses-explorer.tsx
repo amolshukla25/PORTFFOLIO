@@ -32,17 +32,17 @@ import { cn } from "@/lib/utils";
 const getIcon = (iconName: string) => {
   switch (iconName) {
     case "brain":
-      return <Brain className="h-8 w-8 text-primary" />;
+      return <Brain className="h-5 w-5" />;
     case "network":
-      return <Network className="h-8 w-8 text-primary" />;
+      return <Network className="h-5 w-5" />;
     case "activity":
-      return <Activity className="h-8 w-8 text-primary" />;
+      return <Activity className="h-5 w-5" />;
     case "workflow":
-      return <Workflow className="h-8 w-8 text-primary" />;
+      return <Workflow className="h-5 w-5" />;
     case "code":
-      return <Code className="h-8 w-8 text-primary" />;
+      return <Code className="h-5 w-5" />;
     default:
-      return <BookOpen className="h-8 w-8 text-primary" />;
+      return <BookOpen className="h-5 w-5" />;
   }
 };const roadmapSteps = [
   {
@@ -230,13 +230,13 @@ export default function CoursesExplorer() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm transition-colors hover:border-accent/30"
+              className="flex items-center gap-3 rounded-2xl border border-border/80 bg-card/70 p-4"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent">
+              <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent">
                 <stat.icon className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-gradient font-heading text-xl font-bold leading-none">
+                <p className="font-heading text-xl font-semibold leading-none tabular-nums text-foreground">
                   {stat.value}
                 </p>
                 <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -253,9 +253,9 @@ export default function CoursesExplorer() {
             <button
               onClick={() => setActiveTab("courses")}
               className={cn(
-                "px-5 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center gap-2",
+                "flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-medium transition-colors",
                 activeTab === "courses"
-                  ? "bg-background text-foreground shadow-sm"
+                  ? "bg-card text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -265,9 +265,9 @@ export default function CoursesExplorer() {
             <button
               onClick={() => setActiveTab("roadmap")}
               className={cn(
-                "px-5 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center gap-2",
+                "flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-medium transition-colors",
                 activeTab === "roadmap"
-                  ? "bg-background text-foreground shadow-sm"
+                  ? "bg-card text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -290,7 +290,7 @@ export default function CoursesExplorer() {
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search courses by title, topic, or keyword…"
                   aria-label="Search courses"
-                  className="h-11 w-full rounded-xl border border-border bg-background pl-10 pr-10 text-sm shadow-sm transition-all outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 placeholder:text-muted-foreground"
+                  className="h-11 w-full rounded-xl border border-border bg-card pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-accent/50 focus:ring-2 focus:ring-accent/15"
                 />
                 {query && (
                   <button
@@ -310,9 +310,9 @@ export default function CoursesExplorer() {
                 <button
                   onClick={() => setDifficulty("")}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-medium transition-all",
+                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                     !difficulty
-                      ? "border-accent/40 bg-accent text-accent-foreground"
+                      ? "border-accent/30 bg-accent/10 text-accent"
                       : "border-border/60 bg-muted/40 text-muted-foreground hover:border-accent/30 hover:text-foreground"
                   )}
                 >
@@ -323,10 +323,10 @@ export default function CoursesExplorer() {
                     key={level}
                     onClick={() => setDifficulty(difficulty === level ? "" : level)}
                     className={cn(
-                      "rounded-full border px-3 py-1 text-xs font-medium transition-all",
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                       difficulty === level
-                        ? "border-accent/40 bg-accent text-accent-foreground"
-                        : "border-border/60 bg-muted/40 text-muted-foreground hover:border-accent/30 hover:text-foreground"
+                        ? "border-accent/30 bg-accent/10 text-accent"
+                        : "border-border/70 bg-transparent text-muted-foreground hover:border-accent/40 hover:text-foreground"
                     )}
                   >
                     {level}
@@ -340,10 +340,10 @@ export default function CoursesExplorer() {
                     key={cat}
                     onClick={() => setCategory(category === cat ? "" : cat)}
                     className={cn(
-                      "rounded-full border px-3 py-1 text-xs font-medium transition-all",
+                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
                       category === cat
-                        ? "border-accent/40 bg-accent text-accent-foreground"
-                        : "border-border/60 bg-muted/40 text-muted-foreground hover:border-accent/30 hover:text-foreground"
+                        ? "border-accent/30 bg-accent/10 text-accent"
+                        : "border-border/70 bg-transparent text-muted-foreground hover:border-accent/40 hover:text-foreground"
                     )}
                   >
                     {cat} <span className="opacity-60">{count}</span>
@@ -354,8 +354,8 @@ export default function CoursesExplorer() {
 
             {/* lesson results from the search query */}
             {lessonResults.length > 0 && (
-              <div className="mb-8 rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden">
-                <div className="px-5 py-3.5 border-b border-border/60 bg-muted/20 flex items-center gap-2">
+              <div className="mb-8 overflow-hidden rounded-2xl border border-border/80 bg-card">
+                <div className="flex items-center gap-2 border-b border-border/60 px-5 py-3.5">
                   <BookOpen className="h-4 w-4 text-primary" />
                   <span className="text-sm font-semibold text-foreground">
                     lessons found
@@ -419,22 +419,20 @@ export default function CoursesExplorer() {
                   return (
                     <div
                       key={course.id}
-                      className="relative group p-6 rounded-2xl bg-card border border-border shadow-md transition-all duration-300 hover:shadow-xl hover:border-primary/30 flex flex-col justify-between"
+                      className="reveal hover-lift group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6"
                     >
-                      <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
                       <div className="relative space-y-4">
                         <div className="flex items-center justify-between">
-                          <div className="p-3 rounded-xl bg-muted group-hover:bg-primary/10 transition-colors">
+                          <div className="grid h-10 w-10 place-items-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent/15">
                             {getIcon(course.iconName)}
                           </div>
-                          <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                          <span className="inline-flex items-center rounded-full border border-border/70 px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground">
                             {course.difficulty}
                           </span>
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">
+                          <h3 className="text-xl font-semibold tracking-tight transition-colors group-hover:text-accent">
                             {course.title}
                           </h3>
                           <p className="text-sm text-muted-foreground line-clamp-3">
@@ -446,7 +444,7 @@ export default function CoursesExplorer() {
                           <ChipContainer textArr={course.category} />
                         </div>
 
-                        <div className="grid grid-cols-3 gap-2 py-4 border-y border-border/60 text-xs text-muted-foreground">
+                        <div className="grid grid-cols-3 gap-2 border-t border-border/60 py-3.5 text-xs text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Clock className="h-3.5 w-3.5" />
                             <span>{course.duration}</span>
@@ -527,7 +525,7 @@ export default function CoursesExplorer() {
                     <div className="w-full md:w-1/2 hidden md:block" />
 
                     {/* Step Card */}
-                    <div className="w-full md:w-1/2 p-6 rounded-2xl bg-card border border-border/80 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-200 pl-12 sm:pl-6">
+                    <div className="reveal hover-lift w-full rounded-2xl border border-border/80 bg-card p-6 pl-12 sm:pl-6 md:w-1/2">
                       <div className="flex items-center justify-between gap-3 mb-2">
                         <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
                           {step.level}

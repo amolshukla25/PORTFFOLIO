@@ -168,9 +168,8 @@ export default function IndexPage() {
         {/* Backdrop decorations */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_38%,black_30%,transparent_78%)]" />
-          <div className="animate-blob absolute -top-32 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl" />
-          <div className="animate-blob animation-delay-2000 absolute right-[6%] top-1/3 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-          <div className="animate-blob animation-delay-4000 absolute bottom-10 left-[8%] h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
+          <div className="animate-blob absolute -top-32 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
+          <div className="animate-blob animation-delay-4000 absolute bottom-10 left-[8%] h-80 w-80 rounded-full bg-accent/[0.07] blur-3xl" />
         </div>
 
         <div className="container relative flex min-h-[calc(100vh-4rem)] max-w-[64rem] flex-col items-center justify-center py-24 text-center supports-[height:100svh]:min-h-[calc(100svh-4rem)]">
@@ -187,8 +186,8 @@ export default function IndexPage() {
 
           {/* Avatar */}
           <AnimatedText delay={0.2} className="group relative mb-8">
-            <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-accent via-transparent to-primary opacity-25 blur-xl transition-opacity duration-500 group-hover:opacity-60" />
-            <div className="relative rounded-full bg-gradient-to-tr from-accent via-primary/40 to-primary p-[3px] shadow-2xl shadow-accent/20 transition-transform duration-500 group-hover:scale-[1.03]">
+            <div className="absolute -inset-3 rounded-full bg-accent/25 opacity-20 blur-xl transition-opacity duration-500 group-hover:opacity-35" />
+            <div className="relative rounded-full bg-gradient-to-tr from-accent to-primary/80 p-[3px] transition-transform duration-500 group-hover:scale-[1.02]">
               <Image
                 src={profileImg}
                 height={220}
@@ -237,7 +236,7 @@ export default function IndexPage() {
                 href="#about"
                 className={cn(
                   buttonVariants({ size: "lg", variant: "default" }),
-                  "group w-full rounded-xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground shadow-lg shadow-accent/20 hover:opacity-95 sm:w-auto"
+                  "group w-full rounded-xl shadow-sm shadow-primary/10 hover:bg-primary/90 sm:w-auto"
                 )}
                 aria-label="Learn more about Amol Shukla"
               >

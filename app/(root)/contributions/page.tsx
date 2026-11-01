@@ -5,6 +5,7 @@ import ContributionCard from "@/components/contributions/contribution-card";
 import { contributionsUnsorted } from "@/config/contributions";
 import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
+import { pageBreadcrumb } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: pagesConfig.contributions.metadata.title,
@@ -16,14 +17,27 @@ export const metadata: Metadata = {
 
 export default function ContributonsPage() {
   return (
-    <PageContainer
-      title={pagesConfig.contributions.title}
-      description={pagesConfig.contributions.description}
-      eyebrow="Open Source"
-    >
-      <ContributionCard
-        contributions={contributionsUnsorted}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageBreadcrumb(
+              pagesConfig.contributions.title,
+              "/contributions"
+            )
+          ),
+        }}
       />
-    </PageContainer>
+      <PageContainer
+        title={pagesConfig.contributions.title}
+        description={pagesConfig.contributions.description}
+        eyebrow="Open Source"
+      >
+        <ContributionCard
+          contributions={contributionsUnsorted}
+        />
+      </PageContainer>
+    </>
   );
 }

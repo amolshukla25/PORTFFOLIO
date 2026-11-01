@@ -1,5 +1,6 @@
 import { CheckCircle2, Clock, ListChecks } from "lucide-react";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { TodoBoard } from "@/components/admin/todo-board";
 import { PageHeader } from "@/components/portal/portal-page-header";
@@ -23,6 +24,9 @@ export default async function AdminTodosPage({
 }: AdminTodosPageProps) {
   const params = await searchParams;
   const session = await getSession();
+  // Layouts and pages render in parallel, so the layout's redirect does not
+  // stop this page from querying with a null session.
+  if (!session) redirect("/admin/login");
 
   const date =
     params.date && isValidDateKey(params.date) ? params.date : todayKey();
@@ -31,7 +35,7 @@ export default async function AdminTodosPage({
   await connectToDatabase();
 
   const filter: Record<string, unknown> = {
-    owner: session!.userId,
+    owner: session.userId,
     date,
   };
   if (batchId) filter.batch = batchId;

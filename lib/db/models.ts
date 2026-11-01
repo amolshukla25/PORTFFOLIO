@@ -18,6 +18,11 @@ export interface IUser {
   role: UserRole;
   batch: mongoose.Types.ObjectId | null;
   active: boolean;
+  /**
+   * Bumped whenever existing sessions must stop working (password reset).
+   * The value is embedded in the session JWT and compared on every request.
+   */
+  sessionVersion: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -95,6 +100,7 @@ const UserSchema = new Schema<IUser>(
     role: { type: String, enum: ["admin", "student"], default: "student" },
     batch: { type: ObjectId, ref: "Batch", default: null },
     active: { type: Boolean, default: true },
+    sessionVersion: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

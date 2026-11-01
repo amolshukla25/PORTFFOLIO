@@ -13,10 +13,7 @@ export default function PageHeader({
     <>
       <div className="flex flex-col items-start gap-5 pt-10 md:pt-16">
         {eyebrow ? (
-          <span className="eyebrow">
-            <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
-            {eyebrow}
-          </span>
+          <span className="eyebrow">{eyebrow}</span>
         ) : null}
         <div className="flex-1 space-y-3">
           <h1 className="text-gradient font-heading text-4xl font-bold tracking-tight lg:text-5xl">

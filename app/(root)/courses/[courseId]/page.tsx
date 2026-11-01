@@ -1,11 +1,22 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookOpen, Clock, Award, ChevronRight, FileText, ArrowLeft, GraduationCap } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Award,
+  BookOpen,
+  ChevronDown,
+  Clock,
+  FileText,
+  GraduationCap,
+  Layers,
+} from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import CourseProgressPanel from "@/components/courses/course-progress-panel";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, truncateMetaTitle } from "@/lib/utils";
 
@@ -146,7 +157,7 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
   };
 
   return (
-    <div className="container py-8 max-w-7xl">
+    <div className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
@@ -156,131 +167,160 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* Back button */}
-      <Link
-        href="/courses"
-        className={cn(
-          buttonVariants({ variant: "ghost", size: "sm" }),
-          "mb-6 rounded-xl text-muted-foreground hover:text-foreground gap-2"
-        )}
-      >
-        <ArrowLeft className="h-4 w-4" />
-        All Courses
-      </Link>
+      {/* Ambient wash — depth behind the header without a heavy hero block */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-[radial-gradient(60%_100%_at_50%_0%,hsl(var(--accent)/0.10),transparent_72%)]"
+      />
 
-      {/* Course Header */}
-      <div className="space-y-4 mb-10 pb-8 border-b border-border">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-            {course.difficulty}
-          </span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <Clock className="h-3.5 w-3.5" />
-            {course.duration} estimated content
-          </span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <BookOpen className="h-3.5 w-3.5" />
-            {totalLessons} lessons
-          </span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <Award className="h-3.5 w-3.5 text-star" />
-            {course.rating} / 5
-          </span>
-        </div>
+      <div className="container relative max-w-6xl py-8 sm:py-12">
+        <Link
+          href="/courses"
+          className={cn(
+            buttonVariants({ variant: "ghost", size: "sm" }),
+            "-ml-2 mb-8 gap-2 rounded-xl text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          All courses
+        </Link>
 
-        <h1 className="font-heading text-4xl leading-tight md:text-5xl flex items-center gap-3">
-          <GraduationCap className="h-10 w-10 text-primary hidden sm:block" />
-          {course.title}
-        </h1>
+        <header className="animate-rise">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Badge variant="accent">{course.difficulty}</Badge>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Clock className="h-3.5 w-3.5" />
+              {course.duration}
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <BookOpen className="h-3.5 w-3.5" />
+              {totalLessons} lessons
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Award className="h-3.5 w-3.5 text-star" />
+              {course.rating} / 5
+            </span>
+          </div>
 
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          {course.detailedDescription}
-        </p>
+          <h1 className="mt-5 text-balance font-heading text-3xl leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+            {course.title}
+          </h1>
 
-        <div className="flex items-center gap-4 text-sm pt-2">
-          <span className="font-semibold text-foreground">
-            Instructor: <span className="font-normal text-muted-foreground">{course.instructor}</span>
-          </span>
-        </div>
-      </div>
+          <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {course.detailedDescription}
+          </p>
 
-      {/* Progress tracker — completion state persisted to localStorage */}
-      <div className="mb-10">
-        <CourseProgressPanel
-          courseId={course.id}
-          modules={course.modules.map((m) => ({
-            id: m.id,
-            title: m.title,
-            lessons: m.lessons.map((l) => ({ id: l.id, title: l.title })),
-          }))}
-        />
-      </div>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Taught by{" "}
+            <span className="font-medium text-foreground">{course.instructor}</span>
+          </p>
 
-      {/* Syllabus Modules Grid (Card Inside Card Layout) */}
-      <div className="space-y-8">
-        <h2 className="font-heading text-3xl mb-6">Course Modules</h2>
-        
-        {course.modules.map((module, mIdx) => (
-          <div
-            key={module.id}
-            id={module.id}
-            className="p-6 rounded-2xl bg-card border border-border/80 shadow-sm relative overflow-hidden scroll-mt-24"
-          >
-            {/* Soft decorative background tint for module */}
-            <div className="absolute top-0 left-0 w-2 h-full bg-primary" />
-            
-            <div className="space-y-2 mb-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Module {mIdx + 1}
-              </span>
-              <h3 className="text-2xl font-bold text-foreground">
-                {module.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {module.description}
-              </p>
-            </div>
+          {/* Quick facts: one hairline-divided strip instead of four loose chips */}
+          <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border/80 bg-border/70 sm:grid-cols-4">
+            {[
+              { label: "Modules", value: course.modules.length, Icon: Layers },
+              { label: "Lessons", value: totalLessons, Icon: FileText },
+              { label: "Level", value: course.difficulty, Icon: GraduationCap },
+              { label: "Rating", value: `${course.rating} / 5`, Icon: Award },
+            ].map(({ label, value, Icon }) => (
+              <div key={label} className="flex items-center gap-3 bg-card px-4 py-4">
+                <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden />
+                <div className="min-w-0">
+                  <dt className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                    {label}
+                  </dt>
+                  <dd className="truncate text-sm font-semibold text-foreground">
+                    {value}
+                  </dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+        </header>
 
-            {/* Inner lesson Cards (Card inside Card) */}
-            <div className="grid grid-cols-1 gap-4">
-              {module.lessons.map((lesson) => (
-                <div
-                  key={lesson.id}
-                  className="group relative p-4 rounded-xl bg-background border border-border/60 hover:border-primary/30 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-                >
-                  <div className="space-y-1.5 max-w-xl">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-primary/70 shrink-0" />
-                      <h4 className="font-bold text-base text-foreground group-hover:text-primary transition-colors">
-                        {lesson.title}
-                      </h4>
-                    </div>
-                    <p className="text-xs text-muted-foreground line-clamp-2 pl-6">
-                      {lesson.shortDescription || (lesson as any).description || ""}
+        {/* Progress tracker — completion state persisted to localStorage */}
+        <section className="mt-10 animate-rise">
+          <CourseProgressPanel
+            courseId={course.id}
+            modules={course.modules.map((m) => ({
+              id: m.id,
+              title: m.title,
+              lessons: m.lessons.map((l) => ({ id: l.id, title: l.title })),
+            }))}
+          />
+        </section>
+
+        <section className="mt-14">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <h2 className="font-heading text-2xl tracking-tight text-foreground sm:text-3xl">
+              Syllabus
+            </h2>
+            <span className="shrink-0 text-xs text-muted-foreground sm:text-sm">
+              {course.modules.length} modules · {totalLessons} lessons
+            </span>
+          </div>
+
+          {/* Accordion: one module open at a time keeps a ten-module course
+              from becoming an endless wall of nested cards. */}
+          <div className="space-y-3">
+            {course.modules.map((module, mIdx) => (
+              <details
+                key={module.id}
+                id={module.id}
+                open={mIdx === 0}
+                className="reveal group scroll-mt-24 overflow-hidden rounded-2xl border border-border/80 bg-card transition-colors"
+              >
+                <summary className="flex cursor-pointer list-none items-center gap-4 px-4 py-4 transition-colors hover:bg-muted/50 sm:px-5 [&::-webkit-details-marker]:hidden">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent/10 text-xs font-semibold tabular-nums text-accent">
+                    {String(mIdx + 1).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="truncate text-[15px] font-semibold text-foreground">
+                      {module.title}
+                    </h3>
+                    <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground sm:text-[13px]">
+                      {module.description}
                     </p>
                   </div>
+                  <span className="hidden shrink-0 text-xs tabular-nums text-muted-foreground sm:block">
+                    {module.lessons.length} lessons
+                  </span>
+                  <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-180" />
+                </summary>
 
-                  <div className="flex items-center gap-4 pl-6 sm:pl-0 shrink-0">
-                    <div className="text-right hidden sm:block">
-                      <p className="text-xs font-medium text-foreground">{lesson.duration}</p>
-                      <p className="text-[10px] text-muted-foreground">{lesson.readingTime || (lesson as any).duration || ""}</p>
-                    </div>
-                    <Link
-                      href={`/courses/${course.id}/${lesson.id}`}
-                      className={cn(
-                        buttonVariants({ variant: "outline", size: "sm" }),
-                        "rounded-xl gap-1 text-xs py-1.5 h-auto group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                      )}
-                    >
-                      Read Notes
-                      <ChevronRight className="h-3 w-3" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+                <ol className="border-t border-border/70 p-1.5 sm:p-2">
+                  {module.lessons.map((lesson, lIdx) => (
+                    <li key={lesson.id}>
+                      <Link
+                        href={`/courses/${course.id}/${lesson.id}`}
+                        className="group/lesson flex items-start gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-muted/60 focus-visible:bg-muted/60 focus-visible:outline-none"
+                      >
+                        <span className="mt-0.5 w-8 shrink-0 text-xs tabular-nums text-muted-foreground/70">
+                          {mIdx + 1}.{lIdx + 1}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-medium leading-snug text-foreground transition-colors group-hover/lesson:text-accent">
+                            {lesson.title}
+                          </span>
+                          <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-muted-foreground">
+                            {lesson.shortDescription ||
+                              (lesson as any).description ||
+                              ""}
+                          </span>
+                        </span>
+                        <span className="hidden shrink-0 items-center gap-1.5 pt-0.5 text-xs text-muted-foreground sm:flex">
+                          <Clock className="h-3 w-3" />
+                          {lesson.duration}
+                        </span>
+                        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/30 transition-all group-hover/lesson:-translate-y-0.5 group-hover/lesson:translate-x-0.5 group-hover/lesson:text-accent" />
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            ))}
           </div>
-        ))}
+        </section>
       </div>
     </div>
   );

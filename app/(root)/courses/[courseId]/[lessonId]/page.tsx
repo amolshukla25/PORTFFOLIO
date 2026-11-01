@@ -8,7 +8,7 @@ import remarkHtml from "remark-html";
 import LessonNotes from "@/components/courses/lesson-notes";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
-import { truncateMetaTitle } from "@/lib/utils";
+import { truncateMetaDescription, truncateMetaTitle } from "@/lib/utils";
 
 // Renders $$math$$ tokens as styled inline math spans before remark parses
 // the markdown, so notes that use LaTeX-style delimiters keep their look.
@@ -49,6 +49,47 @@ export function generateStaticParams() {
   );
 }
 
+/**
+ * Plain-text summary of a lesson for meta tags.
+ *
+ * Most lessons carry a hand-written `shortDescription`, but some (the stock
+ * marketing modules) only ship a markdown body. Those used to emit the
+ * description " — Free lesson notes by Amol Shukla." and an empty
+ * og:description, so 18 lesson URLs shared one blank snippet. Fall back to
+ * the first prose line of the body, then to the course summary.
+ */
+function lessonSummary(
+  course: { shortDescription?: string },
+  lesson: {
+    shortDescription?: string;
+    contentMarkdown?: string;
+    content?: string;
+  }
+): string {
+  const explicit = (lesson.shortDescription ?? "").trim();
+  if (explicit) return explicit;
+
+  const body = lesson.contentMarkdown || lesson.content || "";
+  const prose = body
+    .split("\n")
+    .map((line) => line.trim())
+    .find(
+      (line) =>
+        line.length > 0 &&
+        !/^(#{1,6}\s|```|\||>|!|-{3,}|\$\$)/.test(line)
+    );
+
+  if (prose) {
+    return prose
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+      .replace(/[*_`#>|]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  return (course.shortDescription ?? "").trim();
+}
+
 function getlesson(courseId: string, lessonId: string) {
   const course = COURSES.find((c) => c.id === courseId);
   const lesson = course
@@ -69,12 +110,17 @@ export async function generateMetadata({
 
   const url = `${siteConfig.url}/courses/${courseId}/${lessonId}`;
   const title = `${lesson.title} — ${course.title}`;
+  const summary = lessonSummary(course, lesson);
+  const description = summary
+    ? `${truncateMetaDescription(
+        summary.replace(/[.!?…]+$/, ""),
+        120
+      )} — Free lesson notes by Amol Shukla.`
+    : `${lesson.title} — free lesson notes from ${course.title} by Amol Shukla.`;
 
   return {
     title,
-    description: `${(lesson.shortDescription || (lesson as any).description || "")
-      .trim()
-      .replace(/[.!?…]+$/, "")} — Free lesson notes by Amol Shukla.`,
+    description,
     keywords: [
       ...course.category,
       siteConfig.authorName,
@@ -83,7 +129,7 @@ export async function generateMetadata({
     alternates: { canonical: url },
     openGraph: {
       title: truncateMetaTitle(title),
-      description: lesson.shortDescription || (lesson as any).description || "",
+      description: truncateMetaDescription(summary, 200),
       url,
       siteName: siteConfig.name,
       type: "article",
@@ -92,7 +138,7 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       title: truncateMetaTitle(title),
-      description: lesson.shortDescription || (lesson as any).description || "",
+      description: truncateMetaDescription(summary, 200),
       images: [siteConfig.ogImage],
       creator: `@${siteConfig.username}`,
     },

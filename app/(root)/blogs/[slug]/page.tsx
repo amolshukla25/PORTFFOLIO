@@ -253,7 +253,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <Link
                   key={tag}
                   href={`/blogs?tag=${encodeURIComponent(tag)}`}
-                  className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 transition-colors hover:bg-accent hover:text-accent-foreground"
+                  className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent transition-colors hover:border-accent/40 hover:bg-accent/15"
                 >
                   {tag}
                 </Link>

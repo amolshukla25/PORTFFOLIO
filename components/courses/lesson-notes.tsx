@@ -287,8 +287,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               <div
                 key={module.id}
                 className={cn(
-                  "rounded-xl border border-border/60 overflow-hidden transition-colors",
-                  isExpanded && "border-primary/25 bg-background/60"
+                  "overflow-hidden rounded-lg transition-colors",
+                  isExpanded && "bg-muted/50"
                 )}
               >
                 <button
@@ -304,7 +304,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
                   aria-expanded={isExpanded}
                   className="flex w-full items-center gap-2 px-2.5 py-2.5 text-left transition-colors hover:bg-muted/50"
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-primary/10 text-[10px] font-bold text-primary">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-accent/10 text-[10px] font-semibold tabular-nums text-accent">
                     {mIdx + 1}
                   </span>
                   <span
@@ -415,7 +415,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
         {/* Navigation / Action bar */}
         <div
           className={cn(
-            "w-full px-4 sm:px-8 py-4 border-b border-border/40 flex items-center justify-between no-print gap-4 transition-[max-width] duration-500 ease-out",
+            "no-print flex w-full items-center justify-between gap-4 border-b border-border/50 px-4 py-3 transition-[max-width] duration-500 ease-out sm:px-8",
             contentWidthClass
           )}
         >
@@ -423,7 +423,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className={cn(
-                "p-2 rounded-lg border border-border bg-card hover:bg-muted md:hidden",
+                "rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden",
                 focusMode && "hidden"
               )}
               aria-label="Toggle Syllabus Outline"
@@ -433,7 +433,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
             <button
               onClick={toggleOutline}
               className={cn(
-                "hidden md:inline-flex p-2 rounded-lg border border-border bg-card hover:bg-muted transition-colors",
+                "hidden rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:inline-flex",
                 focusMode && "hidden"
               )}
               aria-label={sidebarCollapsed ? "Show course outline" : "Hide course outline"}
@@ -459,8 +459,9 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               onClick={toggleFocusMode}
               aria-pressed={focusMode}
               className={cn(
-                buttonVariants({ variant: focusMode ? "default" : "outline", size: "sm" }),
-                "rounded-xl gap-1.5 text-xs h-9 transition-all"
+                buttonVariants({ variant: focusMode ? "default" : "ghost", size: "sm" }),
+                "h-9 gap-1.5 rounded-lg px-2.5 text-xs",
+                !focusMode && "text-muted-foreground hover:text-foreground"
               )}
               title={
                 focusMode
@@ -478,8 +479,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
             <button
               onClick={handleToggleComplete}
               className={cn(
-                buttonVariants({ variant: isCompleted ? "default" : "outline", size: "sm" }),
-                "rounded-xl gap-1.5 text-xs h-9 transition-all"
+                buttonVariants({ variant: isCompleted ? "secondary" : "default", size: "sm" }),
+                "h-9 gap-1.5 rounded-lg px-2.5 text-xs"
               )}
               aria-pressed={isCompleted}
               title={isCompleted ? "Mark as incomplete" : "Mark lesson as complete"}
@@ -500,8 +501,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               onClick={handleDownloadPDF}
               disabled={isExporting}
               className={cn(
-                buttonVariants({ variant: "outline", size: "sm" }),
-                "rounded-xl gap-1.5 text-xs h-9"
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "h-9 gap-1.5 rounded-lg px-2.5 text-xs text-muted-foreground hover:text-foreground"
               )}
               title="Download PDF"
             >
@@ -525,24 +526,36 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
         >
           
           {/* lesson Metadata */}
-          <div className="space-y-3 border-b border-border/60 pb-6">
-            <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-primary/70" />
-                {activeLesson.duration} lesson duration
-              </span>
-              <span>•</span>
-              <span>{activeLesson.readingTime}</span>
-            </div>
-            
-            <h1 className="font-heading text-3xl sm:text-4xl leading-tight text-foreground font-bold">
+          <header className="animate-rise space-y-3 border-b border-border/70 pb-7">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+              {course.title.split(": ")[0]}
+            </p>
+
+            <h1 className="text-balance font-heading text-3xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-4xl">
               {activeLesson.title}
             </h1>
-            
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed italic">
+
+            <p className="text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
               {activeLesson.shortDescription}
             </p>
-          </div>
+
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-1 text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                {activeLesson.duration}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5" />
+                {activeLesson.readingTime}
+              </span>
+              {mounted && isCompleted && (
+                <span className="inline-flex items-center gap-1.5 text-success">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Completed
+                </span>
+              )}
+            </div>
+          </header>
 
           {/* Documented Notes Content — pre-rendered on the server so the
               full lesson text is present in the initial HTML for crawlers. */}
@@ -555,38 +568,40 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
 
           {/* Interactive Code Section Widget (no-print on PDF if you wish, or keep it formatted as standard text box) */}
           {!focusMode && (
-          <div className="border border-border/80 rounded-2xl bg-card overflow-hidden shadow-xs my-8 no-print">
-            <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-code-bg no-print">
+            <div className="flex flex-col gap-2.5 border-b border-white/5 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-2">
-                <FileCode className="h-5 w-5 text-primary" />
-                <span className="text-sm font-semibold text-foreground">Interactive Lesson Code Snippet</span>
+                <FileCode className="h-4 w-4 text-code-accent" />
+                <span className="text-xs font-medium capitalize text-code-fg/70">
+                  {activeLesson.codeLanguage} · worked example
+                </span>
               </div>
-              
+
               {/* Tab Selector */}
-              <div className="flex rounded-lg bg-background border border-border p-0.5 shrink-0 self-start sm:self-auto">
+              <div className="flex shrink-0 items-center gap-1 self-start rounded-lg bg-white/5 p-0.5 sm:self-auto">
                 <button
                   onClick={() => setActiveTab("code")}
                   className={cn(
-                    "px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1",
+                    "flex items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
                     activeTab === "code"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-white/10 text-code-fg"
+                      : "text-code-fg/55 hover:text-code-fg"
                   )}
                 >
                   <FileCode className="h-3 w-3" />
-                  Code script
+                  Code
                 </button>
                 <button
                   onClick={() => setActiveTab("output")}
                   className={cn(
-                    "px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1",
+                    "flex items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
                     activeTab === "output"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-white/10 text-code-fg"
+                      : "text-code-fg/55 hover:text-code-fg"
                   )}
                 >
                   <Terminal className="h-3 w-3" />
-                  Console Output
+                  Output
                 </button>
               </div>
             </div>
@@ -595,33 +610,37 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               <div className="relative group">
                 <button
                   onClick={handleCopy}
-                  className="absolute top-4 right-4 z-10 p-2 rounded-lg bg-card/80 border border-border hover:bg-muted text-muted-foreground hover:text-foreground transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                  className="absolute right-3 top-3 z-10 grid h-7 w-7 place-items-center rounded-md bg-white/5 text-code-fg/50 opacity-100 transition-all hover:bg-white/10 hover:text-code-fg sm:opacity-0 sm:group-hover:opacity-100"
                   title="Copy code script"
                 >
-                  {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
+                  {copied ? (
+                    <Check className="h-3.5 w-3.5 text-code-accent" />
+                  ) : (
+                    <Copy className="h-3.5 w-3.5" />
+                  )}
                 </button>
-                <pre className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-fg leading-relaxed">
+                <pre className="overflow-x-auto bg-code-bg p-4 font-mono text-xs leading-relaxed text-code-fg sm:p-5 sm:text-[13px]">
                   <code>{activeLesson.codeSnippet}</code>
                 </pre>
               </div>
             ) : (
-              <div className="p-5 font-mono text-xs sm:text-sm overflow-x-auto bg-code-bg text-code-accent leading-relaxed border-t border-border/20">
-                <div className="text-code-fg/50 mb-2"># Simulated stdout run execution:</div>
+              <div className="overflow-x-auto bg-code-bg p-4 font-mono text-xs leading-relaxed text-code-accent sm:p-5 sm:text-[13px]">
+                <div className="mb-2 text-code-fg/40"># stdout</div>
                 <code>{activeLesson.codeOutput}</code>
               </div>
             )}
-            
-            <div className="px-5 py-3.5 bg-muted/10 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
-              <span>Language: <span className="font-semibold text-foreground capitalize">{activeLesson.codeLanguage}</span></span>
+
+            <div className="flex items-center justify-between border-t border-white/5 px-4 py-2.5 text-[11px] text-code-fg/50">
+              <span>Read-only sample</span>
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1 hover:text-foreground transition-colors font-medium"
+                className="flex items-center gap-1.5 transition-colors hover:text-code-fg"
               >
-                <Copy className="h-3.5 w-3.5" />
-                Copy script
+                {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied ? "Copied" : "Copy code"}
               </button>
             </div>
-          </div>
+          </section>
           )}
 
           {/* Printable copy of Code snippet for the PDF output (hidden on screen, visible during printing) */}
@@ -642,8 +661,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           {!focusMode &&
             activeLesson.visualizationTips &&
             activeLesson.visualizationTips.length > 0 && (
-              <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
-                <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
+              <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-card no-print">
+                <div className="flex items-center gap-2 border-b border-border/60 px-5 py-3.5">
                   <Eye className="h-4 w-4 text-primary" />
                   <h2 className="text-sm font-semibold text-foreground">
                     Code Visualization Tips
@@ -652,9 +671,10 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
                 <ul className="p-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
                   {activeLesson.visualizationTips.map((tip, tipIdx) => (
                     <li key={tipIdx} className="flex gap-3">
-                      <span className="mt-0.5 shrink-0 text-primary" aria-hidden>
-                        🧠
-                      </span>
+                      <span
+                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/70"
+                        aria-hidden
+                      />
                       <span>{tip}</span>
                     </li>
                   ))}
@@ -666,8 +686,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           {!focusMode &&
             activeLesson.tipsAndTricks &&
             activeLesson.tipsAndTricks.length > 0 && (
-              <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
-                <div className="px-5 py-4 border-b border-border/60 bg-muted/20 flex items-center gap-2">
+              <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-card no-print">
+                <div className="flex items-center gap-2 border-b border-border/60 px-5 py-3.5">
                   <Lightbulb className="h-4 w-4 text-star" />
                   <h2 className="text-sm font-semibold text-foreground">
                     Professional Tips & Tricks
@@ -676,9 +696,10 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
                 <ul className="p-5 space-y-3 text-sm text-muted-foreground leading-relaxed">
                   {activeLesson.tipsAndTricks.map((tip, tipIdx) => (
                     <li key={tipIdx} className="flex gap-3">
-                      <span className="mt-0.5 shrink-0 text-star" aria-hidden>
-                        ⚡
-                      </span>
+                      <span
+                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-star/80"
+                        aria-hidden
+                      />
                       <span>{tip}</span>
                     </li>
                   ))}
@@ -722,9 +743,9 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
 
           {/* Up Next — Continue Learning CTA */}
           {!focusMode && (nextLesson ? (
-            <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
-              <div className="bg-gradient-to-r from-primary/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">
+            <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-card no-print">
+              <div className="border-b border-border/60 bg-accent/5 px-5 py-5 sm:px-6">
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-accent">
                   Up next · Continue learning
                 </p>
                 <h2 className="font-heading text-xl sm:text-2xl font-bold text-foreground leading-snug">
@@ -758,8 +779,8 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
               </div>
             </section>
           ) : (
-            <section className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs my-8 no-print">
-              <div className="bg-gradient-to-r from-success/15 via-accent/10 to-transparent px-5 sm:px-6 py-5 border-b border-border/60 flex items-start gap-3">
+            <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-card no-print">
+              <div className="flex items-start gap-3 border-b border-border/60 bg-success/5 px-5 py-5 sm:px-6">
                 <Award className="h-6 w-6 text-star shrink-0" />
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-success mb-1">

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { EmptyState } from "@/components/common/empty-state";
 import { PageHeader } from "@/components/portal/portal-page-header";
@@ -35,6 +36,10 @@ export const metadata: Metadata = {
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
+  // The layout redirects too, but layouts and pages render in parallel, so
+  // this page would otherwise run its queries for an anonymous visitor.
+  if (!session) redirect("/admin/login");
+
   await connectToDatabase();
 
   const today = todayKey();
@@ -66,7 +71,7 @@ export default async function AdminDashboardPage() {
         },
       },
     ]),
-    Todo.find({ owner: session!.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
+    Todo.find({ owner: session.userId, date: today }).sort({ done: 1, createdAt: 1 }).lean(),
     Activity.find()
       .sort({ date: -1, createdAt: -1 })
       .limit(6)
@@ -107,7 +112,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title={`Good to see you, ${session!.name.split(" ")[0]}`}
+        title={`Good to see you, ${session.name.split(" ")[0]}`}
         description="Everything happening across your batches today."
       >
         <Link href="/admin/activities" className={buttonVariants({ variant: "outline", size: "sm" })}>

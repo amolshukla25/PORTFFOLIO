@@ -35,3 +35,14 @@ export function truncateMetaTitle(title: string, maxLength = 60): string {
   if (lastSpace > 0) cut = cut.slice(0, lastSpace);
   return `${cut}…`;
 }
+
+/**
+ * Same word-boundary truncation for meta/OG descriptions, which search
+ * engines cut off at roughly 155-160 characters.
+ */
+export function truncateMetaDescription(
+  description: string,
+  maxLength = 150
+): string {
+  return truncateMetaTitle(description, maxLength);
+}

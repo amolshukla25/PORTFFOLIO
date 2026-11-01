@@ -5,6 +5,7 @@ import Timeline from "@/components/experience/timeline";
 import { experiences } from "@/config/experience";
 import { pagesConfig } from "@/config/pages";
 import { siteConfig } from "@/config/site";
+import { pageBreadcrumb } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: `${pagesConfig.experience.metadata.title}`,
@@ -23,12 +24,22 @@ export const metadata: Metadata = {
 
 export default function ExperiencePage() {
   return (
-    <PageContainer
-      title={pagesConfig.experience.title}
-      description={pagesConfig.experience.description}
-      eyebrow="Career"
-    >
-      <Timeline experiences={experiences} />
-    </PageContainer>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageBreadcrumb(pagesConfig.experience.title, "/experience")
+          ),
+        }}
+      />
+      <PageContainer
+        title={pagesConfig.experience.title}
+        description={pagesConfig.experience.description}
+        eyebrow="Career"
+      >
+        <Timeline experiences={experiences} />
+      </PageContainer>
+    </>
   );
 }

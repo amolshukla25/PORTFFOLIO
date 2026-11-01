@@ -6,6 +6,7 @@ import { ResponsiveTabs } from "@/components/ui/responsive-tabs";
 import { pagesConfig } from "@/config/pages";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
+import { pageBreadcrumb } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: pagesConfig.projects.metadata.title,
@@ -52,12 +53,22 @@ export default function ProjectsPage() {
   ];
 
   return (
-    <PageContainer
-      title={pagesConfig.projects.title}
-      description={pagesConfig.projects.description}
-      eyebrow="Portfolio"
-    >
-      <ResponsiveTabs items={tabItems} defaultValue="all" />
-    </PageContainer>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageBreadcrumb(pagesConfig.projects.title, "/projects")
+          ),
+        }}
+      />
+      <PageContainer
+        title={pagesConfig.projects.title}
+        description={pagesConfig.projects.description}
+        eyebrow="Portfolio"
+      >
+        <ResponsiveTabs items={tabItems} defaultValue="all" />
+      </PageContainer>
+    </>
   );
 }
