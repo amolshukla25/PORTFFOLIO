@@ -104,6 +104,9 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
     "@context": "https://schema.org",
     "@type": "Course",
     name: course.title,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    educationalLevel: course.difficulty,
     description: course.detailedDescription,
     url: `${siteConfig.url}/courses/${course.id}`,
     provider: {

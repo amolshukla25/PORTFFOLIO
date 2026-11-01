@@ -57,6 +57,8 @@ export interface Course {
   modules: Module[];
 }
 
+import { DATA_SCIENCE_LAB_MODULES } from "./data-science-labs";
+import { MYSQL_COURSE } from "./mysql-course";
 import { PYTHON_COURSE } from "./python-course";
 import { DIGITAL_MARKETING_COURSE } from "./digital-marketing";
 import { STOCK_MARKETING_COURSE } from "./stock-marketing";
@@ -66,21 +68,23 @@ import { AI_TOOLS_COURSE } from "./ai-tools";
 export const COURSES: Course[] = [
   AI_TOOLS_COURSE,
   PYTHON_COURSE,
+  MYSQL_COURSE,
   DIGITAL_MARKETING_COURSE,
   STOCK_MARKETING_COURSE,
   PROMPT_ENGINEERING_COURSE,
   {
     id: "data-science",
-    title: "Applied Data Science & Generative AI Hub",
-    shortDescription: "Master Python data structures, vector computing, statistical models, and build agentic pipelines.",
-    detailedDescription: "This curriculum bridges classical data science (wrangling, exploration, predictive modeling) with the new frontier of Generative AI. Designed by Amol Shukla, this course features code illustrations and interactive note pages designed to help students quickly understand data operations and agent-driven engineering.",
-    category: ["Data Science", "Python", "Machine Learning", "Agentic AI"],
-    duration: "20 hrs",
-    difficulty: "Intermediate",
+    title: "Data Science: NumPy, pandas, Matplotlib, seaborn & Plotly",
+    shortDescription: "Learn five data-analysis libraries through guided notebook workshops, downloadable sales data and Easy-to-Professional practical assignments.",
+    detailedDescription: "Learn NumPy, pandas, Matplotlib, seaborn and Plotly with ten focused library lessons, 40 guided Easy-to-Professional assignments, a downloadable CSV, hints and executable reference solutions. Existing Python ecosystem, machine learning and agentic AI notes remain available as extension material. Designed for learners who know basic Python and want practical analytical skills, not more MCQs.",
+    category: ["Data Science", "NumPy", "pandas", "Matplotlib", "seaborn", "Plotly"],
+    duration: "50 hrs",
+    difficulty: "Beginner",
     rating: 4.9,
     instructor: "Amol Shukla",
     iconName: "brain",
     modules: [
+      ...DATA_SCIENCE_LAB_MODULES,
       {
         id: "module-1-foundations",
         title: "Module 1: Foundations of Python & Ecosystem",

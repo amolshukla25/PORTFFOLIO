@@ -15,6 +15,7 @@ import {
   Compass,
   FileText,
   GraduationCap,
+  Database,
   Layers,
   Network,
   Search,
@@ -31,6 +32,8 @@ import { cn } from "@/lib/utils";
 
 const getIcon = (iconName: string) => {
   switch (iconName) {
+    case "database":
+      return <Database className="h-5 w-5" />;
     case "brain":
       return <Brain className="h-5 w-5" />;
     case "network":
@@ -44,7 +47,9 @@ const getIcon = (iconName: string) => {
     default:
       return <BookOpen className="h-5 w-5" />;
   }
-};const roadmapSteps = [
+};
+
+const roadmapSteps = [
   {
     step: 1,
     title: "Python Foundations",
@@ -215,7 +220,7 @@ export default function CoursesExplorer() {
 
   return (
     <PageContainer
-      title="Amol Shukla's Student Learning Hub"
+      title="Learning Hub"
       description="Access Amol Shukla's comprehensive documented notes, code walk-throughs, and PDF worksheets curated for students and learners."
       eyebrow="Learning"
     >
@@ -249,30 +254,32 @@ export default function CoursesExplorer() {
 
         {/* State-based Tab Switcher */}
         <div className="flex items-center justify-center mb-8 no-print">
-          <div className="flex rounded-xl bg-muted p-1 border border-border">
+          <div className="grid w-full max-w-lg grid-cols-2 rounded-xl border border-border bg-muted p-1">
             <button
               onClick={() => setActiveTab("courses")}
+              aria-pressed={activeTab === "courses"}
               className={cn(
-                "flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-medium transition-colors",
+                "flex min-h-11 items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm font-medium transition-colors sm:px-4",
                 activeTab === "courses"
                   ? "bg-card text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
               <BookOpenCheck className="h-4 w-4" />
-              Available Courses
+              Courses
             </button>
             <button
               onClick={() => setActiveTab("roadmap")}
+              aria-pressed={activeTab === "roadmap"}
               className={cn(
-                "flex items-center gap-2 rounded-lg px-4 py-2 text-[13px] font-medium transition-colors",
+                "flex min-h-11 items-center justify-center gap-2 rounded-lg px-2 py-2 text-sm font-medium transition-colors sm:px-4",
                 activeTab === "roadmap"
                   ? "bg-card text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
               <Compass className="h-4 w-4" />
-              Learning Roadmap
+              Roadmap
             </button>
           </div>
         </div>
@@ -309,8 +316,9 @@ export default function CoursesExplorer() {
                 </span>
                 <button
                   onClick={() => setDifficulty("")}
+                  aria-pressed={!difficulty}
                   className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                    "min-h-10 rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                     !difficulty
                       ? "border-accent/30 bg-accent/10 text-accent"
                       : "border-border/60 bg-muted/40 text-muted-foreground hover:border-accent/30 hover:text-foreground"
@@ -322,8 +330,9 @@ export default function CoursesExplorer() {
                   <button
                     key={level}
                     onClick={() => setDifficulty(difficulty === level ? "" : level)}
+                    aria-pressed={difficulty === level}
                     className={cn(
-                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                      "min-h-10 rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                       difficulty === level
                         ? "border-accent/30 bg-accent/10 text-accent"
                         : "border-border/70 bg-transparent text-muted-foreground hover:border-accent/40 hover:text-foreground"
@@ -339,8 +348,9 @@ export default function CoursesExplorer() {
                   <button
                     key={cat}
                     onClick={() => setCategory(category === cat ? "" : cat)}
+                    aria-pressed={category === cat}
                     className={cn(
-                      "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                      "min-h-10 rounded-full border px-3 py-2 text-sm font-medium transition-colors",
                       category === cat
                         ? "border-accent/30 bg-accent/10 text-accent"
                         : "border-border/70 bg-transparent text-muted-foreground hover:border-accent/40 hover:text-foreground"
@@ -373,10 +383,10 @@ export default function CoursesExplorer() {
                       >
                         <FileText className="h-4 w-4 mt-0.5 shrink-0 text-primary/60" />
                         <span className="min-w-0">
-                          <span className="block text-sm font-semibold text-foreground truncate">
+                          <span className="block break-words text-sm font-semibold text-foreground">
                             {lesson.title}
                           </span>
-                          <span className="block text-xs text-muted-foreground truncate mt-0.5">
+                          <span className="mt-0.5 block break-words text-xs text-muted-foreground">
                             {course.title} · {module.title.split(": ")[1] || module.title}
                           </span>
                         </span>
@@ -409,7 +419,7 @@ export default function CoursesExplorer() {
                 )}
               </div>
             ) : filteredCourses.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
                 {filteredCourses.map((course) => {
                   const totalLessons = course.modules.reduce(
                     (acc, module) => acc + module.lessons.length,
@@ -419,7 +429,7 @@ export default function CoursesExplorer() {
                   return (
                     <div
                       key={course.id}
-                      className="reveal hover-lift group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-card p-6"
+                      className="surface-card hover-lift group relative flex min-w-0 flex-col justify-between p-5 sm:p-6"
                     >
                       <div className="relative space-y-4">
                         <div className="flex items-center justify-between">
@@ -435,7 +445,7 @@ export default function CoursesExplorer() {
                           <h3 className="text-xl font-semibold tracking-tight transition-colors group-hover:text-accent">
                             {course.title}
                           </h3>
-                          <p className="text-sm text-muted-foreground line-clamp-3">
+                          <p className="text-sm leading-relaxed text-muted-foreground">
                             {course.shortDescription}
                           </p>
                         </div>
@@ -444,7 +454,7 @@ export default function CoursesExplorer() {
                           <ChipContainer textArr={course.category} />
                         </div>
 
-                        <div className="grid grid-cols-3 gap-2 border-t border-border/60 py-3.5 text-xs text-muted-foreground">
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 border-t border-border py-3.5 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Clock className="h-3.5 w-3.5" />
                             <span>{course.duration}</span>
@@ -460,16 +470,16 @@ export default function CoursesExplorer() {
                         </div>
                       </div>
 
-                      <div className="relative pt-6 flex flex-wrap items-center justify-between gap-3">
+                      <div className="relative flex flex-col gap-3 pt-5 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between">
                         <span className="text-xs font-medium text-muted-foreground">
                           Instructor: {course.instructor}
                         </span>
-                        <div className="flex items-center gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                           <Link
                             href={`/courses/${course.id}`}
                             className={cn(
                               buttonVariants({ variant: "outline", size: "sm" }),
-                              "rounded-xl gap-1.5 text-xs font-medium"
+                              "h-11 rounded-xl gap-1.5 text-sm font-medium"
                             )}
                           >
                             Syllabus
@@ -482,7 +492,7 @@ export default function CoursesExplorer() {
                             }
                             className={cn(
                               buttonVariants({ variant: "default", size: "sm" }),
-                              "rounded-xl gap-1.5 text-xs font-medium"
+                              "h-11 rounded-xl gap-1.5 text-sm font-medium"
                             )}
                           >
                             Start Course
@@ -525,7 +535,7 @@ export default function CoursesExplorer() {
                     <div className="w-full md:w-1/2 hidden md:block" />
 
                     {/* Step Card */}
-                    <div className="reveal hover-lift w-full rounded-2xl border border-border/80 bg-card p-6 pl-12 sm:pl-6 md:w-1/2">
+                    <div className="reveal hover-lift w-full rounded-2xl border border-border bg-card p-5 pl-12 sm:pl-12 md:w-1/2 md:p-6">
                       <div className="flex items-center justify-between gap-3 mb-2">
                         <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
                           {step.level}

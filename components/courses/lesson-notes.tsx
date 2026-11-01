@@ -646,7 +646,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           {/* Printable copy of Code snippet for the PDF output (hidden on screen, visible during printing) */}
           {!focusMode && (
           <div className="hidden print:block border border-black/20 p-5 rounded-lg my-8">
-            <h4 className="font-bold mb-2">Lesson Code (Python)</h4>
+            <h4 className="font-bold mb-2">Lesson Code ({activeLesson.codeLanguage})</h4>
             <pre className="font-mono text-xs p-3 bg-zinc-50 border border-zinc-200 rounded whitespace-pre-wrap">
               <code>{activeLesson.codeSnippet}</code>
             </pre>
@@ -722,7 +722,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           )}
 
           {/* Interactive Quiz */}
-          {!focusMode && LESSON_QUIZZES[activeLesson.id] && (
+          {!focusMode && !["mysql", "data-science"].includes(courseId) && LESSON_QUIZZES[activeLesson.id] && (
             <section className="my-8 no-print">
               <div className="flex items-center gap-2 mb-3">
                 <Trophy className="h-4 w-4 text-star" />

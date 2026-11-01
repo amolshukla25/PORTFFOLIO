@@ -19,7 +19,7 @@ export default function PageContainer({
     <ClientPageWrapper>
       <div>
         <PageHeader title={title} description={description} eyebrow={eyebrow} />
-        <div className="mx-4 sm:mx-6 lg:mx-8 max-w-full overflow-x-hidden">
+        <div className="min-w-0 max-w-full">
           {children}
         </div>
       </div>

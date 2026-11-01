@@ -8,7 +8,7 @@ import { AnimatedText } from "@/components/common/animated-text";
 import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
 import { Icons } from "@/components/common/icons";
 import { SectionHeading } from "@/components/common/section-heading";
-import { Code } from "lucide-react";
+import { Code, Database } from "lucide-react";
 import ProjectCard from "@/components/projects/project-card";
 import { PromptsSection } from "@/components/prompts/prompts-section";
 import SkillsCard from "@/components/skills/skills-card";
@@ -37,6 +37,8 @@ export const metadata: Metadata = {
 
 const getCourseIcon = (iconName: string, className: string) => {
   switch (iconName) {
+    case "database":
+      return <Database className={className} />;
     case "brain":
       return <Icons.brain className={className} />;
     case "network":
@@ -433,14 +435,14 @@ export default function IndexPage() {
                     ))}
                   </div>
 
-                  <h3 className="card-title mt-3 line-clamp-2 transition-colors group-hover:text-accent">
+                  <h3 className="card-title mt-3 break-words transition-colors group-hover:text-accent">
                     {course.title}
                   </h3>
-                  <p className="card-body mt-2 line-clamp-3">
+                  <p className="card-body mt-2 mb-4">
                     {course.shortDescription}
                   </p>
 
-                  <div className="mt-auto flex items-center justify-between gap-3 border-t border-border/70 pt-3.5">
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3.5">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
                       <span className="inline-flex items-center gap-1">
                         <Icons.clock className="h-3.5 w-3.5" />

@@ -57,7 +57,10 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         star: "hsl(var(--star))",
-        success: "hsl(var(--success))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         code: {
           bg: "hsl(var(--code-bg))",
           fg: "hsl(var(--code-fg))",

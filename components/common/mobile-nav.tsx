@@ -17,10 +17,10 @@ export function MobileNav({ items, children }: MobileNavProps) {
   return (
     <div
       className={cn(
-        "fixed inset-0 top-16 z-50 grid h-[calc(100vh-4rem)] grid-flow-row auto-rows-max overflow-auto p-4 pb-32 shadow-md animate-in slide-in-from-top-10 md:hidden"
+        "fixed inset-0 top-16 z-50 grid h-[calc(100dvh-4rem)] grid-flow-row auto-rows-max overflow-auto p-4 pb-32 shadow-md animate-in slide-in-from-top-10 xl:hidden"
       )}
     >
-      <div className="relative z-20 grid gap-6 rounded-2xl border border-border/60 bg-popover/95 p-5 text-popover-foreground shadow-2xl backdrop-blur-xl">
+      <div className="relative z-20 grid gap-6 rounded-2xl border border-border/60 bg-popover p-5 text-popover-foreground shadow-2xl backdrop-blur-xl">
         <div className="flex items-center justify-between gap-2 border-b border-border/40 pb-3">
           <Link href="/" className="flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary via-primary to-accent font-heading text-xs font-bold text-primary-foreground">

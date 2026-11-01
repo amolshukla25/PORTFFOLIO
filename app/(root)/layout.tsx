@@ -33,7 +33,9 @@ export default function MarketingLayout({ children }: MarketingLayoutProps) {
                 <ModeToggle />
               </div>
             </MainNav>
-            <ModeToggle />
+            <div className="hidden xl:block">
+              <ModeToggle />
+            </div>
           </div>
         </div>
       </header>

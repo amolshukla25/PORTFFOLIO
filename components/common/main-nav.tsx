@@ -25,7 +25,7 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex items-center gap-3">
       {items?.length ? (
-        <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-muted/40 p-1 backdrop-blur-sm md:flex">
+        <nav className="hidden items-center gap-1 rounded-full border border-border/50 bg-muted/40 p-1 backdrop-blur-sm xl:flex">
           {items?.map((item, index) => {
             const isActive =
               !item.isButton &&
@@ -40,7 +40,7 @@ export function MainNav({ items, children }: MainNavProps) {
                 <Link
                   href={item.disabled ? "#" : item.href}
                   className={cn(
-                    "inline-flex items-center rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200",
+                    "inline-flex items-center whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200",
                     item.isButton
                       ? "bg-foreground text-background shadow-sm hover:opacity-90"
                       : isActive
@@ -56,9 +56,10 @@ export function MainNav({ items, children }: MainNavProps) {
         </nav>
       ) : null}
       <button
-        className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-sm font-semibold transition-transform duration-150 active:scale-95 md:hidden"
+        className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-sm font-semibold transition-transform duration-150 active:scale-95 xl:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}
         aria-label="Toggle navigation menu"
+        aria-expanded={showMobileMenu}
       >
         {showMobileMenu ? (
           <Icons.close className="h-4 w-4" />

@@ -202,6 +202,21 @@ export default async function lessonPage({
     ],
   };
 
+  const learningSchema = {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "@id": `${url}#lesson`,
+    name: lesson.title,
+    description: lessonSummary(course, lesson),
+    url,
+    inLanguage: "en",
+    isAccessibleForFree: true,
+    learningResourceType: "Lesson",
+    educationalLevel: course.difficulty,
+    author: { "@type": "Person", name: siteConfig.authorName, url: siteConfig.url },
+    isPartOf: { "@type": "Course", name: course.title, url: `${siteConfig.url}/courses/${course.id}` },
+  };
+
   // Render the lesson body on the server so crawlers see the full notes
   // without executing JavaScript (the previous client-only render left the
   // article body empty in the initial HTML, which Google treats as thin
@@ -213,6 +228,10 @@ export default async function lessonPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(learningSchema).replace(/</g, "\\u003c") }}
       />
       <LessonNotes contentHtml={contentHtml} />
     </>

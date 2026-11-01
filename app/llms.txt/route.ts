@@ -65,7 +65,7 @@ export async function GET() {
     "",
     `> ${siteConfig.description}`,
     "",
-    `This is the personal site and free learning library of ${siteConfig.authorName}. It holds a portfolio (projects, experience, skills, open-source contributions), a technical blog, and ${COURSES.length} free courses covering ${totalLessons} lessons on agentic AI, large language models, prompt engineering, Python, data science, digital marketing and stock market fundamentals. Everything on the site is free to read; no lesson is gated behind an account.`,
+    `This is the personal site and free learning library of ${siteConfig.authorName}. It holds a portfolio (projects, experience, skills, open-source contributions), a technical blog, and ${COURSES.length} free courses covering ${totalLessons} lessons on agentic AI, large language models, prompt engineering, Python, MySQL and SQL, NumPy, pandas, Matplotlib, seaborn, Plotly, data science, digital marketing and stock market fundamentals. Everything on the site is free to read; no lesson is gated behind an account.`,
     "",
     "Content is written in English (`inLanguage: en`) and served worldwide. Lesson notes are rendered to HTML on the server, so the full text is available without executing JavaScript. Structured data (JSON-LD) describes the person, each article, each course and the site hierarchy.",
     "",
@@ -94,7 +94,7 @@ export async function GET() {
     body.push(...courseSection(course), "");
   }
 
-  body.push("## Articles", "");
+  body.push(    "## Articles", "");
   for (const blog of blogs) {
     body.push(
       link(
@@ -130,6 +130,11 @@ export async function GET() {
   }
 
   body.push(
+    "",
+    "## Practice datasets",
+    "",
+    link("MySQL retail practice database", `${SITE}/downloads/mysql-retail-lab.sql`, "MySQL 8 seed schema and fictional retail data for the separate SQL course. No DROP statements."),
+    link("Data-science sales CSV", `${SITE}/downloads/data-science-sales.csv`, "Twelve fictional orders for NumPy, pandas and visualisation workshops; includes returned orders."),
     "",
     "## Optional",
     "",

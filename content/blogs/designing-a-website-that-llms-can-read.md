@@ -11,6 +11,10 @@ Search used to mean ten blue links. Now a growing share of technical questions g
 
 This is a walk through how [amolshukla.online](https://www.amolshukla.online) is built for that, what I measured, and which parts are genuinely load-bearing versus decorative.
 
+![Typed lessons and markdown articles become readable server HTML, with sitemap, JSON-LD and llms.txt discovery paths.](/blogs/diagrams/content-delivery.svg)
+
+The same source should power human-readable pages and their discovery links so they do not drift apart.
+
 ## What an AI crawler actually does with your page
 
 Retrieval crawlers — GPTBot, ClaudeBot, PerplexityBot, Google-Extended — mostly fetch HTML and extract text. Some render JavaScript, but slowly, inconsistently, and with a budget. A single-page app that paints its article body after hydration looks, to those crawlers, like a page with navigation and no content.

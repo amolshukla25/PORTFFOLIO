@@ -6,40 +6,40 @@
   :root {
     /* Layered neutrals: page sits a half-step below cards so content lifts
        off the background instead of every surface being the same white. */
-    --background: 40 33% 98%;
-    --foreground: 224 24% 13%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
 
-    --muted: 38 22% 95%;
-    --muted-foreground: 224 9% 40%;
+    --muted: 214 32% 94%;
+    --muted-foreground: 215 25% 35%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 224 24% 13%;
 
-    --border: 34 16% 88%;
-    --input: 34 16% 88%;
+    --border: 224 14% 80%;
+    --input: 224 14% 68%;
 
     --card: 0 0% 100%;
     --card-foreground: 224 24% 13%;
 
-    --primary: 224 26% 15%;
-    --primary-foreground: 40 33% 98%;
+    --primary: 221 83% 40%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 38 20% 94.5%;
+    --secondary: 214 32% 94%;
     --secondary-foreground: 224 24% 13%;
 
-    /* Brand accent: indigo dialled back from 84% to 62% saturation so it can
-       sit on large surfaces without vibrating next to the neutral text. */
-    --accent: 250 44% 51%;
+    /* Ocean cyan supports the blue primary action colour in both themes. */
+    --accent: 190 90% 28%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 66% 48%;
     --destructive-foreground: 210 40% 98%;
 
-    --ring: 250 44% 51%;
+    --ring: 221 83% 40%;
 
     /* Semantic tokens — stars, success, code blocks */
     --star: 32 88% 50%;
-    --success: 158 48% 35%;
+    --success: 158 48% 30%;
+    --success-foreground: 0 0% 100%;
     --code-bg: 226 30% 11%;
     --code-fg: 42 18% 94%;
     --code-accent: 160 58% 66%;
@@ -51,40 +51,41 @@
   }
 
   .dark {
-    --background: 224 26% 8%;
-    --foreground: 40 14% 93%;
+    --background: 222 47% 7%;
+    --foreground: 210 40% 96%;
 
     --muted: 224 18% 14%;
-    --muted-foreground: 220 12% 66%;
+    --muted-foreground: 220 12% 75%;
 
     /* Cards are a lifted surface in dark mode — previously identical to the
        page background, which made every panel edge invisible. */
-    --card: 225 22% 11%;
+    --card: 222 35% 12%;
     --card-foreground: 40 14% 93%;
 
     --popover: 223 26% 10%;
     --popover-foreground: 40 14% 93%;
 
-    --border: 222 16% 20%;
-    --input: 222 16% 20%;
+    --border: 222 16% 30%;
+    --input: 222 16% 45%;
 
-    --primary: 40 30% 96%;
+    --primary: 213 94% 78%;
     --primary-foreground: 224 26% 9%;
 
     --secondary: 224 18% 15%;
     --secondary-foreground: 40 30% 96%;
 
-    --accent: 248 76% 78%;
+    --accent: 187 80% 70%;
     --accent-foreground: 226 40% 9%;
 
     --destructive: 0 62% 52%;
     --destructive-foreground: 210 40% 98%;
 
-    --ring: 248 76% 78%;
+    --ring: 213 94% 78%;
 
     /* Semantic tokens — brighter variants for dark backgrounds */
     --star: 45 92% 62%;
     --success: 156 45% 52%;
+    --success-foreground: 224 26% 8%;
     --code-bg: 226 30% 8%;
     --code-fg: 42 18% 94%;
     --code-accent: 158 72% 64%;
@@ -149,19 +150,9 @@
 /* ─── Premium design utilities ───────────────────────────────────────────── */
 
 @layer components {
-  /* Headings: solid ink with a quiet accent tail on the last word or two.
-     Earlier this read ink-through-indigo across the whole line, which made
-     every heading look tinted rather than typeset. */
+  /* Headings use the same readable ink in every theme, not transparent text. */
   .text-gradient {
-    background-image: linear-gradient(
-      90deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--primary)) 70%,
-      hsl(var(--accent)) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: hsl(var(--foreground));
   }
 
   /* Subtle blueprint grid backdrop */
@@ -269,8 +260,10 @@
     border-radius: 9999px;
     border: 1px solid hsl(var(--border) / 0.8);
     background: hsl(var(--muted) / 0.55);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.5;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     font-weight: 500;
     color: hsl(var(--muted-foreground));
   }
@@ -284,8 +277,10 @@
     border-radius: 9999px;
     border: 1px solid hsl(var(--accent) / 0.25);
     background: hsl(var(--accent) / 0.1);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.5;
+    max-width: 100%;
+    overflow-wrap: anywhere;
     font-weight: 500;
     color: hsl(var(--accent));
   }
@@ -307,7 +302,7 @@
   }
 
   .card-body {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     line-height: 1.65;
     color: hsl(var(--muted-foreground));
   }
@@ -340,45 +335,44 @@
   }
 }
 
-/* Per-course accent hues. Six cards, six hues, one shared lightness so the
-   grid looks deliberate rather than randomly coloured. */
+/* Shared blue/cyan family across course and skill tiles. */
 .tone-1 {
-  --tone: 250 44% 51%;
+  --tone: 221 83% 40%;
 }
 .tone-2 {
-  --tone: 174 52% 31%;
+  --tone: 190 90% 28%;
 }
 .tone-3 {
-  --tone: 28 80% 42%;
+  --tone: 210 75% 35%;
 }
 .tone-4 {
-  --tone: 344 58% 47%;
+  --tone: 221 70% 42%;
 }
 .tone-5 {
-  --tone: 268 48% 52%;
+  --tone: 198 80% 30%;
 }
 .tone-6 {
-  --tone: 205 68% 41%;
+  --tone: 205 75% 35%;
 }
 
 /* Dark mode needs lighter inks for the same hues to stay legible. */
 .dark .tone-1 {
-  --tone: 248 76% 76%;
+  --tone: 213 94% 78%;
 }
 .dark .tone-2 {
-  --tone: 172 52% 62%;
+  --tone: 187 80% 70%;
 }
 .dark .tone-3 {
-  --tone: 33 84% 64%;
+  --tone: 210 85% 75%;
 }
 .dark .tone-4 {
-  --tone: 344 70% 72%;
+  --tone: 221 85% 80%;
 }
 .dark .tone-5 {
-  --tone: 268 66% 76%;
+  --tone: 198 80% 72%;
 }
 .dark .tone-6 {
-  --tone: 205 72% 68%;
+  --tone: 205 80% 75%;
 }
 
 /* Balance large headings and avoid orphan words in body copy; both are
@@ -501,17 +495,10 @@
 
 /* ─── Scroll-driven reveals ─────────────────────────────────────────────── */
 
-/* `.reveal` fades a section up as it enters the viewport using the CSS
-   scroll-timeline API — no JavaScript, no hydration cost, and the content is
-   in the HTML regardless. Browsers without support simply render it static. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: rise-in linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 55%;
-    }
-  }
+/* Course cards and syllabus content must never depend on scroll progress
+   to become readable. Keep the legacy class safe for existing callers. */
+.reveal {
+  opacity: 1;
 }
 
 /* Gentle lift for interactive cards. Transform-only, so text never reflows. */
@@ -533,6 +520,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-ping,
+  .animate-bounce,
+  .animate-pulse,
   .animate-text-in,
   .animate-page-in,
   .animate-nav-item,

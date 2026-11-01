@@ -9,6 +9,10 @@ featured: true
 
 Retrieval-Augmented Generation (RAG) connects LLMs to custom datasets. In this comprehensive guide, you'll learn the architecture, code, and implementation steps required to build a secure, full-stack RAG application using a Next.js client and a FastAPI server.
 
+![Documents become chunks and embeddings; a question retrieves context for a model answer with sources.](/blogs/diagrams/retrieval-workflow.svg)
+
+The retrieval stage supplies evidence to the model; source inspection and answer evaluation remain necessary.
+
 ## Understanding RAG Architecture
 
 A typical RAG pipeline is split into three main components: ingestion, retrieval, and generation. The ingestion step involves chunking documents, embedding them using a vectorizer, and storing them in a database. When a user asks a question, the retrieval system finds the most similar chunks, which are then passed alongside the query to the LLM to generate a grounded response.
