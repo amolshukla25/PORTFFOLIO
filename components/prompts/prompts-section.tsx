@@ -17,7 +17,7 @@ import {
   Zap,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/common/animated-section";
-import { AnimatedText } from "@/components/common/animated-text";
+import { SectionHeading } from "@/components/common/section-heading";
 import { Icons } from "@/components/common/icons";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
@@ -44,19 +44,6 @@ const getPromptIcon = (iconName: string, className: string = "h-5 w-5") => {
       return <Activity className={className} />;
     default:
       return <Zap className={className} />;
-  }
-};
-
-const getDifficultyBadge = (difficulty: PromptItem["difficulty"]) => {
-  switch (difficulty) {
-    case "Mastery":
-      return "border-purple-500/30 bg-purple-500/10 text-purple-400";
-    case "Advanced":
-      return "border-accent/30 bg-accent/10 text-accent";
-    case "Intermediate":
-      return "border-emerald-500/30 bg-emerald-500/10 text-emerald-400";
-    default:
-      return "border-border bg-muted/50 text-muted-foreground";
   }
 };
 
@@ -90,76 +77,72 @@ export const PromptsSection = () => {
   return (
     <AnimatedSection
       direction="up"
-      className="container space-y-10 py-16"
+      className="section section-band mt-6 px-4 py-10 sm:px-6 sm:py-14 lg:px-10"
       id="prompts"
     >
-      {/* Header */}
-      <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-        <span className="eyebrow">
-          <Icons.aurora className="h-3.5 w-3.5" /> Prompt Vault
-        </span>
-        <AnimatedText
-          as="h2"
-          className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-        >
-          Amol Shukla's Production AI System Prompts
-        </AnimatedText>
-        <AnimatedText
-          as="p"
-          delay={0.2}
-          className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-        >
-          Amol Shukla's curated collection of production-tested system prompts, agentic ReAct patterns, and LLM optimization templates engineered for real-world applications.
-        </AnimatedText>
-      </div>
+      <SectionHeading
+        icon={Icons.aurora}
+        eyebrow="Prompt vault"
+        title="Production AI system prompts"
+        description="A curated set of production-tested system prompts, agentic ReAct patterns and LLM templates — copy any of them straight into your own stack."
+      />
 
-      {/* Controls: Search & Category Filter Tabs */}
-      <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-        {/* Category Tabs */}
-        <div className="flex w-full flex-wrap items-center justify-center gap-1.5 rounded-2xl border border-border/60 bg-muted/30 p-1.5 backdrop-blur md:w-auto md:justify-start">
+      {/* Controls — search first on mobile, filters beside it from sm up. */}
+      <div className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative order-1 w-full sm:order-2 sm:max-w-xs">
+          <Search
+            aria-hidden
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            type="search"
+            aria-label="Search prompts or variables"
+            placeholder="Search prompts or variables"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="h-11 w-full rounded-xl border border-border/80 bg-card pl-9 pr-9 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-accent/60 focus:ring-2 focus:ring-accent/15"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              aria-label="Clear search"
+              className="absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <Icons.close className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
+
+        <div
+          role="group"
+          aria-label="Filter prompts by category"
+          className="-mx-1 order-2 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1 sm:order-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
+        >
           {PROMPT_CATEGORIES.map((category) => (
             <button
               key={category}
+              type="button"
+              aria-pressed={selectedCategory === category}
               onClick={() => setSelectedCategory(category)}
               className={cn(
-                "rounded-xl px-3.5 py-1.5 text-xs font-semibold transition-all duration-200",
+                "h-9 shrink-0 snap-start rounded-lg px-3 text-xs font-medium transition-colors",
                 selectedCategory === category
-                  ? "bg-accent text-accent-foreground shadow-md shadow-accent/20"
-                  : "text-muted-foreground hover:bg-background/60 hover:text-foreground"
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-border/70 bg-card text-muted-foreground hover:text-foreground"
               )}
             >
               {category}
             </button>
           ))}
         </div>
-
-        {/* Search Bar */}
-        <div className="relative w-full max-w-xs">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search prompts or variables..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border border-border/80 bg-background/80 py-2 pl-9 pr-4 text-xs font-medium text-foreground placeholder:text-muted-foreground/60 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
-            >
-              ✕
-            </button>
-          )}
-        </div>
       </div>
 
-      {/* Prompts Grid */}
       {filteredPrompts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border py-12 text-center">
-          <Terminal className="h-8 w-8 text-muted-foreground/50" />
+        <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-border/80 bg-card/50 px-4 py-12 text-center">
+          <Terminal className="h-7 w-7 text-muted-foreground/60" />
           <p className="mt-3 text-sm font-medium text-muted-foreground">
-            No prompts found matching your search query.
+            No prompts match that search.
           </p>
           <Button
             variant="link"
@@ -168,68 +151,50 @@ export const PromptsSection = () => {
               setSearchQuery("");
               setSelectedCategory("All");
             }}
-            className="mt-1 text-xs text-accent"
+            className="mt-1 h-auto px-0 text-xs text-accent"
           >
             Clear filters
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {filteredPrompts.map((prompt, index) => (
             <AnimatedSection
               key={prompt.id}
-              delay={0.08 * (index + 1)}
+              delay={0.06 * (index + 1)}
               direction="up"
-              className="h-full w-full min-w-0"
+              className="h-full min-w-0"
             >
-              <div className="card-hover group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-border/80 bg-background/80 p-6 backdrop-blur transition-all duration-300 hover:border-accent/50 hover:shadow-xl hover:shadow-accent/5">
-                {/* Top Section */}
-                <div className="space-y-4">
-                  {/* Header badges */}
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 via-accent/5 to-transparent text-accent transition-transform duration-300 group-hover:scale-105">
+              <div className="surface-card hover-lift group flex h-full flex-col p-5 sm:p-6">
+                <div className="flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="tile-tone h-10 w-10 shrink-0">
                       {getPromptIcon(prompt.iconName, "h-5 w-5")}
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-[11px] font-semibold text-accent">
-                        {prompt.category}
-                      </span>
-                      <span
-                        className={cn(
-                          "rounded-full border px-2 py-0.5 text-[10px] font-semibold",
-                          getDifficultyBadge(prompt.difficulty)
-                        )}
-                      >
-                        {prompt.difficulty}
-                      </span>
+                    </span>
+                    <div className="flex flex-wrap justify-end gap-1.5">
+                      <span className="chip-accent">{prompt.category}</span>
+                      <span className="chip">{prompt.difficulty}</span>
                     </div>
                   </div>
 
-                  {/* Title & Summary */}
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-foreground transition-colors group-hover:text-accent">
-                      {prompt.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
-                      {prompt.summary}
-                    </p>
-                  </div>
+                  <h3 className="card-title mt-3 transition-colors group-hover:text-accent">
+                    {prompt.title}
+                  </h3>
+                  <p className="card-body mt-2 line-clamp-3">{prompt.summary}</p>
 
-                  {/* Target Model Badge */}
-                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    <Sparkle className="h-3 w-3 text-accent" />
-                    <span>Target: </span>
-                    <span className="font-semibold text-foreground">
+                  <p className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px] text-muted-foreground">
+                    <Sparkle className="h-3 w-3 text-accent" aria-hidden />
+                    Target
+                    <span className="font-medium text-foreground">
                       {prompt.targetModel}
                     </span>
-                  </div>
+                  </p>
 
-                  {/* Variable Pills */}
-                  <div className="flex flex-wrap gap-1 pt-1">
+                  <div className="mt-2.5 flex flex-wrap gap-1">
                     {prompt.variables.map((v) => (
                       <span
                         key={v}
-                        className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                        className="rounded-md border border-border/70 bg-muted/50 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
                       >
                         {v}
                       </span>
@@ -237,14 +202,14 @@ export const PromptsSection = () => {
                   </div>
                 </div>
 
-                {/* Bottom Actions */}
-                <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-4">
+                <div className="mt-4 flex items-center justify-between gap-2 border-t border-border/70 pt-3.5">
                   <button
+                    type="button"
                     onClick={() => setActiveModalPrompt(prompt)}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent transition-colors hover:text-accent/80"
+                    className="inline-flex h-9 items-center gap-1.5 text-xs font-semibold text-accent transition-opacity hover:opacity-80"
                   >
                     <Eye className="h-3.5 w-3.5" />
-                    View Prompt
+                    View prompt
                   </button>
 
                   <Button
@@ -252,21 +217,20 @@ export const PromptsSection = () => {
                     variant={copiedId === prompt.id ? "default" : "outline"}
                     onClick={() => handleCopy(prompt.id, prompt.fullPrompt)}
                     className={cn(
-                      "h-8 gap-1.5 rounded-xl px-3 text-xs transition-all",
-                      copiedId === prompt.id
-                        ? "bg-success text-success-foreground hover:bg-success"
-                        : "hover:border-accent hover:text-accent"
+                      "h-9 gap-1.5 rounded-lg px-3 text-xs",
+                      copiedId === prompt.id &&
+                        "bg-success text-success-foreground hover:bg-success"
                     )}
                   >
                     {copiedId === prompt.id ? (
                       <>
                         <Check className="h-3.5 w-3.5" />
-                        Copied!
+                        Copied
                       </>
                     ) : (
                       <>
                         <Copy className="h-3.5 w-3.5" />
-                        Copy Prompt
+                        Copy
                       </>
                     )}
                   </Button>
@@ -277,35 +241,33 @@ export const PromptsSection = () => {
         </div>
       )}
 
-      {/* Full Prompt View Modal */}
+      {/* Full prompt view */}
       {activeModalPrompt && (
         <Modal
           title={activeModalPrompt.title}
-          description={`Category: ${activeModalPrompt.category} • Target Model: ${activeModalPrompt.targetModel}`}
+          description={`${activeModalPrompt.category} · ${activeModalPrompt.difficulty} · ${activeModalPrompt.targetModel}`}
           isOpen={!!activeModalPrompt}
           onClose={() => setActiveModalPrompt(null)}
         >
-          <div className="mt-4 space-y-5 text-left max-h-[70vh] overflow-y-auto pr-1">
-            {/* Use Case */}
-            <div className="rounded-xl border border-border/60 bg-muted/30 p-3.5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-accent">
-                💡 When to Use
+          <div className="mt-4 max-h-[70vh] space-y-4 overflow-y-auto pr-1 text-left">
+            <div className="rounded-xl border border-border/70 bg-muted/40 p-3.5">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-accent">
+                When to use
               </h4>
-              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                 {activeModalPrompt.useCase}
               </p>
             </div>
 
-            {/* Configured Variables */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-foreground mb-2">
-                ⚙️ Configurable Variables
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                Variables
               </h4>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
                 {activeModalPrompt.variables.map((variable) => (
                   <span
                     key={variable}
-                    className="rounded-lg border border-accent/30 bg-accent/10 px-2.5 py-1 font-mono text-xs font-medium text-accent"
+                    className="rounded-lg border border-accent/30 bg-accent/10 px-2 py-0.5 font-mono text-[11px] font-medium text-accent"
                   >
                     {variable}
                   </span>
@@ -313,11 +275,10 @@ export const PromptsSection = () => {
               </div>
             </div>
 
-            {/* Prompt Code Block */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                  📄 Full System Prompt
+              <div className="mb-1.5 flex items-center justify-between gap-2">
+                <h4 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                  Full system prompt
                 </h4>
                 <Button
                   size="sm"
@@ -328,32 +289,31 @@ export const PromptsSection = () => {
                       activeModalPrompt.fullPrompt
                     )
                   }
-                  className="h-7 gap-1 px-2.5 text-[11px] rounded-lg"
+                  className="h-8 gap-1 rounded-lg px-2.5 text-[11px]"
                 >
                   {copiedId === activeModalPrompt.id + "-modal" ? (
                     <>
                       <Check className="h-3 w-3 text-success" />
-                      Copied!
+                      Copied
                     </>
                   ) : (
                     <>
                       <Copy className="h-3 w-3" />
-                      Copy Code
+                      Copy
                     </>
                   )}
                 </Button>
               </div>
-              <pre className="max-h-60 overflow-x-auto rounded-xl border border-border/80 bg-zinc-950 p-4 font-mono text-xs text-zinc-200 leading-relaxed whitespace-pre-wrap">
+              <pre className="max-h-60 overflow-x-auto whitespace-pre-wrap break-words rounded-xl border border-border/80 bg-zinc-950 p-4 font-mono text-[11px] leading-relaxed text-zinc-200">
                 {activeModalPrompt.fullPrompt}
               </pre>
             </div>
 
-            {/* Sample Output */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-foreground mb-1.5">
-                🎯 Example Execution Output
+              <h4 className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-foreground">
+                Example output
               </h4>
-              <pre className="max-h-40 overflow-x-auto rounded-xl border border-border/60 bg-muted/40 p-3.5 font-mono text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              <pre className="max-h-40 overflow-x-auto whitespace-pre-wrap break-words rounded-xl border border-border/70 bg-muted/40 p-3.5 font-mono text-[11px] leading-relaxed text-muted-foreground">
                 {activeModalPrompt.exampleOutput}
               </pre>
             </div>

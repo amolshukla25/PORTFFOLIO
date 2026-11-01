@@ -10,7 +10,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ blog }: BlogCardProps) {
   const formattedDate = new Date(blog.date).toLocaleDateString("en-US", {
-    month: "long",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
@@ -20,72 +20,66 @@ export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link
       href={`/blogs/${blog.slug}`}
-      className="card-hover group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background"
+      className="surface-card hover-lift group flex h-full flex-col overflow-hidden"
     >
       <article className="flex h-full flex-col">
-        {/* Cover image */}
+        {/* Cover image — fixed ratio instead of a fixed height, so the card
+            scales with the column instead of leaving dead space on mobile. */}
         {blog.coverImage && (
-          <div className="relative h-[180px] w-full flex-shrink-0 overflow-hidden bg-muted">
+          <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted">
             <Image
               src={blog.coverImage}
               alt={blog.title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+            {/* Shared wash over every cover so the mixed artwork reads as one
+                set rather than five different photo styles. */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-accent/10 mix-blend-multiply opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           </div>
         )}
 
-        {/* Content */}
-        <div className="flex flex-grow flex-col gap-3 p-6">
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5" aria-label="Tags">
-            {blog.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex items-center rounded-full border border-accent/20 bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent"
-              >
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <div className="flex flex-wrap gap-1.5">
+            {blog.tags.slice(0, 2).map((tag) => (
+              <span key={tag} className="chip-accent">
                 {tag}
               </span>
             ))}
-            {blog.tags.length > 3 && (
-              <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-                +{blog.tags.length - 3}
-              </span>
+            {blog.tags.length > 2 && (
+              <span className="chip">+{blog.tags.length - 2}</span>
             )}
           </div>
 
-          {/* Title */}
-          <h3 className="line-clamp-2 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-accent">
+          <h3 className="card-title mt-3 line-clamp-2 transition-colors group-hover:text-accent">
             {blog.title}
           </h3>
 
-          {/* Description */}
-          <p className="line-clamp-3 flex-grow text-sm leading-relaxed text-muted-foreground">
+          <p className="card-body mt-2 line-clamp-2 sm:line-clamp-3">
             {blog.description}
           </p>
 
-          {/* Footer: date + read time + arrow */}
-          <div className="mt-auto flex items-center justify-between border-t border-border/60 pt-4">
-            <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              <time dateTime={isoDate} className="flex items-center gap-1">
+          <div className="mt-auto flex items-center justify-between gap-2 border-t border-border/70 pt-3.5">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-muted-foreground">
+              <time dateTime={isoDate} className="inline-flex items-center gap-1">
                 <Icons.calendar className="h-3.5 w-3.5" />
                 {formattedDate}
               </time>
               {blog.readingTime && (
-                <span className="flex items-center gap-1">
+                <span className="inline-flex items-center gap-1">
                   <Icons.clock className="h-3.5 w-3.5" />
-                  {blog.readingTime} min read
+                  {blog.readingTime} min
                 </span>
               )}
             </div>
-            {/* Decorative read indicator */}
             <span
-              className="inline-flex items-center gap-0.5 text-xs font-medium text-muted-foreground transition-colors duration-200 group-hover:text-accent"
+              className="inline-flex shrink-0 items-center gap-0.5 text-[11px] font-semibold text-muted-foreground transition-colors group-hover:text-accent"
               aria-hidden="true"
             >
               Read
-              <Icons.chevronRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
+              <Icons.chevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </span>
           </div>
         </div>

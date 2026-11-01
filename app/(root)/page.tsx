@@ -7,11 +7,12 @@ import { AnimatedSection } from "@/components/common/animated-section";
 import { AnimatedText } from "@/components/common/animated-text";
 import { ClientPageWrapper } from "@/components/common/client-page-wrapper";
 import { Icons } from "@/components/common/icons";
+import { SectionHeading } from "@/components/common/section-heading";
 import { Code } from "lucide-react";
 import ProjectCard from "@/components/projects/project-card";
 import { PromptsSection } from "@/components/prompts/prompts-section";
 import SkillsCard from "@/components/skills/skills-card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { COURSES } from "@/config/courses";
 import { experiences } from "@/config/experience";
 import { pagesConfig } from "@/config/pages";
@@ -73,10 +74,16 @@ export default function IndexPage() {
   // Teaching journey began in 2024 — tracked separately from total experience
   const yearsTraining = Math.max(1, new Date().getFullYear() - 2024);
 
+  const totalLessons = COURSES.reduce(
+    (total, course) =>
+      total + course.modules.reduce((sum, module) => sum + module.lessons.length, 0),
+    0
+  );
+
   const stats = [
-    { value: `${yearsOfExperience}+`, label: "Years Experience" },
-    { value: `${featuredProjects.length}`, label: "Projects" },
-    { value: `${COURSES.length}`, label: "Courses" },
+    { value: `${yearsOfExperience}+`, label: "Years experience" },
+    { value: `${COURSES.length}`, label: "Free courses" },
+    { value: `${totalLessons}`, label: "Lessons" },
     { value: `${allBlogsCount}`, label: "Articles" },
   ];
 
@@ -104,12 +111,6 @@ export default function IndexPage() {
       description:
         "Ship end-to-end products with Next.js, React, TypeScript, Python, and FastAPI.",
     },
-  ];
-
-  const tileGradients = [
-    "from-primary to-accent",
-    "from-accent/90 to-primary/80",
-    "from-primary/80 to-accent/70",
   ];
 
   // Structured data for the homepage — WebSite + Organization + Person in a
@@ -163,333 +164,88 @@ export default function IndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(graphSchema) }}
       />
 
-      {/* ─── Hero ─────────────────────────────────────────────────────── */}
+      {/* ─── Hero ───────────────────────────────────────────────────────
+          One primary action, two supporting ones, and the portrait in a
+          framed card. The four portal links used to sit here as large
+          buttons and drowned the actual call to action; they now live in
+          the slim strip below. */}
       <section className="relative overflow-hidden">
-        {/* Backdrop decorations */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_38%,black_30%,transparent_78%)]" />
-          <div className="animate-blob absolute -top-32 left-1/2 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
-          <div className="animate-blob animation-delay-4000 absolute bottom-10 left-[8%] h-80 w-80 rounded-full bg-accent/[0.07] blur-3xl" />
+          <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,black_25%,transparent_75%)]" />
+          <div className="absolute -top-32 right-[-12%] h-[360px] w-[360px] rounded-full bg-accent/10 blur-3xl sm:h-[460px] sm:w-[460px]" />
+          <div className="absolute bottom-[-10%] left-[-14%] h-[300px] w-[300px] rounded-full bg-accent/[0.06] blur-3xl" />
         </div>
 
-        <div className="container relative flex min-h-[calc(100vh-4rem)] max-w-[64rem] flex-col items-center justify-center py-24 text-center supports-[height:100svh]:min-h-[calc(100svh-4rem)]">
-          {/* Status badge */}
-          <AnimatedText delay={0.1} className="mb-8">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+        <div className="relative grid items-center gap-9 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14 lg:py-20">
+          {/* Copy */}
+          <div className="min-w-0">
+            <AnimatedText delay={0.05}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/80 px-3 py-1.5 text-[11px] font-medium text-muted-foreground shadow-sm backdrop-blur sm:text-xs">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+                </span>
+                Available for AI projects & training
               </span>
-              Available for AI projects & training
-            </span>
-          </AnimatedText>
+            </AnimatedText>
 
-          {/* Avatar */}
-          <AnimatedText delay={0.2} className="group relative mb-8">
-            <div className="absolute -inset-3 rounded-full bg-accent/25 opacity-20 blur-xl transition-opacity duration-500 group-hover:opacity-35" />
-            <div className="relative rounded-full bg-gradient-to-tr from-accent to-primary/80 p-[3px] transition-transform duration-500 group-hover:scale-[1.02]">
-              <Image
-                src={profileImg}
-                height={220}
-                width={220}
-                sizes="(max-width: 768px) 60vw, 220px"
-                className="relative h-[180px] w-[180px] rounded-full border-4 border-background object-cover object-[center_35%] sm:h-[200px] sm:w-[200px]"
-                alt="Amol Shukla - Applied AI Engineer Portfolio"
-                priority
-              />
-            </div>
-          </AnimatedText>
+            <AnimatedText
+              as="h1"
+              delay={0.1}
+              className="mt-5 font-heading text-[2.1rem] font-bold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-[3.5rem]"
+            >
+              Amol Shukla
+            </AnimatedText>
 
-          {/* Name */}
-          <AnimatedText
-            as="h1"
-            delay={0.3}
-            className="text-gradient font-heading text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl"
-          >
-            Amol Shukla
-          </AnimatedText>
+            <AnimatedText
+              as="p"
+              delay={0.18}
+              className="mt-3 font-heading text-base font-semibold leading-snug text-foreground/90 sm:text-lg"
+            >
+              AI Trainer
+              <span className="mx-2 text-accent" aria-hidden>
+                /
+              </span>
+              Python Developer
+              <span className="mx-2 text-accent" aria-hidden>
+                /
+              </span>
+              Generative AI Specialist
+            </AnimatedText>
 
-          {/* Tagline */}
-          <AnimatedText
-            as="h3"
-            delay={0.45}
-            className="mt-3 font-heading text-base font-semibold sm:text-xl md:text-2xl"
-          >
-            AI Trainer <span className="mx-1 text-accent">•</span> Python
-            Developer <span className="mx-1 text-accent">•</span> Generative AI
-            Specialist
-          </AnimatedText>
+            <AnimatedText delay={0.26} className="mt-4 max-w-[54ch]">
+              <span className="text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+                I build agentic AI systems and teach the engineers who ship
+                them — {COURSES.length} free courses, {totalLessons} lessons, and
+                production LLM work in between.
+              </span>
+            </AnimatedText>
 
-          {/* Description */}
-          <AnimatedText delay={0.6} className="mt-5 max-w-[42rem]">
-            <p className="leading-relaxed text-sm text-muted-foreground sm:text-base">
-              Results-driven AI trainer and Python developer focused on
-              building practical learning systems and real-world AI
-              applications.
-            </p>
-          </AnimatedText>
-
-          {/* CTAs */}
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:space-x-4">
-            <AnimatedText delay={0.7}>
+            {/* CTAs: one filled action, one outline, one quiet text link. */}
+            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
-                href="#about"
+                href="/courses"
                 className={cn(
-                  buttonVariants({ size: "lg", variant: "default" }),
-                  "group w-full rounded-xl shadow-sm shadow-primary/10 hover:bg-primary/90 sm:w-auto"
+                  buttonVariants({ size: "lg" }),
+                  "group h-11 w-full gap-2 rounded-xl px-5 text-sm sm:w-auto"
                 )}
-                aria-label="Learn more about Amol Shukla"
               >
-                <Icons.userFill className="mr-2 h-4 w-4" /> About Me
+                <Icons.page className="h-4 w-4" />
+                Explore courses
+                <Icons.arrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
-            </AnimatedText>
-            <AnimatedText delay={0.85}>
-              <a
-                href={
-                  process.env.NEXT_PUBLIC_RESUME_LINK ||
-                  siteConfig.links.resume ||
-                  "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ size: "lg", variant: "outline" }),
-                  "w-full rounded-xl sm:w-auto"
-                )}
-                aria-label="View resume"
-              >
-                <Icons.post className="mr-2 h-4 w-4" /> Resume
-              </a>
-            </AnimatedText>
-            <AnimatedText delay={1.0}>
+
               <Link
-                href={"/contact"}
-                rel="noreferrer"
+                href="/contact"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "w-full rounded-xl sm:w-auto"
+                  "h-11 w-full rounded-xl px-5 text-sm sm:w-auto"
                 )}
-                aria-label="Contact Amol Shukla"
               >
-                <Icons.contact className="mr-2 h-4 w-4" /> Contact
+                <Icons.contact className="h-4 w-4" />
+                Contact me
               </Link>
-            </AnimatedText>
-          </div>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/student/login"
-              className={buttonVariants({ size: "lg" })}
-            >
-              Student login
-            </Link>
-            <Link
-              href="/student/register"
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-            >
-              Student registration
-            </Link>
-            <Link
-              href="/admin/login"
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-            >
-              Admin login
-            </Link>
-            <Link
-              href="/admin/batches"
-              className={buttonVariants({ size: "lg", variant: "outline" })}
-            >
-              Student batches
-            </Link>
-          </div>
-
-          {/* Stats */}
-          <AnimatedText delay={1.15} className="mt-14 w-full max-w-2xl">
-            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border/60 bg-border/60 shadow-sm sm:grid-cols-4">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-background/80 px-4 py-5 backdrop-blur transition-colors hover:bg-background"
-                >
-                  <div className="text-gradient font-heading text-2xl font-bold sm:text-3xl">
-                    {stat.value}
-                  </div>
-                  <div className="mt-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AnimatedText>
-
-          {/* Scroll indicator */}
-          <AnimatedText delay={1.3} className="mt-12">
-            <a
-              href="#courses"
-              className="flex justify-center text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Scroll down to courses"
-            >
-              <Icons.chevronDown className="h-6 w-6 animate-bounce" />
-            </a>
-          </AnimatedText>
-        </div>
-      </section>
-
-      {/* ─── Syllabus & Courses (Immediately After Hero) ─────────────── */}
-      <AnimatedSection
-        direction="up"
-        className="container space-y-10 py-16"
-        id="courses"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.brain className="h-3.5 w-3.5" /> Syllabus & Courses
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            Syllabus & Courses
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            Access interactive notes, code walk-throughs, and downloadable PDF worksheets curated for students and learners.
-          </AnimatedText>
-        </div>
-
-        <div className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full items-stretch">
-            {COURSES.map((course, index) => {
-              const totalLessons = course.modules.reduce(
-                (acc, module) => acc + module.lessons.length,
-                0
-              );
-
-              return (
-                <AnimatedSection
-                  key={course.id}
-                  delay={0.08 * (index + 1)}
-                  direction="up"
-                  className="h-full w-full min-w-0"
-                >
-                  <Link
-                    href={`/courses/${course.id}`}
-                    className="card-hover group relative flex flex-col bg-card border border-border rounded-2xl overflow-hidden h-full p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/40 hover:-translate-y-1"
-                  >
-                    <div className="flex flex-col h-full gap-4">
-                      {/* Top bar with icon and difficulty */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent transition-transform duration-300 group-hover:scale-110">
-                          {getCourseIcon(course.iconName, "h-5 w-5")}
-                        </div>
-                        <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-semibold text-accent">
-                          {course.difficulty}
-                        </span>
-                      </div>
-
-                      {/* Category tags */}
-                      <div className="flex flex-wrap gap-1.5" aria-label="Tags">
-                        {course.category.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-primary/10 text-primary border border-primary/20"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="font-heading text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors duration-200">
-                        {course.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed flex-grow">
-                        {course.shortDescription}
-                      </p>
-
-                      {/* Stats footer */}
-                      <div className="mt-auto flex items-center justify-between pt-4 border-t border-border/60">
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1.5">
-                            <Icons.clock className="h-3.5 w-3.5" />
-                            {course.duration}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            <Icons.page className="h-3.5 w-3.5" />
-                            {totalLessons} lessons
-                          </span>
-                        </div>
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-accent group-hover:text-primary transition-colors">
-                          View Syllabus
-                          <Icons.chevronRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-
-        <AnimatedText delay={0.4} className="flex justify-center pt-2">
-          <Link href="/courses">
-            <Button variant={"outline"} className="group rounded-xl">
-              <Icons.page className="mr-2 h-4 w-4" /> View All Courses
-              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
-
-      {/* ─── About ────────────────────────────────────────────────────── */}
-      <AnimatedSection direction="up" className="container py-16" id="about">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Bio */}
-          <div className="space-y-6">
-            <span className="eyebrow">
-              <Icons.userFill className="h-3.5 w-3.5" /> About Me
-            </span>
-            <AnimatedText
-              as="h2"
-              className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-            >
-              Turning complex AI into practical skills
-            </AnimatedText>
-            <div className="space-y-4 leading-relaxed text-muted-foreground">
-              <p>
-                I&apos;m {siteConfig.authorName} — an AI Developer, Trainer,
-                and Agentic AI Expert with {yearsTraining}+ years of
-                experience helping developers and data professionals master
-                Python, machine learning, and generative AI.
-              </p>
-              <p>
-                As a full-time AI trainer at Ikigai School of AI, I design
-                project-based curricula, mentor students through placements,
-                and build production applications — from agentic AI pipelines
-                to full-stack web products — in parallel.
-              </p>
-            </div>
-
-            {/* Socials + Resume */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              {SocialLinks.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={item.name}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-muted/40 text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent"
-                >
-                  <item.icon className="h-4 w-4" />
-                </a>
-              ))}
               <a
                 href={
                   process.env.NEXT_PUBLIC_RESUME_LINK ||
@@ -497,28 +253,305 @@ export default function IndexPage() {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "sm" }),
-                  "ml-1 rounded-xl"
-                )}
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-accent sm:justify-start"
               >
-                <Icons.post className="mr-2 h-4 w-4" /> Resume
+                <Icons.post className="h-4 w-4" />
+                <span className="link-underline">Resume</span>
               </a>
             </div>
           </div>
 
-          {/* Highlights */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {aboutHighlights.map((h, i) => (
-              <AnimatedSection key={h.title} delay={0.1 * (i + 1)} direction="up">
-                <div className="card-hover h-full rounded-2xl border border-border bg-card p-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/15 to-transparent text-accent">
-                    <h.icon size={22} />
+          {/* Portrait card */}
+          <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[330px] lg:max-w-none">
+            <div
+              aria-hidden
+              className="absolute -inset-4 rounded-[2rem] bg-accent/10 blur-2xl"
+            />
+            <div className="relative overflow-hidden rounded-[1.5rem] border border-border/80 bg-card p-2 shadow-sm">
+              <div className="relative aspect-square overflow-hidden rounded-[1.15rem] bg-muted">
+                <Image
+                  src={profileImg}
+                  alt="Amol Shukla — AI Developer and Trainer"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 330px, 320px"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
+                  <div className="min-w-0">
+                    <p className="font-heading text-sm font-semibold text-white">
+                      Amol Shukla
+                    </p>
+                    <p className="mt-0.5 text-[11px] leading-snug text-white/75">
+                      AI Developer · Trainer
+                    </p>
                   </div>
-                  <h3 className="mt-4 font-bold text-foreground">{h.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {h.description}
+                  <span className="shrink-0 rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur">
+                    {yearsOfExperience}+ yrs
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating facts — desktop only, so mobile stays uncluttered. */}
+            <div className="pointer-events-none absolute -left-7 top-10 hidden rounded-xl border border-border/80 bg-card/95 px-3 py-2 shadow-sm backdrop-blur lg:block">
+              <p className="font-heading text-base font-bold tabular-nums text-foreground">
+                {totalLessons}
+              </p>
+              <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                Free lessons
+              </p>
+            </div>
+            <div className="pointer-events-none absolute -right-5 bottom-16 hidden rounded-xl border border-border/80 bg-card/95 px-3 py-2 shadow-sm backdrop-blur lg:block">
+              <p className="font-heading text-base font-bold tabular-nums text-foreground">
+                {COURSES.length}
+              </p>
+              <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                Courses
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats strip */}
+        <AnimatedText delay={0.34} className="relative pb-2">
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border/70 bg-border/60 sm:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="bg-card px-4 py-4 sm:px-5">
+                <dt className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-[11px]">
+                  {stat.label}
+                </dt>
+                <dd className="mt-1 font-heading text-xl font-bold tabular-nums text-foreground sm:text-2xl">
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </AnimatedText>
+      </section>
+
+      {/* ─── Training portal strip ──────────────────────────────────────
+          Demoted from the hero: real but secondary traffic. */}
+      <section aria-labelledby="portal-heading" className="pt-8 sm:pt-10">
+        <div className="flex flex-col gap-4 rounded-2xl border border-border/70 bg-card/70 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div className="max-w-[46ch]">
+            <h2
+              id="portal-heading"
+              className="text-sm font-semibold text-foreground"
+            >
+              Training portal
+            </h2>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+              For students in my batches: sign in to log a session, or register
+              and wait for approval.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+            <Link
+              href="/student/login"
+              className={cn(
+                buttonVariants({ size: "sm" }),
+                "h-10 justify-center rounded-xl px-3.5 text-xs"
+              )}
+            >
+              Student sign-in
+            </Link>
+            <Link
+              href="/student/register"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "sm" }),
+                "h-10 justify-center rounded-xl px-3.5 text-xs"
+              )}
+            >
+              Register
+            </Link>
+            <Link
+              href="/admin/login"
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "h-10 justify-center rounded-xl px-3 text-xs"
+              )}
+            >
+              Trainer sign-in
+            </Link>
+            <Link
+              href="/admin/batches"
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "sm" }),
+                "h-10 justify-center rounded-xl px-3 text-xs"
+              )}
+            >
+              Batches
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Syllabus & courses ───────────────────────────────────────── */}
+      <AnimatedSection direction="up" className="section" id="courses">
+        <SectionHeading
+          icon={Icons.brain}
+          eyebrow="Learning hub"
+          title="Syllabus & courses"
+          description="Interactive notes, code walk-throughs and downloadable worksheets. Every lesson is free and readable without an account."
+        />
+
+        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {COURSES.map((course, index) => {
+            const lessons = course.modules.reduce(
+              (acc, module) => acc + module.lessons.length,
+              0
+            );
+
+            return (
+              <AnimatedSection
+                key={course.id}
+                delay={0.06 * (index + 1)}
+                direction="up"
+                className="h-full min-w-0"
+              >
+                <Link
+                  href={`/courses/${course.id}`}
+                  className={cn(
+                    "surface-card hover-lift group flex h-full flex-col p-5 sm:p-6",
+                    `tone-${(index % 6) + 1}`
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="tile-tone h-10 w-10 shrink-0">
+                      {getCourseIcon(course.iconName, "h-5 w-5")}
+                    </span>
+                    <span className="chip shrink-0">{course.difficulty}</span>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {course.category.slice(0, 3).map((tag) => (
+                      <span key={tag} className="chip">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <h3 className="card-title mt-3 line-clamp-2 transition-colors group-hover:text-accent">
+                    {course.title}
+                  </h3>
+                  <p className="card-body mt-2 line-clamp-3">
+                    {course.shortDescription}
                   </p>
+
+                  <div className="mt-auto flex items-center justify-between gap-3 border-t border-border/70 pt-3.5">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <Icons.clock className="h-3.5 w-3.5" />
+                        {course.duration}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Icons.page className="h-3.5 w-3.5" />
+                        {lessons} lessons
+                      </span>
+                    </div>
+                    <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-semibold text-accent">
+                      Syllabus
+                      <Icons.chevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/courses"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-10 rounded-xl px-4 text-xs"
+            )}
+          >
+            <Icons.page className="mr-2 h-3.5 w-3.5" />
+            View all courses
+            <Icons.arrowRight className="ml-2 h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </AnimatedSection>
+
+      {/* ─── About ────────────────────────────────────────────────────── */}
+      <AnimatedSection direction="up" className="section" id="about">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+          <div>
+            <SectionHeading
+              icon={Icons.userFill}
+              eyebrow="About me"
+              title="Turning complex AI into practical skills"
+              align="start"
+            />
+
+            <div className="mt-4 space-y-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+              <p>
+                I&apos;m {siteConfig.authorName} — an AI Developer, Trainer and
+                Agentic AI Expert with {yearsTraining}+ years of experience
+                helping developers and data professionals master Python, machine
+                learning and generative AI.
+              </p>
+              <p>
+                As a full-time AI trainer at Ikigai School of AI, I design
+                project-based curricula, mentor students through placements, and
+                build production applications — from agentic AI pipelines to
+                full-stack web products — in parallel.
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-2.5">
+              {SocialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.name}
+                  className="grid h-10 w-10 place-items-center rounded-xl border border-border/70 bg-card text-muted-foreground transition-colors hover:border-accent/40 hover:text-accent"
+                >
+                  <item.icon className="h-4 w-4" />
+                </a>
+              ))}
+              <a
+                href={
+                  process.env.NEXT_PUBLIC_RESUME_LINK || siteConfig.links.resume
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "sm" }),
+                  "h-10 rounded-xl px-3.5 text-xs"
+                )}
+              >
+                <Icons.post className="mr-2 h-3.5 w-3.5" />
+                Resume
+              </a>
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+            {aboutHighlights.map((h, i) => (
+              <AnimatedSection
+                key={h.title}
+                delay={0.06 * (i + 1)}
+                direction="up"
+                className="h-full"
+              >
+                <div
+                  className={cn(
+                    "surface-card hover-lift h-full p-4 sm:p-5",
+                    `tone-${i + 1}`
+                  )}
+                >
+                  <span className="tile-tone h-9 w-9">
+                    <h.icon size={18} />
+                  </span>
+                  <h3 className="card-title mt-3">{h.title}</h3>
+                  <p className="card-body mt-1.5">{h.description}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -526,48 +559,33 @@ export default function IndexPage() {
         </div>
       </AnimatedSection>
 
-      {/* ─── Prompts Vault Section ───────────────────────────────────── */}
+      {/* ─── Prompt vault ─────────────────────────────────────────────── */}
       <PromptsSection />
 
       {/* ─── Experience ───────────────────────────────────────────────── */}
-      <AnimatedSection
-        direction="up"
-        className="container py-16"
-        id="experience"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.work className="h-3.5 w-3.5" /> Experience
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            Where I&apos;ve worked
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            A track record of delivering AI training and building production
-            software across companies and startups.
-          </AnimatedText>
-        </div>
+      <AnimatedSection direction="up" className="section" id="experience">
+        <SectionHeading
+          icon={Icons.work}
+          eyebrow="Experience"
+          title="Where I've worked"
+          description="A track record of delivering AI training and building production software across companies and startups."
+        />
 
-        <div className="mx-auto mt-12 max-w-3xl space-y-4">
+        <div className="mx-auto mt-8 max-w-3xl space-y-3 sm:mt-10">
           {experiences.slice(0, 3).map((exp, i) => (
-            <AnimatedSection key={exp.id} delay={0.1 * (i + 1)} direction="up">
+            <AnimatedSection
+              key={exp.id}
+              delay={0.06 * (i + 1)}
+              direction="up"
+            >
               <Link
                 href={`/experience/${exp.id}`}
-                className="card-hover group flex items-start gap-4 rounded-2xl border border-border bg-background p-5"
+                className={cn(
+                  "surface-card hover-lift group flex items-start gap-3 p-4 sm:gap-4 sm:p-5",
+                  `tone-${i + 1}`
+                )}
               >
-                <span
-                  className={cn(
-                    "flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br font-heading text-sm font-bold text-primary-foreground shadow-sm",
-                    tileGradients[i % tileGradients.length]
-                  )}
-                >
+                <span className="tile-tone h-10 w-10 shrink-0 font-heading text-xs font-bold">
                   {exp.company
                     .split(" ")
                     .slice(0, 2)
@@ -575,166 +593,146 @@ export default function IndexPage() {
                     .join("")}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <h3 className="font-bold text-foreground transition-colors duration-200 group-hover:text-accent">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <h3 className="card-title transition-colors group-hover:text-accent">
                       {exp.position}
                     </h3>
-                    <span className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent">
+                    <span className="chip">
                       {getDurationText(exp.startDate, exp.endDate)}
                     </span>
                   </div>
-                  <p className="mt-0.5 text-sm font-medium text-muted-foreground">
+                  <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-[13px]">
                     {exp.company} · {exp.location}
                   </p>
-                  <p className="mt-1 line-clamp-1 text-sm text-muted-foreground/80">
+                  <p className="card-body mt-1 line-clamp-2">
                     {exp.description[0]}
                   </p>
                 </div>
                 <Icons.chevronRight
-                  aria-hidden="true"
-                  className="mt-1 h-4 w-4 flex-shrink-0 text-muted-foreground transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-accent"
+                  aria-hidden
+                  className="mt-1 hidden h-4 w-4 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:text-accent sm:block"
                 />
               </Link>
             </AnimatedSection>
           ))}
-          <div className="flex justify-center pt-4">
-            <Link href="/experience">
-              <Button variant={"outline"} className="group rounded-xl">
-                Full career timeline
-                <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </Button>
+
+          <div className="flex justify-center pt-3">
+            <Link
+              href="/experience"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "sm" }),
+                "h-10 rounded-xl px-4 text-xs"
+              )}
+            >
+              Full career timeline
+              <Icons.arrowRight className="ml-2 h-3.5 w-3.5" />
             </Link>
           </div>
         </div>
       </AnimatedSection>
 
       {/* ─── Projects ─────────────────────────────────────────────────── */}
-      <AnimatedSection
-        direction="up"
-        className="container space-y-10 py-16"
-        id="projects"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.work className="h-3.5 w-3.5" /> Portfolio
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            {pagesConfig.projects.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {pagesConfig.projects.description}
-          </AnimatedText>
-        </div>
-        <div className="grid w-full grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <AnimatedSection direction="up" className="section" id="projects">
+        <SectionHeading
+          icon={Icons.work}
+          eyebrow="Portfolio"
+          title={pagesConfig.projects.title}
+          description={pagesConfig.projects.description}
+        />
+
+        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {featuredProjects.map((project, index) => (
             <AnimatedSection
               key={project.id}
-              delay={0.1 * (index + 1)}
+              delay={0.06 * (index + 1)}
               direction="up"
-              className="h-full w-full min-w-0"
+              className="h-full min-w-0"
             >
               <ProjectCard project={project} />
             </AnimatedSection>
           ))}
         </div>
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/projects">
-            <Button variant={"outline"} className="group rounded-xl">
-              View All
-              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/projects"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-10 rounded-xl px-4 text-xs"
+            )}
+          >
+            View all projects
+            <Icons.arrowRight className="ml-2 h-3.5 w-3.5" />
           </Link>
-        </AnimatedText>
+        </div>
       </AnimatedSection>
 
       {/* ─── Skills ───────────────────────────────────────────────────── */}
-      <AnimatedSection
-        direction="up"
-        className="container space-y-10 py-16"
-        id="skills"
-      >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.aurora className="h-3.5 w-3.5" /> Expertise
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            {pagesConfig.skills.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {pagesConfig.skills.description}
-          </AnimatedText>
+      <AnimatedSection direction="up" className="section" id="skills">
+        <SectionHeading
+          icon={Icons.aurora}
+          eyebrow="Expertise"
+          title={pagesConfig.skills.title}
+          description={pagesConfig.skills.description}
+        />
+
+        <div className="mt-8 sm:mt-10">
+          <SkillsCard skills={featuredSkills} />
         </div>
-        <SkillsCard skills={featuredSkills} />
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/skills">
-            <Button variant={"outline"} className="group rounded-xl">
-              View All
-              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/skills"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-10 rounded-xl px-4 text-xs"
+            )}
+          >
+            View all skills
+            <Icons.arrowRight className="ml-2 h-3.5 w-3.5" />
           </Link>
-        </AnimatedText>
+        </div>
       </AnimatedSection>
 
-      {/* ─── Blogs ────────────────────────────────────────────────────── */}
+      {/* ─── Writing ──────────────────────────────────────────────────── */}
       <AnimatedSection
         direction="up"
-        className="container space-y-10 rounded-3xl bg-muted/60 px-6 py-16 md:px-12"
+        className="section section-band mt-6 px-4 py-10 sm:px-6 sm:py-14 lg:px-10"
         id="blogs"
       >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <span className="eyebrow">
-            <Icons.post className="h-3.5 w-3.5" /> Writing
-          </span>
-          <AnimatedText
-            as="h2"
-            className="text-gradient font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
-          >
-            {pagesConfig.blogs.title}
-          </AnimatedText>
-          <AnimatedText
-            as="p"
-            delay={0.2}
-            className="max-w-[85%] leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            {pagesConfig.blogs.description}
-          </AnimatedText>
-        </div>
-        <div className="grid w-full grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionHeading
+          icon={Icons.post}
+          eyebrow="Writing"
+          title={pagesConfig.blogs.title}
+          description={pagesConfig.blogs.description}
+        />
+
+        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {featuredBlogs.map((blog, index) => (
             <AnimatedSection
               key={blog.slug}
-              delay={0.1 * (index + 1)}
+              delay={0.06 * (index + 1)}
               direction="up"
-              className="h-full w-full min-w-0"
+              className="h-full min-w-0"
             >
               <BlogCard blog={blog} />
             </AnimatedSection>
           ))}
         </div>
-        <AnimatedText delay={0.4} className="flex justify-center">
-          <Link href="/blogs">
-            <Button variant={"outline"} className="group rounded-xl">
-              View All
-              <Icons.arrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Button>
-          </Link>
-        </AnimatedText>
-      </AnimatedSection>
 
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/blogs"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-10 rounded-xl px-4 text-xs"
+            )}
+          >
+            Read all articles
+            <Icons.arrowRight className="ml-2 h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </AnimatedSection>
     </ClientPageWrapper>
   );
 }

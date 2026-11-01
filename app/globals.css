@@ -230,6 +230,169 @@
     border: 1px solid hsl(var(--border) / 0.9);
     border-radius: var(--radius);
   }
+
+  /* ─── Landing page system ─────────────────────────────────────────────── */
+
+  /* Vertical rhythm for landing sections. Mobile gets a tighter step so a
+     section and its heading fit inside one thumb-scroll instead of two. */
+  .section {
+    padding-block: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .section {
+      padding-block: 4.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: 5.5rem;
+    }
+  }
+
+  /* One card recipe for every landing card — course, project, blog, prompt,
+     skill — so the page reads as one family instead of four card styles. */
+  .surface-card {
+    position: relative;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border) / 0.85);
+    border-radius: 1rem;
+  }
+
+  /* Small metadata pill used in card headers and footers. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--border) / 0.8);
+    background: hsl(var(--muted) / 0.55);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Accent chip — the same tint everywhere so tags stop competing. */
+  .chip-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid hsl(var(--accent) / 0.25);
+    background: hsl(var(--accent) / 0.1);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: hsl(var(--accent));
+  }
+
+  /* Shared card heading + body sizes, so six sections cannot drift apart. */
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
+  }
+
+  @media (min-width: 640px) {
+    .card-title {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .card-body {
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: hsl(var(--muted-foreground));
+  }
+
+  @media (min-width: 640px) {
+    .card-body {
+      font-size: 0.875rem;
+    }
+  }
+
+  /* Icon tile tinted by the card's own hue. */
+  .tile-tone {
+    display: grid;
+    place-items: center;
+    border-radius: 0.75rem;
+    background: hsl(var(--tone, var(--accent)) / 0.12);
+    color: hsl(var(--tone, var(--accent)));
+  }
+
+  /* Tinted band that separates the two content libraries (prompts, writing)
+     from the plain profile sections without another border. */
+  .section-band {
+    border-radius: 1.5rem;
+    border: 1px solid hsl(var(--border) / 0.7);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--muted) / 0.7),
+      hsl(var(--muted) / 0.35)
+    );
+  }
+}
+
+/* Per-course accent hues. Six cards, six hues, one shared lightness so the
+   grid looks deliberate rather than randomly coloured. */
+.tone-1 {
+  --tone: 250 44% 51%;
+}
+.tone-2 {
+  --tone: 174 52% 31%;
+}
+.tone-3 {
+  --tone: 28 80% 42%;
+}
+.tone-4 {
+  --tone: 344 58% 47%;
+}
+.tone-5 {
+  --tone: 268 48% 52%;
+}
+.tone-6 {
+  --tone: 205 68% 41%;
+}
+
+/* Dark mode needs lighter inks for the same hues to stay legible. */
+.dark .tone-1 {
+  --tone: 248 76% 76%;
+}
+.dark .tone-2 {
+  --tone: 172 52% 62%;
+}
+.dark .tone-3 {
+  --tone: 33 84% 64%;
+}
+.dark .tone-4 {
+  --tone: 344 70% 72%;
+}
+.dark .tone-5 {
+  --tone: 268 66% 76%;
+}
+.dark .tone-6 {
+  --tone: 205 72% 68%;
+}
+
+/* Balance large headings and avoid orphan words in body copy; both are
+   no-ops in browsers that do not support them. */
+@layer base {
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
 }
 
 /* Floating blobs for hero decoration */
