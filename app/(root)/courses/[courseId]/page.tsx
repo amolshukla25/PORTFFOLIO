@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import PageContainer from "@/components/common/page-container";
 import CourseProgressPanel from "@/components/courses/course-progress-panel";
+import MysqlCourseLanding from "@/components/courses/mysql/course-landing";
+import { MYSQL_COURSE_FACTS } from "@/config/mysql/syllabus";
+import { breadcrumbs, courseSchema as mysqlCourseSchema, datasetSchema, faqSchema, jsonLd, MYSQL_COURSE_FAQ, MYSQL_CONTENT_UPDATED } from "@/lib/mysql-course/seo";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { Badge } from "@/components/ui/badge";
@@ -39,6 +42,22 @@ export async function generateMetadata({
   if (!course) {
     return {
       title: "Course Not Found",
+    };
+  }
+
+  if (courseId === "mysql") {
+    const url = `${siteConfig.url}/courses/mysql`;
+    const title = "Free MySQL Course for Beginners — Practise SQL in the Browser";
+    const description = `Learn MySQL from zero: ${MYSQL_COURSE_FACTS.lessons} lessons, ${MYSQL_COURSE_FACTS.problems} SQL practice problems with instant checking, real MySQL 8 output and a portfolio capstone. Free, no sign-up.`;
+    return {
+      title: { absolute: title },
+      description,
+      keywords: ["MySQL course", "learn SQL", "SQL practice problems", "MySQL tutorial for beginners", "SQL for data analysts", "MySQL exercises", siteConfig.authorName],
+      alternates: { canonical: url },
+      openGraph: { title, description, url, siteName: siteConfig.name, type: "website", images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: title }] },
+      twitter: { card: "summary_large_image", title, description, images: [siteConfig.ogImage], creator: `@${siteConfig.username}` },
+      robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } },
+      other: { "article:modified_time": MYSQL_CONTENT_UPDATED },
     };
   }
 
@@ -90,6 +109,28 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
 
   if (!course) {
     notFound();
+  }
+
+  if (course.id === "mysql") {
+    const url = `${siteConfig.url}/courses/mysql`;
+    const schemas = [
+      mysqlCourseSchema(),
+      datasetSchema(),
+      faqSchema(MYSQL_COURSE_FAQ, url),
+      breadcrumbs([
+        { name: "Home", url: siteConfig.url },
+        { name: "Learning Hub", url: `${siteConfig.url}/courses` },
+        { name: "MySQL course", url },
+      ]),
+    ];
+    return (
+      <>
+        {schemas.map((d, i) => (
+          <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />
+        ))}
+        <MysqlCourseLanding />
+      </>
+    );
   }
 
   const totalLessons = course.modules.reduce(
@@ -199,10 +240,12 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
               <BookOpen className="h-3.5 w-3.5" />
               {totalLessons} lessons
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Award className="h-3.5 w-3.5 text-star" />
-              {course.rating} / 5
-            </span>
+            {course.rating ? (
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Award className="h-3.5 w-3.5 text-star" />
+                {course.rating} / 5
+              </span>
+            ) : null}
           </div>
 
           <h1 className="mt-5 text-balance font-heading text-3xl leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -224,7 +267,9 @@ export default async function CourseDetailPage({ params }: CoursePageProps) {
               { label: "Modules", value: course.modules.length, Icon: Layers },
               { label: "Lessons", value: totalLessons, Icon: FileText },
               { label: "Level", value: course.difficulty, Icon: GraduationCap },
-              { label: "Rating", value: `${course.rating} / 5`, Icon: Award },
+              course.rating
+                ? { label: "Rating", value: `${course.rating} / 5`, Icon: Award }
+                : { label: "Duration", value: course.duration, Icon: Award },
             ].map(({ label, value, Icon }) => (
               <div key={label} className="flex items-center gap-3 bg-card px-4 py-4">
                 <Icon className="h-4 w-4 shrink-0 text-accent" aria-hidden />

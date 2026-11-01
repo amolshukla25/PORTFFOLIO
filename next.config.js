@@ -7,6 +7,12 @@ const nextConfig = {
         destination: process.env.NEXT_PUBLIC_RESUME_LINK || "https://drive.google.com/file/d/1BiUASo5wgZyJ2NFJwm8wmsQFNx09_Aov/view?usp=sharing",
         permanent: false,
       },
+      // MySQL course restructure (9 → 15 lessons): the old lesson 9 became lesson 14.
+      {
+        source: "/courses/mysql/transactions-quality-performance",
+        destination: "/courses/mysql/views-indexes-explain",
+        permanent: true,
+      },
     ];
   },
   async headers() {

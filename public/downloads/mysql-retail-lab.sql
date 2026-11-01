@@ -1,9 +1,9 @@
--- MySQL 8.0+ / 8.4. Use a local training server, not a production database.
+-- MySQL 8.0.16+ (8.4 recommended). Use a local training server, not a production database.
 -- Workbench: File > Open SQL Script, select this file, Execute All.
 -- CLI: mysql -u YOUR_USER -p < mysql-retail-lab.sql
 -- This script creates a dedicated database; it never drops a database or table.
--- Reimporting keeps seed rows unchanged (INSERT IGNORE); use a fresh schema
--- if you changed seed rows and want an exact reset.
+-- Reimporting keeps seed rows unchanged (INSERT IGNORE). For an exact reset of
+-- rows you changed, run mysql-retail-lab-reset.sql instead (it drops this database).
 CREATE DATABASE IF NOT EXISTS portfolio_retail_lab CHARACTER SET utf8mb4;
 USE portfolio_retail_lab;
 

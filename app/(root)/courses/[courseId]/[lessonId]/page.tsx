@@ -6,6 +6,11 @@ import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
 import LessonNotes from "@/components/courses/lesson-notes";
+import MysqlLessonPage from "@/components/courses/mysql/mysql-lesson-page";
+import MysqlPlayground from "@/components/courses/mysql/playground";
+import { getMysqlLesson, MYSQL_LESSONS, MYSQL_MODULES, MYSQL_SYLLABUS } from "@/config/mysql/index";
+import { renderMysqlLesson } from "@/lib/mysql-course/render";
+import { breadcrumbs, jsonLd, lessonSchemas, MYSQL_CONTENT_UPDATED } from "@/lib/mysql-course/seo";
 import { COURSES } from "@/config/courses";
 import { siteConfig } from "@/config/site";
 import { truncateMetaDescription, truncateMetaTitle } from "@/lib/utils";
@@ -39,14 +44,58 @@ interface LessonPageProps {
 }
 
 export function generateStaticParams() {
-  return COURSES.flatMap((course) =>
-    course.modules.flatMap((module) =>
-      module.lessons.map((lesson) => ({
-        courseId: course.id,
-        lessonId: lesson.id,
-      }))
-    )
-  );
+  return [
+    ...COURSES.flatMap((course) =>
+      course.modules.flatMap((module) =>
+        module.lessons.map((lesson) => ({
+          courseId: course.id,
+          lessonId: lesson.id,
+        }))
+      )
+    ),
+    { courseId: "mysql", lessonId: "playground" },
+  ];
+}
+
+function mysqlMetadata(lessonId: string): Metadata | null {
+  const base = `${siteConfig.url}/courses/mysql`;
+  if (lessonId === "playground") {
+    const title = "Free online MySQL playground with a sample database";
+    const description = "Run MySQL-style SQL in your browser on a ready-made retail database (small or 4,000 orders). No install, no sign-up — practice queries, joins and window functions.";
+    return {
+      title: { absolute: title },
+      description,
+      alternates: { canonical: `${base}/playground` },
+      openGraph: { title, description, url: `${base}/playground`, siteName: siteConfig.name, type: "website", images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: title }] },
+      twitter: { card: "summary_large_image", title, description, images: [siteConfig.ogImage] },
+    };
+  }
+  const found = getMysqlLesson(lessonId);
+  if (!found) return null;
+  const { lesson } = found;
+  const url = `${base}/${lesson.slug}`;
+  const description = truncateMetaDescription(lesson.summary, 158);
+  return {
+    title: { absolute: truncateMetaTitle(lesson.title, 70) },
+    description,
+    keywords: [...lesson.teaches, "MySQL tutorial", "SQL practice", "MySQL course"],
+    authors: [{ name: siteConfig.authorName, url: siteConfig.url }],
+    alternates: { canonical: url },
+    openGraph: {
+      title: lesson.title,
+      description,
+      url,
+      siteName: siteConfig.name,
+      type: "article",
+      modifiedTime: MYSQL_CONTENT_UPDATED,
+      authors: [siteConfig.authorName],
+      section: "MySQL course",
+      tags: lesson.teaches,
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630, alt: lesson.title }],
+    },
+    twitter: { card: "summary_large_image", title: truncateMetaTitle(lesson.title), description, images: [siteConfig.ogImage], creator: `@${siteConfig.username}` },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
+  };
 }
 
 /**
@@ -102,6 +151,7 @@ export async function generateMetadata({
   params,
 }: LessonPageProps): Promise<Metadata> {
   const { courseId, lessonId } = await params;
+  if (courseId === "mysql") return mysqlMetadata(lessonId) ?? { title: "Lesson Not Found" };
   const { course, lesson } = getlesson(courseId, lessonId);
 
   if (!course || !lesson) {
@@ -159,6 +209,7 @@ export default async function lessonPage({
   params,
 }: LessonPageProps) {
   const { courseId, lessonId } = await params;
+  if (courseId === "mysql") return renderMysql(lessonId);
   const { course, lesson } = getlesson(courseId, lessonId);
 
   if (!course || !lesson) {
@@ -234,6 +285,57 @@ export default async function lessonPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(learningSchema).replace(/</g, "\\u003c") }}
       />
       <LessonNotes contentHtml={contentHtml} />
+    </>
+  );
+}
+
+async function renderMysql(lessonId: string) {
+  const base = `${siteConfig.url}/courses/mysql`;
+  if (lessonId === "playground") {
+    const schemas = [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "MySQL practice playground",
+        url: `${base}/playground`,
+        applicationCategory: "EducationalApplication",
+        operatingSystem: "Any (runs in the browser)",
+        isAccessibleForFree: true,
+        offers: { "@type": "Offer", price: 0, priceCurrency: "INR" },
+        description: "Run SQL in the browser on the Learning Shop practice database used by the MySQL course.",
+        isPartOf: { "@type": "Course", "@id": `${base}#course`, url: base },
+      },
+      breadcrumbs([
+        { name: "Home", url: siteConfig.url },
+        { name: "Learning Hub", url: `${siteConfig.url}/courses` },
+        { name: "MySQL course", url: base },
+        { name: "Playground", url: `${base}/playground` },
+      ]),
+    ];
+    return (
+      <>
+        {schemas.map((d, i) => <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />)}
+        <MysqlPlayground />
+      </>
+    );
+  }
+  const found = getMysqlLesson(lessonId);
+  if (!found) notFound();
+  const rendered = await renderMysqlLesson(found.lesson);
+  const syllabus = MYSQL_SYLLABUS.map((l) => ({
+    slug: l.slug,
+    shortTitle: l.shortTitle,
+    module: l.module,
+    minutes: l.minutes,
+    questions: l.questions,
+    questionIds: MYSQL_LESSONS.find((x) => x.slug === l.slug)!.questions.map((q) => q.id),
+  }));
+  return (
+    <>
+      {lessonSchemas(found.lesson, found.index).map((d, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(d) }} />
+      ))}
+      <MysqlLessonPage lesson={rendered} index={found.index} syllabus={syllabus} modules={MYSQL_MODULES.map((m) => ({ number: m.number, title: m.title }))} />
     </>
   );
 }

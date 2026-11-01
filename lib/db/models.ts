@@ -23,6 +23,8 @@ export interface IUser {
    * The value is embedded in the session JWT and compared on every request.
    */
   sessionVersion: number;
+  /** Per-course learning progress, e.g. { mysql: { completedLessons, solved, … } }. */
+  courseProgress?: Record<string, unknown>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -101,6 +103,7 @@ const UserSchema = new Schema<IUser>(
     batch: { type: ObjectId, ref: "Batch", default: null },
     active: { type: Boolean, default: true },
     sessionVersion: { type: Number, default: 0 },
+    courseProgress: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }
 );

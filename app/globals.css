@@ -893,3 +893,50 @@
     line-height: 1.6 !important;
   }
 }
+/* ─── MySQL course ──────────────────────────────────────────────────────── */
+.sql-hl .hl-kw { color: hsl(var(--code-accent)); font-weight: 600; }
+.sql-hl .hl-fn { color: #93c5fd; }
+.sql-hl .hl-str { color: #fcd34d; }
+.sql-hl .hl-num { color: #f9a8d4; }
+.sql-hl .hl-com { color: hsl(var(--code-fg) / 0.5); font-style: italic; }
+.sql-hl .hl-var { color: #c4b5fd; }
+
+.mysql-prose { font-size: 17px; line-height: 1.75; }
+.mysql-prose pre { overflow-x: auto; }
+.table-scroll { overflow-x: auto; max-width: 100%; }
+.table-scroll table { min-width: 32rem; }
+.inline-md code,
+.mysql-prose li code {
+  border-radius: 0.375rem;
+  background: hsl(var(--muted));
+  padding: 0.05rem 0.35rem;
+  font-size: 0.88em;
+}
+.print-only { display: none; }
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confetti-fall 1.6s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(540deg); opacity: 0.2; }
+}
+
+@media print {
+  /* The PDF carries all four steps of a MySQL lesson and every answer. */
+  .mysql-panel[hidden],
+  .mysql-panel [hidden],
+  [data-answer][hidden],
+  .mysql-tab[hidden] { display: block !important; }
+  .mysql-tab::before { content: attr(data-label); display: block; font-weight: 700; margin-top: 0.75em; }
+  .mysql-panel { margin-top: 1.5em !important; }
+  .print-only { display: block !important; }
+  .sql-hl, .sql-hl * { color: #18181b !important; font-weight: normal !important; }
+  figure, table { page-break-inside: avoid; }
+  [role="tablist"], .no-print { display: none !important; }
+}

@@ -463,10 +463,12 @@ export default function CoursesExplorer() {
                             <BookOpen className="h-3.5 w-3.5" />
                             <span>{totalLessons} lessons</span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Star className="h-3.5 w-3.5 text-star fill-star" />
-                            <span>{course.rating} / 5</span>
-                          </div>
+                          {course.rating ? (
+                            <div className="flex items-center gap-1.5">
+                              <Star className="h-3.5 w-3.5 text-star fill-star" />
+                              <span>{course.rating} / 5</span>
+                            </div>
+                          ) : null}
                         </div>
                       </div>
 

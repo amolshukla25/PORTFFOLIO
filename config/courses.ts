@@ -1,4 +1,3 @@
-import type { SkillLab } from "./skill-labs";
 
 export interface TestCase {
   id: string;
@@ -36,8 +35,6 @@ export interface lesson {
   tipsAndTricks?: string[];
   /** Hands-on practice exercises with optional solutions */
   practice?: PracticeExercise[];
-  /** Dedicated SQL workspace, separate from the Python judge and lesson prose. */
-  mysqlLab?: SkillLab;
 }
 
 export interface Module {
@@ -55,7 +52,8 @@ export interface Course {
   category: string[];
   duration: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
-  rating: number;
+  /** Only show a rating backed by real, counted reviews. */
+  rating?: number;
   instructor: string;
   iconName: "brain" | "network" | "activity" | "workflow" | "database" | "chart" | "code";
   modules: Module[];

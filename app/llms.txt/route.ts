@@ -1,4 +1,5 @@
 import { COURSES } from "@/config/courses";
+import { MYSQL_COURSE_FACTS, MYSQL_LESSONS } from "@/config/mysql/index";
 import { experiences } from "@/config/experience";
 import { Projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
@@ -33,11 +34,24 @@ function courseSection(course: (typeof COURSES)[number]): string[] {
     link("Course hub", `${SITE}/courses/${course.id}`, "Syllabus, module list and every lesson in one page."),
   ];
 
+  if (course.id === "mysql") {
+    lines.push(
+      link("MySQL playground", `${SITE}/courses/mysql/playground`, "Run SQL in the browser on the course database; no install."),
+      "",
+      `Key facts: ${MYSQL_COURSE_FACTS.lessons} lessons, ${MYSQL_COURSE_FACTS.problems} practice problems (Easy to Professional) with automatic answer checking in the browser, ${MYSQL_COURSE_FACTS.quizQuestions} quiz questions, about ${MYSQL_COURSE_FACTS.hours} hours, MySQL ${MYSQL_COURSE_FACTS.mysqlVersion}. Every worked example shows output captured from a real MySQL 8 server. Each lesson page has four steps (Lesson, Database, Guided, Practice) that are all present in the server HTML; append #practice to a lesson URL to open its problems.`
+    );
+  }
+
   for (const module of course.modules) {
     lines.push("");
     lines.push(`#### ${module.title}`);
     lines.push("");
     for (const lesson of module.lessons) {
+      const mysql = course.id === "mysql" ? MYSQL_LESSONS.find((l) => l.slug === lesson.id) : undefined;
+      if (mysql) {
+        lines.push(link(lesson.title, `${SITE}/courses/${course.id}/${lesson.id}`, `${mysql.summary} Q: ${mysql.quickAnswer.question} A: ${mysql.quickAnswer.answer}`));
+        continue;
+      }
       const summary = (lesson.shortDescription ?? "").trim();
       lines.push(
         link(
@@ -133,7 +147,9 @@ export async function GET() {
     "",
     "## Practice datasets",
     "",
-    link("MySQL retail practice database", `${SITE}/downloads/mysql-retail-lab.sql`, "MySQL 8 seed schema and fictional retail data for the separate SQL course. No DROP statements."),
+    link("MySQL retail practice database", `${SITE}/downloads/mysql-retail-lab.sql`, "Learning Shop: 6 customers, 6 products, 8 orders, 14 order lines (schema portfolio_retail_lab). MySQL 8.0.16+. No DROP statements; safe to re-run."),
+    link("MySQL practice database reset", `${SITE}/downloads/mysql-retail-lab-reset.sql`, "Drops and recreates portfolio_retail_lab with the original rows. Practice servers only."),
+    link("MySQL large practice dataset", `${SITE}/downloads/mysql-retail-large.sql`, "300 customers, 40 products, 4,000 orders (2025-01 to 2026-06), schema portfolio_retail_large; for window functions, indexes and EXPLAIN."),
     link("Data-science sales CSV", `${SITE}/downloads/data-science-sales.csv`, "Twelve fictional orders for NumPy, pandas and visualisation workshops; includes returned orders."),
     "",
     "## Optional",

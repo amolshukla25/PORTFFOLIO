@@ -105,8 +105,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     )
   );
 
+  const extraRoutes: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/courses/mysql/playground`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
+  ];
+
   return [
     ...routes,
+    ...extraRoutes,
     ...blogRoutes,
     ...projectRoutes,
     ...experienceRoutes,

@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:mysql": "tsx scripts/mysql/check-course.ts",
+    "mysql:syllabus": "tsx scripts/mysql/gen-syllabus.ts",
+    "mysql:downloads": "tsx scripts/mysql/gen-downloads.ts",
+    "mysql:results": "tsx scripts/mysql/export-snippets.ts > .mysql-snippets.json && python3 scripts/mysql/gen-results.py .mysql-snippets.json",
+    "mysql:vendor": "node -e \"for (const f of ['sql-wasm.js','sql-wasm.wasm']) require('fs').copyFileSync('node_modules/sql.js/dist/'+f,'public/vendor/sql.js/'+f)\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -45,6 +50,7 @@
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
     "remark-prism": "^1.3.6",
+    "sql.js": "^1.13.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
@@ -58,12 +64,14 @@
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sql.js": "^1.4.11",
     "eslint": "^9",
     "eslint-config-next": "16.0.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
+    "tsx": "^4.19.2",
     "typescript": "^5"
   }
 }
