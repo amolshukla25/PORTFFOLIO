@@ -571,52 +571,98 @@ export default function IndexPage() {
           description="A track record of delivering AI training and building production software across companies and startups."
         />
 
-        <div className="mx-auto mt-8 max-w-3xl space-y-3 sm:mt-10">
-          {experiences.slice(0, 3).map((exp, i) => (
-            <AnimatedSection
-              key={exp.id}
-              delay={0.06 * (i + 1)}
-              direction="up"
-            >
-              <Link
-                href={`/experience/${exp.id}`}
-                className={cn(
-                  "surface-card hover-lift group flex items-start gap-3 p-4 sm:gap-4 sm:p-5",
-                  `tone-${i + 1}`
-                )}
+        <div className="mx-auto mt-8 max-w-3xl sm:mt-10">
+          {/* Timeline: a rail and a dot per role instead of three loose cards,
+              so the section reads as a career with a direction. */}
+          <ol className="relative">
+            {experiences.slice(0, 3).map((exp, i, all) => (
+              <li
+                key={exp.id}
+                className="relative flex gap-3 pb-4 last:pb-0 sm:gap-5"
               >
-                <span className="tile-tone h-10 w-10 shrink-0 font-heading text-xs font-bold">
-                  {exp.company
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((w) => w[0])
-                    .join("")}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <h3 className="card-title transition-colors group-hover:text-accent">
-                      {exp.position}
-                    </h3>
-                    <span className="chip">
-                      {getDurationText(exp.startDate, exp.endDate)}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-[13px]">
-                    {exp.company} · {exp.location}
-                  </p>
-                  <p className="card-body mt-1 line-clamp-2">
-                    {exp.description[0]}
-                  </p>
-                </div>
-                <Icons.chevronRight
+                <div
                   aria-hidden
-                  className="mt-1 hidden h-4 w-4 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:text-accent sm:block"
-                />
-              </Link>
-            </AnimatedSection>
-          ))}
+                  className="relative flex w-3 shrink-0 justify-center"
+                >
+                  <span className="absolute top-6 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-background" />
+                  {i < all.length - 1 && (
+                    <span className="absolute bottom-0 top-8 w-px bg-border" />
+                  )}
+                </div>
 
-          <div className="flex justify-center pt-3">
+                <AnimatedSection
+                  delay={0.06 * (i + 1)}
+                  direction="up"
+                  className="min-w-0 flex-1"
+                >
+                  <Link
+                    href={`/experience/${exp.id}`}
+                    className={cn(
+                      "surface-card hover-lift group block p-4 sm:p-5",
+                      `tone-${i + 1}`
+                    )}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <h3 className="card-title transition-colors group-hover:text-accent">
+                            {exp.position}
+                          </h3>
+                          <span
+                            className={
+                              exp.endDate === "Present"
+                                ? "chip-accent"
+                                : "chip"
+                            }
+                          >
+                            {exp.endDate === "Present"
+                              ? "Current"
+                              : getDurationText(exp.startDate, exp.endDate)}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs font-medium text-muted-foreground sm:text-[13px]">
+                          {exp.company} · {exp.location} ·{" "}
+                          {getDurationText(exp.startDate, exp.endDate)}
+                        </p>
+                      </div>
+                      <span className="tile-tone hidden h-9 w-9 shrink-0 font-heading text-[11px] font-bold sm:grid">
+                        {exp.company
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((w) => w[0])
+                          .join("")}
+                      </span>
+                    </div>
+
+                    <ul className="mt-2.5 space-y-1.5">
+                      {exp.description.slice(0, 2).map((line) => (
+                        <li key={line} className="card-body flex gap-2">
+                          <span
+                            aria-hidden
+                            className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-accent/70"
+                          />
+                          <span className="line-clamp-2">{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {exp.skills.slice(0, 4).map((skill) => (
+                        <span key={skill} className="chip">
+                          {skill}
+                        </span>
+                      ))}
+                      {exp.skills.length > 4 && (
+                        <span className="chip">+{exp.skills.length - 4}</span>
+                      )}
+                    </div>
+                  </Link>
+                </AnimatedSection>
+              </li>
+            ))}
+          </ol>
+
+          <div className="flex justify-center pt-6">
             <Link
               href="/experience"
               className={cn(
@@ -707,17 +753,30 @@ export default function IndexPage() {
           description={pagesConfig.blogs.description}
         />
 
-        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {featuredBlogs.map((blog, index) => (
-            <AnimatedSection
-              key={blog.slug}
-              delay={0.06 * (index + 1)}
-              direction="up"
-              className="h-full min-w-0"
-            >
-              <BlogCard blog={blog} />
+        {/* Lead article as a full-width editorial card, the next two as a
+            pair. Three equal boxes made the newest post compete with the
+            oldest. */}
+        <div className="mt-8 space-y-4 sm:mt-10 sm:space-y-5">
+          {featuredBlogs[0] && (
+            <AnimatedSection delay={0.06} direction="up">
+              <BlogCard blog={featuredBlogs[0]} variant="wide" />
             </AnimatedSection>
-          ))}
+          )}
+
+          {featuredBlogs.length > 1 && (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+              {featuredBlogs.slice(1).map((blog, index) => (
+                <AnimatedSection
+                  key={blog.slug}
+                  delay={0.06 * (index + 2)}
+                  direction="up"
+                  className="h-full min-w-0"
+                >
+                  <BlogCard blog={blog} />
+                </AnimatedSection>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-8 flex justify-center">

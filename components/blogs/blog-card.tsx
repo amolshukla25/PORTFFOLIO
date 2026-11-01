@@ -3,12 +3,21 @@ import Link from "next/link";
 
 import { Icons } from "@/components/common/icons";
 import { BlogMeta } from "@/lib/blogs";
+import { cn } from "@/lib/utils";
 
 interface BlogCardProps {
   blog: BlogMeta;
+  /**
+   * `wide` lays the card out horizontally — used for the lead article in the
+   * writing section so the newest post reads as the headline, not as one of
+   * three identical boxes.
+   */
+  variant?: "default" | "wide";
 }
 
-export default function BlogCard({ blog }: BlogCardProps) {
+export default function BlogCard({ blog, variant = "default" }: BlogCardProps) {
+  const isWide = variant === "wide";
+
   const formattedDate = new Date(blog.date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -20,44 +29,75 @@ export default function BlogCard({ blog }: BlogCardProps) {
   return (
     <Link
       href={`/blogs/${blog.slug}`}
-      className="surface-card hover-lift group flex h-full flex-col overflow-hidden"
+      className={cn(
+        "surface-card hover-lift group flex h-full flex-col overflow-hidden",
+        isWide && "sm:flex-row"
+      )}
     >
-      <article className="flex h-full flex-col">
-        {/* Cover image — fixed ratio instead of a fixed height, so the card
-            scales with the column instead of leaving dead space on mobile. */}
+      <article
+        className={cn(
+          "flex h-full w-full flex-col",
+          isWide && "sm:flex-row"
+        )}
+      >
+        {/* Cover — fixed ratio on mobile, half the card when wide. */}
         {blog.coverImage && (
-          <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted">
+          <div
+            className={cn(
+              "relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-muted",
+              isWide && "sm:aspect-auto sm:w-[46%]"
+            )}
+          >
             <Image
               src={blog.coverImage}
               alt={blog.title}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes={
+                isWide
+                  ? "(max-width: 640px) 100vw, 46vw"
+                  : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              }
               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
-            {/* Shared wash over every cover so the mixed artwork reads as one
-                set rather than five different photo styles. */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-accent/10 mix-blend-multiply opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-accent/10 opacity-0 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-100" />
           </div>
         )}
 
-        <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div
+          className={cn(
+            "flex flex-1 flex-col p-5 sm:p-6",
+            isWide && "sm:justify-center sm:p-7"
+          )}
+        >
           <div className="flex flex-wrap gap-1.5">
-            {blog.tags.slice(0, 2).map((tag) => (
+            {blog.tags.slice(0, isWide ? 3 : 2).map((tag) => (
               <span key={tag} className="chip-accent">
                 {tag}
               </span>
             ))}
-            {blog.tags.length > 2 && (
-              <span className="chip">+{blog.tags.length - 2}</span>
+            {blog.tags.length > (isWide ? 3 : 2) && (
+              <span className="chip">
+                +{blog.tags.length - (isWide ? 3 : 2)}
+              </span>
             )}
           </div>
 
-          <h3 className="card-title mt-3 line-clamp-2 transition-colors group-hover:text-accent">
+          <h3
+            className={cn(
+              "card-title mt-3 line-clamp-2 transition-colors group-hover:text-accent",
+              isWide && "text-lg sm:text-xl lg:text-2xl"
+            )}
+          >
             {blog.title}
           </h3>
 
-          <p className="card-body mt-2 line-clamp-2 sm:line-clamp-3">
+          <p
+            className={cn(
+              "card-body mt-2 line-clamp-2 sm:line-clamp-3",
+              isWide && "sm:text-[15px]"
+            )}
+          >
             {blog.description}
           </p>
 
