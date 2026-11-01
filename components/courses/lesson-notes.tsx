@@ -40,6 +40,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import LessonQuiz from "./lesson-quiz";
 import PythonPlayground from "./python-playground";
+import MysqlWorkspace from "./mysql-workspace";
 
 interface LessonNotesPageProps {
   /** Pre-rendered HTML of the lesson body, produced server-side so crawlers
@@ -559,15 +560,19 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
 
           {/* Documented Notes Content — pre-rendered on the server so the
               full lesson text is present in the initial HTML for crawlers. */}
-          <div className="lesson-prose">
-            <div
-              className="blog-content lesson-content max-w-none"
-              dangerouslySetInnerHTML={{ __html: contentHtml }}
-            />
-          </div>
+          {activeLesson.mysqlLab ? (
+            <MysqlWorkspace key={activeLesson.id} lab={activeLesson.mysqlLab} contentHtml={contentHtml} />
+          ) : (
+            <div className="lesson-prose">
+              <div
+                className="blog-content lesson-content max-w-none"
+                dangerouslySetInnerHTML={{ __html: contentHtml }}
+              />
+            </div>
+          )}
 
           {/* Interactive Code Section Widget (no-print on PDF if you wish, or keep it formatted as standard text box) */}
-          {!focusMode && (
+          {!focusMode && !activeLesson.mysqlLab && (
           <section className="my-8 overflow-hidden rounded-2xl border border-border/70 bg-code-bg no-print">
             <div className="flex flex-col gap-2.5 border-b border-white/5 px-4 py-2.5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-2">
@@ -644,7 +649,7 @@ export default function LessonNotesPage({ contentHtml }: LessonNotesPageProps) {
           )}
 
           {/* Printable copy of Code snippet for the PDF output (hidden on screen, visible during printing) */}
-          {!focusMode && (
+          {!focusMode && !activeLesson.mysqlLab && (
           <div className="hidden print:block border border-black/20 p-5 rounded-lg my-8">
             <h4 className="font-bold mb-2">Lesson Code ({activeLesson.codeLanguage})</h4>
             <pre className="font-mono text-xs p-3 bg-zinc-50 border border-zinc-200 rounded whitespace-pre-wrap">

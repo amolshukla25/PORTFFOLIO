@@ -1,20 +1,43 @@
 import type { Course } from "./courses";
 import { skillLesson, type SkillLab } from "./skill-labs";
 
-const setup = `Prerequisite: a local MySQL 8.0+ server (8.4 recommended) and MySQL Workbench or the mysql client. This is a **separate SQL course**, not a Python exercise arena. No Python is needed.
-
-1. [Download the ready-to-run MySQL database](/downloads/mysql-retail-lab.sql).
-2. Workbench: File → Open SQL Script → choose the file → Execute All. CLI: \`mysql -u YOUR_USER -p < mysql-retail-lab.sql\`.
-3. Run \`USE portfolio_retail_lab;\` before the queries below.
-4. Confirm 6 customers, 6 products, 8 orders and 14 order_items. Completed revenue must be **6150.00**.
-
-The download creates only a dedicated training database, with fictional people, no passwords, no DROP statements and no external services. Reimporting does not reset modified seed data. Do write exercises in a transaction and roll them back.
-
-**Data dictionary:** customers has one row per customer; products one row per product; orders one row per order; order_items one row per order/product pair. Each item stores its historical selling price. Never use the current product price to calculate historical revenue. Cancelled and pending orders do not count as completed revenue.
-
-[Official MySQL tutorial](https://dev.mysql.com/doc/refman/8.4/en/tutorial.html)`;
-
 const labs: SkillLab[] = [
+  {
+    id: "what-is-a-database", title: "Start here: databases, tables and your first SQL sentence",
+    summary: "No SQL experience needed. Meet a tiny shop and learn what a database, table, row and column mean.",
+    explanation: "Imagine keeping a shop notebook. One page lists customers; another lists products. A database keeps those pages organised. A table is one kind of list, a row is one record, and a column is one fact about that record. In the products table, Notebook is a product_name and 100 is its price in INR. A primary key is a unique label such as product_id: two products can share a name but must not share that key. MySQL is the program that stores and queries these tables; SQL is the language you use to ask it questions. You do not need Python. Start with SELECT, which means show me a value. It does not change stored data. Read SELECT 1 AS first_result as: show the number 1 and call its output column first_result. The semicolon finishes the statement. Open Guided Practice to run this tiny example; the shop data comes later.",
+    language: "sql", example: "SELECT 1 AS first_result;", output: "One row, one column named first_result, containing 1. No database import is required yet.",
+    tasks: [
+      { level: "Easy", task: "Show the number 2 with the column name my_number.", check: "One row, my_number = 2. No tables required.", hint: "Change the number and the name after AS in the example.", solution: "SELECT 2 AS my_number;" },
+      { level: "Medium", task: "Ask MySQL to add 2 and 3.", check: "One column named total containing 5.", hint: "SQL can evaluate 2 + 3 directly after SELECT.", solution: "SELECT 2 + 3 AS total;" },
+      { level: "Hard", task: "Display your shop's name as text.", check: "One column named shop containing Learning Shop. Text needs single quotes.", hint: "Put 'Learning Shop' after SELECT and use AS shop.", solution: "SELECT 'Learning Shop' AS shop;" },
+      { level: "Professional", task: "Prepare a two-column welcome result for your practice notebook.", check: "One row: shop = Learning Shop, next_step = Connect MySQL. This is a small handoff task, not an advanced database exercise.", hint: "Separate output expressions with a comma.", solution: "SELECT 'Learning Shop' AS shop, 'Connect MySQL' AS next_step;" },
+    ],
+  },
+  {
+    id: "install-connect-mysql", title: "Set up MySQL and run your first query",
+    summary: "Install the database server, connect with Workbench and understand where SQL is executed before importing any tables.",
+    explanation: "You need two things: MySQL Community Server 8.0+ (8.4 recommended), which stores data, and a client such as MySQL Workbench, where you write SQL. Installing only Workbench does not install a running server. Get installers from https://dev.mysql.com/downloads/ and follow the installer for your OS. During server setup create a local password and keep it private. In Workbench create a connection: host 127.0.0.1, port 3306 unless you changed it, and the user you created. Test Connection, enter the password when asked, then open a SQL editor tab. Type SELECT 1; and execute the statement using the lightning button. Results appear below the editor. Connection refused usually means the server is stopped or the host/port is wrong; access denied usually means the user/password is wrong. Never paste a password into a lesson, screenshot or shared script. The server must be running even when Workbench is open. Database import is the next lesson, not a prerequisite for this one.",
+    language: "sql", example: "SELECT VERSION() AS mysql_version;", output: "One row containing your server version. It should be MySQL 8.0 or newer; the exact patch number depends on your installation.",
+    tasks: [
+      { level: "Easy", task: "Test your connection with SELECT 1.", check: "The result grid contains 1, not a connection error.", hint: "Open the connection before opening a query tab. No import is needed.", solution: "SELECT 1;" },
+      { level: "Medium", task: "Check which server you connected to.", check: "Record your version locally; it must be MySQL 8.0+. Do not publish credentials.", hint: "VERSION() is a function, so keep its parentheses.", solution: "SELECT VERSION() AS mysql_version;" },
+      { level: "Hard", task: "Check whether a database is selected.", check: "DATABASE() returns NULL before selecting a schema, or the selected schema name. NULL here is not a connection failure.", hint: "You can be connected without choosing a database.", solution: "SELECT DATABASE() AS selected_database;" },
+      { level: "Professional", task: "Save a safe connection-check script for your next session.", check: "A saved .sql file contains only checks, no password or private connection string; both statements run after reconnecting.", hint: "Save the query editor as connection-check.sql.", solution: "SELECT 1 AS connection_ok;\nSELECT VERSION() AS mysql_version;" },
+    ],
+  },
+  {
+    id: "import-explore-retail", title: "Import the shop database and explore its four tables",
+    summary: "Download the prepared data, import it once and find your way around before writing business queries.",
+    explanation: "Open the Database option above and download mysql-retail-lab.sql. In Workbench choose File → Open SQL Script, select the downloaded file and execute the whole script. It creates portfolio_retail_lab and loads the sample records. Refresh the Schemas sidebar if the new database is not visible. Run USE portfolio_retail_lab; to choose it for this editor session. SHOW TABLES; lists its four tables. DESCRIBE products; lists the product columns and their types. SELECT * FROM products; shows every product record; the star means all columns. These are inspection commands, not edits. If you see unknown database, import the complete script. If you see no database selected, run USE again. If an import reports an error, inspect it rather than continuing with partial data. Reimporting preserves existing seed rows, so it is not a reset button. Work only in this fictional practice database.",
+    language: "sql", example: "USE portfolio_retail_lab;\nSHOW TABLES;\nDESCRIBE products;\nSELECT * FROM products ORDER BY product_id;", output: "Four tables: customers, products, orders, order_items. products contains 6 rows, from Notebook (id 1) to Planner (id 6).",
+    tasks: [
+      { level: "Easy", task: "Choose the imported database.", check: "DATABASE() returns portfolio_retail_lab.", hint: "USE selects a schema for the current session.", solution: "USE portfolio_retail_lab;\nSELECT DATABASE();" },
+      { level: "Medium", task: "Inspect the customers table's column definitions.", check: "customer_id, customer_name, city, email. customer_id is the primary key.", hint: "DESCRIBE displays structure rather than customer records.", solution: "DESCRIBE customers;" },
+      { level: "Hard", task: "Read the product list without changing it.", check: "6 rows; id 1 Notebook 100.00 and id 6 Planner 300.00.", hint: "SELECT * reads all columns; ORDER BY product_id makes the order repeatable.", solution: "SELECT * FROM products ORDER BY product_id;" },
+      { level: "Professional", task: "Confirm that the import is complete before practising.", check: "6 customers, 6 products, 8 orders, 14 items. COUNT is previewed here only as an import check and taught later.", hint: "Run each count separately and compare the numbers with the Database tab.", solution: "SELECT COUNT(*) AS customers FROM customers;\nSELECT COUNT(*) AS products FROM products;\nSELECT COUNT(*) AS orders FROM orders;\nSELECT COUNT(*) AS items FROM order_items;" },
+    ],
+  },
   {
     id: "setup-select-filter", title: "MySQL setup, SELECT, WHERE and sorting",
     summary: "Import a prepared retail database, select columns, handle NULL and filter results without building your own question data.",
@@ -92,7 +115,22 @@ const labs: SkillLab[] = [
 export const MYSQL_COURSE: Course = {
   id: "mysql", title: "MySQL: Practical SQL from Beginner to Professional",
   shortDescription: "Learn SQL with a ready-made retail database: filtering, grouping, joins, CTEs, windows, transactions and audited reporting.",
-  detailedDescription: "A standalone MySQL 8 course with a downloadable seeded .sql database and 24 guided skill-development assignments. Each topic includes a worked query, expected results, hints and reference answers, progressing from Easy to Professional without MCQs or a Python code judge.",
+  detailedDescription: "Start with what a database is, connect to MySQL, import a prepared shop dataset and build practical SQL skills. Nine modules separate Lesson, Database, Guided Practice and Practice Questions, with 36 progressive assignments and optional hints and reference answers. No Python or prior SQL knowledge required.",
   category: ["MySQL", "SQL", "Databases", "Data Analysis"], duration: "18 hrs", difficulty: "Beginner", rating: 4.9, instructor: "Amol Shukla", iconName: "database",
-  modules: labs.map((lab, i) => ({ id: `mysql-${i+1}`, title: `Module ${i+1}: ${lab.title}`, description: lab.summary, lessons: [skillLesson(lab, setup)] })),
+  modules: labs.map((lab, i) => {
+    const base = skillLesson(lab, "");
+    return {
+      // Keep the original module ids and lesson URLs stable.
+      id: i < 3 ? `mysql-start-${i+1}` : `mysql-${i-2}`,
+      title: `Module ${i+1}: ${lab.title}`,
+      description: lab.summary,
+      lessons: [{
+        ...base,
+        duration: i < 3 ? "25 mins" : "60 mins",
+        readingTime: i < 3 ? "5 mins read" : "10 mins read",
+        mysqlLab: lab,
+        contentMarkdown: `## Your goal\n\n${lab.summary}\n\n## Understand the idea\n\n${lab.explanation}`,
+      }],
+    };
+  }),
 };

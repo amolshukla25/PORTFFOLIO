@@ -1,3 +1,5 @@
+import type { SkillLab } from "./skill-labs";
+
 export interface TestCase {
   id: string;
   name?: string;
@@ -34,6 +36,8 @@ export interface lesson {
   tipsAndTricks?: string[];
   /** Hands-on practice exercises with optional solutions */
   practice?: PracticeExercise[];
+  /** Dedicated SQL workspace, separate from the Python judge and lesson prose. */
+  mysqlLab?: SkillLab;
 }
 
 export interface Module {
